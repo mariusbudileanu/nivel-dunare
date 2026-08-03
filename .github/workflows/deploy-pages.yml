@@ -1,0 +1,47 @@
+name: Publicare GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - "data/public/**"
+      - ".github/workflows/deploy-pages.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sincronizare date publice
+        run: |
+          mkdir -p public/data
+          rsync -a --delete data/public/ public/data/
+
+      - name: Configurează Pages
+        uses: actions/configure-pages@v5
+
+      - name: Pregătește artefactul Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Publică
+        id: deployment
+        uses: actions/deploy-pages@v4
+
