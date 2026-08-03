@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import threading
 import urllib.request
@@ -28,47 +29,62 @@ def fetch(base: str, path: str, expected: str | None = None) -> bytes:
         return response.read()
 
 
+def check_base(base: str) -> dict[str, object]:
+    base = base.rstrip("/") + "/"
+    checked: list[str] = []
+    index = fetch(base, "", "text/html").decode("utf-8")
+    checked.append("index.html")
+    for path, mime in (
+        ("assets/css/app.css", "text/css"), ("assets/js/app.js", "javascript"),
+        ("assets/js/charts.js", "javascript"), ("assets/js/map.js", "javascript"),
+        ("data/status.json", "application/json"), ("data/latest.geojson", None),
+        ("data/downloads.json", "application/json"),
+    ):
+        fetch(base, path, mime)
+        checked.append(path)
+    status = json.loads(fetch(base, "data/status.json"))
+    geojson = json.loads(fetch(base, "data/latest.geojson"))
+    if status["station_count"] != len(geojson["features"]):
+        raise AssertionError("status.station_count diferă de GeoJSON")
+    selected = []
+    wanted = {"bazias", "giurgiu", "sulina"}
+    for feature in geojson["features"]:
+        slug = feature["properties"]["slug"]
+        if slug in wanted:
+            for suffix in ("observations.json", "forecasts.json", "forecast-scores.json"):
+                path = f"data/station/{slug}-{suffix}"
+                json.loads(fetch(base, path))
+                checked.append(path)
+            selected.append(slug)
+    if set(selected) != wanted:
+        raise AssertionError(f"Stații smoke lipsă: {sorted(wanted - set(selected))}")
+    for relative in ("./assets/css/app.css", "./assets/js/app.js", "./data/downloads.json"):
+        if relative not in index:
+            raise AssertionError(f"Resursa relativă pentru GitHub Pages lipsește: {relative}")
+    return {"ok": True, "base_url": base, "checked_resources": len(checked), "stations": selected}
+
+
 def run_smoke(public_dir: Path) -> dict[str, object]:
     handler = partial(QuietHandler, directory=str(public_dir))
     server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
-    base = f"http://127.0.0.1:{server.server_port}/"
-    checked: list[str] = []
     try:
-        index = fetch(base, "", "text/html").decode("utf-8")
-        checked.append("index.html")
-        for path, mime in (
-            ("assets/css/app.css", "text/css"), ("assets/js/app.js", "javascript"),
-            ("assets/js/charts.js", "javascript"), ("assets/js/map.js", "javascript"),
-            ("data/status.json", "application/json"), ("data/latest.geojson", "application/geo+json"),
-            ("data/downloads.json", "application/json"),
-        ):
-            fetch(base, path, mime if path != "data/latest.geojson" else None)
-            checked.append(path)
-        status = json.loads(fetch(base, "data/status.json"))
-        geojson = json.loads(fetch(base, "data/latest.geojson"))
-        if status["station_count"] != len(geojson["features"]):
-            raise AssertionError("status.station_count diferă de GeoJSON")
-        selected = []
-        wanted = {"bazias", "giurgiu", "sulina"}
-        for feature in geojson["features"]:
-            slug = feature["properties"]["slug"]
-            if slug in wanted:
-                for suffix in ("observations.json", "forecasts.json", "forecast-scores.json"):
-                    path = f"data/station/{slug}-{suffix}"
-                    json.loads(fetch(base, path))
-                    checked.append(path)
-                selected.append(slug)
-        if set(selected) != wanted:
-            raise AssertionError(f"Stații smoke lipsă: {sorted(wanted - set(selected))}")
-        for relative in ("./assets/css/app.css", "./assets/js/app.js", "./data/downloads.json"):
-            if relative not in index:
-                raise AssertionError(f"Resursa relativă pentru GitHub Pages lipsește: {relative}")
-        return {"ok": True, "base_url": base, "checked_resources": len(checked), "stations": selected}
+        return check_base(f"http://127.0.0.1:{server.server_port}/")
     finally:
-        server.shutdown(); server.server_close(); thread.join(timeout=2)
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=2)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--base-url", help="URL public, inclusiv subpath-ul GitHub Pages")
+    args = parser.parse_args()
+    result = check_base(args.base_url) if args.base_url else run_smoke(project_root() / "public")
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    print(json.dumps(run_smoke(project_root() / "public"), ensure_ascii=False, indent=2))
+    raise SystemExit(main())
