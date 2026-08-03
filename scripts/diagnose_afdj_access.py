@@ -930,6 +930,17 @@ def code_fence(text: str) -> str:
     return "`" * max(3, longest + 1)
 
 
+def normalized_block_template(body: bytes, content_type: str) -> tuple[str, bool] | None:
+    text, _encoding = decode_body_losslessly(body, content_type)
+    if text is None:
+        return None
+    normalized = re.sub(
+        r'(?<=Cloudflare Ray ID: <strong class="font-semibold">)[0-9a-f]+',
+        '<RAY>', text, flags=re.IGNORECASE,
+    )
+    normalized = re.sub(r'(?<=id="cf-footer-ip">)[^<]+', '<IP>', normalized)
+    return sha256_bytes(normalized.encode("utf-8")), "static.cloudflareinsights.com/beacon.min.js" in normalized
+
 def write_comparison_index(base: Path) -> dict[str, Any]:
     records = discover_summaries([base])
     body_groups: dict[str, list[str]] = {}
@@ -955,6 +966,15 @@ def generate_comparative_report(roots: Iterable[Path], output_path: Path) -> str
         f"Generated: `{utc_now().isoformat()}`",
         "",
         "This report is evidence-oriented. Body phrase detection is indicative and does not reveal the exact AFDJ/Cloudflare rule.",
+        "",
+        "## Baseline audit",
+        "",
+        "- Production workflow: `.github/workflows/update-data.yml`; run inspected: [30826804988](https://github.com/mariusbudileanu/nivel-dunare/actions/runs/30826804988).",
+        "- The production curl wire profile used `--location`, `--compressed`, `--retry 3`, `--retry-all-errors`, a 2-second retry delay, a 15-second connect timeout, and a 90-second per-attempt maximum.",
+        "- Its configured request headers were the Chrome 140 User-Agent, `Accept-Language: ro-RO,ro;q=0.9,en;q=0.8`, the AFDJ table referer, and the XML Accept value shown in `request.json`.",
+        "- No HTTP version was forced; curl negotiated its default through ALPN. Run 30826804988 did not use verbose/header capture, so its negotiated version is not demonstrated.",
+        "- Run 30826804988 logged four curl error-22 results for HTTP 403. `--fail` did not retain the error body, no header dump existed, and the workflow removed both temporary download files; only the status summary survived.",
+        "- The separate standard-library downloader in `scripts/afdj_core.py` uses three maximum attempts, a 25-second timeout, the same browser-like User-Agent plus Accept/Accept-Language/Cache-Control/Referer, default redirects, and raises a non-retryable 403 without archiving its body.",
         "",
         "## Comparative results",
         "",
@@ -988,6 +1008,26 @@ def generate_comparative_report(roots: Iterable[Path], output_path: Path) -> str
             if (summary.get("cloudflare_headers") or {}).get("CF-RAY")
         })
         lines.append(f"- `{body_hash}`: {environments}; CF-RAY: {', '.join(ray_ids) if ray_ids else 'not present'}")
+    normalized_groups: dict[tuple[str, bool], list[str]] = {}
+    for directory, summary in records:
+        if int(summary.get("http_status") or 0) != 403:
+            continue
+        body = (directory / "response_body.bin").read_bytes()
+        normalized = normalized_block_template(body, str(summary.get("content_type") or ""))
+        if normalized:
+            normalized_groups.setdefault(normalized, []).append(
+                f"{summary.get('environment_label')} / {summary.get('client_profile')}"
+            )
+    if normalized_groups:
+        lines.extend([
+            "", "## Normalized block-page template comparison", "",
+            "This comparison replaces only the displayed Cloudflare Ray ID and displayed client IP with placeholders. Raw artifacts and exact-body hashes above remain unchanged.", "",
+        ])
+        for (template_hash, has_beacon), environments in sorted(normalized_groups.items()):
+            lines.append(
+                f"- `{template_hash}`; Cloudflare beacon script: `{'present' if has_beacon else 'absent'}`; "
+                + ", ".join(environments)
+            )
 
     local_statuses = [int(summary.get("http_status") or 0) for _directory, summary in records if not summary.get("is_github_actions")]
     github_statuses = [int(summary.get("http_status") or 0) for _directory, summary in records if summary.get("is_github_actions")]
@@ -1004,6 +1044,34 @@ def generate_comparative_report(roots: Iterable[Path], output_path: Path) -> str
     if classifications:
         lines.append(f"- Observed response classifications: `{classifications}`.")
 
+    github_records = [summary for _directory, summary in records if summary.get("is_github_actions")]
+    if github_records and all(
+        int(summary.get("http_status") or 0) == 403
+        and summary.get("response_classification") == "cloudflare-block-page"
+        for summary in github_records
+    ):
+        lines.append("- Every GitHub client/OS combination returned a Cloudflare-branded 403 block page containing `Sorry, you have been blocked` and a request-specific CF-RAY.")
+    if github_records and all(not (summary.get("cloudflare_headers") or {}).get("CF-Mitigated") for summary in github_records):
+        lines.append("- `CF-Mitigated` was absent in every GitHub response. The evidence demonstrates a Cloudflare block page, not a `cf-mitigated: challenge` response.")
+    github_providers = sorted({
+        f"{summary.get('asn')} / {summary.get('provider')}"
+        for summary in github_records if summary.get("asn") or summary.get("provider")
+    })
+    if github_providers:
+        lines.append(f"- Advisory egress lookups identified the GitHub runner networks as: `{github_providers}`; both services' raw answers remain in `network.json`.")
+    colos = sorted({
+        str((summary.get("cloudflare_headers") or {}).get("CF-RAY") or "").rsplit("-", 1)[-1]
+        for summary in github_records if "-" in str((summary.get("cloudflare_headers") or {}).get("CF-RAY") or "")
+    })
+    if colos:
+        lines.append(f"- CF-RAY suffixes observed across the run: `{colos}`. They are reported as observed Cloudflare colo codes without inferring the blocking rule.")
+    local_by_profile = {str(summary.get("client_profile")): summary for _directory, summary in records if not summary.get("is_github_actions")}
+    if (
+        local_by_profile.get("transparent-minimal", {}).get("body_sha256")
+        and local_by_profile.get("transparent-minimal", {}).get("body_sha256")
+        == local_by_profile.get("playwright-chromium", {}).get("body_sha256")
+    ):
+        lines.append("- Local transparent curl and local Chromium received byte-identical XML bodies.")
     lines.extend(["", "### Probable", ""])
     if local_statuses and github_statuses and any(200 <= status < 300 for status in local_statuses) and all(status == 403 for status in github_statuses):
         lines.append("- The observed difference is associated with the execution environment. IP/ASN reputation or provider classification is plausible, but not demonstrated by the HTTP response alone.")
@@ -1080,7 +1148,7 @@ def generate_comparative_report(roots: Iterable[Path], output_path: Path) -> str
     ])
     report = "\n".join(lines).rstrip() + "\n"
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(report, encoding="utf-8")
+    output_path.write_text(report, encoding="utf-8", newline="\n")
     return report
 
 
