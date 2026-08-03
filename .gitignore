@@ -11,3 +11,5 @@ venv/
 Thumbs.db
 data/archive/diagnostics/*.tmp
 tmp/
+_diagnostics/afdj/local/
+_diagnostics/afdj/github/

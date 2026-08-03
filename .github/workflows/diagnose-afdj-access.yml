@@ -1,0 +1,65 @@
+name: Diagnostic acces AFDJ
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    name: diagnostic-${{ matrix.label }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            label: ubuntu
+          - os: windows-latest
+            label: windows
+          - os: macos-latest
+            label: macos
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalare dependență diagnostică fixată
+        run: python -m pip install --disable-pip-version-check playwright==1.54.0 tzdata==2025.2
+
+      - name: Instalare Chromium și dependențe Linux
+        if: runner.os == 'Linux'
+        run: python -m playwright install --with-deps chromium
+
+      - name: Instalare Chromium Windows/macOS
+        if: runner.os != 'Linux'
+        run: python -m playwright install chromium
+
+      - name: Rulare profile diagnostice
+        run: >-
+          python -m scripts.diagnose_afdj_access
+          --environment-label github-${{ matrix.label }}
+          --output-dir diagnostics
+          --pause-seconds 5
+
+      - name: Verificare artefacte obligatorii
+        run: >-
+          python -m scripts.diagnose_afdj_access
+          --validate-root diagnostics
+          --expected-result-count 3
+
+      - name: Upload artefact diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: afdj-diagnostic-${{ matrix.label }}-${{ github.run_id }}
+          path: diagnostics/**
+          if-no-files-found: error
+          retention-days: 14
