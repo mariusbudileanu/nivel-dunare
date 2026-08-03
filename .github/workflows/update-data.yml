@@ -35,8 +35,32 @@ jobs:
       - name: Instalare dependențe
         run: python -m pip install -r requirements.txt -r requirements-dev.txt
 
+      - name: Descărcare surse AFDJ
+        shell: bash
+        run: |
+          curl_common=(
+            --fail --show-error --silent --location --compressed
+            --retry 3 --retry-all-errors --retry-delay 2
+            --connect-timeout 15 --max-time 90
+            --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+            --header "Accept-Language: ro-RO,ro;q=0.9,en;q=0.8"
+            --referer "https://www.afdj.ro/ro/cotele-dunarii"
+          )
+          curl "${curl_common[@]}" \
+            --header "Accept: application/xml,text/xml;q=0.9,*/*;q=0.1" \
+            --output "${RUNNER_TEMP}/afdj.xml" \
+            "https://www.afdj.ro/ro/tabel_cotele_dunarii/xml"
+          curl "${curl_common[@]}" \
+            --header "Accept: text/html,application/xhtml+xml;q=0.9,*/*;q=0.1" \
+            --output "${RUNNER_TEMP}/afdj.html" \
+            "https://www.afdj.ro/ro/cotele-dunarii"
+
       - name: Colectare și arhivare AFDJ
-        run: python -m scripts.ingest_afdj
+        run: >-
+          python -m scripts.ingest_afdj
+          --xml-file "${{ runner.temp }}/afdj.xml"
+          --html-file "${{ runner.temp }}/afdj.html"
+          --source live-github-actions
 
       - name: Calcul scoruri prognoze
         run: python -m scripts.calculate_forecast_scores
