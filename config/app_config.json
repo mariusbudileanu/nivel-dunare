@@ -1,0 +1,19 @@
+{
+  "title": "Nivelul Dunării",
+  "subtitle": "Monitorizare zilnică a cotelor și prognozelor hidrologice",
+  "timezone": "Europe/Bucharest",
+  "source_xml": "https://afdj.ro/ro/tabel_cotele_dunarii/xml",
+  "source_html": "https://www.afdj.ro/ro/cotele-dunarii",
+  "map": {
+    "center": [44.6, 25.5],
+    "zoom": 6,
+    "min_zoom": 5,
+    "max_zoom": 15,
+    "primary_tiles": "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    "primary_attribution": "&copy; OpenStreetMap contributors &copy; CARTO",
+    "fallback_tiles": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "fallback_attribution": "&copy; OpenStreetMap contributors"
+  },
+  "default_range": "30d",
+  "comparison_station_limit": 4
+}

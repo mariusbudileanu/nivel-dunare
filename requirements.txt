@@ -1,0 +1,1 @@
+# Pipeline-ul folosește numai biblioteca standard Python 3.12.

@@ -1,0 +1,755 @@
+{
+  "station_count": 23,
+  "missing_by_original_column": {
+    "nid": 0,
+    "uuid": 0,
+    "vid": 0,
+    "langcode": 0,
+    "type": 0,
+    "revision_timestamp": 0,
+    "revision_uid": 0,
+    "status": 0,
+    "uid": 0,
+    "title": 0,
+    "created": 0,
+    "changed": 0,
+    "promote": 0,
+    "sticky": 0,
+    "default_langcode": 0,
+    "revision_translation_affected": 0,
+    "path": 0,
+    "content_translation_source": 0,
+    "content_translation_outdated": 0,
+    "display_page_title": 0,
+    "body": 23,
+    "feeds_item": 0,
+    "field_cota": 0,
+    "field_data_actualizare_prognoze": 0,
+    "field_field_data_actualiz_cote": 0,
+    "field_geolocation_demo_single": 0,
+    "field_km": 0,
+    "field_localitatea": 0,
+    "field_localitate_grafic": 23,
+    "field_temperatura_masurata": 0,
+    "field_tendinta_120h": 0,
+    "field_tendinta_24h": 0,
+    "field_tendinta_48h": 0,
+    "field_tendinta_72h": 0,
+    "field_tendinta_96h": 0,
+    "field_variatia": 0
+  },
+  "missing_documented_fields": {
+    "localitate": 0,
+    "km": 0,
+    "cota": 0,
+    "variatie": 0,
+    "temperatura": 0,
+    "data_masuratoare": 0
+  },
+  "field_profiles": {
+    "coordinates": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 23,
+      "raw_samples": [
+        "45.15541425, 29.652728883222",
+        "45.2721887, 28.4571456",
+        "45.4338215, 28.0549395",
+        "45.2716092, 27.9742932",
+        "44.6845557, 27.9513766",
+        "44.3416349, 28.0316248",
+        "44.1961646, 27.3313233",
+        "44.0904556, 26.6407009"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 23,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 0,
+      "zero_count": 0,
+      "positive_count": 0
+    },
+    "cota": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 23,
+      "raw_samples": [
+        "62",
+        "25",
+        "26",
+        "4",
+        "-115",
+        "-213",
+        "-164",
+        "-120"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 13,
+      "zero_count": 0,
+      "positive_count": 10
+    },
+    "data_masuratoare": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 1,
+      "raw_samples": [
+        "2026-08-03T03:00:00+03:00"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 0,
+      "zero_count": 0,
+      "positive_count": 0
+    },
+    "forecast_120h": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 15,
+      "raw_samples": [
+        "0",
+        "16",
+        "-9",
+        "-118",
+        "-227",
+        "-178",
+        "-130",
+        "-170"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 12,
+      "zero_count": 8,
+      "positive_count": 3
+    },
+    "forecast_24h": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 15,
+      "raw_samples": [
+        "0",
+        "22",
+        "23",
+        "-115",
+        "-218",
+        "-164",
+        "-120",
+        "-159"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 11,
+      "zero_count": 9,
+      "positive_count": 3
+    },
+    "forecast_48h": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 15,
+      "raw_samples": [
+        "0",
+        "21",
+        "-2",
+        "-115",
+        "-220",
+        "-166",
+        "-122",
+        "-161"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 12,
+      "zero_count": 8,
+      "positive_count": 3
+    },
+    "forecast_72h": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 15,
+      "raw_samples": [
+        "0",
+        "20",
+        "-4",
+        "-116",
+        "-222",
+        "-169",
+        "-124",
+        "-164"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 12,
+      "zero_count": 8,
+      "positive_count": 3
+    },
+    "forecast_96h": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 15,
+      "raw_samples": [
+        "0",
+        "18",
+        "-6",
+        "-117",
+        "-224",
+        "-173",
+        "-127",
+        "-167"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 12,
+      "zero_count": 8,
+      "positive_count": 3
+    },
+    "forecast_updated": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 1,
+      "raw_samples": [
+        "2026-08-02T03:00:00+03:00"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 0,
+      "zero_count": 0,
+      "positive_count": 0
+    },
+    "km": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 23,
+      "raw_samples": [
+        "0",
+        "103",
+        "150",
+        "170",
+        "253",
+        "300",
+        "370",
+        "430"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 0,
+      "zero_count": 1,
+      "positive_count": 22
+    },
+    "latitude": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 23,
+      "raw_samples": [
+        "45.15541425",
+        "45.2721887",
+        "45.4338215",
+        "45.2716092",
+        "44.6845557",
+        "44.3416349",
+        "44.1961646",
+        "44.0904556"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 23,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 0,
+      "zero_count": 0,
+      "positive_count": 23
+    },
+    "localitate": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 23,
+      "raw_samples": [
+        "Sulina",
+        "Isaccea",
+        "Galati",
+        "Braila",
+        "Harsova",
+        "Cernavoda",
+        "Calarasi",
+        "Oltenita"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 0,
+      "zero_count": 0,
+      "positive_count": 0
+    },
+    "longitude": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 23,
+      "raw_samples": [
+        "29.652728883222",
+        "28.4571456",
+        "28.0549395",
+        "27.9742932",
+        "27.9513766",
+        "28.0316248",
+        "27.3313233",
+        "26.6407009"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 23,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 0,
+      "zero_count": 0,
+      "positive_count": 23
+    },
+    "temperatura": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 2,
+      "raw_samples": [
+        "27.5",
+        "28"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 17,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 0,
+      "zero_count": 0,
+      "positive_count": 23
+    },
+    "variatie": {
+      "total": 23,
+      "present": 23,
+      "missing": 0,
+      "unique_raw_count": 9,
+      "raw_samples": [
+        "3",
+        "1",
+        "0",
+        "-1",
+        "2",
+        "-3",
+        "-4",
+        "-2"
+      ],
+      "leading_or_trailing_whitespace_count": 0,
+      "explicit_plus_count": 0,
+      "comma_decimal_count": 0,
+      "point_decimal_or_group_count": 0,
+      "thousands_point_count": 0,
+      "unit_count": 0,
+      "nonnumeric_count": 0,
+      "negative_count": 15,
+      "zero_count": 5,
+      "positive_count": 3
+    }
+  },
+  "level_extrema": {
+    "minimum": {
+      "station_index": 6,
+      "raw": "-213",
+      "numeric": -213
+    },
+    "maximum": {
+      "station_index": 19,
+      "raw": "2510",
+      "numeric": 2510
+    }
+  },
+  "variation_extrema": {
+    "minimum": {
+      "station_index": 19,
+      "raw": "-5",
+      "numeric": -5
+    },
+    "maximum": {
+      "station_index": 1,
+      "raw": "3",
+      "numeric": 3
+    }
+  },
+  "measurement_dates_raw_unique": [
+    "2026-08-03T03:00:00+03:00"
+  ],
+  "measurement_dates_iso_unique": [
+    "2026-08-03"
+  ],
+  "invalid_measurement_date_station_indices": [],
+  "nonnumeric_station_indices": {
+    "km": [],
+    "cota": [],
+    "variatie": [],
+    "temperatura": []
+  },
+  "exact_duplicate_rows": [],
+  "duplicate_station_identity_locality_km": [],
+  "duplicate_locality_and_measurement_date": [],
+  "locality_capitalization_variants": [],
+  "localities_with_romanian_characters": [],
+  "textual_or_unit_bearing_km": [],
+  "validation_issue_count": 0,
+  "validation_issue_definition": "Suma valorilor lipsa din campurile documentate, datelor invalide, valorilor nenumerice in campurile numerice si aparitiilor duplicate peste prima aparitie. Semnele, separatorii si unitatile valide sunt observatii de format, nu erori.",
+  "html_comparison": {
+    "html_extraction_success": true,
+    "html_extraction_method": "lxml + selectarea tabelului dupa rolurile semantice ale antetelor",
+    "html_extraction_reason": null,
+    "xml_station_count": 23,
+    "html_station_count": 23,
+    "xml_localities": [
+      "Sulina",
+      "Isaccea",
+      "Galati",
+      "Braila",
+      "Harsova",
+      "Cernavoda",
+      "Calarasi",
+      "Oltenita",
+      "Giurgiu",
+      "Zimnicea",
+      "Turnu Magurele",
+      "Corabia",
+      "Bechet",
+      "Rast",
+      "Calafat",
+      "Cetate",
+      "Gruia",
+      "Drobeta Turnu Severin",
+      "Orsova",
+      "Drencova",
+      "Moldova Veche",
+      "Bazias",
+      "Tulcea"
+    ],
+    "html_localities": [
+      "Sulina",
+      "Tulcea",
+      "Isaccea",
+      "Galati",
+      "Braila",
+      "Harsova",
+      "Cernavoda",
+      "Calarasi",
+      "Oltenita",
+      "Giurgiu",
+      "Zimnicea",
+      "Turnu Magurele",
+      "Corabia",
+      "Bechet",
+      "Rast",
+      "Calafat",
+      "Cetate",
+      "Gruia",
+      "Drobeta Turnu Severin",
+      "Orsova",
+      "Drencova",
+      "Moldova Veche",
+      "Bazias"
+    ],
+    "only_in_xml": [],
+    "only_in_html": [],
+    "common_station_count": 23,
+    "mismatch_counts_on_common_stations": {
+      "km": 0,
+      "cota": 0,
+      "variatie": 0,
+      "temperatura": 0,
+      "data_masuratoare": 0
+    },
+    "selected_locality_comparison": [
+      {
+        "requested_locality": "Bazias",
+        "xml_found": true,
+        "html_found": true,
+        "fields": {
+          "km": {
+            "xml_raw": "1072",
+            "html_raw": "1072",
+            "xml_normalized": 1072,
+            "html_normalized": 1072,
+            "match": true
+          },
+          "cota": {
+            "xml_raw": "544",
+            "html_raw": "544 cm",
+            "xml_normalized": 544,
+            "html_normalized": 544,
+            "match": true
+          },
+          "variatie": {
+            "xml_raw": "0",
+            "html_raw": "0",
+            "xml_normalized": 0,
+            "html_normalized": 0,
+            "match": true
+          },
+          "temperatura": {
+            "xml_raw": "28",
+            "html_raw": "28,0 °C",
+            "xml_normalized": 28,
+            "html_normalized": 28,
+            "match": true
+          },
+          "data_masuratoare": {
+            "xml_raw": "2026-08-03T03:00:00+03:00",
+            "html_raw": "03/08/2026",
+            "xml_normalized": "2026-08-03",
+            "html_normalized": "2026-08-03",
+            "match": true
+          }
+        }
+      },
+      {
+        "requested_locality": "Orsova",
+        "xml_found": true,
+        "html_found": true,
+        "fields": {
+          "km": {
+            "xml_raw": "954",
+            "html_raw": "954",
+            "xml_normalized": 954,
+            "html_normalized": 954,
+            "match": true
+          },
+          "cota": {
+            "xml_raw": "2510",
+            "html_raw": "2510 cm",
+            "xml_normalized": 2510,
+            "html_normalized": 2510,
+            "match": true
+          },
+          "variatie": {
+            "xml_raw": "-5",
+            "html_raw": "-5",
+            "xml_normalized": -5,
+            "html_normalized": -5,
+            "match": true
+          },
+          "temperatura": {
+            "xml_raw": "28",
+            "html_raw": "28,0 °C",
+            "xml_normalized": 28,
+            "html_normalized": 28,
+            "match": true
+          },
+          "data_masuratoare": {
+            "xml_raw": "2026-08-03T03:00:00+03:00",
+            "html_raw": "03/08/2026",
+            "xml_normalized": "2026-08-03",
+            "html_normalized": "2026-08-03",
+            "match": true
+          }
+        }
+      },
+      {
+        "requested_locality": "Giurgiu",
+        "xml_found": true,
+        "html_found": true,
+        "fields": {
+          "km": {
+            "xml_raw": "493",
+            "html_raw": "493",
+            "xml_normalized": 493,
+            "html_normalized": 493,
+            "match": true
+          },
+          "cota": {
+            "xml_raw": "-158",
+            "html_raw": "-158 cm",
+            "xml_normalized": -158,
+            "html_normalized": -158,
+            "match": true
+          },
+          "variatie": {
+            "xml_raw": "-1",
+            "html_raw": "-1",
+            "xml_normalized": -1,
+            "html_normalized": -1,
+            "match": true
+          },
+          "temperatura": {
+            "xml_raw": "27.5",
+            "html_raw": "27,5 °C",
+            "xml_normalized": 27.5,
+            "html_normalized": 27.5,
+            "match": true
+          },
+          "data_masuratoare": {
+            "xml_raw": "2026-08-03T03:00:00+03:00",
+            "html_raw": "03/08/2026",
+            "xml_normalized": "2026-08-03",
+            "html_normalized": "2026-08-03",
+            "match": true
+          }
+        }
+      },
+      {
+        "requested_locality": "Galati",
+        "xml_found": true,
+        "html_found": true,
+        "fields": {
+          "km": {
+            "xml_raw": "150",
+            "html_raw": "150",
+            "xml_normalized": 150,
+            "html_normalized": 150,
+            "match": true
+          },
+          "cota": {
+            "xml_raw": "26",
+            "html_raw": "26 cm",
+            "xml_normalized": 26,
+            "html_normalized": 26,
+            "match": true
+          },
+          "variatie": {
+            "xml_raw": "0",
+            "html_raw": "0",
+            "xml_normalized": 0,
+            "html_normalized": 0,
+            "match": true
+          },
+          "temperatura": {
+            "xml_raw": "27.5",
+            "html_raw": "27,5 °C",
+            "xml_normalized": 27.5,
+            "html_normalized": 27.5,
+            "match": true
+          },
+          "data_masuratoare": {
+            "xml_raw": "2026-08-03T03:00:00+03:00",
+            "html_raw": "03/08/2026",
+            "xml_normalized": "2026-08-03",
+            "html_normalized": "2026-08-03",
+            "match": true
+          }
+        }
+      },
+      {
+        "requested_locality": "Sulina",
+        "xml_found": true,
+        "html_found": true,
+        "fields": {
+          "km": {
+            "xml_raw": "0",
+            "html_raw": "0",
+            "xml_normalized": 0,
+            "html_normalized": 0,
+            "match": true
+          },
+          "cota": {
+            "xml_raw": "62",
+            "html_raw": "62 cm",
+            "xml_normalized": 62,
+            "html_normalized": 62,
+            "match": true
+          },
+          "variatie": {
+            "xml_raw": "3",
+            "html_raw": "3",
+            "xml_normalized": 3,
+            "html_normalized": 3,
+            "match": true
+          },
+          "temperatura": {
+            "xml_raw": "27.5",
+            "html_raw": "27,5 °C",
+            "xml_normalized": 27.5,
+            "html_normalized": 27.5,
+            "match": true
+          },
+          "data_masuratoare": {
+            "xml_raw": "2026-08-03T03:00:00+03:00",
+            "html_raw": "03/08/2026",
+            "xml_normalized": "2026-08-03",
+            "html_normalized": "2026-08-03",
+            "match": true
+          }
+        }
+      }
+    ]
+  },
+  "html_http": {
+    "requested_url": "https://www.afdj.ro/ro/cotele-dunarii",
+    "final_url": "https://www.afdj.ro/ro/cotele-dunarii",
+    "status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "size_bytes": 209077,
+    "sha256": "091e9fde05d74278508ca4cd7f4c15a717334276567fa0b30652acd2caa556a2",
+    "downloaded_at_utc": "2026-08-03T13:10:38.360304+00:00",
+    "attempts": 1
+  }
+}

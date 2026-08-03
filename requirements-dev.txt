@@ -1,0 +1,1 @@
+# Testele și smoke testul folosesc unittest și biblioteca standard Python 3.12.

@@ -1,0 +1,1167 @@
+{
+  "well_formed": true,
+  "xml_declaration": {
+    "present": true,
+    "raw": "<?xml version=\"1.0\"?>",
+    "version": "1.0",
+    "encoding": null,
+    "standalone": null
+  },
+  "root": {
+    "qualified_tag": "response",
+    "local_name": "response",
+    "namespace": null
+  },
+  "namespaces": [],
+  "hierarchy_first_levels": [
+    {
+      "logical_path": "/response",
+      "depth": 0,
+      "occurrences": 1
+    },
+    {
+      "logical_path": "/response/item",
+      "depth": 1,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/body",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/changed",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/content_translation_outdated",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/content_translation_source",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/created",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/default_langcode",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/display_page_title",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/feeds_item",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_cota",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_data_actualizare_prognoze",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_field_data_actualiz_cote",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_geolocation_demo_single",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_km",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_localitate_grafic",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_localitatea",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_temperatura_masurata",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_120h",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_24h",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_48h",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_72h",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_96h",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_variatia",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/langcode",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/nid",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/path",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/promote",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_timestamp",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_translation_affected",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_uid",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/status",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/sticky",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/title",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/type",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/uid",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/uuid",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/vid",
+      "depth": 2,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/changed/format",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/changed/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/content_translation_outdated/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/content_translation_source/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/created/format",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/created/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/default_langcode/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/display_page_title/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/feeds_item/guid",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/feeds_item/hash",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/feeds_item/imported",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/feeds_item/target_id",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/feeds_item/target_type",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/feeds_item/target_uuid",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/feeds_item/url",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_cota/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_data_actualizare_prognoze/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_field_data_actualiz_cote/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_geolocation_demo_single/data",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_geolocation_demo_single/lat",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_geolocation_demo_single/lng",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_geolocation_demo_single/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_km/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_localitatea/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_temperatura_masurata/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_120h/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_24h/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_48h/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_72h/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_tendinta_96h/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/field_variatia/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/langcode/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/nid/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/path/alias",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/path/langcode",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/path/pid",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/promote/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_timestamp/format",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_timestamp/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_translation_affected/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_uid/target_id",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_uid/target_type",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_uid/target_uuid",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/revision_uid/url",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/status/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/sticky/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/title/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/type/target_id",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/type/target_type",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/type/target_uuid",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/uid/target_id",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/uid/target_type",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/uid/target_uuid",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/uid/url",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/uuid/value",
+      "depth": 3,
+      "occurrences": 23
+    },
+    {
+      "logical_path": "/response/item/vid/value",
+      "depth": 3,
+      "occurrences": 23
+    }
+  ],
+  "all_tags": [
+    {
+      "qualified_tag": "alias",
+      "local_name": "alias",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "body",
+      "local_name": "body",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "changed",
+      "local_name": "changed",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "content_translation_outdated",
+      "local_name": "content_translation_outdated",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "content_translation_source",
+      "local_name": "content_translation_source",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "created",
+      "local_name": "created",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "data",
+      "local_name": "data",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "default_langcode",
+      "local_name": "default_langcode",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "display_page_title",
+      "local_name": "display_page_title",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "feeds_item",
+      "local_name": "feeds_item",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_cota",
+      "local_name": "field_cota",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_data_actualizare_prognoze",
+      "local_name": "field_data_actualizare_prognoze",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_field_data_actualiz_cote",
+      "local_name": "field_field_data_actualiz_cote",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_geolocation_demo_single",
+      "local_name": "field_geolocation_demo_single",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_km",
+      "local_name": "field_km",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_localitate_grafic",
+      "local_name": "field_localitate_grafic",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_localitatea",
+      "local_name": "field_localitatea",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_temperatura_masurata",
+      "local_name": "field_temperatura_masurata",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_tendinta_120h",
+      "local_name": "field_tendinta_120h",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_tendinta_24h",
+      "local_name": "field_tendinta_24h",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_tendinta_48h",
+      "local_name": "field_tendinta_48h",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_tendinta_72h",
+      "local_name": "field_tendinta_72h",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_tendinta_96h",
+      "local_name": "field_tendinta_96h",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "field_variatia",
+      "local_name": "field_variatia",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "format",
+      "local_name": "format",
+      "namespace": null,
+      "count": 69
+    },
+    {
+      "qualified_tag": "guid",
+      "local_name": "guid",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "hash",
+      "local_name": "hash",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "imported",
+      "local_name": "imported",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "item",
+      "local_name": "item",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "langcode",
+      "local_name": "langcode",
+      "namespace": null,
+      "count": 46
+    },
+    {
+      "qualified_tag": "lat",
+      "local_name": "lat",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "lng",
+      "local_name": "lng",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "nid",
+      "local_name": "nid",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "path",
+      "local_name": "path",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "pid",
+      "local_name": "pid",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "promote",
+      "local_name": "promote",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "response",
+      "local_name": "response",
+      "namespace": null,
+      "count": 1
+    },
+    {
+      "qualified_tag": "revision_timestamp",
+      "local_name": "revision_timestamp",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "revision_translation_affected",
+      "local_name": "revision_translation_affected",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "revision_uid",
+      "local_name": "revision_uid",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "status",
+      "local_name": "status",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "sticky",
+      "local_name": "sticky",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "target_id",
+      "local_name": "target_id",
+      "namespace": null,
+      "count": 92
+    },
+    {
+      "qualified_tag": "target_type",
+      "local_name": "target_type",
+      "namespace": null,
+      "count": 92
+    },
+    {
+      "qualified_tag": "target_uuid",
+      "local_name": "target_uuid",
+      "namespace": null,
+      "count": 92
+    },
+    {
+      "qualified_tag": "title",
+      "local_name": "title",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "type",
+      "local_name": "type",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "uid",
+      "local_name": "uid",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "url",
+      "local_name": "url",
+      "namespace": null,
+      "count": 69
+    },
+    {
+      "qualified_tag": "uuid",
+      "local_name": "uuid",
+      "namespace": null,
+      "count": 23
+    },
+    {
+      "qualified_tag": "value",
+      "local_name": "value",
+      "namespace": null,
+      "count": 667
+    },
+    {
+      "qualified_tag": "vid",
+      "local_name": "vid",
+      "namespace": null,
+      "count": 23
+    }
+  ],
+  "unique_tag_count": 52,
+  "attributes": [
+    {
+      "element_qualified_tag": "item",
+      "element_local_name": "item",
+      "attribute_qualified_name": "key",
+      "attribute_local_name": "key",
+      "count": 23,
+      "sample_values": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    }
+  ],
+  "station": {
+    "node_tag": "item",
+    "logical_path": "/response/item",
+    "indexed_paths": [
+      "/response[1]/item[1]",
+      "/response[1]/item[2]",
+      "/response[1]/item[3]",
+      "/response[1]/item[4]",
+      "/response[1]/item[5]",
+      "/response[1]/item[6]",
+      "/response[1]/item[7]",
+      "/response[1]/item[8]",
+      "/response[1]/item[9]",
+      "/response[1]/item[10]",
+      "/response[1]/item[11]",
+      "/response[1]/item[12]",
+      "/response[1]/item[13]",
+      "/response[1]/item[14]",
+      "/response[1]/item[15]",
+      "/response[1]/item[16]",
+      "/response[1]/item[17]",
+      "/response[1]/item[18]",
+      "/response[1]/item[19]",
+      "/response[1]/item[20]",
+      "/response[1]/item[21]",
+      "/response[1]/item[22]",
+      "/response[1]/item[23]"
+    ],
+    "count": 23,
+    "fields": [
+      {
+        "tag": "nid",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "uuid",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "vid",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "langcode",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "type",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "revision_timestamp",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "revision_uid",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "status",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "uid",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "title",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "created",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "changed",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "promote",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "sticky",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "default_langcode",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "revision_translation_affected",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "path",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "content_translation_source",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "content_translation_outdated",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "display_page_title",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "body",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "feeds_item",
+        "associated_role": null,
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_cota",
+        "associated_role": "cota",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_data_actualizare_prognoze",
+        "associated_role": "forecast_updated",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_field_data_actualiz_cote",
+        "associated_role": "data_masuratoare",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_geolocation_demo_single",
+        "associated_role": "coordinates",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_km",
+        "associated_role": "km",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_localitatea",
+        "associated_role": "localitate",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_localitate_grafic",
+        "associated_role": "localitate",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_temperatura_masurata",
+        "associated_role": "temperatura",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_tendinta_120h",
+        "associated_role": "forecast_120h",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_tendinta_24h",
+        "associated_role": "forecast_24h",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_tendinta_48h",
+        "associated_role": "forecast_48h",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_tendinta_72h",
+        "associated_role": "forecast_72h",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_tendinta_96h",
+        "associated_role": "forecast_96h",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      },
+      {
+        "tag": "field_variatia",
+        "associated_role": "variatie",
+        "namespace": null,
+        "occurrences": 23,
+        "missing_station_count": 0
+      }
+    ],
+    "special_field_availability": {
+      "latitude": {
+        "exists": true,
+        "matching_tags": [
+          "lat"
+        ]
+      },
+      "longitude": {
+        "exists": true,
+        "matching_tags": [
+          "lng"
+        ]
+      },
+      "coordinates": {
+        "exists": true,
+        "matching_tags": [
+          "field_geolocation_demo_single"
+        ]
+      },
+      "forecast_24h": {
+        "exists": true,
+        "matching_tags": [
+          "field_tendinta_24h"
+        ]
+      },
+      "forecast_48h": {
+        "exists": true,
+        "matching_tags": [
+          "field_tendinta_48h"
+        ]
+      },
+      "forecast_72h": {
+        "exists": true,
+        "matching_tags": [
+          "field_tendinta_72h"
+        ]
+      },
+      "forecast_96h": {
+        "exists": true,
+        "matching_tags": [
+          "field_tendinta_96h"
+        ]
+      },
+      "forecast_120h": {
+        "exists": true,
+        "matching_tags": [
+          "field_tendinta_120h"
+        ]
+      },
+      "forecast_updated": {
+        "exists": true,
+        "matching_tags": [
+          "field_data_actualizare_prognoze"
+        ]
+      },
+      "has_any_coordinates": true,
+      "has_any_forecasts": true
+    },
+    "example_xml": "<item key=\"0\">\n  <nid>\n    <value>82</value>\n  </nid>\n  <uuid>\n    <value>657e4b68-9e17-4102-a240-b2cf2f34ba27</value>\n  </uuid>\n  <vid>\n    <value>105</value>\n  </vid>\n  <langcode>\n    <value>ro</value>\n  </langcode>\n  <type>\n    <target_id>cote</target_id>\n    <target_type>node_type</target_type>\n    <target_uuid>d5b549ce-2740-49f7-8f34-d399df21fbb6</target_uuid>\n  </type>\n  <revision_timestamp>\n    <value>2023-07-26T12:41:06+00:00</value>\n    <format>Y-m-d\\TH:i:sP</format>\n  </revision_timestamp>\n  <revision_uid>\n    <target_id>0</target_id>\n    <target_type>user</target_type>\n    <target_uuid>1faab451-89c1-41f5-bb1a-e9270859731c</target_uuid>\n    <url>/ro/user/0</url>\n  </revision_uid>\n  <status>\n    <value>1</value>\n  </status>\n  <uid>\n    <target_id>1</target_id>\n    <target_type>user</target_type>\n    <target_uuid>3ed76c64-399c-4099-a53e-4456eb2fdb78</target_uuid>\n    <url>/ro/users/admin</url>\n  </uid>\n  <title>\n    <value>Sulina</value>\n  </title>\n  <created>\n    <value>2014-07-22T12:09:46+00:00</value>\n    <format>Y-m-d\\TH:i:sP</format>\n  </created>\n  <changed>\n    <value>2026-08-03T05:57:28+00:00</value>\n    <format>Y-m-d\\TH:i:sP</format>\n  </changed>\n  <promote>\n    <value>0</value>\n  </promote>\n  <sticky>\n    <value>0</value>\n  </sticky>\n  <default_langcode>\n    <value>1</value>\n  </default_langcode>\n  <revision_translation_affected>\n    <value>1</value>\n  </revision_translation_affected>\n  <path>\n    <alias>/content/sulina</alias>\n    <pid>53</pid>\n    <langcode>ro</langcode>\n  </path>\n  <content_translation_source>\n    <value>und</value>\n  </content_translation_source>\n  <content_translation_outdated>\n    <value>0</value>\n  </content_translation_outdated>\n  <display_page_title>\n    <value>1</value>\n  </display_page_title>\n  <body />\n  <feeds_item>\n    <target_id>7</target_id>\n    <imported>2026-08-03T05:57:28+00:00</imported>\n    <url>/ro/feed/7</url>\n    <guid />\n    <hash>f5f18f92c380155802467c0218a371d8</hash>\n    <target_type>feeds_feed</target_type>\n    <target_uuid>cfcb2ba1-82f0-4490-985d-eaa03abb5b7d</target_uuid>\n  </feeds_item>\n  <field_cota>\n    <value>62</value>\n  </field_cota>\n  <field_data_actualizare_prognoze>\n    <value>2026-08-02T03:00:00+03:00</value>\n  </field_data_actualizare_prognoze>\n  <field_field_data_actualiz_cote>\n    <value>2026-08-03T03:00:00+03:00</value>\n  </field_field_data_actualiz_cote>\n  <field_geolocation_demo_single>\n    <lat>45.15541425</lat>\n    <lng>29.652728883222</lng>\n    <data />\n    <value>45.15541425, 29.652728883222</value>\n  </field_geolocation_demo_single>\n  <field_km>\n    <value>0</value>\n  </field_km>\n  <field_localitatea>\n    <value>Sulina</value>\n  </field_localitatea>\n  <field_localitate_grafic />\n  <field_temperatura_masurata>\n    <value>27.5</value>\n  </field_temperatura_masurata>\n  <field_tendinta_120h>\n    <value>0</value>\n  </field_tendinta_120h>\n  <field_tendinta_24h>\n    <value>0</value>\n  </field_tendinta_24h>\n  <field_tendinta_48h>\n    <value>0</value>\n  </field_tendinta_48h>\n  <field_tendinta_72h>\n    <value>0</value>\n  </field_tendinta_72h>\n  <field_tendinta_96h>\n    <value>0</value>\n  </field_tendinta_96h>\n  <field_variatia>\n    <value>3</value>\n  </field_variatia>\n</item>"
+  }
+}

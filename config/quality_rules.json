@@ -1,0 +1,14 @@
+{
+  "reference_station_count": 23,
+  "block_station_drop_percent": 20,
+  "required_root": "response",
+  "required_station_node": "item",
+  "required_forecast_lead_hours": [24, 48, 72, 96, 120],
+  "valid_latitude_range": [-90, 90],
+  "valid_longitude_range": [-180, 180],
+  "stale_after_hours": 36,
+  "score_maturity": {
+    "insufficient_below": 10,
+    "preliminary_below": 30
+  }
+}
