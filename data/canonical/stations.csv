@@ -1,0 +1,24 @@
+﻿station_id,station_nid,source_name,display_name,slug,river_km,latitude,longitude,path_alias,first_seen_at,last_seen_at,active
+03013570-89c3-468d-929e-389aa605e929,95,Bechet,Bechet,bechet,679,43.784314,23.9574422,/content/bechet,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,98,Cetate,Cetate,cetate,811,44.1114259,23.0475514,/content/cetate,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+09b542d8-41d7-4746-8d84-e081f76a8c37,99,Gruia,Gruia,gruia,851,44.2665732,22.7046852,/content/gruia,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+1a87220f-e0ae-4cf3-b921-e1e5b73f5f75,104,Bazias,Baziaș,bazias,1072,44.8159071,21.39048,/content/bazias,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+264afec2-a181-408b-979c-473e5eaf4940,103,Moldova Veche,Moldova Veche,moldova-veche,1048,44.7213534,21.6198348,/content/moldova-veche,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+267d20a8-8a85-4d85-97e1-8aee686e9535,88,Cernavoda,Cernavodă,cernavoda,300,44.3416349,28.0316248,/content/cernavoda,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+29f3d156-04e1-46bc-b699-bbea096e212f,89,Calarasi,Călărași,calarasi,370,44.1961646,27.3313233,/content/calarasi,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+3d63f295-2216-491e-86ba-a0e19b6b5fa3,100,Drobeta Turnu Severin,Drobeta-Turnu Severin,drobeta-turnu-severin,931,44.6257835,22.6531975,/content/drobeta-turnu-severin,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+434d580b-1bc9-4210-aea9-3d263e8251fe,87,Harsova,Hârșova,harsova,253,44.6845557,27.9513766,/content/harsova-0,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+5f0aaecc-01c1-4828-be3a-405bf48702b8,93,Turnu Magurele,Turnu Măgurele,turnu-magurele,597,43.7518306,24.8691717,/content/turnu-magurele,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+657e4b68-9e17-4102-a240-b2cf2f34ba27,82,Sulina,Sulina,sulina,0,45.15541425,29.652728883222,/content/sulina,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+733c61e2-3083-4766-9b49-9c51b6e6c7cc,84,Isaccea,Isaccea,isaccea,103,45.2721887,28.4571456,/content/isaccea,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+841d8091-d02e-4c06-8391-7f5aa233b244,102,Drencova,Drencova,drencova,1015,44.6377707,21.9723364,/content/drencova,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+89bd48d0-b491-4706-986d-d67ffc282f4e,96,Rast,Rast,rast,738,43.8851672,23.2813472,/content/rast,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+a4976c0d-d21d-4bda-b6bc-c19c0edc6123,97,Calafat,Calafat,calafat,795,43.9942983,22.9337027,/content/calafat,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+b5ab6a64-d495-4137-b6a3-4c98d96836c9,94,Corabia,Corabia,corabia,630,43.7747612,24.5015439,/content/corabia,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+bbf5e3ee-6ed6-4b87-afee-d78643847aea,101,Orsova,Orșova,orsova,954,44.726128,22.392312975059,/content/orsova,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+c726848a-12e0-4961-be36-8a8d29ce9106,85,Galati,Galați,galati,150,45.4338215,28.0549395,/content/galati,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,86,Braila,Brăila,braila,170,45.2716092,27.9742932,/content/braila,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+e3a30b68-5b3e-42d0-b6e7-82411594d811,91,Giurgiu,Giurgiu,giurgiu,493,43.8959058,25.9658111,/content/giurgiu,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+e5eea969-9ccd-4b3e-9aa5-439c8f0d1ff0,90,Oltenita,Oltenița,oltenita,430,44.0904556,26.6407009,/content/oltenita,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+ec11d8f6-34c5-4d2d-afc2-4171b759c56a,5243,Tulcea,Tulcea,tulcea,71,45.177518,28.8016348,,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True
+fda97819-adbe-448c-bb6b-85e4aea435af,92,Zimnicea,Zimnicea,zimnicea,554,43.6542344,25.3655464,/content/zimnicea,2026-08-03T14:01:46Z,2026-08-03T14:01:46Z,True

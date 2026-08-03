@@ -1,0 +1,7 @@
+﻿record_type,station_id,display_name,datetime,date,lead_hours,level_cm,variation_cm_24h,water_temperature_c,quality_flag
+observation,733c61e2-3083-4766-9b49-9c51b6e6c7cc,Isaccea,2026-08-03T03:00:00+03:00,2026-08-03,,25,1,27.5,valid
+forecast,733c61e2-3083-4766-9b49-9c51b6e6c7cc,Isaccea,2026-08-07T03:00:00+03:00,2026-08-07,120,16,,,xml_html_value_mismatch
+forecast,733c61e2-3083-4766-9b49-9c51b6e6c7cc,Isaccea,2026-08-03T03:00:00+03:00,2026-08-03,24,22,,,xml_html_value_mismatch
+forecast,733c61e2-3083-4766-9b49-9c51b6e6c7cc,Isaccea,2026-08-04T03:00:00+03:00,2026-08-04,48,21,,,xml_html_value_mismatch
+forecast,733c61e2-3083-4766-9b49-9c51b6e6c7cc,Isaccea,2026-08-05T03:00:00+03:00,2026-08-05,72,20,,,xml_html_value_mismatch
+forecast,733c61e2-3083-4766-9b49-9c51b6e6c7cc,Isaccea,2026-08-06T03:00:00+03:00,2026-08-06,96,18,,,xml_html_value_mismatch

@@ -1,0 +1,7 @@
+﻿record_type,station_id,display_name,datetime,date,lead_hours,level_cm,variation_cm_24h,water_temperature_c,quality_flag
+observation,03013570-89c3-468d-929e-389aa605e929,Bechet,2026-08-03T03:00:00+03:00,2026-08-03,,-87,-3,27.5,valid
+forecast,03013570-89c3-468d-929e-389aa605e929,Bechet,2026-08-07T03:00:00+03:00,2026-08-07,120,-101,,,xml_html_value_mismatch
+forecast,03013570-89c3-468d-929e-389aa605e929,Bechet,2026-08-03T03:00:00+03:00,2026-08-03,24,-88,,,xml_html_value_mismatch
+forecast,03013570-89c3-468d-929e-389aa605e929,Bechet,2026-08-04T03:00:00+03:00,2026-08-04,48,-92,,,xml_html_value_mismatch
+forecast,03013570-89c3-468d-929e-389aa605e929,Bechet,2026-08-05T03:00:00+03:00,2026-08-05,72,-95,,,xml_html_value_mismatch
+forecast,03013570-89c3-468d-929e-389aa605e929,Bechet,2026-08-06T03:00:00+03:00,2026-08-06,96,-99,,,xml_html_value_mismatch
