@@ -2,7 +2,7 @@
   "title": "Nivelul Dunării",
   "subtitle": "Monitorizare zilnică a cotelor și prognozelor hidrologice",
   "timezone": "Europe/Bucharest",
-  "source_xml": "https://afdj.ro/ro/tabel_cotele_dunarii/xml",
+  "source_xml": "https://www.afdj.ro/ro/tabel_cotele_dunarii/xml",
   "source_html": "https://www.afdj.ro/ro/cotele-dunarii",
   "map": {
     "center": [44.6, 25.5],

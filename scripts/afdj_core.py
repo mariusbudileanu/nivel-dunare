@@ -29,9 +29,13 @@ from typing import Any, Iterable
 from zoneinfo import ZoneInfo
 
 
-XML_URL = "https://afdj.ro/ro/tabel_cotele_dunarii/xml"
+XML_URL = "https://www.afdj.ro/ro/tabel_cotele_dunarii/xml"
 HTML_URL = "https://www.afdj.ro/ro/cotele-dunarii"
-USER_AGENT = "Nivelul-Dunarii/1.0 (+https://github.com/; public-data-collector)"
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/140.0.0.0 Safari/537.36"
+)
 TIMEOUT_SECONDS = 25
 MAX_ATTEMPTS = 3
 BUCHAREST = ZoneInfo("Europe/Bucharest")
@@ -225,7 +229,9 @@ def download(url: str, expected_mime: tuple[str, ...]) -> dict[str, Any]:
             headers={
                 "User-Agent": USER_AGENT,
                 "Accept": "application/xml,text/xml,text/html,application/xhtml+xml;q=0.9,*/*;q=0.1",
+                "Accept-Language": "ro-RO,ro;q=0.9,en;q=0.8",
                 "Cache-Control": "no-cache",
+                "Referer": HTML_URL,
             },
         )
         try:
