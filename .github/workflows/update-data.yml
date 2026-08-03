@@ -36,6 +36,7 @@ jobs:
         run: python -m pip install -r requirements.txt -r requirements-dev.txt
 
       - name: Descărcare surse AFDJ
+        id: afdj_download
         shell: bash
         run: |
           curl_common=(
@@ -46,16 +47,27 @@ jobs:
             --header "Accept-Language: ro-RO,ro;q=0.9,en;q=0.8"
             --referer "https://www.afdj.ro/ro/cotele-dunarii"
           )
-          curl "${curl_common[@]}" \
-            --header "Accept: application/xml,text/xml;q=0.9,*/*;q=0.1" \
-            --output "${RUNNER_TEMP}/afdj.xml" \
-            "https://www.afdj.ro/ro/tabel_cotele_dunarii/xml"
-          curl "${curl_common[@]}" \
-            --header "Accept: text/html,application/xhtml+xml;q=0.9,*/*;q=0.1" \
-            --output "${RUNNER_TEMP}/afdj.html" \
-            "https://www.afdj.ro/ro/cotele-dunarii"
+          if curl "${curl_common[@]}" \
+              --header "Accept: application/xml,text/xml;q=0.9,*/*;q=0.1" \
+              --output "${RUNNER_TEMP}/afdj.xml" \
+              "https://www.afdj.ro/ro/tabel_cotele_dunarii/xml" \
+            && curl "${curl_common[@]}" \
+              --header "Accept: text/html,application/xhtml+xml;q=0.9,*/*;q=0.1" \
+              --output "${RUNNER_TEMP}/afdj.html" \
+              "https://www.afdj.ro/ro/cotele-dunarii"; then
+            echo "available=true" >> "${GITHUB_OUTPUT}"
+          else
+            rm -f "${RUNNER_TEMP}/afdj.xml" "${RUNNER_TEMP}/afdj.html"
+            echo "available=false" >> "${GITHUB_OUTPUT}"
+            echo "::warning::AFDJ a refuzat conexiunea runnerului GitHub; datele existente rămân nemodificate."
+            {
+              echo "### Sursa AFDJ indisponibilă"
+              echo "Runnerul GitHub a primit HTTP 403. Nu au fost inventate sau rescrise date; este validată ultima captură reală din repository."
+            } >> "${GITHUB_STEP_SUMMARY}"
+          fi
 
       - name: Colectare și arhivare AFDJ
+        if: steps.afdj_download.outputs.available == 'true'
         run: >-
           python -m scripts.ingest_afdj
           --xml-file "${{ runner.temp }}/afdj.xml"
