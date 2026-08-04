@@ -1,0 +1,83 @@
+{
+  "captured_at_utc": "2026-08-04T10:00:00+00:00",
+  "payloads": [
+    {
+      "label": "station-5140",
+      "file": "station-5140.html",
+      "url": "https://fixture.invalid/sk/station-5140.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5141",
+      "file": "station-5141.html",
+      "url": "https://fixture.invalid/sk/station-5141.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5142",
+      "file": "station-5142.html",
+      "url": "https://fixture.invalid/sk/station-5142.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5143",
+      "file": "station-5143.html",
+      "url": "https://fixture.invalid/sk/station-5143.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5144",
+      "file": "station-5144.html",
+      "url": "https://fixture.invalid/sk/station-5144.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5145",
+      "file": "station-5145.html",
+      "url": "https://fixture.invalid/sk/station-5145.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5146",
+      "file": "station-5146.html",
+      "url": "https://fixture.invalid/sk/station-5146.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5147",
+      "file": "station-5147.html",
+      "url": "https://fixture.invalid/sk/station-5147.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5148",
+      "file": "station-5148.html",
+      "url": "https://fixture.invalid/sk/station-5148.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5149",
+      "file": "station-5149.html",
+      "url": "https://fixture.invalid/sk/station-5149.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5150",
+      "file": "station-5150.html",
+      "url": "https://fixture.invalid/sk/station-5150.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5151",
+      "file": "station-5151.html",
+      "url": "https://fixture.invalid/sk/station-5151.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "station-5152",
+      "file": "station-5152.html",
+      "url": "https://fixture.invalid/sk/station-5152.html",
+      "content_type": "text/html; charset=utf-8"
+    }
+  ]
+}

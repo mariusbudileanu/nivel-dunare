@@ -1,0 +1,73 @@
+name: Test international Danube sources
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Independent source adapter to run
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - de
+          - at
+          - sk
+          - hu
+          - hr
+          - bg
+          - rs
+      mode:
+        description: Fixture contract test or one low-volume live collection
+        required: true
+        default: fixtures
+        type: choice
+        options:
+          - fixtures
+          - live
+
+permissions:
+  contents: read
+
+jobs:
+  test-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm diagnostic dependency set
+        run: |
+          python --version
+          echo "Adapters use the Python standard library only."
+      - name: Run adapter and validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="_diagnostics/international/github-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          archive="$output/raw-archive"
+          fixture_args=()
+          if [[ "${{ inputs.mode }}" == "fixtures" ]]; then
+            fixture_args=(--fixture-root tests/fixtures/international)
+          fi
+          mkdir -p "$output"
+          {
+            python -m scripts.ingest_danube_sources \
+              --source "${{ inputs.source }}" \
+              --output-dir "$output/results" \
+              --archive-root "$archive" \
+              "${fixture_args[@]}"
+            python -m unittest discover -s tests -v
+            python -m scripts.build_international_station_audit \
+              --output "$output/INTERNATIONAL_STATIONS_AUDIT.csv"
+          } 2>&1 | tee "$output/run.log"
+      - name: Upload raw, normalized and validation artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: international-danube-${{ inputs.source }}-${{ inputs.mode }}-${{ github.run_id }}
+          path: _diagnostics/international/github-*
+          if-no-files-found: error
+          retention-days: 14

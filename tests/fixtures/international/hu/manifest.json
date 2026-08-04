@@ -1,0 +1,17 @@
+{
+  "captured_at_utc": "2026-08-04T10:00:00+00:00",
+  "payloads": [
+    {
+      "label": "current",
+      "file": "current.html",
+      "url": "https://fixture.invalid/hu/current.html",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "label": "forecast-narrative",
+      "file": "forecast.html",
+      "url": "https://fixture.invalid/hu/forecast.html",
+      "content_type": "text/html; charset=utf-8"
+    }
+  ]
+}

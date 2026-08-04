@@ -14,3 +14,11 @@ tmp/
 _diagnostics/afdj/local/
 _diagnostics/afdj/github/
 _audit_source/danube_international/
+_diagnostics/international/
+data/archive/pegelonline_de/
+data/archive/viadonau_at/
+data/archive/shmu_sk/
+data/archive/hydroinfo_hu/
+data/archive/vodniputovi_hr/
+data/archive/appd_bg/
+data/archive/hidmet_rs/
