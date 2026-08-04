@@ -1,0 +1,17 @@
+{
+  "beta": true,
+  "current_station_count": 83,
+  "fixtures_run_id": "30929839808",
+  "forecast_count": 434,
+  "generated_from_capture_utc": "2026-08-04T16:36:40.150242+00:00",
+  "latest_valid_count": 161,
+  "live_run_id": "30929930388",
+  "mapped_station_count": 26,
+  "observation_count": 192,
+  "quality_issue_count": 25,
+  "stale_station_count": 3,
+  "station_count": 101,
+  "suspect_current_observation_count": 1,
+  "suspended_station_count": 16,
+  "unmapped_station_count": 75
+}

@@ -1,3 +1,5 @@
+import { getLocale } from "./i18n.js";
+
 export const COLORS = {
   text: "#183042", secondary: "#647484", grid: "#dce5ec",
   observation: "#147da6", current: "#00a6a6", forecast: "#7161d9",
@@ -22,16 +24,17 @@ export const LEADS = [24, 48, 72, 96, 120];
 
 export function formatNumber(value, digits = 0) {
   if (value === null || value === undefined || value === "" || Number.isNaN(Number(value))) return "—";
-  return new Intl.NumberFormat("ro-RO", { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(Number(value));
+  return new Intl.NumberFormat(getLocale(), { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(Number(value));
 }
 
 export function formatDate(value, withTime = false) {
   if (!value) return "—";
+  const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(String(value));
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat("ro-RO", {
-    timeZone: "Europe/Bucharest", day: "2-digit", month: "2-digit", year: "numeric",
-    ...(withTime ? { hour: "2-digit", minute: "2-digit" } : {})
+  return new Intl.DateTimeFormat(getLocale(), {
+    timeZone: dateOnly ? "UTC" : "Europe/Bucharest", day: "2-digit", month: "2-digit", year: "numeric",
+    ...(!dateOnly && withTime ? { hour: "2-digit", minute: "2-digit" } : {})
   }).format(date);
 }
 

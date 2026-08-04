@@ -1,0 +1,78 @@
+# International Danube beta publication report
+
+## Scope and evidence
+
+This beta publication is an explicit promotion step after the international adapters:
+
+```text
+validated candidate data -> source publication policy -> international public files -> frontend
+```
+
+It does not alter the AFDJ collection, Hetzner schedule, Romanian canonical history, AIS service or the manual-only AFDJ workflow.
+
+PR #1 (`feature/international-danube-sources`) was revalidated with 78 tests, the repository validator and the station-audit builder, then merged as `5df2b72264a1a7cf7eac3b26a7d41b8f78aa18e3`.
+
+The manual `Test international Danube sources` workflow was executed after that merge:
+
+| Mode | Run ID | Result | Artifact retained locally |
+|---|---:|---|---|
+| fixtures / all | `30929839808` | success | `_diagnostics/international/github-fixtures-30929839808/` |
+| live / all | `30929930388` | success | `_diagnostics/international/github-live-30929930388/` |
+
+The live aggregate contained no failed source job, but adapter success is not treated as equivalent to complete publication status.
+
+## Live evidence and publication policy
+
+| Country | Audited stations | Live observations | Public status | Public handling |
+|---|---:|---:|---|---|
+| DE | 18 | 25 | complete | observations published; 17 official coordinate pairs mapped |
+| AT | 9 | 9 | partial | observations and 238 forecasts published as a test-source beta; 9 official coordinate pairs mapped |
+| SK | 13 | 25 | partial | 24 usable observations plus forecasts remain usable; one suspect temperature is retained but excluded from `latest` |
+| HU | 25 | 57 | complete for observations | date-only observations preserved without an invented time/timezone |
+| HR | 3 | 30 historical | stale / suspended | values retained as stale history, excluded from current values and statistics |
+| BG | 20 | 46 | partial | current validated observations published; 30 raw candidate forecasts are not promoted |
+| RS | 13 audited | 0 | suspended | audit metadata only; no request, no TLS bypass, no observations or forecasts |
+
+The live SHMU capture contained a suspect Iža water temperature of 45.3 °C. The validated earlier capture containing the authentic 46.2 °C Iža value is also retained in `quality_issues.json` with its original observation, source hash and capture time. Neither suspect value is eligible for `latest` temperature. Valid Slovak water levels and forecasts are unaffected.
+
+## Public contract
+
+The following files are byte-identical under both `data/public/international/` and `public/data/international/`:
+
+- `stations.json`
+- `observations.json`
+- `latest.json`
+- `forecasts.json`
+- `sources.json`
+- `status.json`
+- `stations.geojson`
+- `unmapped_stations.json`
+- `quality_issues.json`
+
+The promoted live dataset contains:
+
+| Measure | Count |
+|---|---:|
+| audited stations | 101 |
+| map stations with official verified coordinates | 26 |
+| stations listed without coordinates | 75 |
+| stations with a current valid value | 83 |
+| published observations, including labelled stale/suspect evidence | 192 |
+| latest valid parameter records | 161 |
+| published forecasts | 434 |
+| current suspect observations | 1 |
+| quality issues | 25 |
+
+Every published observation retains station/source identifiers, source URL, source-file SHA-256, capture time, observation time as supplied, quality and source status. Sensitive DoRIS query parameters are removed. GeoJSON contains only DE and AT official high-confidence coordinates.
+
+## Frontend and languages
+
+The existing Romanian AFDJ GeoJSON is loaded unchanged and combined in memory with the 26 international GeoJSON features. The remaining 75 stations are shown in a separate filterable list rather than assigned approximate positions. Filters cover country, source, status and station type. International markers and cards expose country, official local name where different, administration, source status, capture time, values and official source link.
+
+The translation mechanism is centralized in `public/assets/js/i18n.js`. It provides matching Romanian and English catalogues, defaults to Romanian, applies URL language before `localStorage`, updates `<html lang>`, preserves the choice, formats with `ro-RO` or `en-GB`, and notifies map, cards, tables, charts, dialogs and filters after a language change. The compact keyboard-accessible EN/RO button is next to Info.
+
+## Validation
+
+The full repository suite currently contains **88 passing tests**. Automated checks cover the builder round trip, mirrored files, source policy, AFDJ/international isolation, suspect/stale/suspended handling, BG forecast exclusion, RS audit-only handling, coordinate partition, references, duplicates, provenance, secret scanning, translation-key parity, language priority/persistence, accessible language control, dynamic translated components, international resource loading and responsive CSS.
+
+The repository smoke test serves the site locally and fetches the existing AFDJ resources, representative Romanian station history, all nine international files and both `?lang=ro` and `?lang=en` entry URLs. Final public browser and GitHub Pages evidence is reported with the deployment run because that run can only exist after the publication commit is merged.

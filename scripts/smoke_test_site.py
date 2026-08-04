@@ -37,6 +37,8 @@ def check_base(base: str) -> dict[str, object]:
     for path, mime in (
         ("assets/css/app.css", "text/css"), ("assets/js/app.js", "javascript"),
         ("assets/js/charts.js", "javascript"), ("assets/js/map.js", "javascript"),
+        ("assets/js/i18n.js", "javascript"), ("assets/js/international.js", "javascript"),
+        ("assets/js/map-beta.js", "javascript"), ("assets/js/beta-ui.js", "javascript"),
         ("data/status.json", "application/json"), ("data/latest.geojson", None),
         ("data/downloads.json", "application/json"),
     ):
@@ -58,10 +60,42 @@ def check_base(base: str) -> dict[str, object]:
             selected.append(slug)
     if set(selected) != wanted:
         raise AssertionError(f"Stații smoke lipsă: {sorted(wanted - set(selected))}")
+    international_names = (
+        "stations.json", "observations.json", "latest.json", "forecasts.json", "sources.json",
+        "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json",
+    )
+    international = {}
+    for name in international_names:
+        path = f"data/international/{name}"
+        international[name] = json.loads(fetch(base, path, None if name.endswith(".geojson") else "application/json"))
+        checked.append(path)
+    international_status = international["status.json"]
+    if international_status["station_count"] != 101:
+        raise AssertionError("Registrul internațional public nu are 101 stații")
+    if len(international["stations.geojson"]["features"]) != 26:
+        raise AssertionError("GeoJSON internațional nu are 26 stații cu coordonate verificate")
+    if len(international["unmapped_stations.json"]) != 75:
+        raise AssertionError("Lista internațională necartografiată nu are 75 stații")
+    for language in ("ro", "en"):
+        localized_index = fetch(base, f"?lang={language}", "text/html").decode("utf-8")
+        if 'id="language-button"' not in localized_index or 'assets/js/app.js' not in localized_index:
+            raise AssertionError(f"Interfața {language} nu include mecanismul bilingv")
+        checked.append(f"?lang={language}")
     for relative in ("./assets/css/app.css", "./assets/js/app.js", "./data/downloads.json"):
         if relative not in index:
             raise AssertionError(f"Resursa relativă pentru GitHub Pages lipsește: {relative}")
-    return {"ok": True, "base_url": base, "checked_resources": len(checked), "stations": selected}
+    return {
+        "ok": True,
+        "base_url": base,
+        "checked_resources": len(checked),
+        "stations": selected,
+        "languages": ["ro", "en"],
+        "international": {
+            "stations": international_status["station_count"],
+            "mapped": international_status["mapped_station_count"],
+            "unmapped": international_status["unmapped_station_count"],
+        },
+    }
 
 
 def run_smoke(public_dir: Path) -> dict[str, object]:
