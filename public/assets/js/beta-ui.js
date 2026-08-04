@@ -1,7 +1,7 @@
 import { formatDate, formatNumber } from "./config.js";
-import { applyTranslations, countryName, issueLabel, onLanguageChange, qualityLabel, stationTypeLabel, statusLabel, t } from "./i18n.js";
+import { applyTranslations, coordinateConfidenceLabel, countryName, issueLabel, onLanguageChange, qualityLabel, stationTypeLabel, statusLabel, t } from "./i18n.js";
 
-const filters = { country: "all", source: "all", status: "all", type: "all" };
+const filters = { country: "all", source: "all", status: "all", type: "all", coordinate: "all" };
 let data;
 let notify = () => {};
 let qualityByStation = new Map();
@@ -35,16 +35,19 @@ function renderFilters() {
   const source = document.querySelector("#source-filter");
   const status = document.querySelector("#status-filter");
   const type = document.querySelector("#type-filter");
+  const coordinate = document.querySelector("#coordinate-filter");
   country.innerHTML = option("all", t("allCountries"), filters.country) + ["RO", "DE", "AT", "SK", "HU", "HR", "BG", "RS"].map(code => option(code, countryName(code), filters.country)).join("");
   source.innerHTML = option("all", t("allSources"), filters.source) + [{ source_id: "afdj_ro", label: "AFDJ" }, ...data.sources].map(item => option(item.source_id, item.label, filters.source)).join("");
   status.innerHTML = option("all", t("allStatuses"), filters.status) + ["complete", "partial", "provisional", "suspect", "stale", "suspended", "unavailable"].map(value => option(value, `${statusIcon(value)} ${statusLabel(value)}`, filters.status)).join("");
   const types = [...new Set(data.stations.map(station => station.station_type))].sort();
   type.innerHTML = option("all", t("allTypes"), filters.type) + types.map(value => option(value, stationTypeLabel(value), filters.type)).join("");
+  coordinate.innerHTML = [["all", "allCoordinateTypes"], ["official", "officialCoordinates"], ["approximate", "approximateCoordinates"], ["without", "withoutCoordinates"]].map(([value, key]) => option(value, t(key), filters.coordinate)).join("");
 }
 
 function renderMetrics() {
   const values = [
     ["totalRegistry", data.status.station_count], ["mappedStations", data.status.mapped_station_count],
+    ["officialCoordinateStations", data.status.official_coordinate_station_count], ["approximateCoordinateStations", data.status.approximate_coordinate_station_count],
     ["unmappedStations", data.status.unmapped_station_count], ["currentStations", data.status.current_station_count],
     ["completeSources", data.status.complete_source_count], ["partialSources", data.status.partial_source_count],
     ["staleStations", data.status.stale_station_count], ["suspendedStations", data.status.suspended_station_count],
@@ -99,6 +102,7 @@ function renderUnmapped() {
       ${quality ? `<p><b>${escapeHtml(t("observationQuality"))}:</b> <span class="status-tag ${escapeHtml(quality)}">${escapeHtml(qualityLabel(quality))}</span></p>` : ""}
       ${timeDetails}
       ${station.capture_datetime_utc ? `<p><b>${escapeHtml(t("captureTime"))}:</b> ${escapeHtml(formatDate(station.capture_datetime_utc, true, "UTC"))} UTC</p>` : ""}
+      <p class="warning-copy">! ${escapeHtml(t("coordinateReviewRequired"))} (${escapeHtml(coordinateConfidenceLabel(station.coordinate_confidence))})</p>
       ${issueCodes.map(code => `<p class="warning-copy">! ${escapeHtml(issueLabel(code))}</p>`).join("")}
       ${station.country_code === "HR" ? `<p class="warning-copy">◷ ${escapeHtml(t("stale"))}</p>` : ""}
       ${station.country_code === "RS" ? `<p class="warning-copy">⏸ TLS: ${escapeHtml(statusLabel("suspended"))}</p>` : ""}
@@ -112,15 +116,18 @@ export function matchesFilters(properties) {
   const qualities = qualityByStation.get(properties.station_id) || new Set();
   const statusMatches = filters.status === "all"
     || (["provisional", "suspect", "unavailable"].includes(filters.status) ? qualities.has(filters.status) : sourceStatus === filters.status);
+  const coordinateType = properties.mapped === false
+    ? "without" : properties.coordinate_method === "geocoded_locality" || properties.is_exact_station_location === false ? "approximate" : "official";
   return (filters.country === "all" || properties.country_code === filters.country)
     && (filters.source === "all" || properties.source_id === filters.source)
     && statusMatches
-    && (filters.type === "all" || properties.station_type === filters.type);
+    && (filters.type === "all" || properties.station_type === filters.type)
+    && (filters.coordinate === "all" || coordinateType === filters.coordinate);
 }
 
 export function initBetaUi(international, onFilter) {
   data = international; notify = onFilter; buildQualityIndex();
-  for (const [key, selector] of [["country", "#country-filter"], ["source", "#source-filter"], ["status", "#status-filter"], ["type", "#type-filter"]]) {
+  for (const [key, selector] of [["country", "#country-filter"], ["source", "#source-filter"], ["status", "#status-filter"], ["type", "#type-filter"], ["coordinate", "#coordinate-filter"]]) {
     document.querySelector(selector).addEventListener("change", event => { filters[key] = event.target.value; renderUnmapped(); notify(matchesFilters); });
   }
   renderFilters(); renderMetrics(); renderUnmapped(); applyTranslations();

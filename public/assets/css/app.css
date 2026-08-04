@@ -94,7 +94,7 @@ footer { padding:26px clamp(20px,5vw,70px) 40px; border-top:1px solid var(--bord
 .international-metrics span, .international-metrics strong { display: block; }
 .international-metrics span { color: var(--text-secondary); font-size: .65rem; min-height: 2.8em; }
 .international-metrics strong { margin-top: 2px; font-size: 1.18rem; }
-.international-filters { display: grid; grid-template-columns: repeat(4, minmax(150px, 1fr)); gap: 10px; padding: 8px 18px 16px; }
+.international-filters { display: grid; grid-template-columns: repeat(5, minmax(140px, 1fr)); gap: 10px; padding: 8px 18px 16px; }
 .international-filters label { display: grid; gap: 4px; color: var(--text-secondary); font-size: .68rem; font-weight: 700; }
 .unmapped-section { margin-top: 20px; padding-bottom: 16px; }
 .unmapped-list { display: grid; grid-template-columns: repeat(4, minmax(210px, 1fr)); gap: 10px; padding: 14px 18px 2px; max-height: 620px; overflow: auto; }
@@ -118,3 +118,14 @@ footer { padding:26px clamp(20px,5vw,70px) 40px; border-top:1px solid var(--bord
   .unmapped-list { grid-template-columns: 1fr; padding-inline: 12px; max-height: 72vh; }
   .beta-heading { flex-direction: row; }
 }
+/* Coordinate provenance and shared-locality markers */
+.legend-dot.coordinate-official { background: white; border: 2px solid #354b5b; }
+.legend-dot.coordinate-approximate { background: white; border: 2px solid #354b5b; border-radius: 1px; transform: rotate(45deg); }
+.station-marker.approximate { border-radius: 2px; transform: rotate(45deg); }
+.station-marker.approximate.selected { transform: rotate(45deg) scale(1.55); }
+.station-marker.aggregate { width: 25px; height: 25px; color: white !important; display: grid; place-items: center; font-size: 10px; font-weight: 900; }
+.station-marker.aggregate span { transform: rotate(0); line-height: 1; }
+.station-marker.approximate.aggregate span { transform: rotate(-45deg); }
+.shared-locality-popup ul { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 5px; }
+.shared-locality-popup li button { margin: 0; text-align: left; }
+.coordinate-warning { font-weight: 700; }

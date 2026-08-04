@@ -54,6 +54,7 @@
         <label><span data-i18n="source">Administrație / sursă</span><select id="source-filter"></select></label>
         <label><span data-i18n="sourceStatus">Status sursă</span><select id="status-filter"></select></label>
         <label><span data-i18n="stationType">Tip stație</span><select id="type-filter"></select></label>
+        <label><span data-i18n="coordinateType">Tip coordonate</span><select id="coordinate-filter"></select></label>
       </div>
     </section>
     <section class="dashboard-grid">
@@ -79,6 +80,8 @@
           <span><i class="legend-dot stale"></i> <span data-i18n="stale">date vechi</span></span>
           <span><i class="legend-dot suspended"></i> <span data-i18n="suspended">suspendat</span></span>
           <span><i class="legend-dot unavailable"></i> <span data-i18n="unavailable">indisponibil</span></span>
+          <span><i class="legend-dot coordinate-official"></i> <span data-i18n="officialCoordinateLegend">poziție oficială exactă</span></span>
+          <span><i class="legend-dot coordinate-approximate"></i> <span data-i18n="approximateCoordinateLegend">poziție aproximativă a localității</span></span>
         </div>
       </article>
 
@@ -151,7 +154,7 @@
     </section>
 
     <section class="surface unmapped-section" aria-labelledby="unmapped-title">
-      <div class="panel-heading"><div><p class="eyebrow" data-i18n="noVerifiedCoordinates">Fără coordonate verificate</p><h2 id="unmapped-title" data-i18n="unmappedTitle">Stații disponibile fără coordonate cartografice verificate</h2><p data-i18n="unmappedCopy">Aceste stații sunt consultabile în listă, dar nu sunt poziționate aproximativ pe hartă.</p></div><strong id="unmapped-count">—</strong></div>
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="noVerifiedCoordinates">Fără coordonate acceptate</p><h2 id="unmapped-title" data-i18n="unmappedTitle">Stații fără coordonate acceptate pentru hartă</h2><p data-i18n="unmappedCopy">Aceste stații sunt consultabile în listă, dar rezultatul de geocodare este nerezolvat sau necesită review.</p></div><strong id="unmapped-count">—</strong></div>
       <div class="unmapped-list" id="unmapped-list" aria-live="polite"></div>
     </section>
     <section class="surface comparison-section" aria-labelledby="compare-title">
@@ -185,7 +188,7 @@
       <section><h3 data-i18n="infoPurposeTitle">Scop și proveniență</h3><p data-i18n="infoPurpose">Portalul reunește observații și prognoze oficiale ale Dunării. România este actualizată automat prin fluxul AFDJ–Hetzner; sursele internaționale sunt publicate separat, în versiune beta, cu frecvențe diferite.</p></section>
       <section><h3 data-i18n="infoForecastTitle">Observații și prognoze</h3><p data-i18n="infoForecast">Observațiile descriu măsurători publicate de administrații. Prognozele sunt valori viitoare și sunt afișate numai când parametrul, unitatea și timpul sunt demonstrate.</p></section>
       <section><h3 data-i18n="infoStatusTitle">Statusuri și calitate</h3><p data-i18n="infoStatus">Statusul sursei este separat de calitatea fiecărei observații. Valorile suspecte sunt păstrate și marcate, dar sunt excluse din valorile curente și statistici.</p></section>
-      <section><h3 data-i18n="infoMapTitle">Coordonate verificate</h3><p data-i18n="infoMap">Pe hartă apar numai coordonate oficiale verificate. Stațiile fără coordonate sunt listate separat; pozițiile nu sunt inventate sau estimate.</p></section>
+      <section><h3 data-i18n="infoMapTitle">Coordonate oficiale și aproximative</h3><p data-i18n="infoMap">Cercul indică o coordonată oficială exactă a stației. Rombul indică centrul aproximativ al localității, obținut prin OpenStreetMap Nominatim (© contribuitorii OpenStreetMap, ODbL), nu amplasamentul mirei sau senzorului. Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.</p></section>
       <section><h3 data-i18n="infoStaleTitle">Date vechi și surse suspendate</h3><p data-i18n="infoStale">Datele vechi nu sunt prezentate drept curente. Sursele suspendate nu sunt interogate prin dezactivarea TLS sau alte metode nesigure.</p></section>
       <section><h3 data-i18n="infoDisclaimerTitle">Limitare</h3><p data-i18n="infoDisclaimer">Aplicația este informativă și nu înlocuiește avizele oficiale, informațiile de navigație sau deciziile autorităților.</p></section>
       <details><summary data-i18n="technicalDetails">Detalii tehnice</summary><pre id="technical-status"></pre></details>

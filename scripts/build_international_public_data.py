@@ -37,6 +37,51 @@ def write_json(path: Path, value: Any) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def apply_coordinate_registry(stations: list[dict[str, Any]], registry_path: Path) -> None:
+    if not registry_path.is_file():
+        raise ValueError(f"Missing geocoding registry: {registry_path}")
+    with registry_path.open(encoding="utf-8-sig", newline="") as stream:
+        rows = {row["station_id"]: row for row in csv.DictReader(stream)}
+    if len(rows) != 75:
+        raise ValueError(f"Expected 75 geocoding registry rows, got {len(rows)}")
+    station_ids = {station["station_id"] for station in stations}
+    if not set(rows) <= station_ids:
+        raise ValueError("Geocoding registry contains an unknown station_id")
+    expected = {
+        station["station_id"] for station in stations
+        if station.get("latitude") is None or station.get("longitude") is None
+        or station.get("is_exact_station_location") is False
+    }
+    if set(rows) != expected:
+        raise ValueError("Geocoding registry does not match the 75 stations without official coordinates")
+    for station in stations:
+        has_official = (
+            station.get("latitude") is not None and station.get("longitude") is not None
+            and station["station_id"] not in rows
+        )
+        if has_official:
+            station.update({
+                "coordinate_method": "official_station_coordinate",
+                "coordinate_provider": station.get("source_label") or station.get("source_id"),
+                "coordinate_confidence": "high", "coordinate_review_status": "accepted",
+                "is_exact_station_location": True, "mapped": True,
+            })
+            continue
+        row = rows[station["station_id"]]
+        accepted = row.get("review_status") == "accepted" and row.get("coordinate_confidence") in {"medium", "low"}
+        latitude = float(row["latitude"]) if accepted and row.get("latitude") else None
+        longitude = float(row["longitude"]) if accepted and row.get("longitude") else None
+        station.update({
+            "latitude": latitude, "longitude": longitude,
+            "coordinate_method": "geocoded_locality",
+            "coordinate_source": row.get("source_url") or None,
+            "coordinate_provider": row.get("coordinate_provider") or None,
+            "coordinate_confidence": row.get("coordinate_confidence") or "unresolved",
+            "coordinate_review_status": row.get("review_status") or "required",
+            "is_exact_station_location": False, "mapped": accepted,
+        })
+
+
 def sanitize_url(value: str | None) -> str | None:
     if not value:
         return value
@@ -139,7 +184,8 @@ def historical_quality_issues(candidate_root: Path | None, archive_root: Path | 
 
 def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root: Path, mirror_root: Path | None = None,
           historical_quality_root: Path | None = None, historical_archive_root: Path | None = None,
-          fixtures_run_id: str | None = None, live_run_id: str | None = None) -> dict[str, Any]:
+          fixtures_run_id: str | None = None, live_run_id: str | None = None,
+          geocoding_registry: Path = Path("data/reference/international_station_geocoding.csv")) -> dict[str, Any]:
     captures, source_captures = capture_index(archive_root)
     aggregate = read_json(candidate_root / "summary.json")
     aggregate_by_source = {item["source"]: item for item in aggregate["sources"]}
@@ -211,6 +257,7 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
             "capture_datetime_utc": None, "has_current_data": False, "mapped": False,
         })
 
+    apply_coordinate_registry(stations, geocoding_registry)
     station_lookup = {station["station_id"]: station for station in stations}
     if len(station_lookup) != 101:
         raise ValueError(f"Expected 101 unique stations, got {len(station_lookup)}")
@@ -242,6 +289,8 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
         properties = {key: station.get(key) for key in (
             "station_id", "station_slug", "station_name", "station_name_local", "country_code", "river_name", "river_km",
             "station_type", "source_id", "source_label", "source_status", "source_url", "capture_datetime_utc",
+            "coordinate_method", "coordinate_source", "coordinate_provider", "coordinate_confidence",
+            "coordinate_review_status", "is_exact_station_location",
         )}
         for parameter in ("water_level", "discharge", "water_temperature"):
             properties[parameter] = values.get(parameter)
@@ -259,9 +308,11 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
             "note": policy.get("note"), "live_run_id": live_run_id,
         })
     status = {
-        "beta": True, "contract_version": "1.0-beta", "generated_from_capture_utc": max(source_captures.values()),
+        "beta": True, "contract_version": "1.1-beta", "generated_from_capture_utc": max(source_captures.values()),
         "fixtures_run_id": fixtures_run_id, "live_run_id": live_run_id,
         "station_count": len(stations), "mapped_station_count": len(mapped), "unmapped_station_count": len(unmapped),
+        "official_coordinate_station_count": sum(station["is_exact_station_location"] for station in stations),
+        "approximate_coordinate_station_count": sum(station["mapped"] and not station["is_exact_station_location"] for station in stations),
         "current_station_count": len({row["station_id"] for row in latest}),
         "complete_source_count": sum(source["status"] == "complete" for source in sources),
         "partial_source_count": sum(source["status"] == "partial" for source in sources),
@@ -314,9 +365,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--historical-archive-root", type=Path)
     parser.add_argument("--fixtures-run-id")
     parser.add_argument("--live-run-id")
+    parser.add_argument("--geocoding-registry", type=Path, default=Path("data/reference/international_station_geocoding.csv"))
     args = parser.parse_args(argv)
     status = build(args.candidate_root, args.audit_csv, args.archive_root, args.output_root, args.mirror_root,
-                   args.historical_quality_root, args.historical_archive_root, args.fixtures_run_id, args.live_run_id)
+                   args.historical_quality_root, args.historical_archive_root, args.fixtures_run_id, args.live_run_id,
+                   args.geocoding_registry)
     print(json.dumps(status, ensure_ascii=False, indent=2))
     return 0
 

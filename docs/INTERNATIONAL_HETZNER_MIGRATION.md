@@ -72,12 +72,15 @@ python -m scripts.build_international_public_data \
   --archive-root /var/lib/nivel-dunare-international/candidate/APPROVED_RUN/raw-archive \
   --historical-quality-root /var/lib/nivel-dunare-international/quality-evidence/sk-20260804T145920Z \
   --historical-archive-root /var/lib/nivel-dunare-international/quality-evidence/raw-archive \
+  --geocoding-registry /opt/nivel-dunare/data/reference/international_station_geocoding.csv \
   --output-root /var/lib/nivel-dunare-international/public \
   --mirror-root /var/lib/nivel-dunare-international/public-mirror \
   --live-run-id HETZNER-APPROVED_RUN
 ```
 
 The `quality-evidence` paths above refer to the reviewed SHMU candidate capture and matching raw metadata that preserve the authentic Iža 46.2 °C observation. Restore them from the validated diagnostic artifact by SHA-256; do not synthesize the observation or its capture time.
+
+The reviewed geocoding registry is a static build input. Do not invoke live geocoding from the Hetzner collector or public builder; locality coordinates change only through a separately reviewed registry update. Full policy is in `INTERNATIONAL_STATION_GEOCODING.md`.
 
 Review `summary.json`, `issues.json`, source counts and SHA-256 metadata before any Git commit. Promotion must use a staging directory followed by an atomic rename only after validation; never replace a valid public dataset with an empty/partial failed run.
 

@@ -1,7 +1,8 @@
 {
+  "approximate_coordinate_station_count": 67,
   "beta": true,
   "complete_source_count": 2,
-  "contract_version": "1.0-beta",
+  "contract_version": "1.1-beta",
   "current_station_count": 83,
   "current_usable_observation_count": 161,
   "fixtures_run_id": "30929839808",
@@ -9,8 +10,9 @@
   "generated_from_capture_utc": "2026-08-04T16:36:40.150242+00:00",
   "latest_valid_count": 161,
   "live_run_id": "30929930388",
-  "mapped_station_count": 26,
+  "mapped_station_count": 93,
   "observation_count": 192,
+  "official_coordinate_station_count": 26,
   "partial_source_count": 3,
   "provisional_observation_count": 24,
   "quality_issue_count": 25,
@@ -20,5 +22,5 @@
   "suspect_current_observation_count": 1,
   "suspended_source_count": 2,
   "suspended_station_count": 16,
-  "unmapped_station_count": 75
+  "unmapped_station_count": 8
 }

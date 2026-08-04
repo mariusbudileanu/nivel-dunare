@@ -72,10 +72,15 @@ def check_base(base: str) -> dict[str, object]:
     international_status = international["status.json"]
     if international_status["station_count"] != 101:
         raise AssertionError("Registrul internațional public nu are 101 stații")
-    if len(international["stations.geojson"]["features"]) != 26:
-        raise AssertionError("GeoJSON internațional nu are 26 stații cu coordonate verificate")
-    if len(international["unmapped_stations.json"]) != 75:
-        raise AssertionError("Lista internațională necartografiată nu are 75 stații")
+    features = international["stations.geojson"]["features"]
+    if len(features) != 93:
+        raise AssertionError("GeoJSON internațional nu are 93 stații cartografiate")
+    if sum(feature["properties"]["is_exact_station_location"] for feature in features) != 26:
+        raise AssertionError("GeoJSON internațional nu separă cele 26 coordonate oficiale")
+    if sum(not feature["properties"]["is_exact_station_location"] for feature in features) != 67:
+        raise AssertionError("GeoJSON internațional nu separă cele 67 poziții aproximative")
+    if len(international["unmapped_stations.json"]) != 8:
+        raise AssertionError("Lista internațională necartografiată nu are 8 stații")
     for language in ("ro", "en"):
         localized_index = fetch(base, f"?lang={language}", "text/html").decode("utf-8")
         if 'id="language-button"' not in localized_index or 'assets/js/app.js' not in localized_index:

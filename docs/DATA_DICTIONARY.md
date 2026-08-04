@@ -55,3 +55,19 @@ Grupează după `station_id + lead_hours`. Conține `n_pairs`, eroarea semnată 
 
 Coloanele folosesc calea logică completă, de exemplu `item/type/target_uuid`, `item/path/alias`, `item/feeds_item/hash` și `item/field_cota/value`. Astfel, leaf-urile omonime nu se confundă. CSV-ul este UTF-8 și comprimat gzip.
 
+
+## Contract internațional beta 1.1
+
+`data/public/international/` și oglinda `public/data/international/` publică registrul internațional separat de AFDJ. `stations.json` conține toate cele 101 stații, iar `stations.geojson` numai coordonatele acceptate. `unmapped_stations.json` conține rezultatele nerezolvate sau care necesită review.
+
+Câmpurile de coordonate sunt:
+
+- `latitude`, `longitude`: EPSG:4326 sau `null`;
+- `coordinate_method`: `official_station_coordinate` ori `geocoded_locality`;
+- `coordinate_source`: URL-ul sursei oficiale sau al interogării geocoderului;
+- `coordinate_provider`: administrația oficială ori `OpenStreetMap Nominatim`;
+- `coordinate_confidence`: `high`, `medium`, `low` sau `unresolved`;
+- `coordinate_review_status`: `accepted`, `required` sau `rejected`;
+- `is_exact_station_location`: `true` numai pentru coordonata oficială exactă a stației.
+
+O poziție `geocoded_locality` este centrul aproximativ al localității și nu demonstrează amplasamentul mirei/senzorului. Nu se folosește pentru distanțe, ordine, precizie spațială sau inferarea kilometrului fluvial. Metoda completă și registrul review-ului sunt descrise în `INTERNATIONAL_STATION_GEOCODING.md`.

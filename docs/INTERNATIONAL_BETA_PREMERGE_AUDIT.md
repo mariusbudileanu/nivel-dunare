@@ -3,7 +3,7 @@
 Audit date: 2026-08-04
 Branch: `feature/international-map-beta`
 Pull request: `#2`
-Public contract: `1.0-beta`
+Public contract: `1.1-beta`
 
 This audit covers the beta-publication branch before merge. It does not claim a GitHub Pages deployment. AFDJ collection, the Hetzner configuration, AIS, production schedules and Romanian canonical data are outside the change set.
 
@@ -13,8 +13,8 @@ This audit covers the beta-publication branch before merge. It does not claim a 
 |---:|---|---|
 | 1 | Beta publication and complete public contract | Complete. Nine documented JSON/GeoJSON files are mirrored byte-for-byte under `data/public/international/` and `public/data/international/`. |
 | 2 | Public builder and validator | Complete. Dedicated deterministic builder and fail-closed validator cover counts, mirrors, references, policy, provenance and quality evidence. |
-| 3 | International map integration | Complete in branch. Existing 23 AFDJ markers are combined in memory with 26 verified international markers; no Romanian station is duplicated. |
-| 4 | Stations without verified coordinates | Complete. Exactly 75 stations are kept in `unmapped_stations.json` and rendered in a separate list. |
+| 3 | International map integration | Complete in branch. Existing 23 AFDJ stations are combined in memory with 93 international points (26 exact official + 67 approximate); no Romanian station is duplicated. Six exact-coordinate locality pairs use aggregate markers. |
+| 4 | Coordinate provenance | Complete. 26 exact official coordinates and 67 accepted approximate locality positions are mapped; 8 review-required stations remain in `unmapped_stations.json`. |
 | 5 | Country/source/status/type filters | Complete. Browser checks covered DE, SK, AT-source, suspect and manual-station filters. |
 | 6 | Popups, cards, legend and statistics | Complete. Optional fields are omitted when absent; values, types, forecast availability, source/local/UTC/capture times, quality, status and official links are displayed where available. |
 | 7 | Complete/partial/provisional/suspect/stale/suspended/unavailable | Complete. Source status and observation quality remain separate; all seven states have labels, symbols and distinct styles. |
@@ -39,7 +39,7 @@ The branch was served locally and exercised in the in-app browser. This was not 
 
 - application startup: operational (`Date actualizate`);
 - marker count: 49 = 23 AFDJ + 17 DE + 9 AT;
-- list-only stations: 75;
+- list-only stations: 8;
 - Leaflet `.leaflet-pane` and `.leaflet-tile`: computed `position: absolute`;
 - basemap: nine complete tiles covered the map viewport;
 - country DE: 17 markers and one list card;
@@ -58,8 +58,10 @@ The branch was served locally and exercised in the in-app browser. This was not 
 | Measure | Count |
 |---|---:|
 | audited international stations | 101 |
-| mapped international stations | 26 |
-| list-only international stations | 75 |
+| mapped international stations | 93 |
+| exact official coordinates | 26 |
+| accepted approximate positions | 67 |
+| list-only international stations | 8 |
 | stations with a usable current value | 83 |
 | published observations | 192 |
 | current-usable observations / latest records | 161 / 161 |

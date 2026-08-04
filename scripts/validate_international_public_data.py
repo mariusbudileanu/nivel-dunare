@@ -6,9 +6,12 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import re
 from pathlib import Path
 from typing import Any
+
+from scripts.geocode_international_stations import COUNTRY_BOUNDS, validate_registry
 
 
 FILES = (
@@ -30,7 +33,7 @@ def require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
-def validate(root: Path, mirror: Path | None = None) -> dict[str, Any]:
+def validate(root: Path, mirror: Path | None = None, geocoding_registry: Path = Path("data/reference/international_station_geocoding.csv"), geocoding_cache: Path = Path("data/reference/international_station_geocoding_cache-v1.json")) -> dict[str, Any]:
     for name in FILES:
         require((root / name).is_file(), f"Missing {root / name}")
         if mirror:
@@ -50,6 +53,7 @@ def validate(root: Path, mirror: Path | None = None) -> dict[str, Any]:
     geojson = read_json(root / "stations.geojson")
     unmapped = read_json(root / "unmapped_stations.json")
     issues = read_json(root / "quality_issues.json")
+    geocoding = validate_registry(root / "stations.json", geocoding_registry, geocoding_cache)
 
     station_ids = [row["station_id"] for row in stations]
     slugs = [row["station_slug"] for row in stations]
@@ -65,13 +69,37 @@ def validate(root: Path, mirror: Path | None = None) -> dict[str, Any]:
     mapped_ids = {feature["properties"]["station_id"] for feature in features}
     unmapped_ids = {row["station_id"] for row in unmapped}
     require(geojson.get("type") == "FeatureCollection", "Invalid GeoJSON type")
-    require(len(features) == 26 == status["mapped_station_count"], "Expected 26 mapped stations")
-    require(len(unmapped) == 75 == status["unmapped_station_count"], "Expected 75 unmapped stations")
+    require(len(features) == status["mapped_station_count"], "Mapped count mismatch")
+    require(len(unmapped) == status["unmapped_station_count"], "Unmapped count mismatch")
     require(mapped_ids.isdisjoint(unmapped_ids) and mapped_ids | unmapped_ids == station_id_set, "Mapped/unmapped partition mismatch")
+    require(status["official_coordinate_station_count"] == 26, "Expected 26 official station coordinates")
+    require(status["approximate_coordinate_station_count"] == 67, "Expected 67 accepted locality coordinates")
+    require(len(features) == 93 and len(unmapped) == 8, "Unexpected accepted coordinate totals")
+    coordinate_groups: dict[tuple[float, float], list[dict[str, Any]]] = {}
+    for station in stations:
+        for key in ("coordinate_method", "coordinate_source", "coordinate_provider", "coordinate_confidence", "coordinate_review_status", "is_exact_station_location"):
+            require(key in station, f"Missing {key} for {station['station_id']}")
+        if station["mapped"]:
+            latitude, longitude = station["latitude"], station["longitude"]
+            require(isinstance(latitude, (int, float)) and isinstance(longitude, (int, float)), "Mapped coordinate is not numeric")
+            require(math.isfinite(latitude) and math.isfinite(longitude) and -90 <= latitude <= 90 and -180 <= longitude <= 180, "Invalid EPSG:4326 coordinate")
+            require(station["country_code"] in COUNTRY_BOUNDS and COUNTRY_BOUNDS[station["country_code"]][0] <= latitude <= COUNTRY_BOUNDS[station["country_code"]][1] and COUNTRY_BOUNDS[station["country_code"]][2] <= longitude <= COUNTRY_BOUNDS[station["country_code"]][3], "Coordinate outside country bounds")
+            coordinate_groups.setdefault((latitude, longitude), []).append(station)
+            if station["is_exact_station_location"]:
+                require(station["coordinate_method"] == "official_station_coordinate" and station["coordinate_confidence"] == "high", "Invalid official coordinate metadata")
+            else:
+                require(station["coordinate_method"] == "geocoded_locality", "Approximate coordinate has wrong method")
+                require(station["coordinate_confidence"] in {"medium", "low"} and station["coordinate_review_status"] == "accepted", "Unreviewed locality coordinate leaked into GeoJSON")
+        else:
+            require(station["latitude"] is None and station["longitude"] is None, "Unmapped station exposes coordinates")
+            require(station["coordinate_review_status"] == "required", "Unmapped geocoding result is not marked for review")
+    for group in coordinate_groups.values():
+        if len(group) > 1:
+            require(len({row["station_name"] for row in group}) == 1, "Unexplained duplicate coordinates across different localities")
     for feature in features:
         station = next(row for row in stations if row["station_id"] == feature["properties"]["station_id"])
-        require(station["coordinate_method"] == "official_rest_payload" and station["coordinate_confidence"] == "high", "GeoJSON contains unverified coordinates")
-        require(station["country_code"] in {"DE", "AT"}, "Only DE and AT may be mapped")
+        require(feature["geometry"]["coordinates"] == [station["longitude"], station["latitude"]], "GeoJSON/station coordinate mismatch")
+        require(feature["properties"]["coordinate_method"] == station["coordinate_method"], "GeoJSON coordinate metadata mismatch")
 
     latest_keys = {(row["station_id"], row["parameter"]) for row in latest}
     require(len(latest_keys) == len(latest), "Duplicate latest record")
@@ -95,7 +123,7 @@ def validate(root: Path, mirror: Path | None = None) -> dict[str, Any]:
     require(any(row.get("observation", {}).get("value") == 45.3 and row.get("observation", {}).get("canonical_quality_flag") == "suspect" for row in current_suspect_issues), "Current suspect observation is not preserved structurally in quality issues")
 
     require(len(sources) == 7 and {row["country_code"] for row in sources} == {"DE", "AT", "SK", "HU", "HR", "BG", "RS"}, "Source registry mismatch")
-    require(status.get("contract_version") == "1.0-beta", "Unexpected public contract version")
+    require(status.get("contract_version") == "1.1-beta", "Unexpected public contract version")
     require(status["complete_source_count"] == sum(row["status"] == "complete" for row in sources), "Complete source count mismatch")
     require(status["partial_source_count"] == sum(row["status"] == "partial" for row in sources), "Partial source count mismatch")
     require(status["suspended_source_count"] == sum(row["status"] == "suspended" for row in sources), "Suspended source count mismatch")
@@ -113,8 +141,10 @@ def validate(root: Path, mirror: Path | None = None) -> dict[str, Any]:
 
     return {
         "ok": True, "stations": len(stations), "mapped": len(features), "unmapped": len(unmapped),
+        "official_coordinates": status["official_coordinate_station_count"],
+        "approximate_coordinates": status["approximate_coordinate_station_count"],
         "observations": len(observations), "latest": len(latest), "forecasts": len(forecasts),
-        "quality_issues": len(issues), "suspect_observations": len(suspect_observations),
+        "quality_issues": len(issues), "suspect_observations": len(suspect_observations), "geocoding": geocoding,
     }
 
 
@@ -122,8 +152,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path("data/public/international"))
     parser.add_argument("--mirror", type=Path, default=Path("public/data/international"))
+    parser.add_argument("--geocoding-registry", type=Path, default=Path("data/reference/international_station_geocoding.csv"))
+    parser.add_argument("--geocoding-cache", type=Path, default=Path("data/reference/international_station_geocoding_cache-v1.json"))
     args = parser.parse_args(argv)
-    print(json.dumps(validate(args.root, args.mirror), ensure_ascii=False, indent=2))
+    print(json.dumps(validate(args.root, args.mirror, args.geocoding_registry, args.geocoding_cache), ensure_ascii=False, indent=2))
     return 0
 
 

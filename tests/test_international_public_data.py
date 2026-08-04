@@ -22,7 +22,7 @@ class InternationalPublicDataTests(unittest.TestCase):
     def test_committed_public_contract_and_mirror(self):
         result = validate(PUBLIC_ROOT, ROOT / "public" / "data" / "international")
         self.assertTrue(result["ok"])
-        self.assertEqual((result["stations"], result["mapped"], result["unmapped"]), (101, 26, 75))
+        self.assertEqual((result["stations"], result["mapped"], result["unmapped"]), (101, 93, 8))
 
     def test_publication_policy_is_explicit_and_isolated_from_afdj(self):
         self.assertEqual(SOURCE_POLICY["de"]["status"], "complete")
@@ -46,9 +46,10 @@ class InternationalPublicDataTests(unittest.TestCase):
         ids = {row["station_id"] for row in stations}
         self.assertEqual(len(ids), 101)
         self.assertTrue({row["station_id"] for row in observations + forecasts + latest} <= ids)
-        self.assertEqual(len(features), 26)
-        self.assertEqual(len(unmapped), 75)
-        self.assertTrue(all(feature["properties"]["country_code"] in {"DE", "AT"} for feature in features))
+        self.assertEqual(len(features), 93)
+        self.assertEqual(len(unmapped), 8)
+        self.assertEqual(sum(feature["properties"]["is_exact_station_location"] for feature in features), 26)
+        self.assertEqual(sum(not feature["properties"]["is_exact_station_location"] for feature in features), 67)
         self.assertFalse(any(row["country_code"] == "HR" for row in latest))
         self.assertFalse(any(row["source_id"] == "appd_bg" for row in forecasts))
         self.assertEqual(len([row for row in stations if row["country_code"] == "RS"]), 13)

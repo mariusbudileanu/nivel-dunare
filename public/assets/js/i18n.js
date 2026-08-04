@@ -16,14 +16,16 @@ export const translations = {
     officialSource: "Sursă oficială", sourceStatus: "Status sursă", observationQuality: "Calitatea observației",
     localName: "Nume oficial", country: "Țară", source: "Administrație / sursă", stationType: "Tip stație",
     allCountries: "Toate țările", allSources: "Toate sursele", allStatuses: "Toate statusurile", allTypes: "Toate tipurile",
+    coordinateType: "Tip coordonate", allCoordinateTypes: "Toate coordonatele", officialCoordinates: "Coordonate oficiale", approximateCoordinates: "Coordonate aproximative", withoutCoordinates: "Fără coordonate",
     betaTitle: "Date internaționale beta", betaCopy: "Sursele internaționale au frecvențe și niveluri de maturitate diferite. Valorile suspecte și vechi nu intră în statisticile curente.",
-    totalRegistry: "Stații totale în registru", mappedStations: "Stații cartografiate", unmappedStations: "Fără coordonate verificate",
+    totalRegistry: "Stații totale în registru", mappedStations: "Stații cartografiate", unmappedStations: "Fără coordonate acceptate",
+    officialCoordinateStations: "Cu coordonate oficiale", approximateCoordinateStations: "Cu poziții aproximative",
     currentStations: "Stații cu date actuale", staleStations: "Stații cu date vechi", suspendedStations: "Stații suspendate",
-    suspectValues: "Valori suspecte", unmappedTitle: "Stații disponibile fără coordonate cartografice verificate",
-    unmappedCopy: "Aceste stații sunt consultabile în listă, dar nu sunt poziționate aproximativ pe hartă.",
+    suspectValues: "Valori suspecte", unmappedTitle: "Stații fără coordonate acceptate pentru hartă",
+    unmappedCopy: "Aceste stații sunt consultabile în listă, dar rezultatul de geocodare este nerezolvat sau necesită review.",
     noFilteredStations: "Nicio stație nu corespunde filtrelor curente.", showDetails: "Vezi detalii", hideDetails: "Ascunde detaliile",
     complete: "Complet", partial: "Parțial", provisional: "Provizoriu", suspect: "Valoare suspectă",
-    stale: "Date vechi", suspended: "Sursă suspendată", noVerifiedCoordinates: "Fără coordonate verificate",
+    stale: "Date vechi", suspended: "Sursă suspendată", noVerifiedCoordinates: "Fără coordonate acceptate",
     openAnalysis: "Deschide analiza", date: "Data", status: "Stare", valid: "Validată", trendUp: "creștere",
     trendDown: "scădere", trendStill: "staționare", qualityWarning: "atenționare", noData: "Fără date",
     sourceTime: "Ora locală a sursei", utcTime: "UTC", captureTime: "Data capturii", river: "Dunărea",
@@ -31,7 +33,7 @@ export const translations = {
     infoPurpose: "Portalul reunește observații și prognoze oficiale ale Dunării. România este actualizată automat prin fluxul AFDJ–Hetzner; sursele internaționale sunt publicate separat, în versiune beta, cu frecvențe diferite.",
     infoForecastTitle: "Observații și prognoze", infoForecast: "Observațiile descriu măsurători publicate de administrații. Prognozele sunt valori viitoare și sunt afișate numai când parametrul, unitatea și timpul sunt demonstrate.",
     infoStatusTitle: "Statusuri și calitate", infoStatus: "Statusul sursei este separat de calitatea observației: complete este stabil, partial are limitări, provisional indică validare preliminară, suspect marchează o valoare neplauzibilă, stale înseamnă date vechi, suspended înseamnă că sursa nu este interogată, iar unavailable indică lipsa unei valori. Valorile suspecte și stale sunt excluse din statisticile curente.",
-    infoMapTitle: "Coordonate verificate", infoMap: "Pe hartă apar numai coordonate oficiale verificate. Stațiile fără coordonate sunt listate separat; pozițiile nu sunt inventate sau estimate.",
+    infoMapTitle: "Coordonate oficiale și aproximative", infoMap: "Cercul indică o coordonată oficială exactă a stației. Rombul indică centrul aproximativ al localității, obținut prin OpenStreetMap Nominatim (© contribuitorii OpenStreetMap, ODbL), nu amplasamentul mirei sau senzorului. Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.",
     infoStaleTitle: "Date vechi și surse suspendate", infoStale: "Datele vechi nu sunt prezentate drept curente. Sursele suspendate nu sunt interogate prin dezactivarea TLS sau alte metode nesigure.",
     infoDisclaimerTitle: "Limitare", infoDisclaimer: "Aplicația este informativă și nu înlocuiește avizele oficiale, informațiile de navigație sau deciziile autorităților.",
     close: "Închide", openData: "Date deschise", downloadTitle: "Descarcă date", downloadCopy: "Fișiere AFDJ și internaționale beta generate la ultima actualizare validă.",
@@ -61,6 +63,9 @@ export const translations = {
     downloadCurrentSituation: "Situația curentă", downloadAllObservations: "Toate observațiile", downloadAllForecasts: "Toate prognozele", downloadStationRegistry: "Registrul stațiilor", downloadGeospatialSituation: "Situația geospațială", combinedHistory: "istoric combinat", internationalBetaDownload: "Beta internațional",
     issueOutsideTemperatureRange: "Temperatură a apei în afara intervalului plauzibil; valoarea este păstrată ca suspectă și exclusă din valorile curente.", issueMissingStationId: "Sursa nu publică un identificator instituțional demonstrat pentru această stație.", issueGeneric: "Problemă de calitate raportată de adaptor.",
     completeSources: "Surse complete", partialSources: "Surse parțiale", availableForecasts: "Prognoze disponibile", riverLabel: "Râu", austriaTestSourceWarning: "Sursă beta cu cheia publică de test; nu este încă integrare permanentă de producție.",
+    coordinateMethod: "Metoda coordonatelor", coordinateSource: "Sursa coordonatelor", coordinateProvider: "Furnizor coordonate", coordinateConfidence: "Încredere coordonate", highConfidence: "ridicată", mediumConfidence: "medie", lowConfidence: "scăzută", unresolvedConfidence: "nerezolvată",
+    approximateCoordinateWarning: "Poziție aproximativă la nivelul localității; nu reprezintă amplasamentul exact al mirei sau senzorului.", officialCoordinateLegend: "poziție oficială exactă", approximateCoordinateLegend: "poziție aproximativă a localității",
+    sharedLocalityStations: "{count} stații în aceeași localitate", sharedLocalityCopy: "Marker comun; alege stația pentru a deschide cardul individual.", coordinateReviewRequired: "Coordonata nu este acceptată; este necesar review.",
   },
   en: {
     appTitle: "Danube Water Levels", appSubtitle: "Daily monitoring of water levels and hydrological forecasts",
@@ -79,14 +84,16 @@ export const translations = {
     officialSource: "Official source", sourceStatus: "Source status", observationQuality: "Observation quality",
     localName: "Official local name", country: "Country", source: "Administration / source", stationType: "Station type",
     allCountries: "All countries", allSources: "All sources", allStatuses: "All statuses", allTypes: "All types",
+    coordinateType: "Coordinate type", allCoordinateTypes: "All coordinate types", officialCoordinates: "Official coordinates", approximateCoordinates: "Approximate coordinates", withoutCoordinates: "Without coordinates",
     betaTitle: "International beta data", betaCopy: "International sources have different refresh frequencies and maturity levels. Suspect and stale values are excluded from current statistics.",
-    totalRegistry: "Total stations in registry", mappedStations: "Mapped stations", unmappedStations: "No verified coordinates",
+    totalRegistry: "Total stations in registry", mappedStations: "Mapped stations", unmappedStations: "No accepted coordinates",
+    officialCoordinateStations: "With official coordinates", approximateCoordinateStations: "With approximate positions",
     currentStations: "Stations with current data", staleStations: "Stations with stale data", suspendedStations: "Suspended stations",
-    suspectValues: "Suspect values", unmappedTitle: "Stations available without verified map coordinates",
-    unmappedCopy: "These stations can be reviewed in the list but are not placed approximately on the map.",
+    suspectValues: "Suspect values", unmappedTitle: "Stations without coordinates accepted for the map",
+    unmappedCopy: "These stations remain available in the list, but their geocoding result is unresolved or requires review.",
     noFilteredStations: "No station matches the current filters.", showDetails: "Show details", hideDetails: "Hide details",
     complete: "Complete", partial: "Partial", provisional: "Provisional", suspect: "Suspect value",
-    stale: "Stale data", suspended: "Source suspended", noVerifiedCoordinates: "No verified coordinates",
+    stale: "Stale data", suspended: "Source suspended", noVerifiedCoordinates: "No accepted coordinates",
     openAnalysis: "Open analysis", date: "Date", status: "Status", valid: "Validated", trendUp: "rising",
     trendDown: "falling", trendStill: "stationary", qualityWarning: "warning", noData: "No data",
     sourceTime: "Source local time", utcTime: "UTC", captureTime: "Capture time", river: "Danube",
@@ -94,7 +101,7 @@ export const translations = {
     infoPurpose: "The portal brings together official Danube observations and forecasts. Romania is updated automatically through the AFDJ–Hetzner flow; international sources are published separately as beta data with different refresh frequencies.",
     infoForecastTitle: "Observations and forecasts", infoForecast: "Observations describe measurements published by administrations. Forecasts are future values and are shown only when the parameter, unit and time are demonstrated.",
     infoStatusTitle: "Statuses and quality", infoStatus: "Source status is separate from observation quality: complete is stable, partial has documented limits, provisional indicates preliminary validation, suspect marks an implausible value, stale means old data, suspended means the source is not queried, and unavailable means no value is available. Suspect and stale values are excluded from current statistics.",
-    infoMapTitle: "Verified coordinates", infoMap: "Only officially verified coordinates appear on the map. Stations without coordinates are listed separately; positions are never invented or estimated.",
+    infoMapTitle: "Official and approximate coordinates", infoMap: "A circle marks an exact official station coordinate. A diamond marks an approximate locality centre obtained through OpenStreetMap Nominatim (© OpenStreetMap contributors, ODbL), not the gauge or sensor location. Approximate positions are not used for distances, ordering or river kilometre.",
     infoStaleTitle: "Stale data and suspended sources", infoStale: "Stale data is not presented as current. Suspended sources are not queried by disabling TLS or using other unsafe methods.",
     infoDisclaimerTitle: "Disclaimer", infoDisclaimer: "This application is informational and does not replace official notices, navigation information or authority decisions.",
     close: "Close", openData: "Open data", downloadTitle: "Download data", downloadCopy: "AFDJ and international beta files generated at the latest valid update.",
@@ -124,6 +131,9 @@ export const translations = {
     downloadCurrentSituation: "Current situation", downloadAllObservations: "All observations", downloadAllForecasts: "All forecasts", downloadStationRegistry: "Station registry", downloadGeospatialSituation: "Geospatial situation", combinedHistory: "combined history", internationalBetaDownload: "International beta",
     issueOutsideTemperatureRange: "Water temperature outside the plausible range; the value is retained as suspect and excluded from current values.", issueMissingStationId: "The source does not publish a demonstrated institutional identifier for this station.", issueGeneric: "Quality issue reported by the adapter.",
     completeSources: "Complete sources", partialSources: "Partial sources", availableForecasts: "Available forecasts", riverLabel: "River", austriaTestSourceWarning: "Beta source using the public test key; this is not yet a permanent production integration.",
+    coordinateMethod: "Coordinate method", coordinateSource: "Coordinate source", coordinateProvider: "Coordinate provider", coordinateConfidence: "Coordinate confidence", highConfidence: "high", mediumConfidence: "medium", lowConfidence: "low", unresolvedConfidence: "unresolved",
+    approximateCoordinateWarning: "Approximate locality-level position; not the exact gauge or sensor location.", officialCoordinateLegend: "exact official position", approximateCoordinateLegend: "approximate locality position",
+    sharedLocalityStations: "{count} stations at one locality", sharedLocalityCopy: "Shared marker; choose a station to open its individual card.", coordinateReviewRequired: "The coordinate is not accepted; review is required.",
   },
 };
 
@@ -146,6 +156,7 @@ export function countryName(code) { return t(COUNTRY_KEYS[code] || code); }
 export function statusLabel(status) { return t({ complete: "complete", partial: "partial", provisional: "provisional", suspect: "suspect", stale: "stale", suspended: "suspended", unavailable: "unavailable" }[status] || "unavailable"); }
 export function qualityLabel(quality) { return t({ observed: "valid", valid: "valid", provisional: "provisional", suspect: "suspect", missing: "unavailable" }[quality] || "unavailable"); }
 export function stationTypeLabel(type) { return t({ gauge: "gauge", hydrometric: "hydrometric", manual: "manual", automatic: "automatic", automated: "automatic" }[type] || "unavailable"); }
+export function coordinateConfidenceLabel(value) { return t({ high: "highConfidence", medium: "mediumConfidence", low: "lowConfidence", unresolved: "unresolvedConfidence" }[value] || "unresolvedConfidence"); }
 export function issueLabel(code) { return t({ outside_plausible_water_temperature_range: "issueOutsideTemperatureRange", missing_source_station_id: "issueMissingStationId", missing_institutional_station_ids: "issueMissingStationId" }[code] || "issueGeneric"); }
 
 export function applyTranslations(root = document) {

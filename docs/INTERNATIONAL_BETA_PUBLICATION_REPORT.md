@@ -37,7 +37,7 @@ The live SHMU capture contained a suspect Iža water temperature of 45.3 °C. Th
 
 ## Public contract
 
-Contract version `1.0-beta` is declared in `status.json`. The following files are byte-identical under both `data/public/international/` and `public/data/international/`:
+Contract version `1.1-beta` is declared in `status.json`. The following files are byte-identical under both `data/public/international/` and `public/data/international/`:
 
 - `stations.json`
 - `observations.json`
@@ -54,8 +54,10 @@ The promoted live dataset contains:
 | Measure | Count |
 |---|---:|
 | audited stations | 101 |
-| map stations with official verified coordinates | 26 |
-| stations listed without coordinates | 75 |
+| exact official station coordinates | 26 |
+| accepted approximate locality positions | 67 |
+| total international GeoJSON points | 93 |
+| stations listed without accepted coordinates | 8 |
 | stations with a current valid value | 83 |
 | published observations, including labelled stale/suspect evidence | 192 |
 | current usable observations | 161 |
@@ -71,12 +73,12 @@ Every published observation retains station/source identifiers, source URL, sour
 
 ## Frontend and languages
 
-The existing Romanian AFDJ GeoJSON is loaded unchanged and combined in memory with the 26 international GeoJSON features. The remaining 75 stations are shown in a separate filterable list rather than assigned approximate positions. Filters cover country, source, status and station type. International markers and cards expose country, official local name where different, administration, station type, river, source status, observation quality, local/source and UTC times, capture time, values, forecast availability and official source link. Austria also displays an explicit public-test-key warning.
+The existing Romanian AFDJ GeoJSON is loaded unchanged and combined in memory with 93 international GeoJSON features: 26 exact official station coordinates and 67 accepted locality-level positions. Eight review-required stations remain in a separate list. Filters cover country, source, status, station type and coordinate type. Official circles and approximate diamonds are distinguished by shape and text; approximate popups carry an explicit RO/EN precision warning. Same-locality overlaps use a shared aggregate popup with individual station buttons. Full method, provenance and limitations are documented in `INTERNATIONAL_STATION_GEOCODING.md`.
 
 The translation mechanism is centralized in `public/assets/js/i18n.js`. It provides matching Romanian and English catalogues, defaults to Romanian, applies URL language before `localStorage`, updates `<html lang>`, preserves the choice, formats with `ro-RO` or `en-GB`, and notifies map, cards, tables, charts, dialogs and filters after a language change. The compact keyboard-accessible EN/RO button is next to Info.
 
 ## Validation
 
-The full repository suite currently contains **97 passing tests**. Automated checks cover the builder round trip, mirrored files, source policy, AFDJ/international isolation, suspect/stale/suspended handling, BG forecast exclusion, RS audit-only handling, coordinate partition, references, duplicates, provenance, secret scanning, translation-key parity, language priority/persistence, accessible language control, dynamic translated components, international resource loading and responsive CSS.
+The full repository suite currently contains **107 passing tests**. Automated checks cover the builder round trip, mirrored files, source policy, AFDJ/international isolation, suspect/stale/suspended handling, BG forecast exclusion, RS audit-only handling, coordinate partition, references, duplicates, provenance, secret scanning, translation-key parity, language priority/persistence, accessible language control, dynamic translated components, international resource loading and responsive CSS.
 
-The repository smoke test serves the site locally and fetches the existing AFDJ resources, representative Romanian station history, all nine international files and both `?lang=ro` and `?lang=en` entry URLs. A pre-merge local-browser audit verified the branch frontend without GitHub Pages: 49 visible map markers (23 AFDJ + 26 international), 75 list-only stations, nine fully loaded basemap tiles covering the map, absolute Leaflet pane/tile positioning, country/source/status/type filters, the structured Iža warning, an Austrian popup with 119 forecasts and complete provenance times, an already-open popup translated RO→EN, URL priority, language persistence by navigation, and visible keyboard focus. The static mobile contract and responsive breakpoint are tested; final public/mobile deployment evidence remains intentionally deferred until an explicit merge/deploy authorization.
+The repository smoke test serves the site locally and fetches the existing AFDJ resources, representative Romanian station history, all nine international files and both `?lang=ro` and `?lang=en` entry URLs. A pre-merge local-browser audit verified the branch frontend without GitHub Pages: 110 rendered marker icons representing 23 AFDJ and 93 international stations (six same-locality aggregate markers), 8 list-only stations, fully loaded basemap tiles covering the map, absolute Leaflet pane/tile positioning, country/source/status/type/coordinate filters, the structured Iža warning, an Austrian popup with 119 forecasts and complete provenance times, an already-open popup translated RO→EN, URL priority, language persistence by navigation, and visible keyboard focus. The static mobile contract and responsive breakpoint are tested; final public/mobile deployment evidence remains intentionally deferred until an explicit merge/deploy authorization.
