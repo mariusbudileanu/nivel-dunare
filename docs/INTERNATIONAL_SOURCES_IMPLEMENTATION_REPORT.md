@@ -7,17 +7,19 @@ Scope: independent candidate-data adapters only. This work does not modify AFDJ,
 
 Six source adapters and one explicit suspended source state are implemented behind a common fail-closed contract. Raw responses are saved byte-for-byte in gzip archives with URL, capture time, HTTP status, content type, byte count, SHA-256 and adapter version. Normalized results are written only to a caller-selected review directory; no adapter publishes to `public/` or canonical datasets.
 
-| Country | Administration | Format | Found | Danube primary | With coordinates | Without coordinates | Observations available | Local test | GitHub Actions | Final status | Blocker | Hetzner recommendation |
-|---|---|---|---:|---:|---:|---:|---|---|---|---|---|---|
-| DE | WSV PEGELONLINE | JSON | 27 | 18 | 17 | 1 | level, discharge, temperature where series exist | parsed/normalized/validated: complete | access audit 30922831901: HTTP 200 JSON | complete | one metadata coordinate gap | ready for later independent probe |
-| AT | viadonau DoRIS | JSON | 10 | 9 | 9 | 0 | level, variation, 240 forecast points in live sample | parsed/normalized/validated: partial | access audit 30922831901: HTTP 200 JSON | partial | public test key | provision permanent key before activation |
-| SK | SHMÚ | HTML + JavaScript | 13 | 13 | 0 | 13 | level, optional temperature, 196 forecast points in live sample | parsed/normalized; validation partial | access audit 30922831901: HTTP 200 HTML | partial | Iža reported implausible 46.2 °C | probe independently; alert on critical quality issue |
-| HU | OVF Hydroinfo | HTML | 93 | 25 | 0 | 25 | level, variation, discharge, temperature; narrative forecast only | parsed/normalized/validated: complete | access audit 30922831901: HTTP 200 HTML | complete | official coordinates unavailable | ready for later independent probe |
-| HR | Croatian waterways/DHMZ | JSON | 3 | 3 | 0 | 3 | dated level history | parsed/normalized; validation suspended | access audit 30922831901: HTTP 200 JSON | suspended | newest record was 2026-03-12 | probe for restoration, never publish as current while stale |
-| BG | APPD | HTML | 26 | 20 current | 0 | 20 | level, some discharge, temperature, categorical trend, 30 forecasts | parsed/normalized; validation partial | access audit 30922831901: HTTP 200 HTML | partial | no stable institutional IDs; forecast contract incomplete | metadata/operator review before any activation |
-| RS | RHMZ/Hidmet | HTML | 13 audited | 13 audited, 0 activated | 0 | 13 | not collected by implementation | deliberately no request | access audit 30922831901: curl 60, no HTTP response | suspended | TLS certificate chain validation | do not deploy until normal TLS validation succeeds |
+The status dimensions are independent. `implementation_status` describes whether the adapter implementation is available; `latest_live_status` records the last audited live-source result; `canonical_quality_flag` and `source_quality_code` describe each observation. A suspect observation therefore does not rewrite the implementation or source-level live status unless a separate critical source condition exists.
 
-The committed audit contains 88 primary station rows and 26 verified coordinate pairs. No coordinates were inferred from names, river kilometres, third-party maps or cross-border matches. The source row `KACHLET WEHR UP` has no official coordinate pair in the audited PEGELONLINE payload and remains blank.
+| Country | Administration | Format | Audited | Active candidates | Coordinates | Implementation status | Latest live status | Observation quality | Main review item |
+|---|---|---|---:|---:|---:|---|---|---|---|
+| DE | WSV PEGELONLINE | JSON | 18 | 18 | 17 | complete | complete | current observations valid in audited run | one official coordinate gap |
+| AT | viadonau DoRIS | JSON | 9 | 9 | 9 | complete | partial | current observations structurally valid | permanent partner key required |
+| SK | SHMÚ | HTML + JavaScript | 13 | 13 | 0 | complete | complete | one temperature suspect; valid levels and forecasts remain usable | confirm Iža 46.2 °C with source owner |
+| HU | OVF Hydroinfo | HTML | 25 | 25 | 0 | complete | complete | current observations valid in audited run | official coordinates unavailable |
+| HR | Croatian waterways/DHMZ | JSON | 3 | 3 | 0 | complete | suspended | observations structurally valid but stale | newest audited record was 2026-03-12 |
+| BG | APPD | HTML | 20 | 20 | 0 | complete | partial | observations retained; identifier/forecast review remains | no stable institutional IDs demonstrated |
+| RS | RHMZ/Hidmet | HTML | 13 | 0 | 0 | suspended | suspended | no live observations collected | TLS certificate-chain validation failure |
+
+The committed audit contains 101 reviewed station rows: 88 active candidate rows and 13 suspended Serbian rows. It contains 26 verified coordinate pairs. No coordinates were inferred from names, river kilometres, third-party maps or cross-border matches. The source row `KACHLET WEHR UP` has no official coordinate pair in the audited PEGELONLINE payload and remains blank.
 
 ## Adapter behavior
 
@@ -35,7 +37,7 @@ Official API: <https://opendata2.doris-info.at/swagger-ui/index.html>
 
 ### Slovakia — SHMÚ
 
-Station discovery is semantic: only official selector options ending in `- Dunaj` are included. Each discovered station page is downloaded once, its latest `Merané hodnoty` row is parsed, and its inline `forecast_serie` is retained when present. A missing optional temperature column does not discard a valid water level. The official page presents local civil time; it is stored as `Europe/Bratislava` and converted to UTC. No coordinates are exposed in the audited pages. In the live 2026-08-04 run, Iža reported `46.2 °C`; the range validator kept all raw data but marked the result partial instead of publishing that implausible value.
+Station discovery is semantic: only official selector options ending in `- Dunaj` are included. Each discovered station page is downloaded once, its latest `Merané hodnoty` row is parsed, and its inline `forecast_serie` is retained when present. A missing optional temperature column does not discard a valid water level. The official page presents local civil time; it is stored as `Europe/Bratislava` and converted to UTC. No coordinates are exposed in the audited pages. In the live 2026-08-04 run, Iža reported `46.2 °C`. The candidate observation and original value are retained with `canonical_quality_flag=suspect` and `source_quality_code=outside_plausible_water_temperature_range`; the issue is written to `issues.json`, and this record is excluded from usable current temperatures. The station level, valid forecasts and other Slovak observations remain usable, so this observation-level warning does not change the source implementation or live status.
 
 Official station page: <https://www.shmu.sk/en/?id=hydro_vod_all&page=1&station_id=5140>
 
@@ -63,14 +65,17 @@ The adapter intentionally performs no request. The audited official endpoint did
 
 ## Local live verification
 
-One sequential run with no retries produced: DE complete (18 stations, 25 observations); AT partial (9 stations, 9 observations, 240 forecast points, public test key); SK partial after reparsing archived data (13 stations, 25 observations, 196 forecast points, one implausible official temperature); HU complete after strict ISO-8859-2 decoding (25 stations, 75 observations); HR suspended (3 stations, 30 historical observations); BG partial (20 stations, 46 observations, 30 forecasts); RS suspended without a request. The first BG attempt exposed a misspelled route in code (hydrology-en); the demonstrated official route hidrology-en was corrected and verified once. No canonical or public data was written.
+One sequential run with no retries produced: DE complete (18 stations, 25 observations); AT partial (9 stations, 9 observations, 240 forecast points, public test key); SK complete at source level after reparsing archived data (13 stations, 25 observations, 196 forecast points), with one Iža temperature classified as a suspect observation and excluded from usable current temperatures; HU complete after strict ISO-8859-2 decoding (25 stations, 75 observations); HR suspended (3 stations, 30 historical observations); BG partial (20 stations, 46 observations, 30 forecasts); RS suspended without a request. The first BG attempt exposed a misspelled route in code (`hydrology-en`); the demonstrated official route `hidrology-en` was corrected and verified once. No canonical or public data was written.
 
 ## Validation contract
 
-Critical validation includes mass station disappearance, duplicate canonical IDs or slugs, absent required source IDs, incomplete/out-of-country coordinates, impossible values, future observations and inconsistent forecast bounds. Empty responses, non-200 responses, common anti-bot pages, wrong content formats and structural schema changes fail before normalization.
+Critical validation includes mass station disappearance, duplicate canonical IDs or slugs, absent required source IDs, incomplete/out-of-country coordinates, impossible values, future observations (including date-only records), stale records using a configurable threshold per adapter, orphan observation/forecast station references and inconsistent forecast bounds. It never invents a time or timezone for a date-only observation. A single out-of-range optional water temperature is retained and flagged at observation level as `suspect`; it is reported but does not invalidate valid level observations or forecasts. Empty responses, non-200 responses, common anti-bot pages, wrong content formats and structural schema changes fail before normalization.
 
 Fixture snapshots are synthetic parser contracts, not claimed live observations. They exercise all expected station counts and source-specific shapes without making network requests. The real station inventory and coordinate audit are in `docs/INTERNATIONAL_STATIONS_AUDIT.csv`.
 
+## Station naming contract
+
+`country_code` is the ISO 3166-1 alpha-2 country code. `station_name` is the stable international ASCII name used by the application, while `station_name_local` preserves the official source text exactly. When an official Latin or English name exists in the audited source, it is preferred. Otherwise the project applies its documented deterministic Unicode normalization/transliteration mapping; this is a project convention, not a claim of compliance with a formal ISO transliteration standard. Tests cover Bulgarian Cyrillic (`Силистра` → `Silistra`) and Serbian Latin diacritics (`Bačka Palanka` → `Backa Palanka`, `Veliko Gradište` → `Veliko Gradiste`).
 ## GitHub Actions
 
 `.github/workflows/test-international-sources.yml` is manual-only (`workflow_dispatch`) and read-only (`contents: read`). It accepts a source selector and `fixtures`/`live` mode, runs validation, and uploads raw archives, normalized candidate files, logs and summaries. It never commits or pushes data.

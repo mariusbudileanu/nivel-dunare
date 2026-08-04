@@ -18,6 +18,7 @@ class ViaDonauAdapter(SourceAdapter):
     provider_id = "viadonau_at"
     country_code = "AT"
     expected_min_stations = 9
+    stale_after_days = 2
     base_url = "https://opendata2.doris-info.at/doris/api/1.0/gauge"
 
     def __init__(self, partner_key: str | None = None) -> None:
@@ -127,4 +128,4 @@ class ViaDonauAdapter(SourceAdapter):
             source_station_count=len(gauges), excluded_station_count=excluded,
             notes=["Schwedenbrücke is excluded because it is on Donaukanal, not the main Danube."],
         )
-        return self.validate(result)
+        return self.validate(result, self.capture_time(payloads))

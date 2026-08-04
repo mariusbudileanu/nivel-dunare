@@ -13,7 +13,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable
@@ -179,9 +179,21 @@ class AdapterResult:
     def publishable(self) -> bool:
         return self.status == "complete" and not any(i.severity == "critical" for i in self.issues)
 
+    @property
+    def usable_observations(self) -> list[ObservationRecord]:
+        return [
+            observation for observation in self.observations
+            if observation.canonical_quality_flag not in {"suspect", "missing"}
+        ]
+
     def to_dict(self) -> dict[str, Any]:
         result = asdict(self)
         result["publishable"] = self.publishable
+        result["usable_observation_count"] = len(self.usable_observations)
+        result["suspect_observation_count"] = sum(
+            observation.canonical_quality_flag == "suspect"
+            for observation in self.observations
+        )
         return result
 
 
@@ -286,6 +298,8 @@ class SourceAdapter:
     country_code = "XX"
     expected_min_stations = 1
     default_status = "complete"
+    stale_after_days: int | None = None
+    stale_status = "partial"
 
     def initial_requests(self) -> list[SourceRequest]:
         raise NotImplementedError
@@ -296,8 +310,32 @@ class SourceAdapter:
     def parse(self, payloads: dict[str, FetchedPayload]) -> AdapterResult:
         raise NotImplementedError
 
+    @staticmethod
+    def capture_time(payloads: dict[str, FetchedPayload]) -> datetime:
+        if not payloads:
+            return datetime.now(timezone.utc)
+        captured = [
+            datetime.fromisoformat(payload.captured_at_utc.replace("Z", "+00:00"))
+            for payload in payloads.values()
+        ]
+        return max(
+            value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(timezone.utc)
+            for value in captured
+        )
+
+    @staticmethod
+    def _append_quality_code(current: str | None, code: str) -> str:
+        codes = [item for item in (current or "").split(";") if item]
+        if code not in codes:
+            codes.append(code)
+        return ";".join(codes)
+
     def validate(self, result: AdapterResult, now: datetime | None = None) -> AdapterResult:
         now = now or datetime.now(timezone.utc)
+        if now.tzinfo is None:
+            now = now.replace(tzinfo=timezone.utc)
+        else:
+            now = now.astimezone(timezone.utc)
         issues = list(result.issues)
         included = [station for station in result.stations if station.included]
         if len(included) < self.expected_min_stations:
@@ -326,7 +364,14 @@ class SourceAdapter:
                 if not (bounds[0] <= station.latitude <= bounds[1] and bounds[2] <= station.longitude <= bounds[3]):
                     issues.append(ValidationIssue("critical", "coordinate_country", "Coordinates incompatible with country bounds", station.station_id))
 
+        observation_dates: list[date] = []
         for observation in result.observations:
+            if observation.station_id not in seen_ids:
+                issues.append(ValidationIssue(
+                    "critical", "orphan_observation",
+                    "Observation references a station_id absent from this adapter result",
+                    observation.station_id,
+                ))
             limits = {"water_level": (-5000, 5000), "discharge": (0, 100000), "water_temperature": (-5, 45)}
             canonical_units = {"water_level": "cm", "discharge": "m3/s", "water_temperature": "degC"}
             if observation.parameter not in limits:
@@ -334,15 +379,62 @@ class SourceAdapter:
             else:
                 low, high = limits[observation.parameter]
                 if not low <= observation.value <= high:
-                    issues.append(ValidationIssue("critical", "impossible_value", f"{observation.parameter}={observation.value}", observation.station_id))
+                    if observation.parameter == "water_temperature":
+                        quality_code = "outside_plausible_water_temperature_range"
+                        observation.canonical_quality_flag = "suspect"
+                        observation.source_quality_code = self._append_quality_code(
+                            observation.source_quality_code, quality_code,
+                        )
+                        if not any(
+                            issue.code == quality_code and issue.record_id == observation.station_id
+                            for issue in issues
+                        ):
+                            issues.append(ValidationIssue(
+                                "warning", quality_code,
+                                f"water_temperature={observation.value} {observation.unit}; raw value preserved but excluded from usable current temperatures",
+                                observation.station_id,
+                            ))
+                    else:
+                        issues.append(ValidationIssue("critical", "impossible_value", f"{observation.parameter}={observation.value}", observation.station_id))
                 if observation.unit != canonical_units[observation.parameter]:
                     issues.append(ValidationIssue("critical", "unit_change", f"Expected {canonical_units[observation.parameter]}, got {observation.unit}", observation.station_id))
             if observation.measurement_datetime_utc:
-                measured = datetime.fromisoformat(observation.measurement_datetime_utc.replace("Z", "+00:00"))
-                if measured > now + timedelta(hours=24):
-                    issues.append(ValidationIssue("critical", "future_timestamp", observation.measurement_datetime_utc, observation.station_id))
+                try:
+                    measured = datetime.fromisoformat(observation.measurement_datetime_utc.replace("Z", "+00:00"))
+                    if measured.tzinfo is None:
+                        raise ValueError("UTC datetime has no offset")
+                    measured = measured.astimezone(timezone.utc)
+                    observation_dates.append(measured.date())
+                    if measured > now + timedelta(hours=24):
+                        issues.append(ValidationIssue("critical", "future_timestamp", observation.measurement_datetime_utc, observation.station_id))
+                except ValueError:
+                    issues.append(ValidationIssue("critical", "invalid_measurement_datetime", observation.measurement_datetime_utc, observation.station_id))
+            elif observation.measurement_date:
+                try:
+                    measured_date = date.fromisoformat(observation.measurement_date)
+                    observation_dates.append(measured_date)
+                    if measured_date > now.date():
+                        issues.append(ValidationIssue("critical", "future_measurement_date", observation.measurement_date, observation.station_id))
+                except ValueError:
+                    issues.append(ValidationIssue("critical", "invalid_measurement_date", observation.measurement_date, observation.station_id))
+
+        if self.stale_after_days is not None and observation_dates:
+            latest_date = max(observation_dates)
+            age_days = (now.date() - latest_date).days
+            if age_days > self.stale_after_days:
+                issues.append(ValidationIssue(
+                    "critical", "stale_source",
+                    f"Latest observation date {latest_date.isoformat()} is {age_days} days old; limit is {self.stale_after_days}",
+                ))
+                result.status = self.stale_status
 
         for forecast in result.forecasts:
+            if forecast.station_id not in seen_ids:
+                issues.append(ValidationIssue(
+                    "critical", "orphan_forecast",
+                    "Forecast references a station_id absent from this adapter result",
+                    forecast.station_id,
+                ))
             if forecast.forecast_parameter not in {"water_level", "discharge", None}:
                 issues.append(ValidationIssue("critical", "unknown_forecast_parameter", str(forecast.forecast_parameter), forecast.station_id))
             if forecast.forecast_min_value is not None and forecast.forecast_min_value > forecast.forecast_value:

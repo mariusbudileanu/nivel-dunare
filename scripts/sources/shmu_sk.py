@@ -18,6 +18,7 @@ class ShmuAdapter(SourceAdapter):
     provider_id = "shmu_sk"
     country_code = "SK"
     expected_min_stations = 13
+    stale_after_days = 2
     base_url = "https://www.shmu.sk/en/?id=hydro_vod_all&page=1&station_id={station_id}"
 
     def initial_requests(self) -> list[SourceRequest]:
@@ -129,4 +130,4 @@ class ShmuAdapter(SourceAdapter):
             source_station_count=len(discovered), excluded_station_count=0,
             notes=["Coordinates are not present in the audited official station pages and remain unset."],
         )
-        return self.validate(result)
+        return self.validate(result, self.capture_time(payloads))

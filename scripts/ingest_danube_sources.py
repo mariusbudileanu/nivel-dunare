@@ -59,7 +59,8 @@ def run_source(source: str, output_root: Path, archive_root: Path, fixture_root:
             "source": source, "adapter": adapter.source_id, "status": result.status,
             "publishable": result.publishable, "station_count": len(result.stations),
             "included_station_count": len([s for s in result.stations if s.included]),
-            "observation_count": len(result.observations), "forecast_count": len(result.forecasts),
+            "observation_count": len(result.observations), "usable_observation_count": len(result.usable_observations),
+            "suspect_observation_count": len(result.observations) - len(result.usable_observations), "forecast_count": len(result.forecasts),
             "critical_issue_count": len([i for i in result.issues if i.severity == "critical"]),
             "output": str(source_output),
         }

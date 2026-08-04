@@ -14,6 +14,7 @@ class PegelonlineAdapter(SourceAdapter):
     provider_id = "pegelonline_de"
     country_code = "DE"
     expected_min_stations = 18
+    stale_after_days = 2
     url = (
         "https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json"
         "?waters=DONAU&includeTimeseries=true&includeCurrentMeasurement=true"
@@ -100,4 +101,4 @@ class PegelonlineAdapter(SourceAdapter):
             source_station_count=len(data), excluded_station_count=excluded,
             notes=["Rows with agency=VIA DONAU are republished Austrian stations and are excluded from the German primary adapter."],
         )
-        return self.validate(result)
+        return self.validate(result, self.capture_time(payloads))

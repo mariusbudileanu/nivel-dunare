@@ -15,11 +15,15 @@ Date: 2026-08-04
 
 ## Metadata gaps
 
-- Official WGS84 coordinates are missing for one included PEGELONLINE station (`KACHLET WEHR UP`) and all audited SK, HU, HR and BG station rows.
+- Official WGS84 coordinates are missing for one included PEGELONLINE station (`KACHLET WEHR UP`) and all audited SK, HU, HR, BG and suspended RS station rows.
 - SHMÚ pages supply local date/time but no explicit textual timezone. The adapter uses `Europe/Bratislava` because the source is the Slovak national service; this mapping should be confirmed before publication policy is finalized.
 - Croatian and Hungarian rows provide a date without a time or offset. The adapter deliberately leaves local and UTC datetimes blank.
 - APPD automated direction is categorical (`up`, `down`, `nochange`), not a numeric six-hour delta.
 - Hydroinfo's English forecast is narrative. No numeric forecast can be extracted from the audited page.
+
+## Observation-quality follow-up
+
+- Iža returned an official water-temperature value of 46.2 °C in the 2026-08-04 live run. The raw and candidate observation are retained with `canonical_quality_flag=suspect` and `source_quality_code=outside_plausible_water_temperature_range`, but the value is excluded from usable current temperatures. Confirm it with SHMÚ; valid Slovak levels and forecasts remain usable in the meantime.
 
 ## Non-blocking engineering follow-up
 

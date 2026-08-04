@@ -15,6 +15,7 @@ class AppdAdapter(SourceAdapter):
     provider_id = "appd_bg"
     country_code = "BG"
     expected_min_stations = 20
+    stale_after_days = 2
     current_url = "https://www.appd-bg.org/hidrology-en"
     forecast_url = "https://www.appd-bg.org/forecasts-en"
 
@@ -151,4 +152,4 @@ class AppdAdapter(SourceAdapter):
                 "Publishing is fail-closed until official station IDs and forecast semantics are verified.",
             ],
         )
-        return self.validate(result)
+        return self.validate(result, self.capture_time(payloads))

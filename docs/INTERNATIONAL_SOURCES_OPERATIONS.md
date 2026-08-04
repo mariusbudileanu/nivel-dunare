@@ -50,7 +50,7 @@ Without it, the public test key is used transparently and the result remains `pa
 - Raw metadata: adjacent `.metadata.json`
 - Candidate records: `<output>/<selector>/stations.json`, `observations.json`, `forecasts.json`
 - Validation: `<output>/<selector>/issues.json` and `summary.json`
-- Aggregate status: `<output>/summary.json`
+- Aggregate status: `<output>/summary.json`, including usable and suspect observation counts
 
 Exit code `2` means a source could not be safely fetched or parsed. Exit code `3` is returned only when `--require-publishable` is supplied and at least one source is partial/suspended. HTTP or schema failures are never converted into empty successful datasets.
 
@@ -77,4 +77,10 @@ Actions → **Test international Danube sources** → **Run workflow**. Select a
 python -m scripts.build_international_station_audit
 ```
 
-The builder fails unless the reviewed selection still contains exactly 88 primary station records, which makes accidental disappearance or scope drift visible.
+By default, `last_verified_at` is derived from the audit date recorded in `docs/DANUBE_SOURCE_TECHNICAL_AUDIT.md`. For a deterministic review build against another explicit audit date, use:
+
+```bash
+python -m scripts.build_international_station_audit --verified-at YYYY-MM-DD
+```
+
+The builder fails unless the reviewed inventory contains exactly 101 stations: 88 active candidates and 13 suspended Serbian stations. The current inventory has 26 verified coordinate pairs. This makes accidental disappearance or scope drift visible without performing a Serbian live request.

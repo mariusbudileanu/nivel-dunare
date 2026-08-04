@@ -65,9 +65,10 @@ def sk() -> None:
     options = "".join(f'<option value="{5140+i}">{name} - Dunaj</option>' for i, name in enumerate(names))
     payloads = []
     for i, name in enumerate(names):
+        temperature = 46.2 if i == 1 else 20 + i / 10
         body = f'''<!doctype html><html><body><select>{options}</select>
 <table><caption>Merané hodnoty</caption><tr><th>time</th><th>level</th><th>temp</th></tr>
-<tr><td>04.08.2026 10:00</td><td>{200+i}</td><td>{20+i/10:.1f}</td></tr></table>
+<tr><td>04.08.2026 10:00</td><td>{200+i}</td><td>{temperature:.1f}</td></tr></table>
 <script>var forecast_serie = {{ data: [[1785916800000,{201+i}],[1786003200000,{202+i}]] }};</script>
 </body></html>'''
         payloads.append((f"station-{5140+i}", f"station-{5140+i}.html", "text/html; charset=utf-8", body))

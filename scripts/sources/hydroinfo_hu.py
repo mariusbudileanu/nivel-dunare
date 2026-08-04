@@ -17,6 +17,7 @@ class HydroinfoAdapter(SourceAdapter):
     provider_id = "hydroinfo_hu"
     country_code = "HU"
     expected_min_stations = 25
+    stale_after_days = 2
     current_url = "https://www.hydroinfo.hu/tables/dunhif.html"
     forecast_url = "https://www.hydroinfo.hu/mobil/en/hydroinfo.php"
 
@@ -110,4 +111,4 @@ class HydroinfoAdapter(SourceAdapter):
                 "Coordinates are not present in the audited official HTML and remain unset.",
             ],
         )
-        return self.validate(result)
+        return self.validate(result, self.capture_time(payloads))

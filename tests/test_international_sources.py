@@ -54,6 +54,14 @@ class InternationalAdapterTests(unittest.TestCase):
         self.assertIn("Devín", {s.station_name_local for s in sk.stations})
         self.assertIn("Devin", {s.station_name for s in sk.stations})
         self.assertEqual("Silistra", transliterate("Силистра"))
+        _, _, bg = self.parse("bg")
+        self.assertIn(("Силистра", "Silistra"), {
+            (station.station_name_local, station.station_name) for station in bg.stations
+        })
+        _, _, hr = self.parse("hr")
+        self.assertIn(("Aljmaš", "Aljmas"), {
+            (station.station_name_local, station.station_name) for station in hr.stations
+        })
 
     def test_coordinates_only_from_official_json_sources(self):
         expected_verified = {"de": 17, "at": 9, "sk": 0, "hu": 0, "hr": 0, "bg": 0}
@@ -145,13 +153,37 @@ class InternationalAdapterTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             generated = Path(directory) / "audit.csv"
             rows = build(Path("docs/DANUBE_STATION_INVENTORY.csv"), generated)
-            self.assertEqual(88, len(rows))
+            self.assertEqual(101, len(rows))
+            self.assertEqual(88, len([row for row in rows if row["included"] == "yes"]))
+            self.assertEqual(13, len([row for row in rows if row["implementation_status"] == "suspended"]))
             self.assertEqual(26, len([row for row in rows if row["latitude"]]))
             self.assertEqual(
                 Path("docs/INTERNATIONAL_STATIONS_AUDIT.csv").read_text(encoding="utf-8"),
                 generated.read_text(encoding="utf-8"),
             )
+            explicit = Path(directory) / "explicit-date.csv"
+            explicit_rows = build(
+                Path("docs/DANUBE_STATION_INVENTORY.csv"), explicit,
+                verified_at="2026-08-05",
+            )
+            self.assertEqual({"2026-08-05"}, {row["last_verified_at"] for row in explicit_rows})
 
+            sk_rows = [row for row in rows if row["country_code"] == "SK"]
+            self.assertEqual({"complete"}, {row["implementation_status"] for row in sk_rows})
+            self.assertEqual({"complete"}, {row["latest_live_status"] for row in sk_rows})
+            self.assertTrue(all("suspect water_temperature" in row["observation_quality_summary"] for row in sk_rows))
+
+            rs_rows = [row for row in rows if row["country_code"] == "RS"]
+            self.assertEqual(13, len(rs_rows))
+            self.assertTrue(all(row["included"] == "no" for row in rs_rows))
+            self.assertTrue(all(row["review_required"] == "yes" for row in rs_rows))
+            self.assertTrue(all("TLS certificate-chain validation failed" in row["review_reason"] for row in rs_rows))
+            self.assertIn(("Bačka Palanka", "Backa Palanka"), {
+                (row["station_name_local"], row["station_name"]) for row in rs_rows
+            })
+            self.assertIn(("Veliko Gradište", "Veliko Gradiste"), {
+                (row["station_name_local"], row["station_name"]) for row in rs_rows
+            })
 
 if __name__ == "__main__":
     unittest.main()

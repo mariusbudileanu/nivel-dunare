@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from datetime import date, datetime, timezone
+from datetime import datetime
 
 from .base import (
     AdapterResult, ObservationRecord, SourceAdapter, SourceRequest, SourceStructureError,
-    StationRecord, ValidationIssue, json_load, parse_optional_float, station_slug,
+    StationRecord, canonical_station_name, json_load, parse_optional_float, station_slug,
 )
 
 
@@ -15,6 +15,8 @@ class VodniputoviAdapter(SourceAdapter):
     provider_id = "vodniputovi_hr"
     country_code = "HR"
     expected_min_stations = 3
+    stale_after_days = 7
+    stale_status = "suspended"
     current_url = "https://vodniputovi.hr/dhmz_vodostaji/getwaterstuff.php"
     station_metadata = {
         "aljmas": ("5001", "Aljmaš"),
@@ -42,7 +44,6 @@ class VodniputoviAdapter(SourceAdapter):
 
         stations: list[StationRecord] = []
         observations: list[ObservationRecord] = []
-        latest_date: date | None = None
         for source_key, (source_id, local_name) in self.station_metadata.items():
             series = document.get(source_key)
             if not isinstance(series, list) or not series:
@@ -50,7 +51,7 @@ class VodniputoviAdapter(SourceAdapter):
             sid = f"hr-{source_id}"
             stations.append(StationRecord(
                 station_id=sid, source_station_id=source_id, country_code="HR",
-                station_name=station_slug("HR", local_name)[3:].replace("-", " ").title(),
+                station_name=canonical_station_name(local_name),
                 station_name_local=local_name, station_slug=station_slug("HR", local_name),
                 river_name="Danube", latitude=None, longitude=None, coordinate_source=None,
                 coordinate_method="unavailable", coordinate_confidence="unavailable",
@@ -66,7 +67,6 @@ class VodniputoviAdapter(SourceAdapter):
                 level = parse_optional_float(item.get("vodostaj"))
                 if level is None:
                     continue
-                latest_date = max(latest_date or date.min, date.fromisoformat(observed_date))
                 observations.append(ObservationRecord(
                     station_id=sid, source_station_id=source_id,
                     operator_provider_id="dhmz_hr", source_provider_id="vodniputovi_hr",
@@ -77,18 +77,9 @@ class VodniputoviAdapter(SourceAdapter):
                     source_file_sha256=payload.sha256,
                 ))
 
-        issues: list[ValidationIssue] = []
-        status = "complete"
-        capture_date = datetime.fromisoformat(payload.captured_at_utc.replace("Z", "+00:00")).date()
-        if latest_date is None or (capture_date - latest_date).days > 7:
-            status = "suspended"
-            issues.append(ValidationIssue(
-                "critical", "stale_source",
-                f"Latest Croatian observation is {latest_date}; capture date is {capture_date}",
-            ))
         result = AdapterResult(
-            source_id=self.source_id, country_code="HR", status=status,
-            stations=stations, observations=observations, forecasts=[], issues=issues,
+            source_id=self.source_id, country_code="HR", status="complete",
+            stations=stations, observations=observations, forecasts=[],
             source_station_count=len(document),
             notes=[
                 "The source exposes dates but no observation time or timezone; neither is inferred.",
@@ -96,4 +87,4 @@ class VodniputoviAdapter(SourceAdapter):
                 "A feed older than seven days is suspended rather than published as current data.",
             ],
         )
-        return self.validate(result)
+        return self.validate(result, self.capture_time(payloads))
