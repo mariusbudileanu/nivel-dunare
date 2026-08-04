@@ -1,0 +1,70 @@
+name: Audit Danube sources
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Official source to audit
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - de
+          - at
+          - sk
+          - hu
+          - hr
+          - rs
+          - bg
+          - ro
+      browser:
+        description: Run one Chromium navigation instead of HTTP probes
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install optional browser dependency
+        if: ${{ inputs.browser }}
+        run: |
+          python -m pip install 'playwright==1.54.0'
+          python -m playwright install --with-deps chromium
+      - name: Run low-volume audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="_audit_source/danube_international/github-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          if [[ "${{ inputs.source }}" == "all" ]]; then
+            selector=(--all)
+            maximum=12
+          else
+            selector=(--source "${{ inputs.source }}")
+            maximum=2
+          fi
+          if [[ "${{ inputs.browser }}" == "true" ]]; then
+            mode=(--browser)
+          else
+            mode=(--http-only)
+          fi
+          python -m scripts.audit_danube_sources "${selector[@]}" "${mode[@]}" --max-requests "$maximum" --output-dir "$output"
+          python -m scripts.audit_danube_sources --report-from "$output" --report-output "$output/comparison/report.md"
+      - name: Upload complete audit artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: danube-source-audit-${{ inputs.source }}-${{ github.run_id }}
+          path: _audit_source/danube_international/github-*
+          if-no-files-found: error
+          retention-days: 14
