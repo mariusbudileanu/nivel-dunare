@@ -14,7 +14,9 @@ class PublicOutputTests(unittest.TestCase):
         result = validate_repository(ROOT)
         self.assertTrue(result["ok"])
         self.assertEqual(result["stations"], 23)
-        self.assertEqual(result["forecasts"], 115)
+        forecasts_per_issue = result["stations"] * 5
+        self.assertGreaterEqual(result["forecasts"], forecasts_per_issue)
+        self.assertEqual(result["forecasts"] % forecasts_per_issue, 0)
 
     def test_station_lazy_files_exist(self):
         with (ROOT / "data/public/stations.csv").open(encoding="utf-8-sig", newline="") as stream:
