@@ -35,14 +35,16 @@ export function internationalMapFeatures(data) {
     const level = p.water_level;
     const temperature = p.water_temperature;
     const discharge = p.discharge;
+    const primary = level || discharge || temperature;
     return {
       ...feature,
       properties: {
         ...p, scope: "international", display_name: p.station_name, slug: p.station_slug,
         level_cm: level?.value ?? null, variation_cm_24h: level?.variation_value ?? null,
         water_temperature_c: temperature?.value ?? null, discharge_m3_s: discharge?.value ?? null,
-        measurement_datetime: level?.measurement_datetime_utc || level?.measurement_datetime_local || level?.measurement_date || null,
-        quality_flag: level?.canonical_quality_flag === "suspect" ? "suspect" : "valid",
+        forecast_count: (data.forecastsByStation.get(p.station_id) || []).length,
+        measurement_datetime: primary?.measurement_datetime_local || primary?.measurement_datetime_utc || primary?.measurement_date || null,
+        quality_flag: primary?.canonical_quality_flag === "observed" ? "valid" : primary?.canonical_quality_flag || "unavailable",
       },
     };
   });
@@ -68,14 +70,17 @@ export function legacyStationData(data, stationId) {
   for (const row of sourceRows) {
     const key = measurementKey(row);
     if (!grouped.has(key)) grouped.set(key, {
-      measurement_datetime: row.measurement_datetime_utc || row.measurement_datetime_local || row.measurement_date,
+      measurement_datetime: row.measurement_datetime_local || row.measurement_datetime_utc || row.measurement_date,
       measurement_date: (row.measurement_datetime_utc || row.measurement_datetime_local || row.measurement_date || "").slice(0, 10),
       level_cm: null, variation_cm_24h: null, water_temperature_c: null, quality_flag: "valid",
     });
     const item = grouped.get(key);
-    if (row.parameter === "water_level") { item.level_cm = row.value; item.variation_cm_24h = row.variation_value; }
+    if (row.parameter === "water_level") {
+      item.level_cm = row.value;
+      item.variation_cm_24h = row.variation_value;
+      item.quality_flag = row.canonical_quality_flag === "observed" ? "valid" : row.canonical_quality_flag || "valid";
+    }
     if (row.parameter === "water_temperature" && row.canonical_quality_flag !== "suspect") item.water_temperature_c = row.value;
-    if (row.canonical_quality_flag === "suspect") item.quality_flag = "suspect";
   }
   const observations = [...grouped.values()].filter(row => row.level_cm !== null).sort((a, b) => String(a.measurement_datetime).localeCompare(String(b.measurement_datetime)));
   const forecasts = (data.forecastsByStation.get(stationId) || []).map(row => ({

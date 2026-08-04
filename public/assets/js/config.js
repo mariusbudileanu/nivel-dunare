@@ -27,15 +27,30 @@ export function formatNumber(value, digits = 0) {
   return new Intl.NumberFormat(getLocale(), { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(Number(value));
 }
 
-export function formatDate(value, withTime = false) {
+export function formatDate(value, withTime = false, requestedTimeZone = null) {
   if (!value) return "—";
-  const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(String(value));
-  const date = new Date(value);
+  const text = String(value);
+  const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(text);
+  let date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat(getLocale(), {
-    timeZone: dateOnly ? "UTC" : "Europe/Bucharest", day: "2-digit", month: "2-digit", year: "numeric",
+  let timeZone = dateOnly ? "UTC" : requestedTimeZone || "Europe/Bucharest";
+  const options = () => ({
+    timeZone, day: "2-digit", month: "2-digit", year: "numeric",
     ...(!dateOnly && withTime ? { hour: "2-digit", minute: "2-digit" } : {})
-  }).format(date);
+  });
+  try {
+    return new Intl.DateTimeFormat(getLocale(), options()).format(date);
+  } catch (error) {
+    if (!(error instanceof RangeError)) throw error;
+    const local = text.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+    if (requestedTimeZone && local) {
+      date = new Date(Date.UTC(Number(local[1]), Number(local[2]) - 1, Number(local[3]), Number(local[4]), Number(local[5])));
+      timeZone = "UTC";
+      return new Intl.DateTimeFormat(getLocale(), options()).format(date);
+    }
+    timeZone = dateOnly ? "UTC" : "Europe/Bucharest";
+    return new Intl.DateTimeFormat(getLocale(), options()).format(date);
+  }
 }
 
 export function safeFilename(value) {

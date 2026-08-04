@@ -28,13 +28,13 @@
     </div>
     <div class="header-actions">
       <button class="button secondary" id="info-button" type="button" data-i18n="info">Info</button>
-      <button class="button secondary language-button" id="language-button" type="button" aria-label="Switch to English" title="English">EN</button>
+      <button class="button secondary language-button" id="language-button" type="button" aria-label="Switch to English" title="English" data-i18n-aria-label="languageAction" data-i18n-title="languageTitle">EN</button>
       <button class="button primary" id="downloads-button" type="button" data-i18n="downloads">Descarcă date</button>
     </div>
   </header>
 
   <main id="main-content" class="page-shell">
-    <section class="metric-grid" aria-label="Indicatori generali">
+    <section class="metric-grid" aria-label="Indicatori generali" data-i18n-aria-label="generalMetricsAria">
       <article class="metric-card"><span data-i18n="reportedStations">Stații raportate</span><strong id="metric-stations">—</strong><small data-i18n="currentCapture">în captura curentă</small></article>
       <article class="metric-card rising"><span data-i18n="rising">În creștere</span><strong id="metric-rising">—</strong><small data-i18n="positiveVariation">variație pozitivă</small></article>
       <article class="metric-card falling"><span data-i18n="falling">În scădere</span><strong id="metric-falling">—</strong><small data-i18n="negativeVariation">variație negativă</small></article>
@@ -47,9 +47,9 @@
     </div>
 
     <section class="surface international-beta" aria-labelledby="international-title">
-      <div class="panel-heading beta-heading"><div><p class="eyebrow">Beta</p><h2 id="international-title" data-i18n="betaTitle">Date internaționale beta</h2><p data-i18n="betaCopy">Sursele internaționale au frecvențe și niveluri de maturitate diferite. Valorile suspecte și vechi nu intră în statisticile curente.</p></div><span class="status-tag partial" data-i18n="partial">Parțial</span></div>
+      <div class="panel-heading beta-heading"><div><p class="eyebrow" data-i18n="betaLabel">Beta</p><h2 id="international-title" data-i18n="betaTitle">Date internaționale beta</h2><p data-i18n="betaCopy">Sursele internaționale au frecvențe și niveluri de maturitate diferite. Valorile suspecte și vechi nu intră în statisticile curente.</p></div><span class="status-tag partial" data-i18n="partial">Parțial</span></div>
       <div class="international-metrics" id="international-metrics" aria-live="polite"></div>
-      <div class="international-filters" aria-label="Filtre internaționale">
+      <div class="international-filters" aria-label="Filtre internaționale" data-i18n-aria-label="internationalFiltersAria">
         <label><span data-i18n="country">Țară</span><select id="country-filter"></select></label>
         <label><span data-i18n="source">Administrație / sursă</span><select id="source-filter"></select></label>
         <label><span data-i18n="sourceStatus">Status sursă</span><select id="status-filter"></select></label>
@@ -61,19 +61,24 @@
         <div class="panel-heading map-heading">
           <div><p class="eyebrow" data-i18n="currentSituation">Situația curentă</p><h2 id="map-title" data-i18n="stationMap">Harta stațiilor</h2></div>
           <div class="map-tools">
-            <label class="search-field"><span class="sr-only">Caută stație</span><input id="station-search" type="search" placeholder="Caută stație…" data-i18n-placeholder="searchStation" autocomplete="off"></label>
+            <label class="search-field"><span class="sr-only" data-i18n="searchStationLabel">Caută stație</span><input id="station-search" type="search" placeholder="Caută stație…" data-i18n-placeholder="searchStation" autocomplete="off"></label>
             <button class="icon-button" id="map-reset" type="button" aria-label="Resetează harta" title="Resetează harta" data-i18n-aria-label="resetMap" data-i18n-title="resetMap">⌖</button>
             <button class="icon-button" id="map-fullscreen" type="button" aria-label="Extinde harta" title="Extinde harta" data-i18n-aria-label="fullscreenMap" data-i18n-title="fullscreenMap">⛶</button>
           </div>
         </div>
         <div id="map" role="application" aria-label="Hartă interactivă cu stațiile hidrometrice" data-i18n-aria-label="mapAria"></div>
-        <div class="map-legend" aria-label="Legendă hartă">
+        <div class="map-legend" aria-label="Legendă hartă" data-i18n-aria-label="mapLegend">
           <span><i class="legend-dot up"></i> <span data-i18n="trendUp">creștere</span></span>
           <span><i class="legend-dot down"></i> <span data-i18n="trendDown">scădere</span></span>
           <span><i class="legend-dot still"></i> <span data-i18n="trendStill">staționare</span></span>
           <span><i class="legend-dot alert"></i> <span data-i18n="qualityWarning">atenționare</span></span>
           <span><i class="legend-dot international"></i> <span data-i18n="complete">complet internațional</span></span>
           <span><i class="legend-dot partial"></i> <span data-i18n="partial">parțial</span></span>
+          <span><i class="legend-dot provisional"></i> <span data-i18n="provisional">provizoriu</span></span>
+          <span><i class="legend-dot suspect"></i> <span data-i18n="suspect">suspect</span></span>
+          <span><i class="legend-dot stale"></i> <span data-i18n="stale">date vechi</span></span>
+          <span><i class="legend-dot suspended"></i> <span data-i18n="suspended">suspendat</span></span>
+          <span><i class="legend-dot unavailable"></i> <span data-i18n="unavailable">indisponibil</span></span>
         </div>
       </article>
 
@@ -85,7 +90,7 @@
             <p id="station-context" data-i18n="chooseMarker">Alege un marker sau un rând din tabel.</p>
           </div>
           <label class="station-select-label"><span data-i18n="station">Stație</span>
-            <select id="station-select" aria-label="Selectează stația"><option value="">Se încarcă…</option></select>
+            <select id="station-select" aria-label="Selectează stația" data-i18n-aria-label="stationSelectAria"><option value="" data-i18n="loadingEllipsis">Se încarcă…</option></select>
           </label>
         </div>
 
@@ -98,8 +103,8 @@
 
         <div class="quality-banner" id="quality-banner" hidden></div>
 
-        <div class="range-toolbar" aria-label="Interval temporal">
-          <div class="range-presets" role="group" aria-label="Intervale rapide">
+        <div class="range-toolbar" aria-label="Interval temporal" data-i18n-aria-label="temporalRangeAria">
+          <div class="range-presets" role="group" aria-label="Intervale rapide" data-i18n-aria-label="quickRangesAria">
             <button type="button" data-range="7d" data-i18n="sevenDays">7 zile</button>
             <button type="button" data-range="30d" class="active" data-i18n="thirtyDays">30 zile</button>
             <button type="button" data-range="90d" data-i18n="ninetyDays">90 zile</button>
@@ -107,13 +112,13 @@
             <button type="button" data-range="all" data-i18n="all">Tot</button>
           </div>
           <div class="date-fields">
-            <label>De la <input id="date-from" type="date"></label>
-            <label>Până la <input id="date-to" type="date"></label>
+            <label><span data-i18n="from">De la</span> <input id="date-from" type="date"></label>
+            <label><span data-i18n="to">Până la</span> <input id="date-to" type="date"></label>
             <button class="button ghost compact" id="range-reset" type="button" data-i18n="reset">Resetare</button>
           </div>
         </div>
 
-        <div class="tabs" role="tablist" aria-label="Grafice stație">
+        <div class="tabs" role="tablist" aria-label="Grafice stație" data-i18n-aria-label="stationChartsAria">
           <button id="tab-level" role="tab" aria-selected="true" aria-controls="panel-level" data-tab="level" data-i18n="evolutionForecast">Evoluție și prognoză</button>
           <button id="tab-variation" role="tab" aria-selected="false" aria-controls="panel-variation" data-tab="variation" data-i18n="dailyVariation">Variație zilnică</button>
           <button id="tab-temperature" role="tab" aria-selected="false" aria-controls="panel-temperature" data-tab="temperature" data-i18n="waterTemperature">Temperatura apei</button>
@@ -123,24 +128,24 @@
 
         <section class="chart-tab" id="panel-level" role="tabpanel" aria-labelledby="tab-level">
           <div class="chart-header"><div><h3 data-i18n="levelEvolutionTitle">Evoluția nivelului și prognoza</h3><p data-i18n="gaugeReference">cm față de mira stației</p></div><div class="chart-actions"><button data-action="csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button><button data-action="expand" type="button" data-i18n="expand">Extinde</button><button data-action="png" type="button" data-i18n="downloadPng">Descarcă PNG</button></div></div>
-          <div class="chart" id="chart-level" aria-label="Grafic evoluție nivel și prognoză"></div>
+          <div class="chart" id="chart-level" aria-label="Grafic evoluție nivel și prognoză" data-i18n-aria-label="chartLevelAria"></div>
         </section>
         <section class="chart-tab" id="panel-variation" role="tabpanel" aria-labelledby="tab-variation" hidden>
           <div class="chart-header"><div><h3 data-i18n="dailyVariation">Variația zilnică</h3><p data-i18n="dailyVariationSubtitle">schimbare în 24 h, cm</p></div><div class="chart-actions"><button data-action="csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button><button data-action="expand" type="button" data-i18n="expand">Extinde</button><button data-action="png" type="button" data-i18n="downloadPng">Descarcă PNG</button></div></div>
-          <div class="chart" id="chart-variation" aria-label="Grafic variație zilnică"></div>
+          <div class="chart" id="chart-variation" aria-label="Grafic variație zilnică" data-i18n-aria-label="chartVariationAria"></div>
         </section>
         <section class="chart-tab" id="panel-temperature" role="tabpanel" aria-labelledby="tab-temperature" hidden>
           <div class="chart-header"><div><h3 data-i18n="waterTemperature">Temperatura apei</h3><p data-i18n="degreesCelsius">grade Celsius</p></div><div class="chart-actions"><button data-action="csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button><button data-action="expand" type="button" data-i18n="expand">Extinde</button><button data-action="png" type="button" data-i18n="downloadPng">Descarcă PNG</button></div></div>
-          <div class="chart" id="chart-temperature" aria-label="Grafic temperatura apei"></div>
+          <div class="chart" id="chart-temperature" aria-label="Grafic temperatura apei" data-i18n-aria-label="chartTemperatureAria"></div>
         </section>
         <section class="chart-tab" id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden>
           <div class="chart-header"><div><h3 data-i18n="previousForecasts">Prognoze anterioare</h3><p data-i18n="forecastEditionOutcome">ediția și realizarea ulterioară</p></div><div class="chart-actions"><label class="issue-picker"><span data-i18n="forecastIssuedAt">Prognoză emisă la</span> <select id="forecast-issue-select"></select></label><button data-action="csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button><button data-action="expand" type="button" data-i18n="expand">Extinde</button><button data-action="png" type="button" data-i18n="downloadPng">Descarcă PNG</button></div></div>
-          <div class="chart" id="chart-history" aria-label="Grafic prognoză istorică"></div>
+          <div class="chart" id="chart-history" aria-label="Grafic prognoză istorică" data-i18n-aria-label="chartHistoryAria"></div>
         </section>
         <section class="chart-tab" id="panel-scores" role="tabpanel" aria-labelledby="tab-scores" hidden>
           <div class="chart-header"><div><h3 data-i18n="forecastEvaluation">Evaluarea prognozelor</h3><p data-i18n="forecastStatisticsNote">statistici calculate de aplicație, nu publicate de AFDJ/INHGA</p></div><div class="chart-actions"><button data-action="csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button><button data-action="expand" type="button" data-i18n="expand">Extinde</button><button data-action="png" type="button" data-i18n="downloadPng">Descarcă PNG</button></div></div>
           <div class="score-summary" id="score-summary"></div>
-          <div class="chart" id="chart-scores" aria-label="Grafic evaluare prognoze"></div>
+          <div class="chart" id="chart-scores" aria-label="Grafic evaluare prognoze" data-i18n-aria-label="chartScoresAria"></div>
         </section>
       </article>
     </section>
@@ -151,18 +156,18 @@
     </section>
     <section class="surface comparison-section" aria-labelledby="compare-title">
       <div class="panel-heading"><div><p class="eyebrow" data-i18n="compareAnalysis">Analiză comparativă</p><h2 id="compare-title" data-i18n="compareStations">Compară stații</h2></div><div class="compare-controls"><select id="compare-mode"><option value="delta" data-i18n="comparisonDelta">Schimbare față de prima zi</option><option value="variation" data-i18n="comparisonVariation">Variație zilnică</option></select><button class="button secondary compact" id="compare-add" type="button" data-i18n="chooseStations">Alege stații</button></div></div>
-      <p class="method-copy">Cotele absolute sunt raportate la mire locale diferite și nu sunt direct comparabile între stații. Poți selecta maximum patru stații.</p>
+      <p class="method-copy" data-i18n="compareMethodCopy">Cotele absolute sunt raportate la mire locale diferite și nu sunt direct comparabile între stații. Poți selecta maximum patru stații.</p>
       <div class="compare-picker" id="compare-picker" hidden></div>
       <div class="chart-header inline"><span id="compare-selection" data-i18n="noStationSelected">Nicio stație selectată</span><div class="chart-actions"><button data-compare-action="csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button><button data-compare-action="expand" type="button" data-i18n="expand">Extinde</button><button data-compare-action="png" type="button" data-i18n="downloadPng">Descarcă PNG</button></div></div>
-      <div class="chart comparison-chart" id="chart-compare" aria-label="Grafic comparare stații"></div>
+      <div class="chart comparison-chart" id="chart-compare" aria-label="Grafic comparare stații" data-i18n-aria-label="chartCompareAria"></div>
     </section>
 
     <section class="surface station-table-section" aria-labelledby="table-title">
-      <div class="panel-heading"><div><p class="eyebrow" data-i18n="allStations">Toate stațiile</p><h2 id="table-title" data-i18n="reportedSituation">Situația raportată</h2></div><div class="table-tools"><input id="table-search" type="search" placeholder="Caută…" data-i18n-placeholder="search" aria-label="Caută în tabel"><select id="table-filter" aria-label="Filtrează după tendință"><option value="all" data-i18n="allStates">Toate stările</option><option value="up">Creștere</option><option value="down">Scădere</option><option value="still">Staționare</option><option value="alert">Atenționări</option></select><button class="button secondary compact" id="table-csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button></div></div>
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="allStations">Toate stațiile</p><h2 id="table-title" data-i18n="reportedSituation">Situația raportată</h2></div><div class="table-tools"><input id="table-search" type="search" placeholder="Caută…" data-i18n-placeholder="search" aria-label="Caută în tabel" data-i18n-aria-label="tableSearchAria"><select id="table-filter" aria-label="Filtrează după tendință" data-i18n-aria-label="trendFilterAria"><option value="all" data-i18n="allStates">Toate stările</option><option value="up" data-i18n="rising">Creștere</option><option value="down" data-i18n="falling">Scădere</option><option value="still" data-i18n="stationary">Staționare</option><option value="alert" data-i18n="warnings">Atenționări</option></select><button class="button secondary compact" id="table-csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button></div></div>
       <p class="table-caption" data-i18n="tableOrder">Ordine implicită: kilometrul fluvial crescător. Selectează un rând pentru analiza stației.</p>
       <div class="table-scroll">
         <table id="stations-table">
-          <thead><tr><th data-sort="display_name" scope="col" data-i18n="station">Stație</th><th data-sort="river_km" scope="col">Km</th><th data-sort="level_cm" scope="col" data-i18n="level">Nivel</th><th data-sort="variation_cm_24h" scope="col" data-i18n="variation">Variație</th><th data-sort="water_temperature_c" scope="col" data-i18n="temperature">Temperatură</th><th data-sort="measurement_datetime" scope="col" data-i18n="observationDate">Data observației</th><th scope="col" data-i18n="state">Stare</th></tr></thead>
+          <thead><tr><th data-sort="display_name" scope="col" data-i18n="station">Stație</th><th data-sort="river_km" scope="col" data-i18n="kilometre">Km</th><th data-sort="level_cm" scope="col" data-i18n="level">Nivel</th><th data-sort="variation_cm_24h" scope="col" data-i18n="variation">Variație</th><th data-sort="water_temperature_c" scope="col" data-i18n="temperature">Temperatură</th><th data-sort="measurement_datetime" scope="col" data-i18n="observationDate">Data observației</th><th scope="col" data-i18n="state">Stare</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>

@@ -91,14 +91,25 @@ def validate(root: Path, mirror: Path | None = None) -> dict[str, Any]:
     require(all((row["station_id"], row["parameter"]) not in latest_keys for row in suspect_observations), "Suspect observation leaked into latest")
     suspect_issues = [row for row in issues if row.get("code") == "outside_plausible_water_temperature_range"]
     require(any(row.get("historical") and row.get("observation", {}).get("value") == 46.2 for row in suspect_issues), "Historical Iza 46.2 quality record missing")
-    require(any(not row.get("historical") for row in suspect_issues), "Current suspect quality record missing")
+    current_suspect_issues = [row for row in suspect_issues if not row.get("historical")]
+    require(any(row.get("observation", {}).get("value") == 45.3 and row.get("observation", {}).get("canonical_quality_flag") == "suspect" for row in current_suspect_issues), "Current suspect observation is not preserved structurally in quality issues")
 
     require(len(sources) == 7 and {row["country_code"] for row in sources} == {"DE", "AT", "SK", "HU", "HR", "BG", "RS"}, "Source registry mismatch")
+    require(status.get("contract_version") == "1.0-beta", "Unexpected public contract version")
+    require(status["complete_source_count"] == sum(row["status"] == "complete" for row in sources), "Complete source count mismatch")
+    require(status["partial_source_count"] == sum(row["status"] == "partial" for row in sources), "Partial source count mismatch")
+    require(status["suspended_source_count"] == sum(row["status"] == "suspended" for row in sources), "Suspended source count mismatch")
     require(status["observation_count"] == len(observations), "Observation count mismatch")
+    require(status["current_usable_observation_count"] == sum(row["current_usable"] for row in observations), "Current usable observation count mismatch")
+    require(status["stale_observation_count"] == sum(row["stale"] for row in observations), "Stale observation count mismatch")
+    require(status["provisional_observation_count"] == sum(row["canonical_quality_flag"] == "provisional" for row in observations), "Provisional observation count mismatch")
     require(status["forecast_count"] == len(forecasts), "Forecast count mismatch")
     require(status["latest_valid_count"] == len(latest), "Latest count mismatch")
     require(all(row.get("source_file_sha256") and row.get("source_url") and row.get("source_status") for row in observations), "Observation provenance incomplete")
     require(all(row.get("captured_at_utc") for row in observations), "Observation capture time missing")
+    require(all(row.get("measurement_time_original") and (row.get("measurement_datetime_utc") or row.get("measurement_datetime_local") or row.get("measurement_date")) for row in observations), "Observation original time or normalized date/time missing")
+    require(all(row.get("source_file_sha256") and row.get("source_url") and row.get("source_status") and row.get("captured_at_utc") for row in forecasts), "Forecast provenance incomplete")
+    require(all(row.get("target_time_original") and (row.get("target_datetime_utc") or row.get("target_date")) for row in forecasts), "Forecast original or normalized target time missing")
 
     return {
         "ok": True, "stations": len(stations), "mapped": len(features), "unmapped": len(unmapped),

@@ -30,7 +30,7 @@ export const translations = {
     infoTitle: "Ghid și metodologie", infoAbout: "Despre aplicație", infoPurposeTitle: "Scop și proveniență",
     infoPurpose: "Portalul reunește observații și prognoze oficiale ale Dunării. România este actualizată automat prin fluxul AFDJ–Hetzner; sursele internaționale sunt publicate separat, în versiune beta, cu frecvențe diferite.",
     infoForecastTitle: "Observații și prognoze", infoForecast: "Observațiile descriu măsurători publicate de administrații. Prognozele sunt valori viitoare și sunt afișate numai când parametrul, unitatea și timpul sunt demonstrate.",
-    infoStatusTitle: "Statusuri și calitate", infoStatus: "Statusul sursei este separat de calitatea fiecărei observații. Valorile suspecte sunt păstrate și marcate, dar sunt excluse din valorile curente și statistici.",
+    infoStatusTitle: "Statusuri și calitate", infoStatus: "Statusul sursei este separat de calitatea observației: complete este stabil, partial are limitări, provisional indică validare preliminară, suspect marchează o valoare neplauzibilă, stale înseamnă date vechi, suspended înseamnă că sursa nu este interogată, iar unavailable indică lipsa unei valori. Valorile suspecte și stale sunt excluse din statisticile curente.",
     infoMapTitle: "Coordonate verificate", infoMap: "Pe hartă apar numai coordonate oficiale verificate. Stațiile fără coordonate sunt listate separat; pozițiile nu sunt inventate sau estimate.",
     infoStaleTitle: "Date vechi și surse suspendate", infoStale: "Datele vechi nu sunt prezentate drept curente. Sursele suspendate nu sunt interogate prin dezactivarea TLS sau alte metode nesigure.",
     infoDisclaimerTitle: "Limitare", infoDisclaimer: "Aplicația este informativă și nu înlocuiește avizele oficiale, informațiile de navigație sau deciziile autorităților.",
@@ -55,6 +55,12 @@ export const translations = {
     trend: "Tendință", issued: "Emisă", validation: "Validare", target: "Țintă", error: "Eroare", selectedEditionNoForecasts: "Ediția selectată nu conține prognoze disponibile.", scoresNoData: "Date insuficiente pentru scoruri — sunt necesare observații la datele-țintă.", chooseOneStation: "Alege cel puțin o stație.",
     chartLevelExportTitle: "Evoluția nivelului și prognoza", chartVariationExportTitle: "Variația zilnică", chartTemperatureExportTitle: "Temperatura apei", chartForecastExportTitle: "Prognoză emisă", chartScoresExportTitle: "Evaluarea prognozelor", comparisonVariationTitle: "Comparație — variație zilnică", comparisonDeltaTitle: "Comparație — schimbare față de prima zi",
     series: "serie", datetime: "data și ora", value: "valoare", unit: "unitate", interval: "Interval", intervalStart: "început", intervalPresent: "prezent", intervalAll: "tot intervalul disponibil", dataSource: "Sursa datelor", generated: "Generat",
+    generalMetricsAria: "Indicatori generali", internationalFiltersAria: "Filtre pentru stațiile internaționale", betaLabel: "Beta", searchStationLabel: "Caută stație", stationSelectAria: "Selectează stația", temporalRangeAria: "Interval temporal", quickRangesAria: "Intervale rapide", stationChartsAria: "Graficele stației",
+    chartLevelAria: "Grafic: evoluția nivelului și prognoza", chartVariationAria: "Grafic: variația zilnică", chartTemperatureAria: "Grafic: temperatura apei", chartHistoryAria: "Grafic: prognoză istorică", chartScoresAria: "Grafic: evaluarea prognozelor", chartCompareAria: "Grafic: compararea stațiilor", tableSearchAria: "Caută în tabel", trendFilterAria: "Filtrează după tendință",
+    compareMethodCopy: "Cotele absolute sunt raportate la mire locale diferite și nu sunt direct comparabile între stații. Poți selecta maximum patru stații.", kilometre: "Km", automatic: "Automată", hydrometric: "Hidrometrică",
+    downloadCurrentSituation: "Situația curentă", downloadAllObservations: "Toate observațiile", downloadAllForecasts: "Toate prognozele", downloadStationRegistry: "Registrul stațiilor", downloadGeospatialSituation: "Situația geospațială", combinedHistory: "istoric combinat", internationalBetaDownload: "Beta internațional",
+    issueOutsideTemperatureRange: "Temperatură a apei în afara intervalului plauzibil; valoarea este păstrată ca suspectă și exclusă din valorile curente.", issueMissingStationId: "Sursa nu publică un identificator instituțional demonstrat pentru această stație.", issueGeneric: "Problemă de calitate raportată de adaptor.",
+    completeSources: "Surse complete", partialSources: "Surse parțiale", availableForecasts: "Prognoze disponibile", riverLabel: "Râu", austriaTestSourceWarning: "Sursă beta cu cheia publică de test; nu este încă integrare permanentă de producție.",
   },
   en: {
     appTitle: "Danube Water Levels", appSubtitle: "Daily monitoring of water levels and hydrological forecasts",
@@ -87,7 +93,7 @@ export const translations = {
     infoTitle: "Guide and methodology", infoAbout: "About the application", infoPurposeTitle: "Purpose and provenance",
     infoPurpose: "The portal brings together official Danube observations and forecasts. Romania is updated automatically through the AFDJ–Hetzner flow; international sources are published separately as beta data with different refresh frequencies.",
     infoForecastTitle: "Observations and forecasts", infoForecast: "Observations describe measurements published by administrations. Forecasts are future values and are shown only when the parameter, unit and time are demonstrated.",
-    infoStatusTitle: "Statuses and quality", infoStatus: "Source status is separate from individual observation quality. Suspect values are retained and labelled but excluded from current values and statistics.",
+    infoStatusTitle: "Statuses and quality", infoStatus: "Source status is separate from observation quality: complete is stable, partial has documented limits, provisional indicates preliminary validation, suspect marks an implausible value, stale means old data, suspended means the source is not queried, and unavailable means no value is available. Suspect and stale values are excluded from current statistics.",
     infoMapTitle: "Verified coordinates", infoMap: "Only officially verified coordinates appear on the map. Stations without coordinates are listed separately; positions are never invented or estimated.",
     infoStaleTitle: "Stale data and suspended sources", infoStale: "Stale data is not presented as current. Suspended sources are not queried by disabling TLS or using other unsafe methods.",
     infoDisclaimerTitle: "Disclaimer", infoDisclaimer: "This application is informational and does not replace official notices, navigation information or authority decisions.",
@@ -112,6 +118,12 @@ export const translations = {
     trend: "Trend", issued: "Issued", validation: "Validation", target: "Target", error: "Error", selectedEditionNoForecasts: "The selected issue contains no available forecasts.", scoresNoData: "Insufficient scoring data — observations are required on target dates.", chooseOneStation: "Choose at least one station.",
     chartLevelExportTitle: "Level evolution and forecast", chartVariationExportTitle: "Daily variation", chartTemperatureExportTitle: "Water temperature", chartForecastExportTitle: "Forecast issued", chartScoresExportTitle: "Forecast evaluation", comparisonVariationTitle: "Comparison — daily variation", comparisonDeltaTitle: "Comparison — change from first day",
     series: "series", datetime: "date and time", value: "value", unit: "unit", interval: "Interval", intervalStart: "start", intervalPresent: "present", intervalAll: "entire available interval", dataSource: "Data source", generated: "Generated",
+    generalMetricsAria: "General indicators", internationalFiltersAria: "International station filters", betaLabel: "Beta", searchStationLabel: "Search station", stationSelectAria: "Select station", temporalRangeAria: "Time range", quickRangesAria: "Quick ranges", stationChartsAria: "Station charts",
+    chartLevelAria: "Chart: level evolution and forecast", chartVariationAria: "Chart: daily variation", chartTemperatureAria: "Chart: water temperature", chartHistoryAria: "Chart: historical forecast", chartScoresAria: "Chart: forecast evaluation", chartCompareAria: "Chart: station comparison", tableSearchAria: "Search table", trendFilterAria: "Filter by trend",
+    compareMethodCopy: "Absolute levels refer to different local gauges and are not directly comparable between stations. You can select up to four stations.", kilometre: "Km", automatic: "Automatic", hydrometric: "Hydrometric",
+    downloadCurrentSituation: "Current situation", downloadAllObservations: "All observations", downloadAllForecasts: "All forecasts", downloadStationRegistry: "Station registry", downloadGeospatialSituation: "Geospatial situation", combinedHistory: "combined history", internationalBetaDownload: "International beta",
+    issueOutsideTemperatureRange: "Water temperature outside the plausible range; the value is retained as suspect and excluded from current values.", issueMissingStationId: "The source does not publish a demonstrated institutional identifier for this station.", issueGeneric: "Quality issue reported by the adapter.",
+    completeSources: "Complete sources", partialSources: "Partial sources", availableForecasts: "Available forecasts", riverLabel: "River", austriaTestSourceWarning: "Beta source using the public test key; this is not yet a permanent production integration.",
   },
 };
 
@@ -132,6 +144,9 @@ export function getLanguage() { return language; }
 export function getLocale() { return language === "en" ? "en-GB" : "ro-RO"; }
 export function countryName(code) { return t(COUNTRY_KEYS[code] || code); }
 export function statusLabel(status) { return t({ complete: "complete", partial: "partial", provisional: "provisional", suspect: "suspect", stale: "stale", suspended: "suspended", unavailable: "unavailable" }[status] || "unavailable"); }
+export function qualityLabel(quality) { return t({ observed: "valid", valid: "valid", provisional: "provisional", suspect: "suspect", missing: "unavailable" }[quality] || "unavailable"); }
+export function stationTypeLabel(type) { return t({ gauge: "gauge", hydrometric: "hydrometric", manual: "manual", automatic: "automatic", automated: "automatic" }[type] || "unavailable"); }
+export function issueLabel(code) { return t({ outside_plausible_water_temperature_range: "issueOutsideTemperatureRange", missing_source_station_id: "issueMissingStationId", missing_institutional_station_ids: "issueMissingStationId" }[code] || "issueGeneric"); }
 
 export function applyTranslations(root = document) {
   root.querySelectorAll?.("[data-i18n]").forEach(element => { element.textContent = t(element.dataset.i18n); });

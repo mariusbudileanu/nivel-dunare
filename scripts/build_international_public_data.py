@@ -166,17 +166,31 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
             })
             stations.append(item)
         station_lookup = {item["station_id"]: item for item in stations}
+        published_source_observations = []
         if policy["observations"]:
             for row in read_json(folder / "observations.json"):
-                observations.append(enrich_observation(row, station_lookup[row["station_id"]], policy, captures))
+                enriched = enrich_observation(row, station_lookup[row["station_id"]], policy, captures)
+                observations.append(enriched)
+                published_source_observations.append(enriched)
         if policy["forecasts"]:
             for row in read_json(folder / "forecasts.json"):
                 forecasts.append(enrich_forecast(row, station_lookup[row["station_id"]], policy, captures))
         for issue in read_json(folder / "issues.json"):
-            quality_issues.append({
+            public_issue = {
                 **issue, "source_id": policy["source_id"], "source_status": policy["status"],
                 "captured_at_utc": source_captures.get(policy["source_id"]), "historical": False,
-            })
+            }
+            if issue.get("code") == "outside_plausible_water_temperature_range":
+                matching = [
+                    row for row in published_source_observations
+                    if row.get("station_id") == issue.get("record_id")
+                    and row.get("parameter") == "water_temperature"
+                    and row.get("canonical_quality_flag") == "suspect"
+                ]
+                if len(matching) != 1:
+                    raise ValueError(f"{country}: suspect temperature issue must resolve to exactly one observation")
+                public_issue["observation"] = matching[0]
+            quality_issues.append(public_issue)
 
     with audit_csv.open(encoding="utf-8-sig", newline="") as stream:
         audit_rows = list(csv.DictReader(stream))
@@ -245,13 +259,20 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
             "note": policy.get("note"), "live_run_id": live_run_id,
         })
     status = {
-        "beta": True, "generated_from_capture_utc": max(source_captures.values()),
+        "beta": True, "contract_version": "1.0-beta", "generated_from_capture_utc": max(source_captures.values()),
         "fixtures_run_id": fixtures_run_id, "live_run_id": live_run_id,
         "station_count": len(stations), "mapped_station_count": len(mapped), "unmapped_station_count": len(unmapped),
         "current_station_count": len({row["station_id"] for row in latest}),
+        "complete_source_count": sum(source["status"] == "complete" for source in sources),
+        "partial_source_count": sum(source["status"] == "partial" for source in sources),
+        "suspended_source_count": sum(source["status"] == "suspended" for source in sources),
         "stale_station_count": sum(station["country_code"] == "HR" for station in stations),
         "suspended_station_count": sum(station["country_code"] in {"HR", "RS"} for station in stations),
-        "observation_count": len(observations), "latest_valid_count": len(latest), "forecast_count": len(forecasts),
+        "observation_count": len(observations),
+        "current_usable_observation_count": sum(row["current_usable"] for row in observations),
+        "stale_observation_count": sum(row["stale"] for row in observations),
+        "provisional_observation_count": sum(row["canonical_quality_flag"] == "provisional" for row in observations),
+        "latest_valid_count": len(latest), "forecast_count": len(forecasts),
         "suspect_current_observation_count": sum(row["canonical_quality_flag"] == "suspect" for row in observations),
         "quality_issue_count": len(quality_issues),
     }

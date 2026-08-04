@@ -2,7 +2,7 @@ import { RANGE_DAYS, formatDate, formatNumber } from "./config.js";
 import { dataUrl, loadStartupData, loadStation } from "./data.js";
 import { filterMap, findStation, initMap, refreshMapLanguage, refreshMapSize, resetMap, selectMapStation } from "./map-beta.js";
 import { initBetaUi } from "./beta-ui.js";
-import { applyTranslations, countryName, getLocale, initLanguage, onLanguageChange, statusLabel, t, toggleLanguage } from "./i18n.js";
+import { applyTranslations, countryName, getLocale, initLanguage, issueLabel, onLanguageChange, statusLabel, t, toggleLanguage } from "./i18n.js";
 import {
   downloadChartCsv, downloadChartPng, renderComparison, renderHistory,
   renderLevel, renderScores, renderTemperature, renderVariation, resizeChart
@@ -15,6 +15,7 @@ const state = {
   filterPredicate: () => true, international: null
 };
 
+let downloadEntries = [];
 const chartIds = {
   level: "chart-level", variation: "chart-variation", temperature: "chart-temperature",
   history: "chart-history", scores: "chart-scores"
@@ -54,24 +55,31 @@ function applyStatus(status) {
   const warning = status.system_status !== "operational" || status.xml_html_mismatch_count > 0;
   pill.classList.toggle("warning", warning);
   pill.innerHTML = `<span class="status-dot"></span>${warning ? t("attention") : t("updated")}`;
-  $("#archive-start").textContent = formatDate(status.archive_start_date);
   $("#technical-status").textContent = JSON.stringify(status, null, 2);
   const archiveDays = Math.max(0, (new Date(status.latest_measurement_date) - new Date(status.archive_start_date)) / 86400000);
   if (archiveDays < 30 && !new URLSearchParams(location.search).has("range")) state.rangePreset = "all";
 }
 
-function setupStations(geojson) {
-  state.features = geojson.features;
+function renderStationOptions() {
   const select = $("#station-select");
+  const selected = state.selectedId || select.value;
   select.innerHTML = "";
-  [...geojson.features].sort((a, b) => a.properties.river_km - b.properties.river_km).forEach(feature => {
-    const station = { ...feature.properties, latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0] };
-    state.stations.set(station.station_id, station);
+  [...state.stations.values()].sort((a, b) => (a.river_km ?? Number.POSITIVE_INFINITY) - (b.river_km ?? Number.POSITIVE_INFINITY) || a.display_name.localeCompare(b.display_name, getLocale())).forEach(station => {
     const option = document.createElement("option"); option.value = station.station_id;
     option.textContent = `${station.display_name} · ${countryName(station.country_code)}${station.river_km == null ? "" : ` · km ${formatNumber(station.river_km)}`}`;
     select.append(option);
   });
-  renderTable(); renderComparePicker();
+  if (selected && state.stations.has(selected)) select.value = selected;
+}
+
+function setupStations(geojson) {
+  state.features = geojson.features;
+  state.stations.clear();
+  geojson.features.forEach(feature => {
+    const station = { ...feature.properties, latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0] };
+    state.stations.set(station.station_id, station);
+  });
+  renderStationOptions(); renderTable(); renderComparePicker();
 }
 
 async function getStationData(station) {
@@ -124,7 +132,7 @@ async function selectStation(stationId, options = {}) {
     const banner = $("#quality-banner");
     if (qualityIssues.length) {
       banner.hidden = false;
-      banner.textContent = qualityIssues.map(issue => issue.message).join(" · ");
+      banner.textContent = [...new Set(qualityIssues.map(issue => issueLabel(issue.code)))].join(" · ");
     } else if (station.scope === "international" && station.source_status !== "complete") {
       banner.hidden = false; banner.textContent = `${t("sourceStatus")}: ${statusLabel(station.source_status)}.`;
     } else if (stationWarnings.length) {
@@ -138,7 +146,7 @@ async function selectStation(stationId, options = {}) {
   } catch (error) {
     $("#station-forecast-date").textContent = t("unavailable");
     $("#quality-banner").hidden = false; $("#quality-banner").textContent = t("stationDataUnavailable");
-    toast(error.message || t("stationLoadError"));
+    console.error(error); toast(t("stationLoadError"));
   }
 }
 
@@ -193,7 +201,7 @@ function filteredTableFeatures() {
 
 function renderTable() {
   const tbody = $("#stations-table tbody"); tbody.innerHTML = "";
-  const cell = (value, unit = "", digits = 0) => value === null || value === undefined || value === "" ? "<span aria-label=\"unavailable\">—</span>" : `${formatNumber(value, digits)}${unit ? ` ${unit}` : ""}`;
+  const cell = (value, unit = "", digits = 0) => value === null || value === undefined || value === "" ? `<span aria-label="${t("unavailable")}">—</span>` : `${formatNumber(value, digits)}${unit ? ` ${unit}` : ""}`;
   filteredTableFeatures().forEach(feature => {
     const p = feature.properties; const rowTrend = trend(p.variation_cm_24h, p.quality_flag);
     const variation = p.variation_cm_24h == null ? null : Number(p.variation_cm_24h);
@@ -244,6 +252,23 @@ function toggleFullscreen(element, chartId) {
   setTimeout(() => resizeChart(chartId), 100);
 }
 
+function localizedDownloadLabel(item) {
+  const fixed = {
+    "latest.csv": "downloadCurrentSituation",
+    "observations.csv": "downloadAllObservations",
+    "forecasts.csv": "downloadAllForecasts",
+    "stations.csv": "downloadStationRegistry",
+    "latest.geojson": "downloadGeospatialSituation",
+  }[item.path];
+  if (fixed) return t(fixed);
+  if (item.path.startsWith("station/")) return `${item.label.split(" — ")[0]} — ${t("combinedHistory")}`;
+  if (item.path.startsWith("international/")) return `${t("internationalBetaDownload")} · ${item.path.split("/").at(-1)}`;
+  return item.label;
+}
+
+function renderDownloads() {
+  $("#download-list").innerHTML = downloadEntries.map(item => `<a href="${dataUrl(item.path)}" download><span>${localizedDownloadLabel(item)}</span><small>${item.format}</small></a>`).join("");
+}
 function bindEvents(downloads) {
   $("#station-select").addEventListener("change", event => selectStation(event.target.value));
   $("#map-reset").addEventListener("click", resetMap);
@@ -265,8 +290,8 @@ function bindEvents(downloads) {
   $("#language-button").addEventListener("click", toggleLanguage);
   $("#downloads-button").addEventListener("click", () => $("#downloads-dialog").showModal());
   $$('[data-close-dialog]').forEach(button => button.addEventListener("click", () => document.getElementById(button.dataset.closeDialog).close()));
-  const internationalDownloads = ["stations.json", "observations.json", "latest.json", "forecasts.json", "sources.json", "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json"].map(name => ({ path: `international/${name}`, label: `International beta · ${name}`, format: name.endsWith("geojson") ? "GeoJSON" : "JSON" }));
-  $("#download-list").innerHTML = [...downloads, ...internationalDownloads].map(item => `<a href="${dataUrl(item.path)}" download><span>${item.label}</span><small>${item.format}</small></a>`).join("");
+  const internationalDownloads = ["stations.json", "observations.json", "latest.json", "forecasts.json", "sources.json", "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json"].map(name => ({ path: `international/${name}`, label: name, format: name.endsWith("geojson") ? "GeoJSON" : "JSON" }));
+  downloadEntries = [...downloads, ...internationalDownloads]; renderDownloads();
   document.addEventListener("keydown", event => { if (event.key !== "Escape") return; const expanded = $(".is-fullscreen"); if (expanded) { const chart = expanded.querySelector(".chart")?.id; expanded.classList.remove("is-fullscreen"); document.body.style.overflow = ""; if (chart) resizeChart(chart); refreshMapSize(); } });
   window.addEventListener("resize", debounce(() => { refreshMapSize(); Object.values(chartIds).forEach(resizeChart); resizeChart("chart-compare"); }, 120));
 }
@@ -282,8 +307,9 @@ async function start() {
     applyStatus(status); setupStations(geojson); initMap("map", geojson, id => selectStation(id)); bindEvents(downloads);
     initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); });
     onLanguageChange(async () => {
-      applyTranslations(); applyStatus(state.status); refreshMapLanguage(); renderTable(); renderComparePicker();
+      applyTranslations(); applyStatus(state.status); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads();
       if (state.selectedId) await selectStation(state.selectedId, { pan: false });
+      await renderCompare();
     });
     const params = new URLSearchParams(location.search); const requestedSlug = params.get("station");
     const requested = [...state.stations.values()].find(station => station.slug === requestedSlug) || [...state.stations.values()].find(station => station.slug === "giurgiu") || [...state.stations.values()][0];
