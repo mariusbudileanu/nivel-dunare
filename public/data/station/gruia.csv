@@ -1,7 +1,13 @@
 ﻿record_type,station_id,display_name,datetime,date,lead_hours,level_cm,variation_cm_24h,water_temperature_c,quality_flag
 observation,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-03T03:00:00+03:00,2026-08-03,,-140,-2,28,valid
+observation,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-04T03:00:00+03:00,2026-08-04,,-148,-8,28,valid
 forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-07T03:00:00+03:00,2026-08-07,120,-136,,,xml_html_value_mismatch
 forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-03T03:00:00+03:00,2026-08-03,24,-126,,,xml_html_value_mismatch
 forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-04T03:00:00+03:00,2026-08-04,48,-129,,,xml_html_value_mismatch
 forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-05T03:00:00+03:00,2026-08-05,72,-132,,,xml_html_value_mismatch
 forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-06T03:00:00+03:00,2026-08-06,96,-134,,,xml_html_value_mismatch
+forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-09T03:00:00+03:00,2026-08-09,120,-137,,,valid
+forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-05T03:00:00+03:00,2026-08-05,24,-133,,,valid
+forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-06T03:00:00+03:00,2026-08-06,48,-134,,,valid
+forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-07T03:00:00+03:00,2026-08-07,72,-135,,,valid
+forecast,09b542d8-41d7-4746-8d84-e081f76a8c37,Gruia,2026-08-08T03:00:00+03:00,2026-08-08,96,-136,,,valid

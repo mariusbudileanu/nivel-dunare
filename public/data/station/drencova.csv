@@ -1,7 +1,13 @@
 ﻿record_type,station_id,display_name,datetime,date,lead_hours,level_cm,variation_cm_24h,water_temperature_c,quality_flag
 observation,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-03T03:00:00+03:00,2026-08-03,,963,-1,28,valid
+observation,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-04T03:00:00+03:00,2026-08-04,,964,1,28,valid
 forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-07T03:00:00+03:00,2026-08-07,120,,,,missing_forecast_encoded_as_zero
 forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-03T03:00:00+03:00,2026-08-03,24,,,,missing_forecast_encoded_as_zero
 forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-04T03:00:00+03:00,2026-08-04,48,,,,missing_forecast_encoded_as_zero
 forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-05T03:00:00+03:00,2026-08-05,72,,,,missing_forecast_encoded_as_zero
 forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-06T03:00:00+03:00,2026-08-06,96,,,,missing_forecast_encoded_as_zero
+forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-09T03:00:00+03:00,2026-08-09,120,,,,missing_forecast_encoded_as_zero
+forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-05T03:00:00+03:00,2026-08-05,24,,,,missing_forecast_encoded_as_zero
+forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-06T03:00:00+03:00,2026-08-06,48,,,,missing_forecast_encoded_as_zero
+forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-07T03:00:00+03:00,2026-08-07,72,,,,missing_forecast_encoded_as_zero
+forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-08T03:00:00+03:00,2026-08-08,96,,,,missing_forecast_encoded_as_zero
