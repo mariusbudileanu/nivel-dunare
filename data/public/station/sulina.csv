@@ -12,3 +12,8 @@ forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-05T03:00:00+03:00,2
 forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-06T03:00:00+03:00,2026-08-06,48,,,,missing_forecast_encoded_as_zero
 forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-07T03:00:00+03:00,2026-08-07,72,,,,missing_forecast_encoded_as_zero
 forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-08T03:00:00+03:00,2026-08-08,96,,,,missing_forecast_encoded_as_zero
+forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-10T03:00:00+03:00,2026-08-10,120,,,,missing_forecast_encoded_as_zero
+forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-06T03:00:00+03:00,2026-08-06,24,,,,missing_forecast_encoded_as_zero
+forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-07T03:00:00+03:00,2026-08-07,48,,,,missing_forecast_encoded_as_zero
+forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-08T03:00:00+03:00,2026-08-08,72,,,,missing_forecast_encoded_as_zero
+forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-09T03:00:00+03:00,2026-08-09,96,,,,missing_forecast_encoded_as_zero
