@@ -1,0 +1,87 @@
+{
+  "valid_locality": [
+    {
+      "place_id": 1,
+      "lat": "47.750348",
+      "lon": "18.2235858",
+      "category": "place",
+      "type": "municipality",
+      "addresstype": "municipality",
+      "importance": 0.42,
+      "name": "Iža",
+      "display_name": "Iža, District of Komárno, Slovakia",
+      "address": {"municipality": "Iža", "country_code": "sk"},
+      "namedetails": {"name": "Iža", "name:en": "Iza"}
+    }
+  ],
+  "wrong_country": [
+    {
+      "place_id": 2,
+      "lat": "47.75",
+      "lon": "18.22",
+      "category": "place",
+      "type": "village",
+      "addresstype": "village",
+      "name": "Iža",
+      "display_name": "Iža, Hungary",
+      "address": {"country_code": "hu"},
+      "namedetails": {"name": "Iža"}
+    }
+  ],
+  "outside_danube_sector": [
+    {
+      "place_id": 3,
+      "lat": "49.20",
+      "lon": "21.00",
+      "category": "place",
+      "type": "village",
+      "addresstype": "village",
+      "name": "Iža",
+      "display_name": "Iža, Slovakia",
+      "address": {"country_code": "sk"},
+      "namedetails": {"name": "Iža"}
+    }
+  ],
+  "non_locality": [
+    {
+      "place_id": 4,
+      "lat": "47.75",
+      "lon": "18.22",
+      "category": "waterway",
+      "type": "river",
+      "addresstype": "river",
+      "name": "Iža",
+      "display_name": "Iža waterway, Slovakia",
+      "address": {"country_code": "sk"},
+      "namedetails": {"name": "Iža"}
+    }
+  ],
+  "ambiguous_homonyms": [
+    {
+      "place_id": 5,
+      "lat": "48.00",
+      "lon": "17.20",
+      "category": "place",
+      "type": "village",
+      "addresstype": "village",
+      "importance": 0.4,
+      "name": "Testovce",
+      "display_name": "Testovce, western Slovakia",
+      "address": {"country_code": "sk"},
+      "namedetails": {"name": "Testovce"}
+    },
+    {
+      "place_id": 6,
+      "lat": "48.10",
+      "lon": "17.60",
+      "category": "place",
+      "type": "village",
+      "addresstype": "village",
+      "importance": 0.4,
+      "name": "Testovce",
+      "display_name": "Testovce, southern Slovakia",
+      "address": {"country_code": "sk"},
+      "namedetails": {"name": "Testovce"}
+    }
+  ]
+}

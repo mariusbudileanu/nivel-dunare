@@ -1,0 +1,26 @@
+{
+  "target_station_count": 75,
+  "unique_query_count": 68,
+  "requests_made": 0,
+  "requests_made_this_run": 0,
+  "cache_query_count": 75,
+  "accepted": 67,
+  "medium": 67,
+  "low": 3,
+  "unresolved": 5,
+  "review_required": 8,
+  "ambiguous_station_ids": [],
+  "review_required_station_ids": [
+    "bg-bajkal-automatic",
+    "bg-novo-selo-automatic",
+    "bg-novo-selo-manual",
+    "de-560cf185-0052-4e40-832b-7792b52dd343",
+    "hr-5170",
+    "hu-442708",
+    "hu-442532",
+    "sk-5128"
+  ],
+  "provider": "OpenStreetMap Nominatim",
+  "cache": "data\\reference\\international_station_geocoding_cache-v1.json",
+  "registry": "data\\reference\\international_station_geocoding.csv"
+}

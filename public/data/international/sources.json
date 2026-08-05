@@ -1,0 +1,93 @@
+[
+  {
+    "adapter_live_status": "complete",
+    "capture_datetime_utc": "2026-08-04T16:36:22.153894+00:00",
+    "country_code": "DE",
+    "forecast_count": 0,
+    "label": "WSV PEGELONLINE",
+    "live_run_id": "30929930388",
+    "note": null,
+    "observation_count": 25,
+    "source_id": "pegelonline_de",
+    "station_count": 18,
+    "status": "complete"
+  },
+  {
+    "adapter_live_status": "partial",
+    "capture_datetime_utc": "2026-08-04T16:36:24.814447+00:00",
+    "country_code": "AT",
+    "forecast_count": 238,
+    "label": "viadonau DoRIS",
+    "live_run_id": "30929930388",
+    "note": "Public test source; a permanent DORIS_PARTNER_KEY is required for production.",
+    "observation_count": 9,
+    "source_id": "viadonau_at",
+    "station_count": 9,
+    "status": "partial"
+  },
+  {
+    "adapter_live_status": "complete",
+    "capture_datetime_utc": "2026-08-04T16:36:34.176673+00:00",
+    "country_code": "SK",
+    "forecast_count": 196,
+    "label": "SHMU",
+    "live_run_id": "30929930388",
+    "note": "Usable beta data; suspect temperatures are excluded from latest valid values.",
+    "observation_count": 25,
+    "source_id": "shmu_sk",
+    "station_count": 13,
+    "status": "partial"
+  },
+  {
+    "adapter_live_status": "complete",
+    "capture_datetime_utc": "2026-08-04T16:36:37.294217+00:00",
+    "country_code": "HU",
+    "forecast_count": 0,
+    "label": "OVF Hydroinfo",
+    "live_run_id": "30929930388",
+    "note": null,
+    "observation_count": 57,
+    "source_id": "hydroinfo_hu",
+    "station_count": 25,
+    "status": "complete"
+  },
+  {
+    "adapter_live_status": "suspended",
+    "capture_datetime_utc": "2026-08-04T16:36:37.977776+00:00",
+    "country_code": "HR",
+    "forecast_count": 0,
+    "label": "Croatian waterways / DHMZ",
+    "live_run_id": "30929930388",
+    "note": "Feed is stale; historical values are not current.",
+    "observation_count": 30,
+    "source_id": "vodniputovi_hr",
+    "station_count": 3,
+    "status": "suspended"
+  },
+  {
+    "adapter_live_status": "partial",
+    "capture_datetime_utc": "2026-08-04T16:36:40.150242+00:00",
+    "country_code": "BG",
+    "forecast_count": 0,
+    "label": "APPD",
+    "live_run_id": "30929930388",
+    "note": "Institutional station IDs and forecast semantics are not demonstrated.",
+    "observation_count": 46,
+    "source_id": "appd_bg",
+    "station_count": 20,
+    "status": "partial"
+  },
+  {
+    "adapter_live_status": "suspended",
+    "capture_datetime_utc": null,
+    "country_code": "RS",
+    "forecast_count": 0,
+    "label": "RHMZ / Hidmet",
+    "live_run_id": "30929930388",
+    "note": "Live access suspended after TLS certificate-chain validation failure; no request is made.",
+    "observation_count": 0,
+    "source_id": "hidmet_rs",
+    "station_count": 13,
+    "status": "suspended"
+  }
+]

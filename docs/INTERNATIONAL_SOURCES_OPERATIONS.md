@@ -67,6 +67,8 @@ The same commands work on the current Hetzner checkout with Python 3.11+ and no 
 
 This change intentionally creates no cron entry, systemd service or timer.
 
+The complete future migration runbook, including isolated paths, exact per-source/all-source commands, promotion, `DORIS_PARTNER_KEY`, locking, resource controls, retention, logs, fail-closed behavior and AIS isolation, is in [`INTERNATIONAL_HETZNER_MIGRATION.md`](INTERNATIONAL_HETZNER_MIGRATION.md).
+
 ## GitHub manual run
 
 Actions → **Test international Danube sources** → **Run workflow**. Select a source and `fixtures` or `live`. The workflow has `contents: read`, uses no secret in fixture mode, performs no commit, and uploads a 14-day artifact containing raw, normalized and validation files.

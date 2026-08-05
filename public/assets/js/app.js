@@ -1,6 +1,8 @@
 import { RANGE_DAYS, formatDate, formatNumber } from "./config.js";
 import { dataUrl, loadStartupData, loadStation } from "./data.js";
-import { findStation, initMap, refreshMapSize, resetMap, selectMapStation } from "./map.js";
+import { filterMap, findStation, initMap, refreshMapLanguage, refreshMapSize, resetMap, selectMapStation } from "./map-beta.js";
+import { initBetaUi } from "./beta-ui.js";
+import { applyTranslations, countryName, getLocale, initLanguage, issueLabel, onLanguageChange, statusLabel, t, toggleLanguage } from "./i18n.js";
 import {
   downloadChartCsv, downloadChartPng, renderComparison, renderHistory,
   renderLevel, renderScores, renderTemperature, renderVariation, resizeChart
@@ -9,9 +11,11 @@ import {
 const state = {
   status: null, features: [], stations: new Map(), stationData: new Map(),
   selectedId: null, activeTab: "level", rangePreset: "30d", range: {},
-  compareIds: [], compareMode: "delta", tableSort: { field: "river_km", direction: 1 }
+  compareIds: [], compareMode: "delta", tableSort: { field: "river_km", direction: 1 },
+  filterPredicate: () => true, international: null
 };
 
+let downloadEntries = [];
 const chartIds = {
   level: "chart-level", variation: "chart-variation", temperature: "chart-temperature",
   history: "chart-history", scores: "chart-scores"
@@ -26,14 +30,17 @@ function toast(message, timeout = 3200) {
 }
 
 function trend(value, quality = "valid") {
-  if (quality !== "valid") return { key: "alert", symbol: "!", label: "atenționare" };
+  if (quality !== "valid") return { key: "alert", symbol: "!", label: t("qualityWarning") };
   const number = Number(value);
-  if (number > 0) return { key: "up", symbol: "+", label: "creștere" };
-  if (number < 0) return { key: "down", symbol: "−", label: "scădere" };
-  return { key: "still", symbol: "0", label: "staționare" };
+  if (number > 0) return { key: "up", symbol: "+", label: t("trendUp") };
+  if (number < 0) return { key: "down", symbol: "−", label: t("trendDown") };
+  return { key: "still", symbol: "0", label: t("trendStill") };
 }
 
 function selectedStation() { return state.stations.get(state.selectedId); }
+function valueWithUnit(value, unit, digits = 0) {
+  return value === null || value === undefined || value === "" ? t("unavailable") : `${formatNumber(value, digits)} ${unit}`;
+}
 
 function applyStatus(status) {
   state.status = status;
@@ -47,25 +54,32 @@ function applyStatus(status) {
   const pill = $("#system-status");
   const warning = status.system_status !== "operational" || status.xml_html_mismatch_count > 0;
   pill.classList.toggle("warning", warning);
-  pill.innerHTML = `<span class="status-dot"></span>${warning ? "Necesită atenție" : "Date actualizate"}`;
-  $("#archive-start").textContent = formatDate(status.archive_start_date);
+  pill.innerHTML = `<span class="status-dot"></span>${warning ? t("attention") : t("updated")}`;
   $("#technical-status").textContent = JSON.stringify(status, null, 2);
   const archiveDays = Math.max(0, (new Date(status.latest_measurement_date) - new Date(status.archive_start_date)) / 86400000);
   if (archiveDays < 30 && !new URLSearchParams(location.search).has("range")) state.rangePreset = "all";
 }
 
-function setupStations(geojson) {
-  state.features = geojson.features;
+function renderStationOptions() {
   const select = $("#station-select");
+  const selected = state.selectedId || select.value;
   select.innerHTML = "";
-  [...geojson.features].sort((a, b) => a.properties.river_km - b.properties.river_km).forEach(feature => {
-    const station = { ...feature.properties, latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0] };
-    state.stations.set(station.station_id, station);
+  [...state.stations.values()].sort((a, b) => (a.river_km ?? Number.POSITIVE_INFINITY) - (b.river_km ?? Number.POSITIVE_INFINITY) || a.display_name.localeCompare(b.display_name, getLocale())).forEach(station => {
     const option = document.createElement("option"); option.value = station.station_id;
-    option.textContent = `${station.display_name} · km ${formatNumber(station.river_km)}`;
+    option.textContent = `${station.display_name} · ${countryName(station.country_code)}${station.river_km == null ? "" : ` · km ${formatNumber(station.river_km)}`}`;
     select.append(option);
   });
-  renderTable(); renderComparePicker();
+  if (selected && state.stations.has(selected)) select.value = selected;
+}
+
+function setupStations(geojson) {
+  state.features = geojson.features;
+  state.stations.clear();
+  geojson.features.forEach(feature => {
+    const station = { ...feature.properties, latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0] };
+    state.stations.set(station.station_id, station);
+  });
+  renderStationOptions(); renderTable(); renderComparePicker();
 }
 
 async function getStationData(station) {
@@ -101,30 +115,38 @@ async function selectStation(stationId, options = {}) {
   state.selectedId = stationId; $("#station-select").value = stationId;
   selectMapStation(stationId, { pan: options.pan !== false, openPopup: options.openPopup === true });
   $("#station-title").textContent = station.display_name;
-  $("#station-context").textContent = `Km ${formatNumber(station.river_km)} · ${station.source_name}`;
-  $("#station-level").textContent = `${formatNumber(station.level_cm)} cm`;
-  const variation = Number(station.variation_cm_24h); $("#station-variation").textContent = `${variation > 0 ? "+" : ""}${formatNumber(variation)} cm`;
-  $("#station-temperature").textContent = `${formatNumber(station.water_temperature_c, 1)} °C`;
-  $("#station-forecast-date").textContent = "Se încarcă…";
+  const context = [countryName(station.country_code), station.source_label || station.source_name, station.river_km == null ? null : `km ${formatNumber(station.river_km)}`].filter(Boolean);
+  $("#station-context").textContent = context.join(" · ");
+  $("#station-level").textContent = valueWithUnit(station.level_cm, "cm");
+  const variation = station.variation_cm_24h == null ? null : Number(station.variation_cm_24h);
+  $("#station-variation").textContent = variation == null ? t("unavailable") : `${variation > 0 ? "+" : ""}${formatNumber(variation)} cm`;
+  $("#station-temperature").textContent = valueWithUnit(station.water_temperature_c, "°C", 1);
+  $("#station-forecast-date").textContent = t("loadingEllipsis");
   try {
     const data = await getStationData(station);
-    const issues = [...new Set(data.forecasts.map(row => row.forecast_issue_datetime))].sort();
-    $("#station-forecast-date").textContent = formatDate(issues.at(-1), true);
+    const issues = [...new Set(data.forecasts.map(row => row.forecast_issue_datetime).filter(Boolean))].sort();
+    $("#station-forecast-date").textContent = issues.length ? formatDate(issues.at(-1), true) : t("unavailable");
     state.range = deriveRange(data.observations); updateRangeUi();
     const stationWarnings = data.forecasts.filter(row => !["valid"].includes(row.quality_flag));
+    const qualityIssues = state.international?.qualityIssues.filter(issue => (issue.station_id || issue.record_id) === station.station_id) || [];
     const banner = $("#quality-banner");
-    if (stationWarnings.length) {
+    if (qualityIssues.length) {
+      banner.hidden = false;
+      banner.textContent = [...new Set(qualityIssues.map(issue => issueLabel(issue.code)))].join(" · ");
+    } else if (station.scope === "international" && station.source_status !== "complete") {
+      banner.hidden = false; banner.textContent = `${t("sourceStatus")}: ${statusLabel(station.source_status)}.`;
+    } else if (stationWarnings.length) {
       const ambiguous = stationWarnings.filter(row => row.quality_flag.includes("zero") || row.quality_flag.includes("missing_forecast")).length;
       const mismatch = stationWarnings.filter(row => row.quality_flag.includes("mismatch")).length;
-      banner.hidden = false; banner.textContent = `Validare prognoze: ${ambiguous} valori indisponibile/zero ambiguu și ${mismatch} nepotriviri XML–HTML. Valorile sunt marcate în arhivă.`;
+      banner.hidden = false; banner.textContent = `${t("warnings")}: ${ambiguous + mismatch}`;
     } else banner.hidden = true;
     populateIssueSelector(issues); await renderActiveChart();
     if (state.compareIds.includes(stationId)) await renderCompare();
     renderTable(); updateQuery();
   } catch (error) {
-    $("#station-forecast-date").textContent = "Indisponibil";
-    $("#quality-banner").hidden = false; $("#quality-banner").textContent = "Datele stației nu au putut fi încărcate. Reîncearcă sau consultă situația globală.";
-    toast(error.message || "Eroare la încărcarea stației");
+    $("#station-forecast-date").textContent = t("unavailable");
+    $("#quality-banner").hidden = false; $("#quality-banner").textContent = t("stationDataUnavailable");
+    console.error(error); toast(t("stationLoadError"));
   }
 }
 
@@ -149,10 +171,10 @@ function renderScoreSummary(scores) {
   const paired = scores.filter(row => Number(row.n_pairs) > 0);
   const total = paired.reduce((sum, row) => sum + Number(row.n_pairs), 0);
   const average = field => paired.length ? paired.reduce((sum, row) => sum + Number(row[field] || 0), 0) / paired.length : null;
-  const maturity = total < 10 ? "Date insuficiente" : total < 30 ? "Rezultate preliminare" : "Rezultate consolidate";
+  const maturity = total < 10 ? t("maturityInsufficient") : total < 30 ? t("maturityPreliminary") : t("maturityConsolidated");
   $("#score-summary").innerHTML = [
-    ["Perechi", total], ["MAE mediu", average("mae_cm") == null ? "—" : `${formatNumber(average("mae_cm"), 1)} cm`],
-    ["RMSE mediu", average("rmse_cm") == null ? "—" : `${formatNumber(average("rmse_cm"), 1)} cm`], ["Maturitate", maturity]
+    [t("pairs"), total], [t("averageMae"), average("mae_cm") == null ? "—" : `${formatNumber(average("mae_cm"), 1)} cm`],
+    [t("averageRmse"), average("rmse_cm") == null ? "—" : `${formatNumber(average("rmse_cm"), 1)} cm`], [t("maturity"), maturity]
   ].map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join("");
 }
 
@@ -164,25 +186,29 @@ async function changeTab(tab) {
 }
 
 function filteredTableFeatures() {
-  const query = $("#table-search").value.trim().toLocaleLowerCase("ro-RO"); const filter = $("#table-filter").value;
+  const query = $("#table-search").value.trim().toLocaleLowerCase(getLocale()); const filter = $("#table-filter").value;
   const rows = state.features.filter(feature => {
     const p = feature.properties; const t = trend(p.variation_cm_24h, p.quality_flag);
-    return (!query || p.display_name.toLocaleLowerCase("ro-RO").includes(query)) && (filter === "all" || t.key === filter);
+    return state.filterPredicate(p) && (!query || `${p.display_name} ${p.station_name_local || ""}`.toLocaleLowerCase(getLocale()).includes(query)) && (filter === "all" || t.key === filter);
   });
   const { field, direction } = state.tableSort;
   return rows.sort((a, b) => {
     const av = a.properties[field], bv = b.properties[field];
     const numeric = ["river_km", "level_cm", "variation_cm_24h", "water_temperature_c"].includes(field);
-    return direction * (numeric ? Number(av) - Number(bv) : String(av).localeCompare(String(bv), "ro"));
+    return direction * (numeric ? Number(av) - Number(bv) : String(av).localeCompare(String(bv), getLocale()));
   });
 }
 
 function renderTable() {
   const tbody = $("#stations-table tbody"); tbody.innerHTML = "";
+  const cell = (value, unit = "", digits = 0) => value === null || value === undefined || value === "" ? `<span aria-label="${t("unavailable")}">—</span>` : `${formatNumber(value, digits)}${unit ? ` ${unit}` : ""}`;
   filteredTableFeatures().forEach(feature => {
-    const p = feature.properties; const t = trend(p.variation_cm_24h, p.quality_flag); const variation = Number(p.variation_cm_24h);
+    const p = feature.properties; const rowTrend = trend(p.variation_cm_24h, p.quality_flag);
+    const variation = p.variation_cm_24h == null ? null : Number(p.variation_cm_24h);
+    const localName = p.station_name_local && p.station_name_local !== p.display_name ? `<small>${p.station_name_local}</small>` : "";
+    const status = p.scope === "international" ? `<span class="status-tag ${p.source_status}">${statusLabel(p.source_status)}</span>` : `<span class="quality-chip ${p.quality_flag === "valid" ? "" : "warning"}">${p.quality_flag === "valid" ? rowTrend.label : t("qualityWarning")}</span>`;
     const row = document.createElement("tr"); row.tabIndex = 0; row.dataset.stationId = p.station_id;
-    row.innerHTML = `<td><strong>${p.display_name}</strong></td><td>${formatNumber(p.river_km)}</td><td>${formatNumber(p.level_cm)} cm</td><td><span class="trend-badge ${t.key}">${t.symbol}</span> ${variation > 0 ? "+" : ""}${formatNumber(variation)} cm</td><td>${formatNumber(p.water_temperature_c, 1)} °C</td><td>${formatDate(p.measurement_datetime)}</td><td><span class="quality-chip ${p.quality_flag === "valid" ? "" : "warning"}">${p.quality_flag === "valid" ? t.label : "atenționare"}</span></td>`;
+    row.innerHTML = `<td><strong>${p.display_name}</strong>${localName}<small>${countryName(p.country_code)} · ${p.source_label || p.source_name || ""}</small></td><td>${cell(p.river_km)}</td><td>${cell(p.level_cm, "cm")}</td><td>${variation == null ? "—" : `<span class="trend-badge ${rowTrend.key}">${rowTrend.symbol}</span> ${variation > 0 ? "+" : ""}${formatNumber(variation)} cm`}</td><td>${cell(p.water_temperature_c, "°C", 1)}</td><td>${formatDate(p.measurement_datetime)}</td><td>${status}</td>`;
     row.addEventListener("click", () => { selectStation(p.station_id); scrollToAnalysis(); });
     row.addEventListener("keydown", event => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); row.click(); } });
     if (p.station_id === state.selectedId) row.setAttribute("aria-current", "true");
@@ -198,7 +224,7 @@ function renderComparePicker() {
     const label = document.createElement("label");
     label.innerHTML = `<input type="checkbox" value="${station.station_id}" ${state.compareIds.includes(station.station_id) ? "checked" : ""}> ${station.display_name}`;
     label.querySelector("input").addEventListener("change", async event => {
-      if (event.target.checked && state.compareIds.length >= 4) { event.target.checked = false; toast("Poți compara maximum 4 stații."); return; }
+      if (event.target.checked && state.compareIds.length >= 4) { event.target.checked = false; toast(t("compareMaximumFour")); return; }
       state.compareIds = event.target.checked ? [...state.compareIds, station.station_id] : state.compareIds.filter(id => id !== station.station_id);
       await renderCompare();
     }); picker.append(label);
@@ -208,7 +234,7 @@ function renderComparePicker() {
 async function renderCompare() {
   const series = [];
   for (const id of state.compareIds) { const station = state.stations.get(id); const data = await getStationData(station); series.push({ station, observations: data.observations }); }
-  $("#compare-selection").textContent = series.length ? series.map(item => item.station.display_name).join(" · ") : "Nicio stație selectată";
+  $("#compare-selection").textContent = series.length ? series.map(item => item.station.display_name).join(" · ") : t("noStationSelected");
   await renderComparison("chart-compare", series, state.compareMode, state.range);
 }
 
@@ -222,15 +248,32 @@ function downloadTableCsv() {
 
 function toggleFullscreen(element, chartId) {
   const active = element.classList.toggle("is-fullscreen"); document.body.style.overflow = active ? "hidden" : "";
-  const button = element.querySelector("[data-action=expand], [data-compare-action=expand]"); if (button) button.textContent = active ? "Închide" : "Extinde";
+  const button = element.querySelector("[data-action=expand], [data-compare-action=expand]"); if (button) button.textContent = active ? t("closeAction") : t("expand");
   setTimeout(() => resizeChart(chartId), 100);
 }
 
+function localizedDownloadLabel(item) {
+  const fixed = {
+    "latest.csv": "downloadCurrentSituation",
+    "observations.csv": "downloadAllObservations",
+    "forecasts.csv": "downloadAllForecasts",
+    "stations.csv": "downloadStationRegistry",
+    "latest.geojson": "downloadGeospatialSituation",
+  }[item.path];
+  if (fixed) return t(fixed);
+  if (item.path.startsWith("station/")) return `${item.label.split(" — ")[0]} — ${t("combinedHistory")}`;
+  if (item.path.startsWith("international/")) return `${t("internationalBetaDownload")} · ${item.path.split("/").at(-1)}`;
+  return item.label;
+}
+
+function renderDownloads() {
+  $("#download-list").innerHTML = downloadEntries.map(item => `<a href="${dataUrl(item.path)}" download><span>${localizedDownloadLabel(item)}</span><small>${item.format}</small></a>`).join("");
+}
 function bindEvents(downloads) {
   $("#station-select").addEventListener("change", event => selectStation(event.target.value));
   $("#map-reset").addEventListener("click", resetMap);
   $("#map-fullscreen").addEventListener("click", () => { const panel = $(".map-panel"); panel.classList.toggle("is-fullscreen"); document.body.style.overflow = panel.classList.contains("is-fullscreen") ? "hidden" : ""; refreshMapSize(); });
-  $("#station-search").addEventListener("keydown", event => { if (event.key === "Enter") { const marker = findStation(event.target.value); if (marker) selectStation(marker.properties.station_id, { openPopup: true }); else toast("Stația nu a fost găsită."); } });
+  $("#station-search").addEventListener("keydown", event => { if (event.key === "Enter") { const marker = findStation(event.target.value); if (marker) selectStation(marker.properties.station_id, { openPopup: true }); else toast(t("stationNotFound")); } });
   $$("[data-range]").forEach(button => button.addEventListener("click", async () => { state.rangePreset = button.dataset.range; const data = await getStationData(selectedStation()); state.range = deriveRange(data.observations); updateRangeUi(); await renderActiveChart(); await renderCompare(); updateQuery(); }));
   [$("#date-from"), $("#date-to")].forEach(input => input.addEventListener("change", async () => { state.rangePreset = "custom"; state.range = { from: $("#date-from").value, to: $("#date-to").value }; updateRangeUi(); await renderActiveChart(); await renderCompare(); updateQuery(); }));
   $("#range-reset").addEventListener("click", async () => { state.rangePreset = "all"; state.range = {}; updateRangeUi(); await renderActiveChart(); await renderCompare(); updateQuery(); });
@@ -244,9 +287,11 @@ function bindEvents(downloads) {
   $("#table-search").addEventListener("input", renderTable); $("#table-filter").addEventListener("change", renderTable); $("#table-csv").addEventListener("click", downloadTableCsv);
   $$("#stations-table th[data-sort]").forEach(header => header.addEventListener("click", () => { const field = header.dataset.sort; state.tableSort.direction = state.tableSort.field === field ? -state.tableSort.direction : 1; state.tableSort.field = field; renderTable(); }));
   $("#info-button").addEventListener("click", () => $("#info-dialog").showModal());
+  $("#language-button").addEventListener("click", toggleLanguage);
   $("#downloads-button").addEventListener("click", () => $("#downloads-dialog").showModal());
   $$('[data-close-dialog]').forEach(button => button.addEventListener("click", () => document.getElementById(button.dataset.closeDialog).close()));
-  $("#download-list").innerHTML = downloads.map(item => `<a href="${dataUrl(item.path)}" download><span>${item.label}</span><small>${item.format}</small></a>`).join("");
+  const internationalDownloads = ["stations.json", "observations.json", "latest.json", "forecasts.json", "sources.json", "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json"].map(name => ({ path: `international/${name}`, label: name, format: name.endsWith("geojson") ? "GeoJSON" : "JSON" }));
+  downloadEntries = [...downloads, ...internationalDownloads]; renderDownloads();
   document.addEventListener("keydown", event => { if (event.key !== "Escape") return; const expanded = $(".is-fullscreen"); if (expanded) { const chart = expanded.querySelector(".chart")?.id; expanded.classList.remove("is-fullscreen"); document.body.style.overflow = ""; if (chart) resizeChart(chart); refreshMapSize(); } });
   window.addEventListener("resize", debounce(() => { refreshMapSize(); Object.values(chartIds).forEach(resizeChart); resizeChart("chart-compare"); }, 120));
 }
@@ -254,19 +299,28 @@ function bindEvents(downloads) {
 function debounce(fn, wait) { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), wait); }; }
 
 async function start() {
+  initLanguage();
   document.body.classList.add("loading");
   try {
-    const { status, geojson, downloads } = await loadStartupData();
+    const { status, geojson, downloads, international } = await loadStartupData();
+    state.international = international;
     applyStatus(status); setupStations(geojson); initMap("map", geojson, id => selectStation(id)); bindEvents(downloads);
+    initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); });
+    onLanguageChange(async () => {
+      applyTranslations(); applyStatus(state.status); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads();
+      if (state.selectedId) await selectStation(state.selectedId, { pan: false });
+      await renderCompare();
+    });
     const params = new URLSearchParams(location.search); const requestedSlug = params.get("station");
     const requested = [...state.stations.values()].find(station => station.slug === requestedSlug) || [...state.stations.values()].find(station => station.slug === "giurgiu") || [...state.stations.values()][0];
     const range = params.get("range"); if (["7d", "30d", "90d", "365d", "all"].includes(range)) state.rangePreset = range;
     const tab = params.get("chart"); if (chartIds[tab]) state.activeTab = tab;
     await selectStation(requested.station_id, { pan: false });
     if (state.activeTab !== "level") await changeTab(state.activeTab);
+    applyTranslations();
   } catch (error) {
-    console.error(error); $("#system-status").classList.add("warning"); $("#system-status").innerHTML = '<span class="status-dot"></span>Date indisponibile';
-    toast("Aplicația nu a putut încărca datele publice. Încearcă din nou mai târziu.", 8000);
+    console.error(error); $("#system-status").classList.add("warning"); $("#system-status").innerHTML = `<span class="status-dot"></span>${t("unavailable")}`;
+    toast(t("unavailable"), 8000);
   } finally { document.body.classList.remove("loading"); }
 }
 
