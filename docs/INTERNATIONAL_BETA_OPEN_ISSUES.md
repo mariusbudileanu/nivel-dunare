@@ -13,11 +13,11 @@ These limitations are intentional and are surfaced as source statuses rather tha
 
 ## Operational limitations
 
-- International collection is still manual. No international production timer or systemd service is created by this beta.
+- The GitHub automation branch schedules DE, SK, HU, HR and BG daily at 01:37 UTC. AT remains manual and RS remains disabled; no international systemd service is created.
 - Refresh frequencies differ by national administration. The publication status and capture time must be read per source.
 - Moving collection to Hetzner requires an isolated unprivileged runtime, locking, resource controls, retention, monitoring and a permanent viadonau credential. Exact preparation commands are in `INTERNATIONAL_HETZNER_MIGRATION.md`.
 - HR and RS must not be enabled in an automated live collection until their respective stale-feed and TLS-chain problems are resolved and reviewed.
-- The AFDJ and AIS services must remain operationally isolated from any future international scheduler.
+- The AFDJ and AIS services must remain operationally isolated from the international GitHub scheduler.
 
 ## Data and presentation limitations
 

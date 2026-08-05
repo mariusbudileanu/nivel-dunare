@@ -26,6 +26,22 @@ SOURCE_POLICY = {
 
 SENSITIVE_QUERY_KEYS = {"viadonau_partner_key", "api_key", "apikey", "token", "access_token"}
 EXPECTED_COUNTS = {"de": 18, "at": 9, "sk": 13, "hu": 25, "hr": 3, "bg": 20, "rs": 13}
+DEFAULT_OPERATIONAL_FIELDS = {
+    "de": {"automation_status": "scheduled", "freshness_status": "current", "validation_status": "validated"},
+    "at": {"automation_status": "manual", "freshness_status": "current", "validation_status": "requires_review"},
+    "sk": {"automation_status": "scheduled", "freshness_status": "current", "validation_status": "requires_review"},
+    "hu": {"automation_status": "scheduled", "freshness_status": "current", "validation_status": "requires_review"},
+    "hr": {"automation_status": "scheduled", "freshness_status": "stale", "validation_status": "requires_review"},
+    "bg": {"automation_status": "scheduled", "freshness_status": "current", "validation_status": "requires_review"},
+    "rs": {"automation_status": "disabled", "freshness_status": "unavailable", "validation_status": "not_applicable"},
+}
+OPERATIONAL_VALUE_DEFAULTS = {
+    "last_attempt_at": None, "last_attempt_status": "unknown", "last_success_at": None,
+    "last_success_capture_at": None, "last_capture_at": None, "last_success_commit": None,
+    "last_error_code": None, "last_error_message": None, "last_error": None,
+    "consecutive_failures": 0, "published_snapshot_date": None, "next_expected_update": None,
+    "update_frequency": None, "validation_message_ro": None, "validation_message_en": None,
+}
 
 
 def read_json(path: Path) -> Any:
@@ -129,7 +145,7 @@ def enrich_observation(row: dict[str, Any], station: dict[str, Any], policy: dic
         "source_id": policy["source_id"],
         "source_status": policy["status"],
         "source_url": sanitize_url(station.get("source_url")),
-        "captured_at_utc": captures.get(result.get("source_file_sha256", "")),
+        "captured_at_utc": captures.get(result.get("source_file_sha256", "")) or result.get("captured_at_utc"),
         "current_usable": current_usable,
         "stale": not policy["current"],
     })
@@ -145,7 +161,7 @@ def enrich_forecast(row: dict[str, Any], station: dict[str, Any], policy: dict[s
         "source_id": policy["source_id"],
         "source_status": policy["status"],
         "source_url": sanitize_url(station.get("source_url")),
-        "captured_at_utc": captures.get(result.get("source_file_sha256", "")),
+        "captured_at_utc": captures.get(result.get("source_file_sha256", "")) or result.get("captured_at_utc"),
     })
     return result
 
@@ -185,8 +201,19 @@ def historical_quality_issues(candidate_root: Path | None, archive_root: Path | 
 def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root: Path, mirror_root: Path | None = None,
           historical_quality_root: Path | None = None, historical_archive_root: Path | None = None,
           fixtures_run_id: str | None = None, live_run_id: str | None = None,
-          geocoding_registry: Path = Path("data/reference/international_station_geocoding.csv")) -> dict[str, Any]:
+          geocoding_registry: Path = Path("data/reference/international_station_geocoding.csv"),
+          operations_state: Path | None = None) -> dict[str, Any]:
     captures, source_captures = capture_index(archive_root)
+    operations = read_json(operations_state) if operations_state and operations_state.is_file() else {"sources": {}}
+    operations_by_code = operations.get("sources", {})
+    effective_policies = {}
+    for code, base_policy in SOURCE_POLICY.items():
+        operational = {**DEFAULT_OPERATIONAL_FIELDS[code], **operations_by_code.get(code, {})}
+        effective_policies[code] = {
+            **base_policy,
+            "status": operational.get("source_status", base_policy["status"]),
+            "current": operational.get("freshness_status") == "current" if operational else base_policy["current"],
+        }
     aggregate = read_json(candidate_root / "summary.json")
     aggregate_by_source = {item["source"]: item for item in aggregate["sources"]}
     stations: list[dict[str, Any]] = []
@@ -194,7 +221,7 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
     forecasts: list[dict[str, Any]] = []
     quality_issues: list[dict[str, Any]] = []
 
-    for country, policy in SOURCE_POLICY.items():
+    for country, policy in effective_policies.items():
         if country == "rs":
             continue
         folder = candidate_root / country
@@ -206,7 +233,7 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
             item.update({
                 "source_id": policy["source_id"], "source_status": policy["status"],
                 "source_label": policy["label"], "source_url": sanitize_url(station.get("source_url")),
-                "capture_datetime_utc": source_captures.get(policy["source_id"]),
+                "capture_datetime_utc": source_captures.get(policy["source_id"]) or station.get("capture_datetime_utc"),
                 "has_current_data": bool(policy["current"]),
                 "mapped": station.get("latitude") is not None and station.get("longitude") is not None,
             })
@@ -224,18 +251,18 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
         for issue in read_json(folder / "issues.json"):
             public_issue = {
                 **issue, "source_id": policy["source_id"], "source_status": policy["status"],
-                "captured_at_utc": source_captures.get(policy["source_id"]), "historical": False,
+                "captured_at_utc": source_captures.get(policy["source_id"]) or issue.get("captured_at_utc"), "historical": issue.get("historical", False),
             }
-            if issue.get("code") == "outside_plausible_water_temperature_range":
+            if issue.get("code") == "outside_plausible_water_temperature_range" and not public_issue["historical"]:
                 matching = [
                     row for row in published_source_observations
                     if row.get("station_id") == issue.get("record_id")
                     and row.get("parameter") == "water_temperature"
                     and row.get("canonical_quality_flag") == "suspect"
                 ]
-                if len(matching) != 1:
-                    raise ValueError(f"{country}: suspect temperature issue must resolve to exactly one observation")
-                public_issue["observation"] = matching[0]
+                if not matching:
+                    raise ValueError(f"{country}: suspect temperature issue must resolve to an observation")
+                public_issue["observation"] = max(matching, key=observation_sort_key)
             quality_issues.append(public_issue)
 
     with audit_csv.open(encoding="utf-8-sig", newline="") as stream:
@@ -253,7 +280,7 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
             "source_url": sanitize_url(row["source_url"]), "active": None, "last_verified_at": row["last_verified_at"],
             "operator_provider_id": "hidmet_rs", "source_provider_id": "hidmet_rs", "captured_via_provider_id": "audit_only",
             "included": False, "inclusion_reason": row["review_reason"], "station_type": row["station_type"],
-            "source_id": "hidmet_rs", "source_status": "suspended", "source_label": SOURCE_POLICY["rs"]["label"],
+            "source_id": "hidmet_rs", "source_status": "suspended", "source_label": effective_policies["rs"]["label"],
             "capture_datetime_utc": None, "has_current_data": False, "mapped": False,
         })
 
@@ -297,28 +324,55 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
         features.append({"type": "Feature", "geometry": {"type": "Point", "coordinates": [station["longitude"], station["latitude"]]}, "properties": properties})
 
     sources = []
-    for country, policy in SOURCE_POLICY.items():
+    for country, policy in effective_policies.items():
         run = aggregate_by_source.get(country, {})
-        sources.append({
+        operational = {
+            **OPERATIONAL_VALUE_DEFAULTS,
+            **DEFAULT_OPERATIONAL_FIELDS[country],
+            **operations_by_code.get(country, {}),
+        }
+        source = {
             "country_code": country.upper(), "source_id": policy["source_id"], "label": policy["label"],
-            "status": policy["status"], "capture_datetime_utc": source_captures.get(policy["source_id"]),
+            "source_status": policy["status"],
+            "capture_datetime_utc": source_captures.get(policy["source_id"]) or operational.get("last_capture_at"),
             "station_count": EXPECTED_COUNTS[country], "observation_count": sum(row["source_id"] == policy["source_id"] for row in observations),
             "forecast_count": sum(row["source_id"] == policy["source_id"] for row in forecasts),
             "adapter_live_status": run.get("status", "suspended" if country == "rs" else "unavailable"),
             "note": policy.get("note"), "live_run_id": live_run_id,
-        })
+        }
+        for key in (
+            "automation_status", "freshness_status", "validation_status", "last_attempt_at",
+            "last_attempt_status", "last_success_at", "last_success_capture_at", "last_capture_at",
+            "last_success_commit", "last_error_code", "last_error_message", "last_error",
+            "consecutive_failures", "published_snapshot_date", "next_expected_update",
+            "update_frequency", "validation_message_ro", "validation_message_en",
+        ):
+            source[key] = operational.get(key)
+        sources.append(source)
+    all_capture_values = [
+        value for value in (
+            list(source_captures.values())
+            + [row.get("last_capture_at") for row in operations_by_code.values()]
+        ) if value
+    ]
     status = {
-        "beta": True, "contract_version": "1.1-beta", "generated_from_capture_utc": max(source_captures.values()),
+        "beta": True, "contract_version": "1.2-beta",
+        "generated_from_capture_utc": max(all_capture_values) if all_capture_values else None,
         "fixtures_run_id": fixtures_run_id, "live_run_id": live_run_id,
         "station_count": len(stations), "mapped_station_count": len(mapped), "unmapped_station_count": len(unmapped),
         "official_coordinate_station_count": sum(station["is_exact_station_location"] for station in stations),
         "approximate_coordinate_station_count": sum(station["mapped"] and not station["is_exact_station_location"] for station in stations),
         "current_station_count": len({row["station_id"] for row in latest}),
-        "complete_source_count": sum(source["status"] == "complete" for source in sources),
-        "partial_source_count": sum(source["status"] == "partial" for source in sources),
-        "suspended_source_count": sum(source["status"] == "suspended" for source in sources),
-        "stale_station_count": sum(station["country_code"] == "HR" for station in stations),
-        "suspended_station_count": sum(station["country_code"] in {"HR", "RS"} for station in stations),
+        "complete_source_count": sum(source["source_status"] == "complete" for source in sources),
+        "partial_source_count": sum(source["source_status"] == "partial" for source in sources),
+        "suspended_source_count": sum(source["source_status"] == "suspended" for source in sources),
+        "stale_station_count": sum(
+            station["source_id"] in {
+                source["source_id"] for source in sources if source["freshness_status"] == "stale"
+            }
+            for station in stations
+        ),
+        "suspended_station_count": sum(station["source_status"] == "suspended" for station in stations),
         "observation_count": len(observations),
         "current_usable_observation_count": sum(row["current_usable"] for row in observations),
         "stale_observation_count": sum(row["stale"] for row in observations),
@@ -366,10 +420,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--fixtures-run-id")
     parser.add_argument("--live-run-id")
     parser.add_argument("--geocoding-registry", type=Path, default=Path("data/reference/international_station_geocoding.csv"))
+    parser.add_argument("--operations-state", type=Path)
     args = parser.parse_args(argv)
     status = build(args.candidate_root, args.audit_csv, args.archive_root, args.output_root, args.mirror_root,
                    args.historical_quality_root, args.historical_archive_root, args.fixtures_run_id, args.live_run_id,
-                   args.geocoding_registry)
+                   args.geocoding_registry, args.operations_state)
     print(json.dumps(status, ensure_ascii=False, indent=2))
     return 0
 

@@ -37,7 +37,7 @@ The live SHMU capture contained a suspect Iža water temperature of 45.3 °C. Th
 
 ## Public contract
 
-Contract version `1.1-beta` is declared in `status.json`. The following files are byte-identical under both `data/public/international/` and `public/data/international/`:
+Contract version `1.2-beta` is declared in `status.json`; `sources.json` separates source, automation, freshness and validation status dimensions. The following files are byte-identical under both `data/public/international/` and `public/data/international/`:
 
 - `stations.json`
 - `observations.json`
@@ -84,6 +84,6 @@ The translation mechanism is centralized in `public/assets/js/i18n.js`. It provi
 
 ## Validation
 
-The full repository suite currently contains **107 passing tests**. Automated checks cover the builder round trip, mirrored files, source policy, AFDJ/international isolation, suspect/stale/suspended handling, BG forecast exclusion, RS audit-only handling, coordinate partition, references, duplicates, provenance, secret scanning, translation-key parity, language priority/persistence, accessible language control, dynamic translated components, international resource loading and responsive CSS.
+The full repository suite on the international automation branch currently contains **128 passing tests**. Automated checks cover the builder round trip, mirrored files, source policy, AFDJ/international isolation, suspect/stale/suspended handling, BG forecast exclusion, RS audit-only handling, coordinate partition, references, duplicates, provenance, secret scanning, translation-key parity, language priority/persistence, accessible language control, dynamic translated components, international resource loading and responsive CSS.
 
 The repository smoke test serves the site locally and fetches the existing AFDJ resources, representative Romanian station history, all nine international files and both `?lang=ro` and `?lang=en` entry URLs. A pre-merge local-browser audit verified the branch frontend without GitHub Pages: 110 rendered marker icons representing 23 AFDJ and 93 international stations (six same-locality aggregate markers), 8 list-only stations, fully loaded basemap tiles covering the map, absolute Leaflet pane/tile positioning, country/source/status/type/coordinate filters, the structured Iža warning, an Austrian popup with 119 forecasts and complete provenance times, an already-open popup translated RO→EN, URL priority, language persistence by navigation, and visible keyboard focus. The static mobile contract and responsive breakpoint are tested; final public/mobile deployment evidence remains intentionally deferred until an explicit merge/deploy authorization.
