@@ -52,12 +52,12 @@ jobs:
       action: ${{ steps.resolve.outputs.action }}
     steps:
       - name: Checkout validated workflow revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -227,7 +227,7 @@ jobs:
 
       - name: Upload raw, candidates, issues, logs and validated product
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: international-danube-${{ steps.resolve.outputs.source }}-${{ steps.resolve.outputs.mode }}-${{ steps.resolve.outputs.action }}-${{ github.run_id }}
           path: _workflow/international-${{ github.run_id }}-${{ github.run_attempt }}/
@@ -244,13 +244,13 @@ jobs:
       actions: write
     steps:
       - name: Checkout latest main without rewriting history
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
 
       - name: Download validated product
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: international-danube-${{ needs.collect-and-validate.outputs.source }}-${{ needs.collect-and-validate.outputs.mode }}-${{ needs.collect-and-validate.outputs.action }}-${{ github.run_id }}
           path: ${{ runner.temp }}/international-validated
