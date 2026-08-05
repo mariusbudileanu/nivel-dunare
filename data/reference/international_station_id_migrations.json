@@ -1,0 +1,15 @@
+{
+  "contract_version": "1.0",
+  "migrations": [
+    {
+      "station_id": "de-560cf185-0052-4e40-832b-7792b52dd343",
+      "stable_application_id_retained": true,
+      "legacy_source_station_id": "560cf185-0052-4e40-832b-7792b52dd343",
+      "official_station_number": "10090708",
+      "measuring_point_uid": "0fd56e0a-e32e-4b56-9cda-e0ce93d715c4",
+      "official_name": "KACHLET SCHLEUSE UP",
+      "aliases": ["KACHLET WEHR UP", "KACHLET LOCK UP"],
+      "reason": "The stable public application id is retained while official station-number and measuring-point identifiers are added; no second Kachlet station is created."
+    }
+  ]
+}

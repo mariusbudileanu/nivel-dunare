@@ -46,10 +46,10 @@ class InternationalTemporalReferenceTests(unittest.TestCase):
         self.assertIn("stale_source", {issue.code for issue in validated.issues})
         self.assertEqual("partial", validated.status)
 
-    def test_hr_staleness_uses_adapter_specific_suspended_status(self):
+    def test_hr_staleness_uses_adapter_specific_partial_status(self):
         adapter, parsed = self.parse("hr")
         self.assertEqual(7, adapter.stale_after_days)
-        self.assertEqual("suspended", adapter.stale_status)
+        self.assertEqual("partial", adapter.stale_status)
         result = AdapterResult(
             adapter.source_id, adapter.country_code, "complete",
             parsed.stations, parsed.observations, [],
@@ -58,7 +58,7 @@ class InternationalTemporalReferenceTests(unittest.TestCase):
             result, datetime(2026, 9, 1, tzinfo=timezone.utc),
         )
         self.assertIn("stale_source", {issue.code for issue in validated.issues})
-        self.assertEqual("suspended", validated.status)
+        self.assertEqual("partial", validated.status)
 
     def test_observation_and_forecast_references_must_resolve(self):
         adapter, parsed = self.parse("at")

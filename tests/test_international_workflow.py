@@ -10,19 +10,31 @@ from scripts.update_international_data import SCHEDULED_SOURCES
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "update-international-data.yml"
+BG_WORKFLOW = ROOT / ".github" / "workflows" / "update-bg-danube-streams.yml"
 
 
 class InternationalWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.workflow = WORKFLOW.read_text(encoding="utf-8")
+        cls.bg_workflow = BG_WORKFLOW.read_text(encoding="utf-8")
 
     def test_cron_contains_only_scheduled_source_selector(self):
         self.assertIn('- cron: "37 1 * * *"', self.workflow)
         self.assertIn('source="scheduled"', self.workflow)
-        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "bg"))
+        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr"))
         self.assertNotIn("at", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
+
+    def test_bg_uses_dst_safe_dedicated_local_time_windows(self):
+        for cron in ("15 6 * * *", "15 7 * * *", "15 18 * * *", "15 19 * * *"):
+            self.assertIn(f'- cron: "{cron}"', self.bg_workflow)
+        self.assertIn("TZ=Europe/Sofia", self.bg_workflow)
+        self.assertIn("09:15", self.bg_workflow)
+        self.assertIn("21:15", self.bg_workflow)
+        self.assertIn("source=bg", self.bg_workflow)
+        self.assertIn('-f stream="$STREAM"', self.bg_workflow)
+        self.assertNotIn("contents: write", self.bg_workflow)
 
     def test_write_permissions_exist_only_in_publish_job(self):
         before_publish, publish = self.workflow.split("\n  publish:\n", 1)

@@ -31,7 +31,7 @@ export const translations = {
     sourceTime: "Ora locală a sursei", utcTime: "UTC", captureTime: "Data capturii", river: "Dunărea",
     infoTitle: "Ghid și metodologie", infoAbout: "Despre aplicație", infoPurposeTitle: "Scop și proveniență",
     infoPurpose: "Portalul reunește observații și prognoze oficiale ale Dunării. România este actualizată automat prin fluxul AFDJ–Hetzner; sursele internaționale sunt publicate separat, în versiune beta, cu frecvențe diferite.",
-    infoForecastTitle: "Observații și prognoze", infoForecast: "Observațiile descriu măsurători publicate de administrații. Prognozele sunt valori viitoare și sunt afișate numai când parametrul, unitatea și timpul sunt demonstrate.",
+    infoForecastTitle: "Observații și prognoze", infoForecast: "Observațiile descriu măsurători publicate de administrații și pot avea frecvențe ori întârzieri diferite, inclusiv pentru fluxurile sub-zilnice. Prognozele sunt afișate numai când parametrul, unitatea, valoarea și timpul sunt demonstrate.",
     infoStatusTitle: "Statusuri și calitate", infoStatus: "Statusul sursei este separat de calitatea observației: complete este stabil, partial are limitări, provisional indică validare preliminară, suspect marchează o valoare neplauzibilă, stale înseamnă date vechi, suspended înseamnă că sursa nu este interogată, iar unavailable indică lipsa unei valori. Valorile suspecte și stale sunt excluse din statisticile curente.",
     infoMapTitle: "Coordonate oficiale și aproximative", infoMap: "Cercul indică o coordonată oficială exactă a stației. Rombul indică centrul aproximativ al localității, obținut prin OpenStreetMap Nominatim (© contribuitorii OpenStreetMap, ODbL), nu amplasamentul mirei sau senzorului. Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.",
     infoStaleTitle: "Date vechi și surse suspendate", infoStale: "Datele vechi nu sunt prezentate drept curente. Sursele suspendate nu sunt interogate prin dezactivarea TLS sau alte metode nesigure.",
@@ -62,10 +62,36 @@ export const translations = {
     compareMethodCopy: "Cotele absolute sunt raportate la mire locale diferite și nu sunt direct comparabile între stații. Poți selecta maximum patru stații.", kilometre: "Km", automatic: "Automată", hydrometric: "Hidrometrică",
     downloadCurrentSituation: "Situația curentă", downloadAllObservations: "Toate observațiile", downloadAllForecasts: "Toate prognozele", downloadStationRegistry: "Registrul stațiilor", downloadGeospatialSituation: "Situația geospațială", combinedHistory: "istoric combinat", internationalBetaDownload: "Beta internațional",
     issueOutsideTemperatureRange: "Temperatură a apei în afara intervalului plauzibil; valoarea este păstrată ca suspectă și exclusă din valorile curente.", issueMissingStationId: "Sursa nu publică un identificator instituțional demonstrat pentru această stație.", issueGeneric: "Problemă de calitate raportată de adaptor.",
-    completeSources: "Surse complete", partialSources: "Surse parțiale", availableForecasts: "Prognoze disponibile", riverLabel: "Râu", austriaTestSourceWarning: "Sursă beta cu cheia publică de test; nu este încă integrare permanentă de producție.",
-    coordinateMethod: "Metoda coordonatelor", coordinateSource: "Sursa coordonatelor", coordinateProvider: "Furnizor coordonate", coordinateConfidence: "Încredere coordonate", highConfidence: "ridicată", mediumConfidence: "medie", lowConfidence: "scăzută", unresolvedConfidence: "nerezolvată",
+    completeSources: "Surse complete", partialSources: "Surse parțiale", availableForecasts: "Prognoze disponibile", riverLabel: "Râu", austriaTestSourceWarning: "Actualizare manuală. Integrarea folosește momentan cheia publică de test DoRIS.",
+    coordinateValue: "Coordonate WGS84", coordinateMethod: "Metoda coordonatelor", coordinateSource: "Sursa coordonatelor", coordinateProvider: "Furnizor coordonate", coordinateConfidence: "Încredere coordonate", highConfidence: "ridicată", mediumConfidence: "medie", lowConfidence: "scăzută", unresolvedConfidence: "nerezolvată",
     approximateCoordinateWarning: "Poziție aproximativă la nivelul localității; nu reprezintă amplasamentul exact al mirei sau senzorului.", officialCoordinateLegend: "poziție oficială exactă", approximateCoordinateLegend: "poziție aproximativă a localității",
     sharedLocalityStations: "{count} stații în aceeași localitate", sharedLocalityCopy: "Marker comun; alege stația pentru a deschide cardul individual.", coordinateReviewRequired: "Coordonata nu este acceptată; este necesar review.",
+  internationalRun: "Rulare internațională", successfulSources: "Surse actualizate", staleManualUnavailable: "Stale / manuale / indisponibile",
+  romaniaPanel: "România — AFDJ", globalOverview: "Rezumat global", globalOverviewTitle: "Acoperirea portalului",
+  totalStations: "Total stații", romanianStations: "Stații România", internationalStations: "Stații internaționale", countries: "Țări", staleOrUnavailableSources: "Surse stale sau indisponibile",
+  coverage: "Acoperire", automation: "Automatizare", freshness: "Prospețime", integration: "Integrare", sourceQuality: "Calitate furnizată de sursă",
+  scheduledSources: "Surse programate", manualSources: "Surse manuale", disabledSources: "Surse dezactivate", currentSources: "Surse curente", staleSources: "Surse stale", unavailableSources: "Surse indisponibile", suspendedSources: "Surse suspendate",
+  validatedSources: "Surse validate", provisionalSources: "Surse provizorii", technicallyValidatedSources: "Validare tehnică trecută", technicalFailures: "Validare tehnică eșuată",
+  frequency: "Frecvență", lastAttempt: "Ultima încercare", lastSuccess: "Ultimul succes",
+  sourceValidated: "Validată de sursă", sourceProvisional: "Provizorie la sursă", sourceUnchecked: "Neverificată la sursă", technicalValidationPassed: "Validare tehnică trecută", technicalValidationFailed: "Validare tehnică eșuată", tlsFailed: "TLS eșuat",
+  mixedUpdateStatus: "Stare mixtă a actualizării", sourceOverview: "Surse", sourceOverviewTitle: "Starea surselor internaționale", lastObservation: "Ultima observație",
+  allTrends: "Toate tendințele", trend_up: "Creștere", trend_down: "Scădere", trend_still: "Staționare",
+  allAccessStates: "Toate stările de acces", allAutomationStates: "Toate stările de automatizare", allFreshnessStates: "Toate stările de prospețime", allQualityStates: "Toate stările de calitate",
+  dataPolicyTitle: "Politica valorilor", dataPolicy: "Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.",
+  physicalStations: "Amplasamente fizice", manuallyVerifiedCoordinateStations: "Cu coordonate exacte verificate manual",
+  manuallyVerifiedCoordinates: "Coordonate exacte verificate manual", activeQualityIssues: "Probleme active de calitate",
+  streamType: "Tip flux", allStreams: "Toate fluxurile", stream_manual: "Manual", stream_automatic: "Automat",
+  stream_daily: "Zilnic", stream_daily_manual: "Zilnic / manual", stream_observed: "Observații",
+  accessStatus: "Acces", automationStatus: "Automatizare", freshnessStatus: "Prospețime",
+  validationStatus: "Validare", coordinateStatus: "Coordonate", available: "Disponibil", scheduled: "Programat", disabled: "Dezactivat", current: "Actual", validated: "Validat", requiresReview: "Necesită verificare", tlsValidationFailed: "Validarea TLS a eșuat", notApplicable: "Nu se aplică", unknown: "Necunoscut",
+  manualCoordinateLegend: "poziție exactă verificată manual", streamCount: "Fluxuri", primaryStream: "Flux principal", frequencyDailyCron: "zilnic la 01:37 UTC", frequencyDaily: "zilnic", frequencyManual: "manual", frequencyDisabled: "dezactivat", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia, în funcție de flux", manualVerificationProvider: "verificare manuală", projectOwnerCoordinateSource: "coordonată de stație verificată manual și furnizată de proprietarul proiectului",
+  appdForecastInactive: "Prognozele APPD nu sunt activate în contractul public.",
+  hrForecastDisclaimer: "Prognozele nivelului apei sunt realizate pentru sprijinirea navigației în siguranță. Potrivit sursei, acestea sunt mai fiabile în perioadele cu niveluri scăzute, iar în perioadele cu niveluri ridicate nu trebuie considerate relevante.",
+  rsTlsSuspended: "Automatizarea RHMZ este suspendată după eșecul validării TLS standard; nu sunt folosite metode nesigure.",
+  hrStaleDetail: "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.",
+  infoStatus: "Accesul, automatizarea, prospețimea, validarea sursei, calitatea observației și calitatea coordonatei sunt dimensiuni separate. Etichetele furnizate de sursă, inclusiv provisional, sunt păstrate. Valorile oficiale nu sunt clasificate sau excluse prin praguri locale de plauzibilitate.",
+  infoMap: "Cercul indică o coordonată oficială exactă, conturul dublu o coordonată exactă verificată manual, iar rombul centrul aproximativ al localității obținut prin OpenStreetMap Nominatim (© OpenStreetMap contributors, ODbL). Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.",
+  betaCopy: "Sursele internaționale au frecvențe și dimensiuni operaționale diferite. Valorile sunt reproduse conform surselor oficiale; datele stale nu intră în statisticile curente."
   },
   en: {
     appTitle: "Danube Water Levels", appSubtitle: "Daily monitoring of water levels and hydrological forecasts",
@@ -99,7 +125,7 @@ export const translations = {
     sourceTime: "Source local time", utcTime: "UTC", captureTime: "Capture time", river: "Danube",
     infoTitle: "Guide and methodology", infoAbout: "About the application", infoPurposeTitle: "Purpose and provenance",
     infoPurpose: "The portal brings together official Danube observations and forecasts. Romania is updated automatically through the AFDJ–Hetzner flow; international sources are published separately as beta data with different refresh frequencies.",
-    infoForecastTitle: "Observations and forecasts", infoForecast: "Observations describe measurements published by administrations. Forecasts are future values and are shown only when the parameter, unit and time are demonstrated.",
+    infoForecastTitle: "Observations and forecasts", infoForecast: "Observations published by waterway authorities can have different frequencies and delays, including sub-daily feeds. Forecasts are shown only when the parameter, unit, value and time are demonstrated.",
     infoStatusTitle: "Statuses and quality", infoStatus: "Source status is separate from observation quality: complete is stable, partial has documented limits, provisional indicates preliminary validation, suspect marks an implausible value, stale means old data, suspended means the source is not queried, and unavailable means no value is available. Suspect and stale values are excluded from current statistics.",
     infoMapTitle: "Official and approximate coordinates", infoMap: "A circle marks an exact official station coordinate. A diamond marks an approximate locality centre obtained through OpenStreetMap Nominatim (© OpenStreetMap contributors, ODbL), not the gauge or sensor location. Approximate positions are not used for distances, ordering or river kilometre.",
     infoStaleTitle: "Stale data and suspended sources", infoStale: "Stale data is not presented as current. Suspended sources are not queried by disabling TLS or using other unsafe methods.",
@@ -130,15 +156,46 @@ export const translations = {
     compareMethodCopy: "Absolute levels refer to different local gauges and are not directly comparable between stations. You can select up to four stations.", kilometre: "Km", automatic: "Automatic", hydrometric: "Hydrometric",
     downloadCurrentSituation: "Current situation", downloadAllObservations: "All observations", downloadAllForecasts: "All forecasts", downloadStationRegistry: "Station registry", downloadGeospatialSituation: "Geospatial situation", combinedHistory: "combined history", internationalBetaDownload: "International beta",
     issueOutsideTemperatureRange: "Water temperature outside the plausible range; the value is retained as suspect and excluded from current values.", issueMissingStationId: "The source does not publish a demonstrated institutional identifier for this station.", issueGeneric: "Quality issue reported by the adapter.",
-    completeSources: "Complete sources", partialSources: "Partial sources", availableForecasts: "Available forecasts", riverLabel: "River", austriaTestSourceWarning: "Beta source using the public test key; this is not yet a permanent production integration.",
-    coordinateMethod: "Coordinate method", coordinateSource: "Coordinate source", coordinateProvider: "Coordinate provider", coordinateConfidence: "Coordinate confidence", highConfidence: "high", mediumConfidence: "medium", lowConfidence: "low", unresolvedConfidence: "unresolved",
+    completeSources: "Complete sources", partialSources: "Partial sources", availableForecasts: "Available forecasts", riverLabel: "River", austriaTestSourceWarning: "Manual update. The integration currently uses the public DoRIS test key.",
+    coordinateValue: "WGS84 coordinates", coordinateMethod: "Coordinate method", coordinateSource: "Coordinate source", coordinateProvider: "Coordinate provider", coordinateConfidence: "Coordinate confidence", highConfidence: "high", mediumConfidence: "medium", lowConfidence: "low", unresolvedConfidence: "unresolved",
     approximateCoordinateWarning: "Approximate locality-level position; not the exact gauge or sensor location.", officialCoordinateLegend: "exact official position", approximateCoordinateLegend: "approximate locality position",
     sharedLocalityStations: "{count} stations at one locality", sharedLocalityCopy: "Shared marker; choose a station to open its individual card.", coordinateReviewRequired: "The coordinate is not accepted; review is required.",
+  internationalRun: "International run", successfulSources: "Updated sources", staleManualUnavailable: "Stale / manual / unavailable",
+  romaniaPanel: "Romania — AFDJ", globalOverview: "Global summary", globalOverviewTitle: "Portal coverage",
+  totalStations: "Total stations", romanianStations: "Romanian stations", internationalStations: "International stations", countries: "Countries", staleOrUnavailableSources: "Stale or unavailable sources",
+  coverage: "Coverage", automation: "Automation", freshness: "Freshness", integration: "Integration", sourceQuality: "Source-provided quality",
+  scheduledSources: "Scheduled sources", manualSources: "Manual sources", disabledSources: "Disabled sources", currentSources: "Current sources", staleSources: "Stale sources", unavailableSources: "Unavailable sources", suspendedSources: "Suspended sources",
+  validatedSources: "Source-validated", provisionalSources: "Source-provisional", technicallyValidatedSources: "Technical validation passed", technicalFailures: "Technical validation failed",
+  frequency: "Frequency", lastAttempt: "Latest attempt", lastSuccess: "Latest success",
+  sourceValidated: "Source validated", sourceProvisional: "Source provisional", sourceUnchecked: "Source unchecked", technicalValidationPassed: "Technical validation passed", technicalValidationFailed: "Technical validation failed", tlsFailed: "TLS failed",
+  mixedUpdateStatus: "Mixed update status", sourceOverview: "Sources", sourceOverviewTitle: "International source status", lastObservation: "Latest observation",
+  allTrends: "All trends", trend_up: "Rising", trend_down: "Falling", trend_still: "Stationary",
+  allAccessStates: "All access states", allAutomationStates: "All automation states", allFreshnessStates: "All freshness states", allQualityStates: "All quality states",
+  dataPolicyTitle: "Value policy", dataPolicy: "Values are reproduced as provided by the official sources and are not corrected or reinterpreted by this application.",
+  physicalStations: "Physical locations", manuallyVerifiedCoordinateStations: "With manually verified exact coordinates",
+  manuallyVerifiedCoordinates: "Manually verified exact coordinates", activeQualityIssues: "Active quality issues",
+  streamType: "Stream type", allStreams: "All streams", stream_manual: "Manual", stream_automatic: "Automatic",
+  stream_daily: "Daily", stream_daily_manual: "Daily / manual", stream_observed: "Observations",
+  accessStatus: "Access", automationStatus: "Automation", freshnessStatus: "Freshness",
+  validationStatus: "Validation", coordinateStatus: "Coordinates", available: "Available", scheduled: "Scheduled", disabled: "Disabled", current: "Current", validated: "Validated", requiresReview: "Requires review", tlsValidationFailed: "TLS validation failed", notApplicable: "Not applicable", unknown: "Unknown",
+  manualCoordinateLegend: "manually verified exact position", streamCount: "Streams", primaryStream: "Primary stream", frequencyDailyCron: "daily at 01:37 UTC", frequencyDaily: "daily", frequencyManual: "manual", frequencyDisabled: "disabled", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia by stream", manualVerificationProvider: "manual verification", projectOwnerCoordinateSource: "project-owner supplied manually verified station coordinate",
+  appdForecastInactive: "APPD forecasts are not activated in the public contract.",
+  hrForecastDisclaimer: "Water-level forecasts are produced to support safe navigation. According to the source, they are more reliable during low-water conditions and should not be considered relevant during high-water conditions.",
+  rsTlsSuspended: "RHMZ automation is suspended after standard TLS validation failed; no unsafe method is used.",
+  hrStaleDetail: "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source.",
+  infoStatus: "Access, automation, freshness, source validation, observation quality and coordinate quality are separate dimensions. Source-provided labels, including provisional, are retained. Official values are not classified or excluded through local plausibility thresholds.",
+  infoMap: "A circle marks an exact official coordinate, a double outline marks a manually verified exact coordinate, and a diamond marks an approximate locality centre obtained through OpenStreetMap Nominatim (© OpenStreetMap contributors, ODbL). Approximate positions are not used for distances, ordering or river kilometre.",
+  betaCopy: "International sources have different frequencies and operational dimensions. Values are reproduced from official sources; stale data is excluded from current statistics."
   },
 };
 
 const COUNTRY_KEYS = { RO: "romanian", DE: "germany", AT: "austria", SK: "slovakia", HU: "hungary", HR: "croatia", BG: "bulgaria", RS: "serbia" };
+
+
+
+
 let language = "ro";
+
 const listeners = new Set();
 
 export function t(key, params = {}) {
@@ -153,10 +210,12 @@ export function t(key, params = {}) {
 export function getLanguage() { return language; }
 export function getLocale() { return language === "en" ? "en-GB" : "ro-RO"; }
 export function countryName(code) { return t(COUNTRY_KEYS[code] || code); }
-export function statusLabel(status) { return t({ complete: "complete", partial: "partial", provisional: "provisional", suspect: "suspect", stale: "stale", suspended: "suspended", unavailable: "unavailable" }[status] || "unavailable"); }
+export function statusLabel(status) { return t({ complete: "complete", partial: "partial", provisional: "provisional", suspect: "suspect", stale: "stale", suspended: "suspended", unavailable: "unavailable", available: "available", scheduled: "scheduled", manual: "manual", disabled: "disabled", current: "current", validated: "validated", requires_review: "requiresReview", tls_validation_failed: "tlsValidationFailed", tls_failed: "tlsFailed", source_validated: "sourceValidated", source_provisional: "sourceProvisional", source_unchecked: "sourceUnchecked", technical_validation_passed: "technicalValidationPassed", technical_validation_failed: "technicalValidationFailed", not_applicable: "notApplicable", unknown: "unknown" }[status] || "unavailable"); }
 export function qualityLabel(quality) { return t({ observed: "valid", valid: "valid", provisional: "provisional", suspect: "suspect", missing: "unavailable" }[quality] || "unavailable"); }
 export function stationTypeLabel(type) { return t({ gauge: "gauge", hydrometric: "hydrometric", manual: "manual", automatic: "automatic", automated: "automatic" }[type] || "unavailable"); }
 export function coordinateConfidenceLabel(value) { return t({ high: "highConfidence", medium: "mediumConfidence", low: "lowConfidence", unresolved: "unresolvedConfidence" }[value] || "unresolvedConfidence"); }
+export function frequencyLabel(value) { return t({ "daily at 01:37 UTC": "frequencyDailyCron", daily: "frequencyDaily", manual: "frequencyManual", disabled: "frequencyDisabled", "09:15/21:15 Europe/Sofia by stream": "frequencyBgByStream" }[value] || value); }
+export function coordinateProvenanceLabel(value) { return t({ "manual verification": "manualVerificationProvider", "Project-owner supplied manually verified station coordinate": "projectOwnerCoordinateSource" }[value] || value); }
 export function issueLabel(code) { return t({ outside_plausible_water_temperature_range: "issueOutsideTemperatureRange", missing_source_station_id: "issueMissingStationId", missing_institutional_station_ids: "issueMissingStationId" }[code] || "issueGeneric"); }
 
 export function applyTranslations(root = document) {

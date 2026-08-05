@@ -1,5 +1,5 @@
 import { MAP_CONFIG, formatDate, formatNumber } from "./config.js";
-import { applyTranslations, coordinateConfidenceLabel, countryName, qualityLabel, stationTypeLabel, statusLabel, t } from "./i18n.js";
+import { applyTranslations, coordinateConfidenceLabel, coordinateProvenanceLabel, countryName, frequencyLabel, qualityLabel, stationTypeLabel, statusLabel, t } from "./i18n.js";
 
 let map;
 let primaryLayer;
@@ -16,7 +16,8 @@ function escapeHtml(value) {
 function trendClass(properties) {
   if (properties.quality_flag === "suspect") return "suspect";
   if (properties.quality_flag === "provisional") return "provisional";
-  if (["stale", "suspended", "unavailable"].includes(properties.source_status)) return properties.source_status;
+  if (properties.freshness_status === "stale") return "stale";
+  if (["suspended", "unavailable"].includes(properties.source_status)) return properties.source_status;
   if (properties.scope === "international") return properties.source_status === "partial" ? "partial" : "international";
   const value = Number(properties.variation_cm_24h);
   return value > 0 ? "up" : value < 0 ? "down" : "still";
@@ -26,11 +27,15 @@ function isApproximate(properties) {
   return properties.coordinate_method === "geocoded_locality" || properties.is_exact_station_location === false;
 }
 
+function isManualCoordinate(properties) {
+  return properties.coordinate_method === "manually_verified_station_coordinate";
+}
+
 function markerIcon(properties, selected = false, count = 1) {
   const approximate = isApproximate(properties);
   return L.divIcon({
     className: "station-marker-wrap",
-    html: `<div class="station-marker ${trendClass(properties)}${approximate ? " approximate" : " official-coordinate"}${selected ? " selected" : ""}${count > 1 ? " aggregate" : ""}" aria-hidden="true">${count > 1 ? `<span>${count}</span>` : ""}</div>`,
+    html: `<div class="station-marker ${trendClass(properties)}${approximate ? " approximate" : isManualCoordinate(properties) ? " manual-coordinate" : " official-coordinate"}${selected ? " selected" : ""}${count > 1 ? " aggregate" : ""}" aria-hidden="true">${count > 1 ? `<span>${count}</span>` : ""}</div>`,
     iconSize: count > 1 ? [25, 25] : [18, 18], iconAnchor: count > 1 ? [12, 12] : [9, 9], popupAnchor: [0, -10],
   });
 }
@@ -42,11 +47,18 @@ function valueLine(label, value, unit = "") {
 
 function coordinateDetails(properties) {
   if (properties.scope !== "international") return "";
-  const method = isApproximate(properties) ? t("approximateCoordinates") : t("officialCoordinates");
-  const source = properties.coordinate_source
-    ? `<p><a href="${escapeHtml(properties.coordinate_source)}" target="_blank" rel="noopener">${escapeHtml(t("coordinateSource"))}</a></p>` : "";
+  const method = isApproximate(properties) ? t("approximateCoordinates") : isManualCoordinate(properties) ? t("manuallyVerifiedCoordinates") : t("officialCoordinates");
+  const coordinate = Number.isFinite(properties.coordinate_latitude) && Number.isFinite(properties.coordinate_longitude)
+    ? `${properties.coordinate_latitude.toFixed(5)}, ${properties.coordinate_longitude.toFixed(5)}` : null;
+  const sourceValue = properties.coordinate_source || "";
+  const source = sourceValue
+    ? /^https?:\/\//i.test(sourceValue)
+      ? `<p><strong>${escapeHtml(t("coordinateSource"))}:</strong> <a href="${escapeHtml(sourceValue)}" target="_blank" rel="noopener">${escapeHtml(sourceValue)}</a></p>`
+      : valueLine(t("coordinateSource"), coordinateProvenanceLabel(sourceValue))
+    : "";
   const warning = isApproximate(properties) ? `<p class="warning-copy coordinate-warning">! ${escapeHtml(t("approximateCoordinateWarning"))}</p>` : "";
-  return `${valueLine(t("coordinateMethod"), method)}${valueLine(t("coordinateProvider"), properties.coordinate_provider)}${valueLine(t("coordinateConfidence"), coordinateConfidenceLabel(properties.coordinate_confidence))}${source}${warning}`;
+  const streamDetails = (properties.streams || []).length ? `<div class="stream-list"><strong>${escapeHtml(t("streamCount"))}: ${formatNumber(properties.stream_count || properties.streams.length)}</strong>${properties.streams.map(stream => `<p>${escapeHtml(t(`stream_${stream.source_stream_type}`))}${stream.is_primary_stream ? ` · ${escapeHtml(t("primaryStream"))}` : ""}${stream.observation_frequency ? ` · ${escapeHtml(frequencyLabel(stream.observation_frequency))}` : ""}</p>`).join("")}</div>` : "";
+  return `${valueLine(t("coordinateValue"), coordinate)}${valueLine(t("coordinateMethod"), method)}${valueLine(t("coordinateProvider"), coordinateProvenanceLabel(properties.coordinate_provider))}${valueLine(t("coordinateConfidence"), coordinateConfidenceLabel(properties.coordinate_confidence))}${source}${warning}${streamDetails}`;
 }
 
 function popupHtml(properties) {
@@ -89,6 +101,11 @@ function popupHtml(properties) {
     ${properties.forecast_count ? valueLine(t("availableForecasts"), formatNumber(properties.forecast_count)) : ""}
     ${timeLines}${captureLine}${qualityLine}${coordinateDetails(properties)}
     ${properties.country_code === "AT" ? `<p class="warning-copy">! ${escapeHtml(t("austriaTestSourceWarning"))}</p>` : ""}
+    ${properties.country_code === "BG" ? `<p class="warning-copy">! ${escapeHtml(t("appdForecastInactive"))}</p>` : ""}
+    ${properties.country_code === "RS" ? `<p class="warning-copy">! ${escapeHtml(t("rsTlsSuspended"))}</p>` : ""}
+    ${properties.country_code === "HR" && properties.freshness_status === "stale" ? `<p class="warning-copy">! ${escapeHtml(t("hrStaleDetail", { date: properties.published_snapshot_date || t("unavailable") }))}</p>` : ""}
+    ${properties.country_code === "HR" ? `<p class="warning-copy">${escapeHtml(t("hrForecastDisclaimer"))}</p>` : ""}
+    ${isInternational ? `${valueLine(t("accessStatus"), statusLabel(properties.access_status || "unavailable"))}${valueLine(t("automationStatus"), statusLabel(properties.automation_status || "unavailable"))}${valueLine(t("freshnessStatus"), statusLabel(properties.freshness_status || "unavailable"))}${valueLine(t("validationStatus"), statusLabel(properties.validation_status || "unavailable"))}` : ""}
     ${isInternational ? `<p><strong>${escapeHtml(t("sourceStatus"))}:</strong> <span class="status-tag ${escapeHtml(properties.source_status)}">${escapeHtml(statusLabel(properties.source_status))}</span></p>` : ""}
     ${sourceLink}
     <button class="button primary compact" type="button" data-open-station="${escapeHtml(properties.station_id)}">${escapeHtml(t("openAnalysis"))}</button>
@@ -118,7 +135,8 @@ function updateGroup(group) {
   if (!group.visibleProperties.length) return;
   group.marker.properties = group.visibleProperties[0];
   const selected = group.visibleProperties.some(item => item.station_id === selectedStationId);
-  group.marker.setIcon(markerIcon(group.marker.properties, selected, group.visibleProperties.length));
+  const aggregateCount = group.visibleProperties.reduce((count, item) => count + Math.max(1, Number(item.stream_count) || 1), 0);
+  group.marker.setIcon(markerIcon(group.marker.properties, selected, aggregateCount));
   group.marker.options.title = group.visibleProperties.length > 1 ? t("sharedLocalityStations", { count: group.visibleProperties.length }) : group.marker.properties.display_name;
   bindPopup(group);
 }
@@ -133,7 +151,7 @@ export function initMap(elementId, geojson, selectCallback) {
   geojson.features.forEach(feature => {
     const key = feature.geometry.coordinates.join(",");
     if (!grouped.has(key)) grouped.set(key, []);
-    grouped.get(key).push(feature.properties);
+    grouped.get(key).push({ ...feature.properties, coordinate_longitude: feature.geometry.coordinates[0], coordinate_latitude: feature.geometry.coordinates[1] });
   });
   const bounds = [];
   grouped.forEach((propertiesList, key) => {

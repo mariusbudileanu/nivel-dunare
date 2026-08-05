@@ -9,6 +9,7 @@ from datetime import date
 from pathlib import Path
 
 from scripts.sources.base import canonical_station_name, station_slug
+from scripts.build_international_public_data import apply_coordinate_registry
 
 SOURCE_RULES = {
     "pegelonline_de": {
@@ -20,20 +21,20 @@ SOURCE_RULES = {
         "observation_quality_summary": "observations valid; public test key prevents production readiness",
     },
     "shmu_sk": {
-        "country": "sk", "implementation_status": "complete", "latest_live_status": "complete",
-        "observation_quality_summary": "one suspect water_temperature retained and excluded from usable current temperatures; levels and forecasts remain usable",
+        "country": "sk", "implementation_status": "complete", "latest_live_status": "partial",
+        "observation_quality_summary": "source-provided provisional quality is retained; official values are not reclassified by application plausibility thresholds",
     },
     "hydroinfo_hu": {
         "country": "hu", "implementation_status": "complete", "latest_live_status": "complete",
         "observation_quality_summary": "validated candidate observations",
     },
     "vodniputovi_hr": {
-        "country": "hr", "implementation_status": "complete", "latest_live_status": "suspended",
+        "country": "hr", "implementation_status": "complete", "latest_live_status": "partial",
         "observation_quality_summary": "historical observations retained; latest feed is stale",
     },
     "appd_bg": {
         "country": "bg", "implementation_status": "complete", "latest_live_status": "partial",
-        "observation_quality_summary": "candidate values retained; stable IDs and forecast semantics unresolved",
+        "observation_quality_summary": "RIS-identified manual and automatic streams retained; forecast semantics remain inactive",
     },
     "hidmet_rs": {
         "country": "rs", "implementation_status": "suspended", "latest_live_status": "suspended",
@@ -47,7 +48,10 @@ FIELDS = [
     "station_id", "source_station_id", "country_code", "station_name", "station_name_local",
     "station_slug", "river", "river_km", "latitude", "longitude", "coordinate_source",
     "coordinate_method", "coordinate_confidence", "source_url", "active", "last_verified_at",
-    "station_type", "included", "review_required", "review_reason",
+    "station_type", "physical_station_id", "isrs_location_code", "source_stream_id", "source_stream_type", "is_primary_stream", "observation_frequency",
+    "coordinate_provider", "coordinate_review_status", "is_exact_station_location", "coordinate_verified_at", "coordinate_notes",
+    "source_coordinate_raw", "source_crs", "mapped", "workbook_filename", "workbook_sheet", "workbook_row", "workbook_version", "workbook_sha256",
+    "included", "review_required", "review_reason",
 ]
 
 
@@ -138,6 +142,15 @@ def build(
     with input_path.open(encoding="utf-8-sig", newline="") as handle:
         source_rows = list(csv.DictReader(handle))
     rows = [transform(*item, verified_at) for item in select(source_rows)]
+    apply_coordinate_registry(rows, Path("data/reference/international_station_geocoding.csv"))
+    for row in rows:
+        reasons = [reason for reason in row["review_reason"].split("; ") if reason and reason not in {"official stable station identifier unavailable", "official WGS84 coordinates unavailable"}]
+        if not row.get("source_station_id"):
+            reasons.insert(0, "official stable station identifier unavailable")
+        if not row.get("latitude") or not row.get("longitude"):
+            reasons.append("verified coordinates unavailable")
+        row["review_reason"] = "; ".join(dict.fromkeys(reasons))
+        row["review_required"] = "yes" if reasons or row["included"] == "no" else "no"
     rows.sort(key=lambda row: (row["country_code"], row["adapter"], row["station_slug"]))
     active_count = sum(row["included"] == "yes" for row in rows)
     suspended_count = sum(row["implementation_status"] == "suspended" for row in rows)
@@ -148,7 +161,7 @@ def build(
         )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n")
+        writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n", extrasaction="ignore")
         writer.writeheader()
         writer.writerows(rows)
     return rows

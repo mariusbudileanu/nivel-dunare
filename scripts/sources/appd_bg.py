@@ -8,6 +8,7 @@ from .base import (
     SourceStructureError, StationRecord, ValidationIssue, canonical_station_name,
     html_tables, parse_optional_float, payload_text, station_slug,
 )
+from .reference import apply_ris_reference
 
 
 class AppdAdapter(SourceAdapter):
@@ -29,17 +30,19 @@ class AppdAdapter(SourceAdapter):
     def _station(local_name: str, kind: str, river_km, payload) -> StationRecord:
         canonical = canonical_station_name(local_name)
         application_id = station_slug("BG", local_name, kind)
-        return StationRecord(
+        return apply_ris_reference(StationRecord(
             station_id=application_id, source_station_id=None, country_code="BG",
             station_name=canonical, station_name_local=local_name,
             station_slug=application_id, river_name="Danube", river_km=river_km,
             latitude=None, longitude=None, coordinate_source=None,
-            coordinate_method="unavailable", coordinate_confidence="unavailable",
+            coordinate_method="unresolved", coordinate_confidence="unavailable",
             source_url=payload.url, active=True, last_verified_at=payload.captured_at_utc[:10],
             operator_provider_id="appd_bg", source_provider_id="appd_bg",
             captured_via_provider_id="appd_bg", station_type=kind,
-            inclusion_reason="official APPD Danube table; no institutional station identifier is exposed",
-        )
+            inclusion_reason="official APPD Danube table linked to the versioned Bulgarian RIS gauge registry",
+            source_stream_type=kind,
+            observation_frequency="daily operational window" if kind == "manual" else "automatic operational window",
+        ))
 
     @staticmethod
     def _edition_date(text: str) -> str:
@@ -76,14 +79,21 @@ class AppdAdapter(SourceAdapter):
                 if value is None:
                     continue
                 observations.append(ObservationRecord(
-                    station_id=station.station_id, source_station_id=None,
+                    station_id=station.station_id, source_station_id=station.source_station_id,
                     operator_provider_id="appd_bg", source_provider_id="appd_bg",
                     captured_via_provider_id="appd_bg", parameter=parameter, value=value,
                     unit=unit, measurement_time_original=measurement_date,
                     measurement_timezone=None, measurement_datetime_local=None,
                     measurement_datetime_utc=None, measurement_date=measurement_date,
                     source_file_sha256=current.sha256, variation_value=variation,
-                    variation_window_hours=window,
+                    variation_window_hours=window, physical_station_id=station.physical_station_id,
+                    source_stream_id=station.source_stream_id, source_stream_type="manual",
+                    is_primary_stream=station.is_primary_stream,
+                    observation_frequency=station.observation_frequency,
+                    observation_daypart="morning", observation_time_precision="date",
+                    observation_window="manual_morning_publication_window",
+                    source_observation_date=measurement_date,
+                    source_observation_time_raw=measurement_date,
                 ))
         direction_by_row = re.findall(r'<img\s+src=["\'][^"\']*/(down|up|nochange)\.gif', current_text, re.I)
         for index, row in enumerate(automatic_rows):
@@ -91,6 +101,7 @@ class AppdAdapter(SourceAdapter):
             station = self._station(local_name, "automatic", km, current)
             stations.append(station)
             direction = direction_by_row[index].lower() if index < len(direction_by_row) else None
+            direction = "no_change" if direction == "nochange" else direction
             for parameter, value, unit in (
                 ("water_level", parse_optional_float(row[2]), "cm"),
                 ("water_temperature", parse_optional_float(row[4]), "degC"),
@@ -98,15 +109,23 @@ class AppdAdapter(SourceAdapter):
                 if value is None:
                     continue
                 observations.append(ObservationRecord(
-                    station_id=station.station_id, source_station_id=None,
+                    station_id=station.station_id, source_station_id=station.source_station_id,
                     operator_provider_id="appd_bg", source_provider_id="appd_bg",
                     captured_via_provider_id="appd_bg", parameter=parameter, value=value,
                     unit=unit, measurement_time_original=measurement_date,
                     measurement_timezone=None, measurement_datetime_local=None,
                     measurement_datetime_utc=None, measurement_date=measurement_date,
                     source_file_sha256=current.sha256,
-                    source_quality_code=f"six_hour_direction={direction}" if direction else None,
                     variation_window_hours=6 if parameter == "water_level" else None,
+                    physical_station_id=station.physical_station_id,
+                    source_stream_id=station.source_stream_id, source_stream_type="automatic",
+                    is_primary_stream=station.is_primary_stream,
+                    observation_frequency=station.observation_frequency,
+                    observation_daypart="evening", observation_time_precision="date",
+                    observation_window="automatic_evening_publication_window",
+                    source_observation_date=measurement_date,
+                    source_observation_time_raw=measurement_date,
+                    trend=direction if parameter == "water_level" else None,
                 ))
 
         forecast_payload = payloads["forecast"]
@@ -127,29 +146,32 @@ class AppdAdapter(SourceAdapter):
                 raise SourceStructureError(f"APPD forecast columns differ for {heading}")
             for day_raw, maximum, central, minimum in zip(rows[0][1:], rows[1][1:], rows[2][1:], rows[3][1:]):
                 forecasts.append(ForecastRecord(
-                    station_id=station.station_id, source_station_id=None,
+                    station_id=station.station_id, source_station_id=station.source_station_id,
                     operator_provider_id="appd_bg", source_provider_id="appd_bg",
                     captured_via_provider_id="appd_bg", forecast_parameter=None,
                     forecast_value=float(central), forecast_unit=None,
                     forecast_issue_time_original=None, forecast_issue_datetime_utc=None,
                     target_time_original=day_raw, target_datetime_utc=None,
                     target_date=None, lead_hours=None, source_file_sha256=forecast_payload.sha256,
+                    physical_station_id=station.physical_station_id,
+                    source_stream_id=f"{station.source_stream_id}:forecast-candidate",
+                    source_quality_status="candidate_not_activated",
                     forecast_min_value=float(minimum), forecast_max_value=float(maximum),
                 ))
 
         issues = [ValidationIssue(
-            "critical", "missing_institutional_station_ids",
-            "APPD publishes station names and river kilometres but no demonstrated stable institutional IDs; application IDs are not substituted for source_station_id.",
+            "warning", "forecast_not_activated",
+            "APPD chart series remain diagnostic candidates because parameter, unit, target year, and issue semantics are not all demonstrated.",
         )]
         result = AdapterResult(
             source_id=self.source_id, country_code="BG", status="partial",
             stations=stations, observations=observations, forecasts=forecasts, issues=issues,
             source_station_count=len(stations),
             notes=[
-                "The eight hydrometeorological and twelve automated rows are distinct records.",
-                "Coordinates are absent from the audited official pages and remain unset.",
+                "The eight manual and twelve automatic streams are linked to 13 physical placements without artificial offsets.",
+                "Official ISRS identifiers and coordinates come from the versioned Bulgarian RIS Index registry.",
                 "Forecast targets remain raw DD.MM values; no year, time or timezone is inferred.",
-                "Publishing is fail-closed until official station IDs and forecast semantics are verified.",
+                "APPD forecast candidates are diagnostic-only and public forecast_status is not_activated.",
             ],
         )
         return self.validate(result, self.capture_time(payloads))

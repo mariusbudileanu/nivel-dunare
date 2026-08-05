@@ -61,7 +61,7 @@ def check_base(base: str) -> dict[str, object]:
     if set(selected) != wanted:
         raise AssertionError(f"Stații smoke lipsă: {sorted(wanted - set(selected))}")
     international_names = (
-        "stations.json", "observations.json", "latest.json", "forecasts.json", "sources.json",
+        "stations.json", "streams.json", "observations.json", "latest.json", "forecasts.json", "sources.json",
         "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json",
     )
     international = {}
@@ -75,12 +75,21 @@ def check_base(base: str) -> dict[str, object]:
     features = international["stations.geojson"]["features"]
     if len(features) != 93:
         raise AssertionError("GeoJSON internațional nu are 93 stații cartografiate")
-    if sum(feature["properties"]["is_exact_station_location"] for feature in features) != 26:
-        raise AssertionError("GeoJSON internațional nu separă cele 26 coordonate oficiale")
-    if sum(not feature["properties"]["is_exact_station_location"] for feature in features) != 67:
-        raise AssertionError("GeoJSON internațional nu separă cele 67 poziții aproximative")
-    if len(international["unmapped_stations.json"]) != 8:
-        raise AssertionError("Lista internațională necartografiată nu are 8 stații")
+    coordinate_counts = {
+        method: sum(feature["properties"]["coordinate_method"] == method for feature in features)
+        for method in ("official_station_coordinate", "manually_verified_station_coordinate", "geocoded_locality")
+    }
+    if coordinate_counts != {"official_station_coordinate": 42, "manually_verified_station_coordinate": 15, "geocoded_locality": 36}:
+        raise AssertionError(f"Clase GeoJSON fizice neașteptate: {coordinate_counts}")
+    stream_coordinate_counts = {
+        "official_station_coordinate": international_status["official_coordinate_station_count"],
+        "manually_verified_station_coordinate": international_status["manually_verified_coordinate_station_count"],
+        "geocoded_locality": international_status["approximate_coordinate_station_count"],
+    }
+    if stream_coordinate_counts != {"official_station_coordinate": 50, "manually_verified_station_coordinate": 15, "geocoded_locality": 36}:
+        raise AssertionError(f"Clase de coordonate per flux neașteptate: {stream_coordinate_counts}")
+    if len(international["streams.json"]) != 101 or len(international["unmapped_stations.json"]) != 0:
+        raise AssertionError("Contractul internațional trebuie să aibă 101 fluxuri și zero stații necartografiate")
     for language in ("ro", "en"):
         localized_index = fetch(base, f"?lang={language}", "text/html").decode("utf-8")
         if 'id="language-button"' not in localized_index or 'assets/js/app.js' not in localized_index:

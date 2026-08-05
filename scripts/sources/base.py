@@ -6,6 +6,7 @@ import gzip
 import hashlib
 import html
 import json
+import math
 import re
 import ssl
 import unicodedata
@@ -109,6 +110,25 @@ class StationRecord:
     included: bool = True
     inclusion_reason: str = "official Danube station"
     station_type: str = "gauge"
+    physical_station_id: str | None = None
+    source_stream_id: str | None = None
+    source_stream_type: str = "observed"
+    is_primary_stream: bool = True
+    observation_frequency: str | None = None
+    coordinate_provider: str | None = None
+    coordinate_review_status: str = "unresolved"
+    is_exact_station_location: bool = False
+    coordinate_verified_at: str | None = None
+    coordinate_notes: str | None = None
+    source_coordinate_raw: str | None = None
+    source_crs: str | None = None
+    isrs_location_code: str | None = None
+    aliases: list[str] = field(default_factory=list)
+    official_station_number: str | None = None
+    measuring_point_uid: str | None = None
+    pnp_value_m: float | None = None
+    pnp_datum: str | None = None
+    pnp_valid_from: str | None = None
 
 
 @dataclass
@@ -119,7 +139,7 @@ class ObservationRecord:
     source_provider_id: str
     captured_via_provider_id: str
     parameter: str
-    value: float
+    value: float | str
     unit: str
     measurement_time_original: str
     measurement_timezone: str | None
@@ -131,6 +151,23 @@ class ObservationRecord:
     canonical_quality_flag: str = "observed"
     variation_value: float | None = None
     variation_window_hours: int | None = None
+    physical_station_id: str | None = None
+    source_stream_id: str | None = None
+    source_stream_type: str = "observed"
+    is_primary_stream: bool = True
+    observation_frequency: str | None = None
+    observation_daypart: str | None = None
+    observation_time_precision: str | None = None
+    observation_window: str | None = None
+    source_observation_datetime: str | None = None
+    source_observation_date: str | None = None
+    source_observation_time_raw: str | None = None
+    source_timezone_raw: str | None = None
+    capture_at: str | None = None
+    source_quality_status: str | None = None
+    source_value_raw: str | None = None
+    trend: str | None = None
+    capture_delay_seconds: float | None = None
 
 
 @dataclass
@@ -152,6 +189,12 @@ class ForecastRecord:
     source_file_sha256: str
     forecast_min_value: float | None = None
     forecast_max_value: float | None = None
+    physical_station_id: str | None = None
+    source_stream_id: str | None = None
+    source_stream_type: str = "forecast"
+    is_primary_stream: bool = False
+    capture_at: str | None = None
+    source_quality_status: str | None = None
 
 
 @dataclass
@@ -183,7 +226,7 @@ class AdapterResult:
     def usable_observations(self) -> list[ObservationRecord]:
         return [
             observation for observation in self.observations
-            if observation.canonical_quality_flag not in {"suspect", "missing"}
+            if observation.canonical_quality_flag != "missing"
         ]
 
     def to_dict(self) -> dict[str, Any]:
@@ -218,7 +261,7 @@ def parse_optional_float(value: Any) -> float | None:
     if value is None:
         return None
     text = html.unescape(str(value)).strip()
-    if not text or text in {"//", "-", "—", "N/A", "n/a", "null"}:
+    if not text or text.casefold() in {"//", "-", "—", "x", "n/a", "null"}:
         return None
     return float(text.replace(" ", "").replace(",", "."))
 
@@ -323,14 +366,14 @@ class SourceAdapter:
             for value in captured
         )
 
-    @staticmethod
-    def _append_quality_code(current: str | None, code: str) -> str:
-        codes = [item for item in (current or "").split(";") if item]
-        if code not in codes:
-            codes.append(code)
-        return ";".join(codes)
-
     def validate(self, result: AdapterResult, now: datetime | None = None) -> AdapterResult:
+        """Validate transport/shape/reference semantics without judging official values.
+
+        Numeric plausibility thresholds are intentionally absent. Hydrological values
+        are retained exactly as supplied by the official source; only non-finite
+        numbers, unsupported parameters, and unit/structure changes are technical
+        validation failures.
+        """
         now = now or datetime.now(timezone.utc)
         if now.tzinfo is None:
             now = now.replace(tzinfo=timezone.utc)
@@ -339,11 +382,18 @@ class SourceAdapter:
         issues = list(result.issues)
         included = [station for station in result.stations if station.included]
         if len(included) < self.expected_min_stations:
-            issues.append(ValidationIssue("critical", "mass_station_loss", f"Expected at least {self.expected_min_stations} included stations, got {len(included)}"))
+            issues.append(ValidationIssue(
+                "critical", "mass_station_loss",
+                f"Expected at least {self.expected_min_stations} included stations, got {len(included)}",
+            ))
 
         seen_ids: set[str] = set()
         seen_slugs: set[tuple[str, str]] = set()
+        stations_by_id: dict[str, StationRecord] = {}
         for station in result.stations:
+            station.physical_station_id = station.physical_station_id or station.station_id
+            station.source_stream_id = station.source_stream_id or station.source_station_id or station.station_id
+            stations_by_id[station.station_id] = station
             if station.station_id in seen_ids:
                 issues.append(ValidationIssue("critical", "duplicate_station_id", station.station_id, station.station_id))
             seen_ids.add(station.station_id)
@@ -354,50 +404,81 @@ class SourceAdapter:
             if station.country_code not in COUNTRY_BOUNDS:
                 issues.append(ValidationIssue("critical", "invalid_country", station.country_code, station.station_id))
             if station.included and not station.source_station_id:
-                issues.append(ValidationIssue("critical", "missing_source_station_id", "Official stable station identifier unavailable", station.station_id))
+                issues.append(ValidationIssue(
+                    "critical", "missing_source_station_id",
+                    "Official stable station identifier unavailable", station.station_id,
+                ))
             if (station.latitude is None) != (station.longitude is None):
-                issues.append(ValidationIssue("critical", "incomplete_coordinates", "Both latitude and longitude are required", station.station_id))
+                issues.append(ValidationIssue(
+                    "critical", "incomplete_coordinates",
+                    "Both latitude and longitude are required", station.station_id,
+                ))
             if station.latitude is not None and station.longitude is not None:
                 if not (-90 <= station.latitude <= 90 and -180 <= station.longitude <= 180):
-                    issues.append(ValidationIssue("critical", "coordinate_range", "Coordinates outside EPSG:4326", station.station_id))
+                    issues.append(ValidationIssue(
+                        "critical", "coordinate_range",
+                        "Coordinates outside EPSG:4326", station.station_id,
+                    ))
                 bounds = COUNTRY_BOUNDS[station.country_code]
                 if not (bounds[0] <= station.latitude <= bounds[1] and bounds[2] <= station.longitude <= bounds[3]):
-                    issues.append(ValidationIssue("critical", "coordinate_country", "Coordinates incompatible with country bounds", station.station_id))
+                    issues.append(ValidationIssue(
+                        "critical", "coordinate_country",
+                        "Coordinates incompatible with country bounds", station.station_id,
+                    ))
 
+        canonical_units = {
+            "water_level": "cm",
+            "discharge": "m3/s",
+            "water_temperature": "degC",
+            "ice_condition": "category",
+        }
         observation_dates: list[date] = []
         for observation in result.observations:
-            if observation.station_id not in seen_ids:
+            station = stations_by_id.get(observation.station_id)
+            if station is None:
                 issues.append(ValidationIssue(
                     "critical", "orphan_observation",
                     "Observation references a station_id absent from this adapter result",
                     observation.station_id,
                 ))
-            limits = {"water_level": (-5000, 5000), "discharge": (0, 100000), "water_temperature": (-5, 45)}
-            canonical_units = {"water_level": "cm", "discharge": "m3/s", "water_temperature": "degC"}
-            if observation.parameter not in limits:
-                issues.append(ValidationIssue("critical", "unknown_parameter", observation.parameter, observation.station_id))
             else:
-                low, high = limits[observation.parameter]
-                if not low <= observation.value <= high:
-                    if observation.parameter == "water_temperature":
-                        quality_code = "outside_plausible_water_temperature_range"
-                        observation.canonical_quality_flag = "suspect"
-                        observation.source_quality_code = self._append_quality_code(
-                            observation.source_quality_code, quality_code,
-                        )
-                        if not any(
-                            issue.code == quality_code and issue.record_id == observation.station_id
-                            for issue in issues
-                        ):
-                            issues.append(ValidationIssue(
-                                "warning", quality_code,
-                                f"water_temperature={observation.value} {observation.unit}; raw value preserved but excluded from usable current temperatures",
-                                observation.station_id,
-                            ))
-                    else:
-                        issues.append(ValidationIssue("critical", "impossible_value", f"{observation.parameter}={observation.value}", observation.station_id))
-                if observation.unit != canonical_units[observation.parameter]:
-                    issues.append(ValidationIssue("critical", "unit_change", f"Expected {canonical_units[observation.parameter]}, got {observation.unit}", observation.station_id))
+                observation.physical_station_id = observation.physical_station_id or station.physical_station_id
+                observation.source_stream_id = observation.source_stream_id or station.source_stream_id
+                if observation.source_stream_type == "observed":
+                    observation.source_stream_type = station.source_stream_type
+                observation.is_primary_stream = observation.is_primary_stream and station.is_primary_stream
+                observation.observation_frequency = observation.observation_frequency or station.observation_frequency
+            expected_unit = canonical_units.get(observation.parameter)
+            if expected_unit is None:
+                issues.append(ValidationIssue(
+                    "critical", "unknown_parameter", observation.parameter, observation.station_id,
+                ))
+            else:
+                if isinstance(observation.value, (int, float)) and not math.isfinite(float(observation.value)):
+                    issues.append(ValidationIssue(
+                        "critical", "non_finite_value",
+                        f"{observation.parameter}={observation.value}", observation.station_id,
+                    ))
+                if observation.unit != expected_unit:
+                    issues.append(ValidationIssue(
+                        "critical", "unit_change",
+                        f"Expected {expected_unit}, got {observation.unit}", observation.station_id,
+                    ))
+            observation.source_observation_datetime = (
+                observation.source_observation_datetime
+                or observation.measurement_datetime_local
+                or observation.measurement_datetime_utc
+            )
+            observation.source_observation_date = observation.source_observation_date or observation.measurement_date
+            observation.source_observation_time_raw = (
+                observation.source_observation_time_raw or observation.measurement_time_original
+            )
+            observation.source_timezone_raw = observation.source_timezone_raw or observation.measurement_timezone
+            observation.capture_at = observation.capture_at or now.isoformat()
+            observation.source_quality_status = (
+                observation.source_quality_status or observation.canonical_quality_flag
+            )
+            observation.source_value_raw = observation.source_value_raw or str(observation.value)
             if observation.measurement_datetime_utc:
                 try:
                     measured = datetime.fromisoformat(observation.measurement_datetime_utc.replace("Z", "+00:00"))
@@ -406,47 +487,74 @@ class SourceAdapter:
                     measured = measured.astimezone(timezone.utc)
                     observation_dates.append(measured.date())
                     if measured > now + timedelta(hours=24):
-                        issues.append(ValidationIssue("critical", "future_timestamp", observation.measurement_datetime_utc, observation.station_id))
+                        issues.append(ValidationIssue(
+                            "critical", "future_timestamp",
+                            observation.measurement_datetime_utc, observation.station_id,
+                        ))
                 except ValueError:
-                    issues.append(ValidationIssue("critical", "invalid_measurement_datetime", observation.measurement_datetime_utc, observation.station_id))
+                    issues.append(ValidationIssue(
+                        "critical", "invalid_measurement_datetime",
+                        observation.measurement_datetime_utc, observation.station_id,
+                    ))
             elif observation.measurement_date:
                 try:
                     measured_date = date.fromisoformat(observation.measurement_date)
                     observation_dates.append(measured_date)
                     if measured_date > now.date():
-                        issues.append(ValidationIssue("critical", "future_measurement_date", observation.measurement_date, observation.station_id))
+                        issues.append(ValidationIssue(
+                            "critical", "future_measurement_date",
+                            observation.measurement_date, observation.station_id,
+                        ))
                 except ValueError:
-                    issues.append(ValidationIssue("critical", "invalid_measurement_date", observation.measurement_date, observation.station_id))
+                    issues.append(ValidationIssue(
+                        "critical", "invalid_measurement_date",
+                        observation.measurement_date, observation.station_id,
+                    ))
 
         if self.stale_after_days is not None and observation_dates:
             latest_date = max(observation_dates)
             age_days = (now.date() - latest_date).days
             if age_days > self.stale_after_days:
                 issues.append(ValidationIssue(
-                    "critical", "stale_source",
+                    "warning", "stale_source",
                     f"Latest observation date {latest_date.isoformat()} is {age_days} days old; limit is {self.stale_after_days}",
                 ))
                 result.status = self.stale_status
 
         for forecast in result.forecasts:
-            if forecast.station_id not in seen_ids:
+            station = stations_by_id.get(forecast.station_id)
+            if station is None:
                 issues.append(ValidationIssue(
                     "critical", "orphan_forecast",
                     "Forecast references a station_id absent from this adapter result",
                     forecast.station_id,
                 ))
+            else:
+                forecast.physical_station_id = forecast.physical_station_id or station.physical_station_id
+                forecast.source_stream_id = forecast.source_stream_id or f"{station.source_stream_id}:forecast"
+            forecast.capture_at = forecast.capture_at or now.isoformat()
             if forecast.forecast_parameter not in {"water_level", "discharge", None}:
-                issues.append(ValidationIssue("critical", "unknown_forecast_parameter", str(forecast.forecast_parameter), forecast.station_id))
+                issues.append(ValidationIssue(
+                    "critical", "unknown_forecast_parameter",
+                    str(forecast.forecast_parameter), forecast.station_id,
+                ))
+            if not math.isfinite(float(forecast.forecast_value)):
+                issues.append(ValidationIssue(
+                    "critical", "non_finite_forecast", str(forecast.forecast_value), forecast.station_id,
+                ))
             if forecast.forecast_min_value is not None and forecast.forecast_min_value > forecast.forecast_value:
-                issues.append(ValidationIssue("critical", "forecast_interval", "minimum exceeds central value", forecast.station_id))
+                issues.append(ValidationIssue(
+                    "critical", "forecast_interval", "minimum exceeds central value", forecast.station_id,
+                ))
             if forecast.forecast_max_value is not None and forecast.forecast_max_value < forecast.forecast_value:
-                issues.append(ValidationIssue("critical", "forecast_interval", "maximum below central value", forecast.station_id))
+                issues.append(ValidationIssue(
+                    "critical", "forecast_interval", "maximum below central value", forecast.station_id,
+                ))
 
         result.issues = issues
         if any(issue.severity == "critical" for issue in issues):
             result.status = "suspended" if result.status == "suspended" else "partial"
         return result
-
 
 def ensure_payload(payload: FetchedPayload, expected_format: str) -> None:
     if payload.status != 200:

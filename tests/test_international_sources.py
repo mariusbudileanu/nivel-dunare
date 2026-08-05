@@ -31,10 +31,10 @@ class InternationalAdapterTests(unittest.TestCase):
             "de": ("complete", 18, 18, 0),
             "at": ("partial", 9, 9, 1),
             "sk": ("complete", 13, 26, 26),
-            "hu": ("complete", 25, 75, 0),
+            "hu": ("complete", 25, 125, 0),
             "hr": ("complete", 3, 6, 0),
             "bg": ("partial", 20, 48, 30),
-            "rs": ("suspended", 0, 0, 0),
+            "rs": ("complete", 13, 75, 32),
         }
         for source, values in expected.items():
             with self.subTest(source=source):
@@ -63,16 +63,22 @@ class InternationalAdapterTests(unittest.TestCase):
             (station.station_name_local, station.station_name) for station in hr.stations
         })
 
-    def test_coordinates_only_from_official_json_sources(self):
-        expected_verified = {"de": 17, "at": 9, "sk": 0, "hu": 0, "hr": 0, "bg": 0}
-        for source, expected in expected_verified.items():
+    def test_verified_coordinates_use_explicit_provenance_classes(self):
+        expected = {
+            "de": (17, "official_station_coordinate"),
+            "at": (9, "official_station_coordinate"),
+            "sk": (0, "manually_verified_station_coordinate"),
+            "hu": (0, "manually_verified_station_coordinate"),
+            "hr": (3, "official_station_coordinate"),
+            "bg": (20, "official_station_coordinate"),
+        }
+        for source, (count, method) in expected.items():
             _, _, result = self.parse(source)
-            with_coords = [s for s in result.stations if s.latitude is not None]
-            self.assertEqual(expected, len(with_coords), source)
-            for station in with_coords:
-                self.assertEqual("official_rest_payload", station.coordinate_method)
-                self.assertEqual("high", station.coordinate_confidence)
-                self.assertTrue(station.coordinate_source.startswith("https://"))
+            with_coords = [row for row in result.stations if row.latitude is not None]
+            self.assertEqual(count, len(with_coords), source)
+            self.assertTrue(all(row.coordinate_method == method for row in with_coords), source)
+            self.assertTrue(all(row.coordinate_confidence == "high" for row in with_coords), source)
+            self.assertTrue(all(row.is_exact_station_location for row in with_coords), source)
 
     def test_primary_source_deduplication_rules(self):
         _, _, de = self.parse("de")
@@ -98,11 +104,13 @@ class InternationalAdapterTests(unittest.TestCase):
         self.assertIn("mass_station_loss", {issue.code for issue in validated.issues})
         self.assertEqual("partial", validated.status)
 
-    def test_bg_missing_institutional_ids_remains_partial(self):
+    def test_bg_ris_identifiers_and_streams_are_complete_but_forecasts_remain_candidate(self):
         _, _, result = self.parse("bg")
         self.assertFalse(result.publishable)
-        self.assertTrue(all(station.source_station_id is None for station in result.stations))
-        self.assertIn("missing_institutional_station_ids", {issue.code for issue in result.issues})
+        self.assertTrue(all(station.source_station_id and station.isrs_location_code for station in result.stations))
+        self.assertEqual({"manual", "automatic"}, {station.source_stream_type for station in result.stations})
+        self.assertNotIn("missing_institutional_station_ids", {issue.code for issue in result.issues})
+        self.assertIn("forecast_not_activated", {issue.code for issue in result.issues})
 
     def test_schema_change_is_detected(self):
         adapter, payloads, _ = self.parse("at")
@@ -131,12 +139,12 @@ class InternationalAdapterTests(unittest.TestCase):
             self.assertEqual(len(payload.body), saved["content_bytes"])
             self.assertEqual("1.0.0", saved["adapter_version"])
 
-    def test_hr_stale_feed_is_suspended(self):
+    def test_hr_stale_feed_is_partial_with_access_retained(self):
         adapter = get_adapter("hr")
         payloads = load_fixture_payloads(FIXTURES / "hr")
         payloads["current"] = replace(payloads["current"], captured_at_utc="2026-09-01T10:00:00+00:00")
         result = adapter.parse(payloads)
-        self.assertEqual("suspended", result.status)
+        self.assertEqual("partial", result.status)
         self.assertIn("stale_source", {issue.code for issue in result.issues})
 
     def test_runner_writes_isolated_outputs_and_summary(self):
@@ -156,7 +164,7 @@ class InternationalAdapterTests(unittest.TestCase):
             self.assertEqual(101, len(rows))
             self.assertEqual(88, len([row for row in rows if row["included"] == "yes"]))
             self.assertEqual(13, len([row for row in rows if row["implementation_status"] == "suspended"]))
-            self.assertEqual(26, len([row for row in rows if row["latitude"]]))
+            self.assertEqual(101, len([row for row in rows if row["latitude"]]))
             self.assertEqual(
                 Path("docs/INTERNATIONAL_STATIONS_AUDIT.csv").read_text(encoding="utf-8"),
                 generated.read_text(encoding="utf-8"),
@@ -170,8 +178,8 @@ class InternationalAdapterTests(unittest.TestCase):
 
             sk_rows = [row for row in rows if row["country_code"] == "SK"]
             self.assertEqual({"complete"}, {row["implementation_status"] for row in sk_rows})
-            self.assertEqual({"complete"}, {row["latest_live_status"] for row in sk_rows})
-            self.assertTrue(all("suspect water_temperature" in row["observation_quality_summary"] for row in sk_rows))
+            self.assertEqual({"partial"}, {row["latest_live_status"] for row in sk_rows})
+            self.assertTrue(all("source-provided provisional quality" in row["observation_quality_summary"] for row in sk_rows))
 
             rs_rows = [row for row in rows if row["country_code"] == "RS"]
             self.assertEqual(13, len(rs_rows))

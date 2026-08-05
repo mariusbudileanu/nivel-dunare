@@ -25,6 +25,9 @@
       <span class="status-pill" id="system-status"><span class="status-dot"></span><span data-i18n="loading">Se încarcă</span></span>
       <span class="meta-item"><small data-i18n="observations">Observații</small><strong id="official-date">—</strong></span>
       <span class="meta-item"><small data-i18n="lastCapture">Ultima captură</small><strong id="capture-date">—</strong></span>
+      <span class="meta-item"><small data-i18n="internationalRun">Rulare internațională</small><strong id="international-run">—</strong></span>
+      <span class="meta-item"><small data-i18n="successfulSources">Surse actualizate</small><strong id="successful-sources">—</strong></span>
+      <span class="meta-item"><small data-i18n="staleManualUnavailable">Stale / manuale / indisponibile</small><strong id="mixed-source-counts">—</strong></span>
     </div>
     <div class="header-actions">
       <button class="button secondary" id="info-button" type="button" data-i18n="info">Info</button>
@@ -34,6 +37,7 @@
   </header>
 
   <main id="main-content" class="page-shell">
+    <p class="eyebrow section-label" data-i18n="romaniaPanel">România — AFDJ</p>
     <section class="metric-grid" aria-label="Indicatori generali" data-i18n-aria-label="generalMetricsAria">
       <article class="metric-card"><span data-i18n="reportedStations">Stații raportate</span><strong id="metric-stations">—</strong><small data-i18n="currentCapture">în captura curentă</small></article>
       <article class="metric-card rising"><span data-i18n="rising">În creștere</span><strong id="metric-rising">—</strong><small data-i18n="positiveVariation">variație pozitivă</small></article>
@@ -46,16 +50,31 @@
       <strong data-i18n="methodTitle">Notă metodologică:</strong> <span data-i18n="methodCopy">cotele sunt raportate la mire locale cu zerouri de referință diferite. Valorile absolute nu sunt direct comparabile între stații.</span>
     </div>
 
+    <section class="surface global-summary" aria-labelledby="global-summary-title">
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="globalOverview">Rezumat global</p><h2 id="global-summary-title" data-i18n="globalOverviewTitle">Acoperirea portalului</h2></div></div>
+      <div class="global-metrics" id="global-metrics" aria-live="polite"></div>
+    </section>
+
     <section class="surface international-beta" aria-labelledby="international-title">
-      <div class="panel-heading beta-heading"><div><p class="eyebrow" data-i18n="betaLabel">Beta</p><h2 id="international-title" data-i18n="betaTitle">Date internaționale beta</h2><p data-i18n="betaCopy">Sursele internaționale au frecvențe și niveluri de maturitate diferite. Valorile suspecte și vechi nu intră în statisticile curente.</p></div><span class="status-tag partial" data-i18n="partial">Parțial</span></div>
+      <div class="panel-heading beta-heading"><div><p class="eyebrow" data-i18n="betaLabel">Beta</p><h2 id="international-title" data-i18n="betaTitle">Date internaționale beta</h2><p data-i18n="betaCopy">Sursele internaționale au frecvențe și niveluri de maturitate diferite. Valorile suspecte și vechi nu intră în statisticile curente.</p><p class="data-policy" data-i18n="dataPolicy">Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.</p></div><span class="status-tag partial" data-i18n="partial">Parțial</span></div>
       <div class="international-metrics" id="international-metrics" aria-live="polite"></div>
       <div class="international-filters" aria-label="Filtre internaționale" data-i18n-aria-label="internationalFiltersAria">
         <label><span data-i18n="country">Țară</span><select id="country-filter"></select></label>
         <label><span data-i18n="source">Administrație / sursă</span><select id="source-filter"></select></label>
+        <label><span data-i18n="trend">Tendință</span><select id="trend-filter"></select></label>
+        <label><span data-i18n="accessStatus">Acces</span><select id="access-filter"></select></label>
         <label><span data-i18n="sourceStatus">Status sursă</span><select id="status-filter"></select></label>
+        <label><span data-i18n="automationStatus">Automatizare</span><select id="automation-filter"></select></label>
+        <label><span data-i18n="freshnessStatus">Prospețime</span><select id="freshness-filter"></select></label>
+        <label><span data-i18n="observationQuality">Calitatea observației</span><select id="quality-filter"></select></label>
         <label><span data-i18n="stationType">Tip stație</span><select id="type-filter"></select></label>
+        <label><span data-i18n="streamType">Tip flux</span><select id="stream-filter"></select></label>
         <label><span data-i18n="coordinateType">Tip coordonate</span><select id="coordinate-filter"></select></label>
       </div>
+    </section>
+    <section class="surface source-summary-section" aria-labelledby="source-summary-title">
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="sourceOverview">Surse</p><h2 id="source-summary-title" data-i18n="sourceOverviewTitle">Starea surselor internaționale</h2></div></div>
+      <div class="source-summary-scroll"><table><thead><tr><th data-i18n="country">Țară</th><th data-i18n="source">Sursă</th><th data-i18n="station">Stații</th><th data-i18n="frequency">Frecvență</th><th data-i18n="lastAttempt">Ultima încercare</th><th data-i18n="lastSuccess">Ultimul succes</th><th data-i18n="lastObservation">Ultima observație</th><th data-i18n="accessStatus">Acces</th><th data-i18n="automationStatus">Automatizare</th><th data-i18n="freshnessStatus">Prospețime</th><th data-i18n="sourceStatus">Integrare</th><th data-i18n="validationStatus">Validare</th><th data-i18n="status">Mesaj</th></tr></thead><tbody id="source-summary-body"></tbody></table></div>
     </section>
     <section class="dashboard-grid">
       <article class="surface map-panel" aria-labelledby="map-title">
@@ -81,6 +100,7 @@
           <span><i class="legend-dot suspended"></i> <span data-i18n="suspended">suspendat</span></span>
           <span><i class="legend-dot unavailable"></i> <span data-i18n="unavailable">indisponibil</span></span>
           <span><i class="legend-dot coordinate-official"></i> <span data-i18n="officialCoordinateLegend">poziție oficială exactă</span></span>
+          <span><i class="legend-dot coordinate-manual"></i> <span data-i18n="manualCoordinateLegend">poziție exactă verificată manual</span></span>
           <span><i class="legend-dot coordinate-approximate"></i> <span data-i18n="approximateCoordinateLegend">poziție aproximativă a localității</span></span>
         </div>
       </article>
@@ -153,7 +173,7 @@
       </article>
     </section>
 
-    <section class="surface unmapped-section" aria-labelledby="unmapped-title">
+    <section class="surface unmapped-section" aria-labelledby="unmapped-title" hidden>
       <div class="panel-heading"><div><p class="eyebrow" data-i18n="noVerifiedCoordinates">Fără coordonate acceptate</p><h2 id="unmapped-title" data-i18n="unmappedTitle">Stații fără coordonate acceptate pentru hartă</h2><p data-i18n="unmappedCopy">Aceste stații sunt consultabile în listă, dar rezultatul de geocodare este nerezolvat sau necesită review.</p></div><strong id="unmapped-count">—</strong></div>
       <div class="unmapped-list" id="unmapped-list" aria-live="polite"></div>
     </section>
@@ -186,6 +206,7 @@
     <div class="modal-head"><div><p class="eyebrow" data-i18n="infoAbout">Despre aplicație</p><h2 id="info-dialog-title" data-i18n="infoTitle">Ghid și metodologie</h2></div><button class="icon-button" data-close-dialog="info-dialog" aria-label="Închide" data-i18n-aria-label="close">×</button></div>
     <div class="modal-body info-grid">
       <section><h3 data-i18n="infoPurposeTitle">Scop și proveniență</h3><p data-i18n="infoPurpose">Portalul reunește observații și prognoze oficiale ale Dunării. România este actualizată automat prin fluxul AFDJ–Hetzner; sursele internaționale sunt publicate separat, în versiune beta, cu frecvențe diferite.</p></section>
+      <section><h3 data-i18n="dataPolicyTitle">Politica valorilor</h3><p data-i18n="dataPolicy">Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.</p></section>
       <section><h3 data-i18n="infoForecastTitle">Observații și prognoze</h3><p data-i18n="infoForecast">Observațiile descriu măsurători publicate de administrații. Prognozele sunt valori viitoare și sunt afișate numai când parametrul, unitatea și timpul sunt demonstrate.</p></section>
       <section><h3 data-i18n="infoStatusTitle">Statusuri și calitate</h3><p data-i18n="infoStatus">Statusul sursei este separat de calitatea fiecărei observații. Valorile suspecte sunt păstrate și marcate, dar sunt excluse din valorile curente și statistici.</p></section>
       <section><h3 data-i18n="infoMapTitle">Coordonate oficiale și aproximative</h3><p data-i18n="infoMap">Cercul indică o coordonată oficială exactă a stației. Rombul indică centrul aproximativ al localității, obținut prin OpenStreetMap Nominatim (© contribuitorii OpenStreetMap, ODbL), nu amplasamentul mirei sau senzorului. Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.</p></section>

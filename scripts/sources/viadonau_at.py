@@ -72,12 +72,21 @@ class ViaDonauAdapter(SourceAdapter):
                 station_slug=station_slug("AT", name), river_name="Danube",
                 latitude=latitude, longitude=longitude,
                 coordinate_source=source_url if latitude is not None else None,
-                coordinate_method="official_rest_payload" if latitude is not None else "unavailable",
+                coordinate_method="official_station_coordinate" if latitude is not None else "unresolved",
                 coordinate_confidence="high" if latitude is not None else "unavailable",
                 source_url=source_url, active=True, last_verified_at=verified,
                 operator_provider_id="viadonau_at", source_provider_id="viadonau_at",
                 captured_via_provider_id="viadonau_at", river_km=parse_optional_float(gauge.get("riverKm")),
                 inclusion_reason="DoRIS Danube gauge; Schwedenbrücke/Donaukanal excluded explicitly",
+                physical_station_id=sid, source_stream_id=f"{object_id}:automatic",
+                source_stream_type="automatic", is_primary_stream=True,
+                observation_frequency="source status cadence",
+                coordinate_provider="viadonau DoRIS" if latitude is not None else None,
+                coordinate_review_status="accepted" if latitude is not None else "unresolved",
+                is_exact_station_location=latitude is not None,
+                coordinate_verified_at=verified if latitude is not None else None,
+                source_coordinate_raw=(f"{latitude}|{longitude}" if latitude is not None else None),
+                source_crs="EPSG:4326" if latitude is not None else None,
             ))
             status = by_id.get(object_id)
             if not status:
