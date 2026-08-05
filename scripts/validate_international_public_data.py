@@ -33,6 +33,16 @@ def require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
+def observation_identity(row: dict[str, Any]) -> tuple[Any, ...]:
+    """Identify one source observation without conflating its parameter series."""
+    return (
+        row.get("station_id"), row.get("parameter"), row.get("value"), row.get("unit"),
+        row.get("measurement_datetime_utc"), row.get("measurement_datetime_local"),
+        row.get("measurement_date"), row.get("measurement_time_original"),
+        row.get("source_file_sha256"),
+    )
+
+
 def validate(root: Path, mirror: Path | None = None, geocoding_registry: Path = Path("data/reference/international_station_geocoding.csv"), geocoding_cache: Path = Path("data/reference/international_station_geocoding_cache-v1.json")) -> dict[str, Any]:
     for name in FILES:
         require((root / name).is_file(), f"Missing {root / name}")
@@ -120,11 +130,22 @@ def validate(root: Path, mirror: Path | None = None, geocoding_registry: Path = 
 
     suspect_observations = [row for row in observations if row["canonical_quality_flag"] == "suspect"]
     require(suspect_observations, "Expected a suspect live observation")
-    require(all((row["station_id"], row["parameter"]) not in latest_keys for row in suspect_observations), "Suspect observation leaked into latest")
+    latest_identities = {observation_identity(row) for row in latest}
+    require(
+        all(observation_identity(row) not in latest_identities for row in suspect_observations),
+        "Suspect observation leaked into latest",
+    )
     suspect_issues = [row for row in issues if row.get("code") == "outside_plausible_water_temperature_range"]
     require(any(row.get("historical") and row.get("observation", {}).get("value") == 46.2 for row in suspect_issues), "Historical Iza 46.2 quality record missing")
-    current_suspect_issues = [row for row in suspect_issues if not row.get("historical")]
-    require(any(row.get("observation", {}).get("canonical_quality_flag") == "suspect" for row in current_suspect_issues), "Current suspect observation is not preserved structurally in quality issues")
+    evidenced_suspect_identities = {
+        observation_identity(row["observation"])
+        for row in suspect_issues
+        if row.get("observation", {}).get("canonical_quality_flag") == "suspect"
+    }
+    require(
+        all(observation_identity(row) in evidenced_suspect_identities for row in suspect_observations),
+        "A preserved suspect observation lacks structured quality evidence",
+    )
 
     require(len(sources) == 7 and {row["country_code"] for row in sources} == {"DE", "AT", "SK", "HU", "HR", "BG", "RS"}, "Source registry mismatch")
     require(status.get("contract_version") == "1.2-beta", "Unexpected public contract version")

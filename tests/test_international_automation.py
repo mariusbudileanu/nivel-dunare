@@ -20,6 +20,7 @@ from scripts.update_international_data import (
     selected_sources,
     update_state,
 )
+from scripts.validate_international_public_data import observation_identity
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -132,6 +133,33 @@ class InternationalAutomationTests(unittest.TestCase):
             self.assertIsNone(stations[0]["source_station_id"])
             self.assertEqual(forecasts, [])
 
+    def test_resolved_suspect_issue_is_preserved_as_historical_evidence(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            incoming = root / "incoming"
+            incoming.mkdir()
+            station = {"station_id": "sk-6860", "source_station_id": "6860"}
+            for name, rows in (
+                ("stations.json", [station]), ("observations.json", []),
+                ("forecasts.json", []), ("issues.json", []),
+            ):
+                (incoming / name).write_text(json.dumps(rows), encoding="utf-8")
+            observation = {
+                "station_id": "sk-6860", "parameter": "water_temperature", "value": 45.3,
+                "unit": "degC", "measurement_datetime_utc": "2026-08-04T16:30:00+00:00",
+                "source_file_sha256": "a" * 64, "canonical_quality_flag": "suspect",
+            }
+            issue = {
+                "code": "outside_plausible_water_temperature_range", "record_id": "sk-6860",
+                "historical": False, "observation": observation,
+            }
+            replace_candidate(root / "candidate", "sk", incoming,
+                              {"observations": [], "forecasts": [], "issues": [issue]})
+            stored = json.loads((root / "candidate" / "sk" / "issues.json").read_text(encoding="utf-8"))
+            self.assertEqual(len(stored), 1)
+            self.assertTrue(stored[0]["historical"])
+            self.assertEqual(observation_identity(stored[0]["observation"]), observation_identity(observation))
+
     def test_http_failure_metadata_is_reported_from_raw_archive(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -213,6 +241,22 @@ class InternationalAutomationTests(unittest.TestCase):
         hu = [row for row in observations if row["country_code"] == "HU"]
         self.assertTrue(hu)
         self.assertTrue(all(row.get("measurement_date") and not row.get("measurement_datetime_utc") for row in hu))
+
+    def test_suspect_record_identity_does_not_exclude_later_valid_value_for_series(self):
+        suspect = {
+            "station_id": "sk-6860", "parameter": "water_temperature", "value": 45.3,
+            "unit": "degC", "measurement_datetime_utc": "2026-08-04T16:30:00+00:00",
+            "source_file_sha256": "a" * 64,
+        }
+        later_valid = {
+            **suspect, "value": 42.3,
+            "measurement_datetime_utc": "2026-08-05T09:00:00+00:00",
+            "source_file_sha256": "b" * 64,
+        }
+        self.assertEqual((suspect["station_id"], suspect["parameter"]),
+                         (later_valid["station_id"], later_valid["parameter"]))
+        self.assertNotEqual(observation_identity(suspect), observation_identity(later_valid))
+        self.assertEqual(observation_identity(suspect), observation_identity(dict(suspect)))
 
     def test_versioned_operation_state_contains_last_known_good_fields(self):
         state = json.loads(STATE.read_text(encoding="utf-8"))
