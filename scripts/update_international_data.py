@@ -250,7 +250,14 @@ def replace_candidate(candidate_root: Path, code: str, new_folder: Path, previou
     station_ids = {row["station_id"] for row in new_stations}
     old_observations = [raw_candidate(row) for row in previous["observations"] if row.get("station_id") in station_ids]
     old_forecasts = [raw_candidate(row) for row in previous["forecasts"] if row.get("station_id") in station_ids]
-    old_issues = [raw_candidate(row) for row in previous["issues"] if row.get("historical")]
+    old_issues = []
+    for row in previous["issues"]:
+        if row.get("historical"):
+            old_issues.append(raw_candidate(row))
+        elif row.get("code") == "outside_plausible_water_temperature_range":
+            historical = raw_candidate(row)
+            historical["historical"] = True
+            old_issues.append(historical)
     write_json(folder / "stations.json", new_stations)
     write_json(folder / "observations.json", dedupe(old_observations + new_observations, "observations"))
     write_json(folder / "forecasts.json", [] if code == "bg" else dedupe(old_forecasts + new_forecasts, "forecasts"))
