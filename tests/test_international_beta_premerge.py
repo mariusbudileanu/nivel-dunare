@@ -128,7 +128,7 @@ class InternationalBetaPremergeTests(unittest.TestCase):
         forecasts = load_json("forecasts.json")
         issues = load_json("quality_issues.json")
         station_ids = {row["station_id"] for row in stations}
-        self.assertEqual(status["contract_version"], "1.1-beta")
+        self.assertEqual(status["contract_version"], "1.2-beta")
         self.assertEqual((status["complete_source_count"], status["partial_source_count"], status["suspended_source_count"]), (2, 3, 2))
         self.assertEqual(status["observation_count"], len(observations))
         self.assertEqual(status["forecast_count"], len(forecasts))

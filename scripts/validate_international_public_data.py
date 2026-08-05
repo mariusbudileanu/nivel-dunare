@@ -105,14 +105,18 @@ def validate(root: Path, mirror: Path | None = None, geocoding_registry: Path = 
     require(len(latest_keys) == len(latest), "Duplicate latest record")
     require(all(row["current_usable"] for row in latest), "Latest contains unusable observation")
     require(all(row["canonical_quality_flag"] not in {"suspect", "missing"} for row in latest), "Latest contains suspect observation")
-    require(not any(row["country_code"] == "HR" for row in latest), "HR stale data present in latest")
     require(not any(row["source_id"] == "appd_bg" for row in forecasts), "BG forecasts must not be normalized publicly")
 
     rs = [row for row in stations if row["country_code"] == "RS"]
     require(len(rs) == 13 and all(row["source_status"] == "suspended" for row in rs), "RS audit registry mismatch")
     require(not any(row["country_code"] == "RS" for row in observations + forecasts), "RS must have no live data")
     hr = [row for row in observations if row["country_code"] == "HR"]
-    require(hr and all(row["stale"] and not row["current_usable"] for row in hr), "HR values must be historical/stale")
+    hr_source = next(row for row in sources if row["country_code"] == "HR")
+    if hr_source.get("freshness_status") == "stale":
+        require(hr and all(row["stale"] and not row["current_usable"] for row in hr), "HR stale values must remain historical")
+        require(not any(row["country_code"] == "HR" for row in latest), "HR stale data present in latest")
+    else:
+        require(hr_source.get("freshness_status") == "current", "HR freshness must be current or stale")
 
     suspect_observations = [row for row in observations if row["canonical_quality_flag"] == "suspect"]
     require(suspect_observations, "Expected a suspect live observation")
@@ -120,13 +124,29 @@ def validate(root: Path, mirror: Path | None = None, geocoding_registry: Path = 
     suspect_issues = [row for row in issues if row.get("code") == "outside_plausible_water_temperature_range"]
     require(any(row.get("historical") and row.get("observation", {}).get("value") == 46.2 for row in suspect_issues), "Historical Iza 46.2 quality record missing")
     current_suspect_issues = [row for row in suspect_issues if not row.get("historical")]
-    require(any(row.get("observation", {}).get("value") == 45.3 and row.get("observation", {}).get("canonical_quality_flag") == "suspect" for row in current_suspect_issues), "Current suspect observation is not preserved structurally in quality issues")
+    require(any(row.get("observation", {}).get("canonical_quality_flag") == "suspect" for row in current_suspect_issues), "Current suspect observation is not preserved structurally in quality issues")
 
     require(len(sources) == 7 and {row["country_code"] for row in sources} == {"DE", "AT", "SK", "HU", "HR", "BG", "RS"}, "Source registry mismatch")
-    require(status.get("contract_version") == "1.1-beta", "Unexpected public contract version")
-    require(status["complete_source_count"] == sum(row["status"] == "complete" for row in sources), "Complete source count mismatch")
-    require(status["partial_source_count"] == sum(row["status"] == "partial" for row in sources), "Partial source count mismatch")
-    require(status["suspended_source_count"] == sum(row["status"] == "suspended" for row in sources), "Suspended source count mismatch")
+    require(status.get("contract_version") == "1.2-beta", "Unexpected public contract version")
+    operational_keys = {
+        "source_status", "automation_status", "freshness_status", "validation_status",
+        "last_attempt_at", "last_success_at", "last_capture_at", "next_expected_update",
+        "update_frequency", "validation_message_ro", "validation_message_en", "last_error",
+        "consecutive_failures",
+    }
+    for source in sources:
+        require(operational_keys <= set(source), f"Operational metadata incomplete for {source['country_code']}")
+        require(source["source_status"] in {"complete", "partial", "suspended", "unavailable"}, "Invalid source_status")
+        require(source["automation_status"] in {"scheduled", "manual", "disabled"}, "Invalid automation_status")
+        require(source["freshness_status"] in {"current", "stale", "unknown", "unavailable"}, "Invalid freshness_status")
+        require(source["validation_status"] in {"validated", "requires_review", "failed", "not_applicable"}, "Invalid validation_status")
+        require(isinstance(source["consecutive_failures"], int) and source["consecutive_failures"] >= 0, "Invalid failure count")
+    automation = {row["country_code"]: row["automation_status"] for row in sources}
+    require({code for code, value in automation.items() if value == "scheduled"} == {"DE", "SK", "HU", "HR", "BG"}, "Scheduled source set mismatch")
+    require(automation["AT"] == "manual" and automation["RS"] == "disabled", "AT/RS automation policy mismatch")
+    require(status["complete_source_count"] == sum(row["source_status"] == "complete" for row in sources), "Complete source count mismatch")
+    require(status["partial_source_count"] == sum(row["source_status"] == "partial" for row in sources), "Partial source count mismatch")
+    require(status["suspended_source_count"] == sum(row["source_status"] == "suspended" for row in sources), "Suspended source count mismatch")
     require(status["observation_count"] == len(observations), "Observation count mismatch")
     require(status["current_usable_observation_count"] == sum(row["current_usable"] for row in observations), "Current usable observation count mismatch")
     require(status["stale_observation_count"] == sum(row["stale"] for row in observations), "Stale observation count mismatch")

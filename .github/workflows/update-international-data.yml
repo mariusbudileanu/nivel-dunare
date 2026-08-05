@@ -1,0 +1,339 @@
+name: Update international Danube data
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Source selector
+        required: true
+        default: all
+        type: choice
+        options: [all, de, at, sk, hu, hr, bg, rs]
+      mode:
+        description: Fixture validation or live access
+        required: true
+        default: fixtures
+        type: choice
+        options: [fixtures, live]
+      action:
+        description: Build a preview or publish validated data
+        required: true
+        default: dry-run
+        type: choice
+        options: [dry-run, publish]
+  schedule:
+    # UTC; scheduled Actions runs can start later than the nominal minute.
+    - cron: "37 1 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: international-danube-data-publication
+  cancel-in-progress: false
+
+jobs:
+  collect-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    outputs:
+      should_publish: ${{ steps.resolve.outputs.should_publish }}
+      source: ${{ steps.resolve.outputs.source }}
+      mode: ${{ steps.resolve.outputs.mode }}
+      action: ${{ steps.resolve.outputs.action }}
+    steps:
+      - name: Checkout validated workflow revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Resolve safe execution profile
+        id: resolve
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            source="scheduled"
+            mode="live"
+            action="publish"
+          else
+            source="${{ inputs.source }}"
+            mode="${{ inputs.mode }}"
+            action="${{ inputs.action }}"
+          fi
+          if [[ "$mode" == "fixtures" && "$action" == "publish" ]]; then
+            echo "Fixture data cannot be published." >&2
+            exit 2
+          fi
+          should_publish=false
+          if [[ "$mode" == "live" && "$action" == "publish" ]]; then
+            should_publish=true
+          fi
+          {
+            echo "source=$source"
+            echo "mode=$mode"
+            echo "action=$action"
+            echo "should_publish=$should_publish"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Collect, parse, validate and build independently
+        env:
+          DORIS_PARTNER_KEY: ${{ secrets.DORIS_PARTNER_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="_workflow/international-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          mkdir -p "$output"
+          python -m scripts.update_international_data \
+            --source "${{ steps.resolve.outputs.source }}" \
+            --mode "${{ steps.resolve.outputs.mode }}" \
+            --action "${{ steps.resolve.outputs.action }}" \
+            --output-dir "$output" \
+            2>&1 | tee "$output/run.log"
+
+      - name: Repository and public-contract validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m scripts.validate_repository
+          python -m scripts.validate_international_public_data
+          python -m scripts.geocode_international_stations --validate-only
+          python -m scripts.smoke_test_site
+          python -m unittest discover -s tests -v
+
+      - name: Validate JSON, GeoJSON, references and mirrors
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          roots = (Path("data/public/international"), Path("public/data/international"))
+          for root in roots:
+              for path in sorted((*root.glob("*.json"), *root.glob("*.geojson"))):
+                  json.loads(path.read_text(encoding="utf-8"))
+          names = {path.name for path in roots[0].iterdir() if path.is_file()}
+          if names != {path.name for path in roots[1].iterdir() if path.is_file()}:
+              raise SystemExit("International mirror file sets differ")
+          for name in names:
+              if (roots[0] / name).read_bytes() != (roots[1] / name).read_bytes():
+                  raise SystemExit(f"International mirror differs: {name}")
+          stations = json.loads((roots[0] / "stations.json").read_text(encoding="utf-8"))
+          station_ids = {row["station_id"] for row in stations}
+          for name in ("observations.json", "forecasts.json", "latest.json"):
+              rows = json.loads((roots[0] / name).read_text(encoding="utf-8"))
+              missing = {row["station_id"] for row in rows} - station_ids
+              if missing:
+                  raise SystemExit(f"{name} contains unknown station IDs: {sorted(missing)}")
+          print({"json_geojson": "ok", "references": "ok", "mirrors": "identical"})
+          PY
+
+      - name: Scan product and artifact for secrets
+        env:
+          DORIS_PARTNER_KEY: ${{ secrets.DORIS_PARTNER_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import gzip
+          import os
+          import re
+          from pathlib import Path
+
+          roots = [Path("data/public/international"), Path("public/data/international"), Path("_workflow")]
+          secret = os.environ.get("DORIS_PARTNER_KEY", "").encode()
+          token_patterns = (
+              re.compile(rb"ghp_[A-Za-z0-9]{20,}"),
+              re.compile(rb"github_pat_[A-Za-z0-9_]{20,}"),
+              re.compile(rb"(?:api[_-]?key|access[_-]?token)=[^&\s\"']+", re.I),
+              re.compile(rb"VIADONAU_PARTNER_KEY=(?!%5BREDACTED%5D|\[REDACTED\])[^&\s\"']+", re.I),
+          )
+          for root in roots:
+              for path in root.rglob("*"):
+                  if not path.is_file():
+                      continue
+                  data = gzip.open(path, "rb").read() if path.suffix == ".gz" else path.read_bytes()
+                  if secret and secret in data:
+                      path.unlink()
+                      raise SystemExit(f"Configured DoRIS secret found in persisted output: {path}")
+                  if any(pattern.search(data) for pattern in token_patterns):
+                      path.unlink()
+                      raise SystemExit(f"Credential-like value found in persisted output: {path}")
+          print("Secret scan passed")
+          PY
+
+      - name: Prepare immutable validated product
+        if: steps.resolve.outputs.should_publish == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="_workflow/international-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          product="$output/product"
+          mkdir -p "$product/data/public" "$product/public/data" "$product/data/reference"
+          cp -a data/public/international "$product/data/public/"
+          cp -a public/data/international "$product/public/data/"
+          cp data/reference/international_source_operations.json "$product/data/reference/"
+          printf '%s\n' "$GITHUB_SHA" > "$product/BASE_SHA"
+          (
+            cd "$product"
+            find data public -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+          )
+
+      - name: Write collection summary
+        if: always()
+        shell: bash
+        run: |
+          output="_workflow/international-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          if [[ -f "$output/update-summary.json" ]]; then
+            python - "$output/update-summary.json" "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          summary = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+          rows = summary.get("sources", [])
+          updated = [row["source"].upper() for row in rows if row.get("accepted_for_publication")]
+          lkg = [row["source"].upper() for row in rows if row.get("publication_status") == "last-known-good"]
+          failed = [row["source"].upper() for row in rows if row.get("status") == "failed"]
+          public = summary.get("public_status", {})
+          with Path(sys.argv[2]).open("a", encoding="utf-8") as stream:
+              stream.write("## International source update\n\n")
+              stream.write(f"- Updated/accepted: {', '.join(updated) or 'none'}\n")
+              stream.write(f"- Last-known-good retained: {', '.join(lkg) or 'none'}\n")
+              stream.write(f"- Failed: {', '.join(failed) or 'none'}\n")
+              stream.write(f"- Observations: {public.get('observation_count', 0)}\n")
+              stream.write(f"- Forecasts: {public.get('forecast_count', 0)}\n")
+          PY
+          fi
+
+      - name: Upload raw, candidates, issues, logs and validated product
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: international-danube-${{ steps.resolve.outputs.source }}-${{ steps.resolve.outputs.mode }}-${{ steps.resolve.outputs.action }}-${{ github.run_id }}
+          path: _workflow/international-${{ github.run_id }}-${{ github.run_attempt }}/
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    needs: collect-and-validate
+    if: needs.collect-and-validate.outputs.should_publish == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Checkout latest main without rewriting history
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Download validated product
+        uses: actions/download-artifact@v4
+        with:
+          name: international-danube-${{ needs.collect-and-validate.outputs.source }}-${{ needs.collect-and-validate.outputs.mode }}-${{ needs.collect-and-validate.outputs.action }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/international-validated
+
+      - name: Verify artifact and protect concurrent international changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          product="${RUNNER_TEMP}/international-validated/product"
+          (
+            cd "$product"
+            sha256sum -c SHA256SUMS
+          )
+          base_sha=$(cat "$product/BASE_SHA")
+          git fetch origin main
+          if ! git merge-base --is-ancestor "$base_sha" origin/main; then
+            echo "Validated base is not an ancestor of origin/main; refusing publication." >&2
+            exit 1
+          fi
+          concurrent=$(git diff --name-only "$base_sha" origin/main -- \
+            data/public/international \
+            public/data/international \
+            data/reference/international_source_operations.json)
+          if [[ -n "$concurrent" ]]; then
+            echo "Concurrent international changes detected; refusing overwrite:" >&2
+            printf '%s\n' "$concurrent" >&2
+            exit 1
+          fi
+          git checkout -B main origin/main
+
+      - name: Apply strict product whitelist
+        shell: bash
+        run: |
+          set -euo pipefail
+          product="${RUNNER_TEMP}/international-validated/product"
+          rm -rf data/public/international public/data/international
+          cp -a "$product/data/public/international" data/public/
+          cp -a "$product/public/data/international" public/data/
+          cp "$product/data/reference/international_source_operations.json" data/reference/
+          unexpected=$(git status --porcelain | awk '{print $2}' | grep -Ev \
+            '^(data/public/international/|public/data/international/|data/reference/international_source_operations\.json$)' || true)
+          if [[ -n "$unexpected" ]]; then
+            echo "Unexpected path outside publication whitelist:" >&2
+            printf '%s\n' "$unexpected" >&2
+            exit 1
+          fi
+
+      - name: Commit only a real whitelisted change
+        id: commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            data/public/international \
+            public/data/international \
+            data/reference/international_source_operations.json
+          if git diff --cached --quiet; then
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            echo "No real whitelisted change; no commit and no Pages dispatch." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git commit -m "data: update international Danube sources $(date -u +%F)"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Push with one controlled retry
+        if: steps.commit.outputs.committed == 'true'
+        id: push
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git push origin HEAD:main; then
+            :
+          else
+            echo "Initial push raced with main; attempting one controlled rebase." >&2
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo "Real conflict; publication stopped without force push." >&2
+              exit 1
+            fi
+            git push origin HEAD:main
+          fi
+          commit_sha=$(git rev-parse HEAD)
+          {
+            echo "pushed=true"
+            echo "commit_sha=$commit_sha"
+          } >> "$GITHUB_OUTPUT"
+          echo "- Automatic data commit: \`$commit_sha\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Dispatch GitHub Pages only after successful push
+        if: steps.commit.outputs.committed == 'true' && steps.push.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: gh workflow run deploy-pages.yml --ref main

@@ -2,7 +2,7 @@
   "approximate_coordinate_station_count": 67,
   "beta": true,
   "complete_source_count": 2,
-  "contract_version": "1.1-beta",
+  "contract_version": "1.2-beta",
   "current_station_count": 83,
   "current_usable_observation_count": 161,
   "fixtures_run_id": "30929839808",
