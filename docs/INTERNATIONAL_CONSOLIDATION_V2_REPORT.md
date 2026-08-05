@@ -23,6 +23,14 @@ Hydrological values are reproduced as provided by official sources. Numeric plau
 
 Counts above describe the committed last-known-good public snapshot before the final live workflow. The final report must use the post-merge artifact and public files, not infer successful live access from fixtures.
 
+## Pre-merge GitHub validation
+
+- fixtures all-source dry-run `31019609341`: success;
+- final live all-source dry-run `31020421889`: success, public preview validated; DE 18/25/0, AT 9/9/240, HU 25/107/0, HR 3/30/0 and BG 20/46/0 public forecasts accepted; SK returned 14/27/245 but was fail-soft rejected against the reviewed 13-station inventory, and RS made no request while suspended;
+- BG manual dry-run `31020513661`: success, HTTP 200/200, 20 streams, 46 observations, forecast candidates excluded from public output;
+- BG automatic dry-run `31020703686`: success, HTTP 200/200, 20 streams, 46 observations, forecast candidates excluded from public output.
+
+The artifact from each run was downloaded and its `update-summary.json`, raw archive, candidate outputs and validated public preview were inspected. GitHub's Node.js 20 deprecation warning was removed by upgrading the affected official actions to the stable Node.js 24-compatible majors available on 2026-08-05.
 ## RIS workbooks and provenance
 
 The original attached workbooks were inspected across relevant sheets and verified against `data/reference/ris_station_registry.csv`:
