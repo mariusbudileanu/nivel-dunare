@@ -9,6 +9,12 @@ on:
         default: all
         type: choice
         options: [all, de, at, sk, hu, hr, bg, rs]
+      stream:
+        description: BG stream selector (ignored for other sources)
+        required: true
+        default: all
+        type: choice
+        options: [all, manual, automatic]
       mode:
         description: Fixture validation or live access
         required: true
@@ -42,15 +48,16 @@ jobs:
       should_publish: ${{ steps.resolve.outputs.should_publish }}
       source: ${{ steps.resolve.outputs.source }}
       mode: ${{ steps.resolve.outputs.mode }}
+      stream: ${{ steps.resolve.outputs.stream }}
       action: ${{ steps.resolve.outputs.action }}
     steps:
       - name: Checkout validated workflow revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -63,10 +70,12 @@ jobs:
             source="scheduled"
             mode="live"
             action="publish"
+            stream="all"
           else
             source="${{ inputs.source }}"
             mode="${{ inputs.mode }}"
             action="${{ inputs.action }}"
+            stream="${{ inputs.stream }}"
           fi
           if [[ "$mode" == "fixtures" && "$action" == "publish" ]]; then
             echo "Fixture data cannot be published." >&2
@@ -79,6 +88,7 @@ jobs:
           {
             echo "source=$source"
             echo "mode=$mode"
+            echo "stream=$stream"
             echo "action=$action"
             echo "should_publish=$should_publish"
           } >> "$GITHUB_OUTPUT"
@@ -94,6 +104,7 @@ jobs:
           python -m scripts.update_international_data \
             --source "${{ steps.resolve.outputs.source }}" \
             --mode "${{ steps.resolve.outputs.mode }}" \
+            --stream "${{ steps.resolve.outputs.stream }}" \
             --action "${{ steps.resolve.outputs.action }}" \
             --output-dir "$output" \
             2>&1 | tee "$output/run.log"
@@ -216,7 +227,7 @@ jobs:
 
       - name: Upload raw, candidates, issues, logs and validated product
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: international-danube-${{ steps.resolve.outputs.source }}-${{ steps.resolve.outputs.mode }}-${{ steps.resolve.outputs.action }}-${{ github.run_id }}
           path: _workflow/international-${{ github.run_id }}-${{ github.run_attempt }}/
@@ -233,13 +244,13 @@ jobs:
       actions: write
     steps:
       - name: Checkout latest main without rewriting history
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
 
       - name: Download validated product
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: international-danube-${{ needs.collect-and-validate.outputs.source }}-${{ needs.collect-and-validate.outputs.mode }}-${{ needs.collect-and-validate.outputs.action }}-${{ github.run_id }}
           path: ${{ runner.temp }}/international-validated

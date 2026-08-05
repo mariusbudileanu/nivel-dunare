@@ -1,0 +1,32 @@
+{
+  "captured_at_utc": "2026-08-05T10:00:00+00:00",
+  "payloads": [
+    {"label":"daily-index","file":"daily-index.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/stanje_voda.php","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-index","file":"nrt-index.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_index.php","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42010","file":"daily-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/prognoza.php?hm_id=42010","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42015","file":"daily-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/prognoza.php?hm_id=42015","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42020","file":"daily-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/prognoza.php?hm_id=42020","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42030","file":"daily-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/prognoza.php?hm_id=42030","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42035","file":"daily-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/prognoza.php?hm_id=42035","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42040","file":"daily-no-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/bezprognoza.php?hm_id=42040","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42045","file":"daily-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/prognoza.php?hm_id=42045","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42050","file":"daily-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/prognoza.php?hm_id=42050","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42055","file":"daily-range.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/opseg.php?hm_id=42055","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42060","file":"daily-no-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/bezprognoza.php?hm_id=42060","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42065","file":"daily-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/prognoza.php?hm_id=42065","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42070","file":"daily-no-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/bezprognoza.php?hm_id=42070","content_type":"text/html; charset=utf-8"},
+    {"label":"daily-42095","file":"daily-no-forecast.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/bezprognoza.php?hm_id=42095","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42010","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42010&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42015","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42015&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42020","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42020&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42030","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42030&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42035","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42035&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42045","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42045&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42050","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42050&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42055","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42055&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42060","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42060&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42065","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42065&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42070","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42070&period=7","content_type":"text/html; charset=utf-8"},
+    {"label":"nrt-42095","file":"nrt.html","url":"https://www.hidmet.gov.rs/eng/osmotreni/nrt_tabela_grafik.php?hm_id=42095&period=7","content_type":"text/html; charset=utf-8"}
+  ]
+}

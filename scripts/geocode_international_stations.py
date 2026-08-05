@@ -199,21 +199,18 @@ def write_cache(path: Path, cache: dict[str, Any]) -> None:
 
 
 def validate_registry(stations_path: Path, registry_path: Path, cache_path: Path) -> dict[str, Any]:
+    """Validate the immutable locality registry without overriding higher-priority coordinates."""
     stations = json.loads(stations_path.read_text(encoding="utf-8"))
-    targets = {
-        row["station_id"]: row for row in stations
-        if row.get("is_exact_station_location") is False
-        or ("is_exact_station_location" not in row and not row.get("mapped"))
-    }
+    stations_by_id = {row["station_id"]: row for row in stations}
     rows = read_registry(registry_path)
-    if len(rows) != 75 or set(rows) != set(targets):
-        raise ValueError("Geocoding registry must contain exactly the 75 non-official-coordinate stations")
+    if len(rows) != 75 or not set(rows) <= set(stations_by_id):
+        raise ValueError("Geocoding registry must contain 75 known legacy locality targets")
     cache = load_cache(cache_path)
     accepted = 0
     coordinate_groups: dict[tuple[float, float], list[dict[str, str]]] = {}
     for station_id, row in rows.items():
         country = row.get("country_code", "").upper()
-        if country not in COUNTRY_NAMES or country != targets[station_id]["country_code"]:
+        if country not in COUNTRY_NAMES or country != stations_by_id[station_id]["country_code"]:
             raise ValueError(f"{station_id}: invalid country_code")
         if row.get("coordinate_method") != "geocoded_locality" or row.get("coordinate_provider") != PROVIDER:
             raise ValueError(f"{station_id}: incomplete coordinate method/provider")
@@ -242,9 +239,12 @@ def validate_registry(stations_path: Path, registry_path: Path, cache_path: Path
     for group in coordinate_groups.values():
         if len(group) > 1 and len({normalize_name(row["station_name"]) for row in group}) != 1:
             raise ValueError("Duplicate accepted coordinates across different locality names")
+    active_locality_ids = {row["station_id"] for row in stations if row.get("coordinate_method") == "geocoded_locality"}
+    if active_locality_ids != {station_id for station_id, row in rows.items() if row.get("review_status") == "accepted" and station_id in active_locality_ids}:
+        raise ValueError("An active locality coordinate is absent from the accepted registry")
     return {
-        "ok": True, "stations": len(rows), "accepted": accepted,
-        "medium": sum(row["coordinate_confidence"] == "medium" for row in rows.values()),
+        "ok": True, "stations": len(rows), "active_locality_coordinates": len(active_locality_ids),
+        "accepted": accepted, "medium": sum(row["coordinate_confidence"] == "medium" for row in rows.values()),
         "low": sum(row["coordinate_confidence"] == "low" for row in rows.values()),
         "unresolved": sum(row["coordinate_confidence"] == "unresolved" for row in rows.values()),
         "review_required": sum(row["review_status"] == "required" for row in rows.values()),

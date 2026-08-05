@@ -60,6 +60,29 @@ function applyStatus(status) {
   if (archiveDays < 30 && !new URLSearchParams(location.search).has("range")) state.rangePreset = "all";
 }
 
+function applyInternationalStatus(international) {
+  const sources = international.sources;
+  const current = sources.filter(source => source.freshness_status === "current" && source.access_status === "available").length;
+  const stale = sources.filter(source => source.freshness_status === "stale").length;
+  const manual = sources.filter(source => source.automation_status === "manual").length;
+  const unavailable = sources.filter(source => source.freshness_status === "unavailable" || source.access_status !== "available").length;
+  const mixed = sources.some(source => source.automation_status !== "scheduled" || source.freshness_status !== "current" || source.source_status !== "complete");
+  const pill = $("#system-status");
+  if (mixed) {
+    pill.classList.add("warning");
+    pill.innerHTML = `<span class="status-dot"></span>${t("mixedUpdateStatus")}`;
+  }
+  $("#international-run").textContent = international.status.generated_from_capture_utc ? formatDate(international.status.generated_from_capture_utc, true) : t("unavailable");
+  $("#successful-sources").textContent = `${formatNumber(current)} / ${formatNumber(sources.length)}`;
+  $("#mixed-source-counts").textContent = `${formatNumber(stale)} / ${formatNumber(manual)} / ${formatNumber(unavailable)}`;
+  const globalValues = [
+    ["totalStations", Number(state.status.station_count) + Number(international.status.station_count)], ["romanianStations", state.status.station_count],
+    ["internationalStations", international.status.station_count], ["mappedStations", Number(state.status.station_count) + Number(international.status.mapped_station_count)],
+    ["currentStations", Number(state.status.station_count) + Number(international.status.current_station_count)], ["countries", new Set(["RO", ...international.stations.map(station => station.country_code)]).size],
+    ["scheduledSources", sources.filter(source => source.automation_status === "scheduled").length], ["manualSources", manual], ["staleOrUnavailableSources", new Set(sources.filter(source => source.freshness_status === "stale" || source.freshness_status === "unavailable").map(source => source.source_id)).size],
+  ];
+  $("#global-metrics").innerHTML = globalValues.map(([key, value]) => `<div><span>${t(key)}</span><strong>${formatNumber(value)}</strong></div>`).join("");
+}
 function renderStationOptions() {
   const select = $("#station-select");
   const selected = state.selectedId || select.value;
@@ -290,7 +313,7 @@ function bindEvents(downloads) {
   $("#language-button").addEventListener("click", toggleLanguage);
   $("#downloads-button").addEventListener("click", () => $("#downloads-dialog").showModal());
   $$('[data-close-dialog]').forEach(button => button.addEventListener("click", () => document.getElementById(button.dataset.closeDialog).close()));
-  const internationalDownloads = ["stations.json", "observations.json", "latest.json", "forecasts.json", "sources.json", "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json"].map(name => ({ path: `international/${name}`, label: name, format: name.endsWith("geojson") ? "GeoJSON" : "JSON" }));
+  const internationalDownloads = ["stations.json", "streams.json", "observations.json", "latest.json", "forecasts.json", "sources.json", "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json"].map(name => ({ path: `international/${name}`, label: name, format: name.endsWith("geojson") ? "GeoJSON" : "JSON" }));
   downloadEntries = [...downloads, ...internationalDownloads]; renderDownloads();
   document.addEventListener("keydown", event => { if (event.key !== "Escape") return; const expanded = $(".is-fullscreen"); if (expanded) { const chart = expanded.querySelector(".chart")?.id; expanded.classList.remove("is-fullscreen"); document.body.style.overflow = ""; if (chart) resizeChart(chart); refreshMapSize(); } });
   window.addEventListener("resize", debounce(() => { refreshMapSize(); Object.values(chartIds).forEach(resizeChart); resizeChart("chart-compare"); }, 120));
@@ -304,10 +327,10 @@ async function start() {
   try {
     const { status, geojson, downloads, international } = await loadStartupData();
     state.international = international;
-    applyStatus(status); setupStations(geojson); initMap("map", geojson, id => selectStation(id)); bindEvents(downloads);
+    applyStatus(status); applyInternationalStatus(international); setupStations(geojson); initMap("map", geojson, id => selectStation(id)); bindEvents(downloads);
     initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); });
     onLanguageChange(async () => {
-      applyTranslations(); applyStatus(state.status); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads();
+      applyTranslations(); applyStatus(state.status); applyInternationalStatus(state.international); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads();
       if (state.selectedId) await selectStation(state.selectedId, { pan: false });
       await renderCompare();
     });

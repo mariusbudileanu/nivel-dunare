@@ -16,6 +16,7 @@ from scripts.update_international_data import (
     acceptable,
     archive_details,
     main,
+    next_scheduled,
     replace_candidate,
     selected_sources,
     update_state,
@@ -35,7 +36,7 @@ def load_public(name: str):
 def operation_state(code: str) -> dict:
     policy = OPERATIONAL_POLICY[code]
     return {
-        "contract_version": "1.0",
+        "contract_version": "1.3-beta",
         "sources": {
             code: {
                 **policy,
@@ -60,17 +61,23 @@ def operation_state(code: str) -> dict:
 
 class InternationalAutomationTests(unittest.TestCase):
     def test_schedule_selection_excludes_manual_at_and_disabled_rs(self):
-        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "bg"))
+        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr"))
         self.assertEqual(selected_sources("scheduled"), list(SCHEDULED_SOURCES))
         self.assertEqual(selected_sources("all"), list(ALL_SOURCES))
         self.assertNotIn("at", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
 
+    def test_next_schedule_uses_dst_safe_bg_windows(self):
+        summer = datetime(2026, 8, 5, 15, 10, tzinfo=timezone.utc)
+        winter = datetime(2026, 1, 5, 7, 0, tzinfo=timezone.utc)
+        self.assertEqual(next_scheduled("bg", summer), "2026-08-05T18:15:00+00:00")
+        self.assertEqual(next_scheduled("bg", winter), "2026-01-05T07:15:00+00:00")
+        self.assertEqual(next_scheduled("de", summer), "2026-08-06T01:37:00+00:00")
     def test_operational_policy_keeps_dimensions_separate(self):
         self.assertEqual(OPERATIONAL_POLICY["at"]["automation_status"], "manual")
         self.assertEqual(OPERATIONAL_POLICY["rs"]["automation_status"], "disabled")
         self.assertEqual(OPERATIONAL_POLICY["hr"]["freshness_status"], "stale")
-        self.assertEqual(OPERATIONAL_POLICY["de"]["validation_status"], "validated")
+        self.assertEqual(OPERATIONAL_POLICY["de"]["validation_status"], "source_validated")
 
     def test_failed_attempt_preserves_last_known_good(self):
         state = operation_state("de")
@@ -84,7 +91,7 @@ class InternationalAutomationTests(unittest.TestCase):
         for key in ("last_success_at", "last_success_capture_at", "last_capture_at", "last_success_commit", "published_snapshot_date"):
             self.assertEqual(current[key], previous[key])
         self.assertEqual(current["last_attempt_status"], "failed")
-        self.assertEqual(current["validation_status"], "failed")
+        self.assertEqual(current["validation_status"], "technical_validation_failed")
         self.assertEqual(current["consecutive_failures"], 1)
         self.assertEqual(current["last_error_code"], "SourceAccessError")
 
@@ -95,12 +102,12 @@ class InternationalAutomationTests(unittest.TestCase):
                      {"last_capture_at": now.isoformat()}, "2025-06-01", "base")
         item = state["sources"]["hr"]
         self.assertEqual((item["source_status"], item["freshness_status"], item["last_attempt_status"]),
-                         ("suspended", "stale", "stale"))
+                         ("partial", "stale", "stale"))
         update_state(state, "hr", now, {"status": "complete"}, True, None,
                      {"last_capture_at": now.isoformat()}, "2026-08-05", "base")
         item = state["sources"]["hr"]
         self.assertEqual((item["source_status"], item["freshness_status"], item["last_attempt_status"]),
-                         ("complete", "current", "success"))
+                         ("partial", "current", "partial"))
         self.assertEqual(item["published_snapshot_date"], "2026-08-05")
 
     def test_sk_suspect_warning_does_not_block_source(self):
@@ -110,6 +117,13 @@ class InternationalAutomationTests(unittest.TestCase):
         )
         self.assertTrue(accepted)
         self.assertIsNone(error)
+
+    def test_unexpected_station_addition_is_fail_soft(self):
+        accepted, error = acceptable(
+            "sk", {"status": "complete", "station_count": 14, "observation_count": 27}, [],
+        )
+        self.assertFalse(accepted)
+        self.assertEqual(error, "unexpected station count: expected 13, got 14")
 
     def test_empty_observation_set_cannot_replace_lkg(self):
         accepted, error = acceptable("de", {"status": "complete", "station_count": 18, "observation_count": 0}, [])
@@ -151,7 +165,7 @@ class InternationalAutomationTests(unittest.TestCase):
             }
             issue = {
                 "code": "outside_plausible_water_temperature_range", "record_id": "sk-6860",
-                "historical": False, "observation": observation,
+                "historical": True, "active": False, "quality_origin": "legacy_application_rule", "observation": observation,
             }
             replace_candidate(root / "candidate", "sk", incoming,
                               {"observations": [], "forecasts": [], "issues": [issue]})
@@ -220,8 +234,8 @@ class InternationalAutomationTests(unittest.TestCase):
 
     def test_public_contract_has_operational_metadata_for_every_source(self):
         required = {
-            "source_status", "automation_status", "freshness_status", "validation_status",
-            "last_attempt_at", "last_success_at", "last_capture_at", "next_expected_update",
+            "implementation_status", "source_status", "access_status", "automation_status", "freshness_status", "validation_status", "coordinate_status",
+            "last_attempt_at", "last_success_at", "last_successful_fetch_at", "last_capture_at", "last_source_observation_at", "last_known_good_commit", "next_expected_update",
             "update_frequency", "validation_message_ro", "validation_message_en", "last_error",
             "consecutive_failures",
         }
@@ -234,10 +248,10 @@ class InternationalAutomationTests(unittest.TestCase):
     def test_current_public_quality_and_date_only_rules(self):
         observations = load_public("observations.json")
         latest = load_public("latest.json")
-        suspect = [row for row in observations if row["country_code"] == "SK" and row["canonical_quality_flag"] == "suspect"]
-        self.assertTrue(suspect)
-        self.assertTrue(all(not row["current_usable"] for row in suspect))
-        self.assertFalse(any(row["canonical_quality_flag"] == "suspect" for row in latest))
+        high_temperatures = [row for row in observations if row["country_code"] == "SK" and row["parameter"] == "water_temperature" and float(row["value"]) > 45]
+        self.assertTrue(high_temperatures)
+        self.assertTrue(all(row["canonical_quality_flag"] == "provisional" and row["current_usable"] for row in high_temperatures))
+        self.assertFalse(any(row["canonical_quality_flag"] == "suspect" for row in observations + latest))
         hu = [row for row in observations if row["country_code"] == "HU"]
         self.assertTrue(hu)
         self.assertTrue(all(row.get("measurement_date") and not row.get("measurement_datetime_utc") for row in hu))
@@ -262,7 +276,7 @@ class InternationalAutomationTests(unittest.TestCase):
         state = json.loads(STATE.read_text(encoding="utf-8"))
         required = {
             "last_attempt_at", "last_attempt_status", "last_success_at", "last_success_capture_at",
-            "last_capture_at", "last_success_commit", "last_error_code", "last_error_message",
+            "last_capture_at", "last_success_commit", "last_known_good_commit", "last_source_observation_at", "last_error_code", "last_error_message",
             "consecutive_failures", "published_snapshot_date",
         }
         self.assertEqual(set(state["sources"]), set(ALL_SOURCES))

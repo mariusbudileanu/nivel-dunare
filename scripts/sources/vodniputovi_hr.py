@@ -8,6 +8,7 @@ from .base import (
     AdapterResult, ObservationRecord, SourceAdapter, SourceRequest, SourceStructureError,
     StationRecord, canonical_station_name, json_load, parse_optional_float, station_slug,
 )
+from .reference import apply_ris_reference
 
 
 class VodniputoviAdapter(SourceAdapter):
@@ -16,7 +17,7 @@ class VodniputoviAdapter(SourceAdapter):
     country_code = "HR"
     expected_min_stations = 3
     stale_after_days = 7
-    stale_status = "suspended"
+    stale_status = "partial"
     current_url = "https://vodniputovi.hr/dhmz_vodostaji/getwaterstuff.php"
     station_metadata = {
         "aljmas": ("5001", "Aljmaš"),
@@ -49,17 +50,19 @@ class VodniputoviAdapter(SourceAdapter):
             if not isinstance(series, list) or not series:
                 raise SourceStructureError(f"Croatian station {source_key!r} is missing or empty")
             sid = f"hr-{source_id}"
-            stations.append(StationRecord(
+            station = apply_ris_reference(StationRecord(
                 station_id=sid, source_station_id=source_id, country_code="HR",
                 station_name=canonical_station_name(local_name),
                 station_name_local=local_name, station_slug=station_slug("HR", local_name),
                 river_name="Danube", latitude=None, longitude=None, coordinate_source=None,
-                coordinate_method="unavailable", coordinate_confidence="unavailable",
+                coordinate_method="unresolved", coordinate_confidence="unavailable",
                 source_url=self.current_url, active=True, last_verified_at=payload.captured_at_utc[:10],
                 operator_provider_id="dhmz_hr", source_provider_id="vodniputovi_hr",
                 captured_via_provider_id="vodniputovi_hr",
                 inclusion_reason="official Croatian waterways feed identifies the three Danube gauges",
+                source_stream_type="daily", observation_frequency="daily",
             ))
+            stations.append(station)
             for item in series:
                 if not isinstance(item, dict) or "datum" not in item:
                     raise SourceStructureError(f"Unexpected record for Croatian station {source_key!r}")
@@ -75,6 +78,12 @@ class VodniputoviAdapter(SourceAdapter):
                     measurement_timezone=None, measurement_datetime_local=None,
                     measurement_datetime_utc=None, measurement_date=observed_date,
                     source_file_sha256=payload.sha256,
+                    physical_station_id=station.physical_station_id,
+                    source_stream_id=station.source_stream_id,
+                    source_stream_type="daily", is_primary_stream=True,
+                    observation_frequency="daily", observation_time_precision="date",
+                    source_observation_date=observed_date,
+                    source_observation_time_raw=str(item["datum"]),
                 ))
 
         result = AdapterResult(
@@ -83,8 +92,9 @@ class VodniputoviAdapter(SourceAdapter):
             source_station_count=len(document),
             notes=[
                 "The source exposes dates but no observation time or timezone; neither is inferred.",
-                "Coordinates are absent from the audited official feed and remain unset.",
-                "A feed older than seven days is suspended rather than published as current data.",
+                "Coordinates and RIS identifiers come from the versioned Croatian RIS Index registry.",
+                "A feed older than seven days remains available as stale last-known-good data and is not presented as current.",
+                "No numeric forecast is published because the feed does not demonstrate forecast values.",
             ],
         )
         return self.validate(result, self.capture_time(payloads))

@@ -6,6 +6,8 @@ import unittest
 from html.parser import HTMLParser
 from pathlib import Path
 
+from scripts.validate_international_public_data import observation_identity
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
@@ -110,26 +112,30 @@ class InternationalBetaPremergeTests(unittest.TestCase):
         self.assertIn('austriaTestSourceWarning', map_beta)
         self.assertIn("applyTranslations", self.scripts["beta-ui.js"])
 
-    def test_suspect_temperature_does_not_poison_valid_slovak_level(self):
+    def test_official_slovak_values_are_not_filtered_by_local_thresholds(self):
         source = self.scripts["international.js"]
         self.assertIn('if (row.parameter === "water_level")', source)
-        self.assertIn('if (row.parameter === "water_temperature" && row.canonical_quality_flag !== "suspect")', source)
-        self.assertNotIn('if (row.canonical_quality_flag === "suspect") item.quality_flag = "suspect"', source)
+        self.assertNotIn('row.canonical_quality_flag !== "suspect"', source)
         observations = load_json("observations.json")
         iza = [row for row in observations if row["station_id"] == "sk-6860"]
-        self.assertTrue(any(row["parameter"] == "water_temperature" and row["canonical_quality_flag"] == "suspect" for row in iza))
+        high = [row for row in iza if row["parameter"] == "water_temperature" and float(row["value"]) > 45]
+        self.assertTrue(high)
+        self.assertTrue(all(row["canonical_quality_flag"] == "provisional" and row["current_usable"] for row in high))
         self.assertTrue(any(row["parameter"] == "water_level" and row["current_usable"] for row in iza))
 
     def test_contract_counts_quality_evidence_and_references(self):
         status = load_json("status.json")
         stations = load_json("stations.json")
+        streams = load_json("streams.json")
         observations = load_json("observations.json")
         latest = load_json("latest.json")
         forecasts = load_json("forecasts.json")
         issues = load_json("quality_issues.json")
         station_ids = {row["station_id"] for row in stations}
-        self.assertEqual(status["contract_version"], "1.2-beta")
-        self.assertEqual((status["complete_source_count"], status["partial_source_count"], status["suspended_source_count"]), (2, 3, 2))
+        self.assertEqual(status["contract_version"], "1.3-beta")
+        self.assertEqual((status["complete_source_count"], status["partial_source_count"], status["suspended_source_count"]), (2, 4, 1))
+        self.assertEqual((status["station_stream_count"], status["physical_station_count"]), (101, 93))
+        self.assertEqual(len(streams), 101)
         self.assertEqual(status["observation_count"], len(observations))
         self.assertEqual(status["forecast_count"], len(forecasts))
         self.assertEqual(status["latest_valid_count"], len(latest))
@@ -138,21 +144,14 @@ class InternationalBetaPremergeTests(unittest.TestCase):
         self.assertEqual(status["provisional_observation_count"], sum(row["canonical_quality_flag"] == "provisional" for row in observations))
         self.assertLess(status["current_usable_observation_count"], status["observation_count"])
         self.assertTrue({row["station_id"] for row in observations + latest + forecasts} <= station_ids)
-        temperature_issues = [row for row in issues if row["code"] == "outside_plausible_water_temperature_range"]
-        historical = next(row for row in temperature_issues if row["historical"] and row["observation"]["value"] == 46.2)
-        suspect_observations = [row for row in observations if row["canonical_quality_flag"] == "suspect"]
-        evidenced = {(
-            row["observation"].get("station_id"), row["observation"].get("parameter"),
-            row["observation"].get("value"), row["observation"].get("measurement_datetime_utc"),
-            row["observation"].get("source_file_sha256"),
-        ) for row in temperature_issues}
-        self.assertTrue(suspect_observations)
-        self.assertTrue(all((
-            row.get("station_id"), row.get("parameter"), row.get("value"),
-            row.get("measurement_datetime_utc"), row.get("source_file_sha256"),
-        ) in evidenced for row in suspect_observations))
-        self.assertEqual(historical["observation"]["canonical_quality_flag"], "suspect")
-        self.assertFalse(historical["observation"].get("current_usable", False))
+        legacy = [row for row in issues if row.get("quality_origin") == "legacy_application_rule"]
+        historical = next(row for row in legacy if row["observation"]["value"] == 46.2)
+        self.assertTrue(historical["historical"])
+        self.assertFalse(historical["active"])
+        self.assertEqual(historical["observation"]["canonical_quality_flag"], "provisional")
+        matching = [row for row in observations if observation_identity(row) == observation_identity(historical["observation"])]
+        self.assertTrue(matching)
+        self.assertTrue(all(row["current_usable"] for row in matching))
 
     def test_provenance_and_original_times_are_preserved(self):
         for row in load_json("observations.json"):

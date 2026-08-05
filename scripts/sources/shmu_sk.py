@@ -11,6 +11,7 @@ from .base import (
     SourceStructureError, StationRecord, canonical_station_name, html_tables,
     iso_from_milliseconds, parse_optional_float, payload_text, station_slug,
 )
+from .reference import apply_coordinate_override
 
 
 class ShmuAdapter(SourceAdapter):
@@ -71,17 +72,21 @@ class ShmuAdapter(SourceAdapter):
             sid = f"sk-{identifier}"
             local_name = name
             url = self.base_url.format(station_id=identifier)
-            stations.append(StationRecord(
+            station = apply_coordinate_override(StationRecord(
                 station_id=sid, source_station_id=identifier, country_code="SK",
                 station_name=canonical_station_name(local_name), station_name_local=local_name,
                 station_slug=station_slug("SK", local_name), river_name="Danube",
                 latitude=None, longitude=None, coordinate_source=None,
-                coordinate_method="unavailable", coordinate_confidence="unavailable",
+                coordinate_method="unresolved", coordinate_confidence="unavailable",
                 source_url=url, active=True, last_verified_at=payload.captured_at_utc[:10],
                 operator_provider_id="shmu_sk", source_provider_id="shmu_sk",
                 captured_via_provider_id="shmu_sk",
                 inclusion_reason="official station option suffix '- Dunaj'",
+                physical_station_id=sid, source_stream_id=f"{identifier}:observed",
+                source_stream_type="observed", is_primary_stream=True,
+                observation_frequency="source timestamp cadence",
             ))
+            stations.append(station)
             raw_time = data_row[0]
             parsed_time = datetime.strptime(raw_time, "%d.%m.%Y %H:%M").replace(tzinfo=bratislava)
             utc_time = parsed_time.astimezone(ZoneInfo("UTC")).isoformat()
@@ -96,6 +101,10 @@ class ShmuAdapter(SourceAdapter):
                     measurement_timezone="Europe/Bratislava", measurement_datetime_local=parsed_time.isoformat(),
                     measurement_datetime_utc=utc_time, measurement_date=None,
                     source_file_sha256=payload.sha256, canonical_quality_flag="provisional",
+                    physical_station_id=station.physical_station_id,
+                    source_stream_id=station.source_stream_id, source_stream_type="observed",
+                    observation_frequency=station.observation_frequency,
+                    source_quality_status="provisional", source_value_raw=str(level),
                 ))
             if temperature is not None:
                 observations.append(ObservationRecord(
@@ -106,6 +115,10 @@ class ShmuAdapter(SourceAdapter):
                     measurement_timezone="Europe/Bratislava", measurement_datetime_local=parsed_time.isoformat(),
                     measurement_datetime_utc=utc_time, measurement_date=None,
                     source_file_sha256=payload.sha256, canonical_quality_flag="provisional",
+                    physical_station_id=station.physical_station_id,
+                    source_stream_id=station.source_stream_id, source_stream_type="observed",
+                    observation_frequency=station.observation_frequency,
+                    source_quality_status="provisional", source_value_raw=str(temperature),
                 ))
 
             forecast_match = re.search(
@@ -122,12 +135,15 @@ class ShmuAdapter(SourceAdapter):
                         forecast_issue_time_original=None, forecast_issue_datetime_utc=None,
                         target_time_original=target, target_datetime_utc=iso_from_milliseconds(int(target)),
                         target_date=None, lead_hours=None, source_file_sha256=payload.sha256,
+                        physical_station_id=station.physical_station_id,
+                        source_stream_id=f"{identifier}:forecast",
+                        source_quality_status="provisional",
                     ))
 
         result = AdapterResult(
             source_id=self.source_id, country_code=self.country_code, status="complete",
             stations=stations, observations=observations, forecasts=forecasts,
             source_station_count=len(discovered), excluded_station_count=0,
-            notes=["Coordinates are not present in the audited official station pages and remain unset."],
+            notes=["The source-provided provisional status is preserved without local plausibility filtering; sk-5128 uses the manually verified exact coordinate override."],
         )
         return self.validate(result, self.capture_time(payloads))

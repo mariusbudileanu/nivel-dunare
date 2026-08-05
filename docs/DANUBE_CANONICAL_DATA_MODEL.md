@@ -71,6 +71,6 @@ Rândurile AFDJ și cele românești republicate de Hydroinfo rămân identită�
 
 ## Calitate, proveniență și evoluție
 
-`source_quality_code` rămâne nemodificat; `canonical_quality_flag` poate fi `observed`, `provisional`, `validated`, `forecast`, `stale`, `missing`, `suspect`, `corrected`. Fiecare fapt conduce la `source_file_sha256` și `ingestion_run_id`.
+`source_quality_code` rămâne nemodificat; `canonical_quality_flag` păstrează calitatea declarată de sursă. `suspect` este permis numai când sursa îl declară sau când o eroare tehnică este demonstrată, nu pe baza unui prag numeric local. Fiecare fapt conduce la `source_file_sha256` și `ingestion_run_id`.
 
 Contractul are versiune semantică, migrații forward-only, schema per versiune, fixture-uri per furnizor și verificări de compatibilitate. Schimbarea unității sau semnificației cere versiune incompatibilă; câmpurile noi sunt nullable până când contractul sursei le demonstrează.

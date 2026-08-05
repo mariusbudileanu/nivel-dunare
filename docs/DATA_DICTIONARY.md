@@ -56,18 +56,22 @@ Grupează după `station_id + lead_hours`. Conține `n_pairs`, eroarea semnată 
 Coloanele folosesc calea logică completă, de exemplu `item/type/target_uuid`, `item/path/alias`, `item/feeds_item/hash` și `item/field_cota/value`. Astfel, leaf-urile omonime nu se confundă. CSV-ul este UTF-8 și comprimat gzip.
 
 
-## Contract internațional beta 1.1
+## Contract internațional beta `1.3-beta`
 
-`data/public/international/` și oglinda `public/data/international/` publică registrul internațional separat de AFDJ. `stations.json` conține toate cele 101 stații, iar `stations.geojson` numai coordonatele acceptate. `unmapped_stations.json` conține rezultatele nerezolvate sau care necesită review.
+`data/public/international/` și oglinda byte-identică `public/data/international/` sunt separate de datele AFDJ.
 
-Câmpurile de coordonate sunt:
+- `stations.json`: 101 înregistrări de flux-stație și metadatele stației fizice/localizării;
+- `streams.json`: identitatea, tipul și frecvența celor 101 fluxuri;
+- `stations.geojson`: 93 features, câte unul pentru fiecare amplasament fizic cartografiat, cu fluxurile agregate în properties;
+- `observations.json`: istoricul observațiilor și proveniența sursei;
+- `latest.json`: ultima observație tehnic utilizabilă per flux și parametru; valorile nu sunt excluse prin praguri numerice locale;
+- `forecasts.json`: numai prognoze cu parametru, unitate, valoare și țintă demonstrate;
+- `sources.json`: dimensiuni operaționale separate și mesaje RO/EN;
+- `quality_issues.json`: probleme active tehnice/de sursă și constatări istorice inactive;
+- `unmapped_stations.json`: gol în versiunea curentă.
 
-- `latitude`, `longitude`: EPSG:4326 sau `null`;
-- `coordinate_method`: `official_station_coordinate` ori `geocoded_locality`;
-- `coordinate_source`: URL-ul sursei oficiale sau al interogării geocoderului;
-- `coordinate_provider`: administrația oficială ori `OpenStreetMap Nominatim`;
-- `coordinate_confidence`: `high`, `medium`, `low` sau `unresolved`;
-- `coordinate_review_status`: `accepted`, `required` sau `rejected`;
-- `is_exact_station_location`: `true` numai pentru coordonata oficială exactă a stației.
+Identitatea separă `station_id`, `physical_station_id`, `source_station_id`, `source_stream_id`, `source_stream_type` și `is_primary_stream`. Observațiile păstrează data/ora originală, precizia, daypart/window, fusul/offsetul brut, momentul capturii, valoarea brută, unitatea, calitatea sursei și SHA-256. O dată fără oră rămâne dată; un placeholder lipsă nu devine zero.
 
-O poziție `geocoded_locality` este centrul aproximativ al localității și nu demonstrează amplasamentul mirei/senzorului. Nu se folosește pentru distanțe, ordine, precizie spațială sau inferarea kilometrului fluvial. Metoda completă și registrul review-ului sunt descrise în `INTERNATIONAL_STATION_GEOCODING.md`.
+Metodele de coordonate sunt `official_station_coordinate`, `manually_verified_station_coordinate`, `geocoded_locality` și `unresolved`. Câmpurile includ sursa/providerul, încrederea, review-ul, exactitatea, data verificării și note. Pozițiile Nominatim sunt centre aproximative de localitate și nu sunt folosite pentru distanțe, ordine sau kilometru fluvial.
+
+`sources.json` separă `access_status`, `source_status`, `automation_status`, `freshness_status`, `validation_status` și `coordinate_status`, apoi păstrează momentele de încercare/succes/captură/observație/LKG, frecvențele, eșecurile și politica bilingvă.

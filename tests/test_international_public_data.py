@@ -22,13 +22,13 @@ class InternationalPublicDataTests(unittest.TestCase):
     def test_committed_public_contract_and_mirror(self):
         result = validate(PUBLIC_ROOT, ROOT / "public" / "data" / "international")
         self.assertTrue(result["ok"])
-        self.assertEqual((result["stations"], result["mapped"], result["unmapped"]), (101, 93, 8))
+        self.assertEqual((result["stations"], result["mapped"], result["unmapped"]), (101, 101, 0))
 
     def test_publication_policy_is_explicit_and_isolated_from_afdj(self):
         self.assertEqual(SOURCE_POLICY["de"]["status"], "complete")
         self.assertEqual(SOURCE_POLICY["at"]["status"], "partial")
         self.assertEqual(SOURCE_POLICY["sk"]["status"], "partial")
-        self.assertEqual(SOURCE_POLICY["hr"]["status"], "suspended")
+        self.assertEqual(SOURCE_POLICY["hr"]["status"], "partial")
         self.assertFalse(SOURCE_POLICY["hr"]["current"])
         self.assertFalse(SOURCE_POLICY["bg"]["forecasts"])
         self.assertFalse(SOURCE_POLICY["rs"]["observations"])
@@ -47,18 +47,20 @@ class InternationalPublicDataTests(unittest.TestCase):
         self.assertEqual(len(ids), 101)
         self.assertTrue({row["station_id"] for row in observations + forecasts + latest} <= ids)
         self.assertEqual(len(features), 93)
-        self.assertEqual(len(unmapped), 8)
-        self.assertEqual(sum(feature["properties"]["is_exact_station_location"] for feature in features), 26)
-        self.assertEqual(sum(not feature["properties"]["is_exact_station_location"] for feature in features), 67)
+        self.assertEqual(len(unmapped), 0)
+        self.assertEqual(sum(feature["properties"]["is_exact_station_location"] for feature in features), 57)
+        self.assertEqual(sum(not feature["properties"]["is_exact_station_location"] for feature in features), 36)
         self.assertFalse(any(row["country_code"] == "HR" for row in latest))
         self.assertFalse(any(row["source_id"] == "appd_bg" for row in forecasts))
         self.assertEqual(len([row for row in stations if row["country_code"] == "RS"]), 13)
         self.assertFalse(any(row["country_code"] == "RS" for row in observations + forecasts))
-        suspect = [row for row in observations if row["canonical_quality_flag"] == "suspect"]
-        self.assertTrue(suspect)
-        latest_identities = {observation_identity(row) for row in latest}
-        self.assertTrue(all(observation_identity(row) not in latest_identities for row in suspect))
-        self.assertTrue(any(row.get("historical") and row.get("observation", {}).get("value") == 46.2 for row in issues))
+        self.assertFalse(any(row["canonical_quality_flag"] == "suspect" for row in observations))
+        high = [row for row in observations if row["country_code"] == "SK" and row["parameter"] == "water_temperature" and float(row["value"]) > 45]
+        self.assertTrue(high)
+        self.assertTrue(all(row["canonical_quality_flag"] == "provisional" and row["current_usable"] for row in high))
+        legacy = [row for row in issues if row.get("quality_origin") == "legacy_application_rule"]
+        self.assertTrue(any(row.get("observation", {}).get("value") == 46.2 for row in legacy))
+        self.assertTrue(all(row.get("historical") and row.get("active") is False for row in legacy))
         self.assertTrue(all(row.get("source_url") and row.get("source_file_sha256") and row.get("captured_at_utc") for row in observations))
 
     def test_builder_round_trip_from_candidate_shape(self):

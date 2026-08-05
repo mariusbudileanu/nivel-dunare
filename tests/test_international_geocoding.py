@@ -119,7 +119,7 @@ class InternationalGeocodingTests(unittest.TestCase):
 
     def test_committed_public_contract_separates_coordinate_types(self):
         result = validate(ROOT / "data/public/international", ROOT / "public/data/international")
-        self.assertEqual((result["official_coordinates"], result["approximate_coordinates"], result["unmapped"]), (26, 67, 8))
+        self.assertEqual((result["official_coordinates"], result["manually_verified_coordinates"], result["approximate_coordinates"], result["unmapped"]), (50, 15, 36, 0))
         stations = json.loads((ROOT / "data/public/international/stations.json").read_text(encoding="utf-8"))
         approximate = [row for row in stations if row["mapped"] and not row["is_exact_station_location"]]
         unresolved = [row for row in stations if not row["mapped"]]

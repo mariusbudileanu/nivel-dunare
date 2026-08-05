@@ -24,29 +24,25 @@ class InternationalLiveVariantTests(unittest.TestCase):
         station_observations = [row for row in result.observations if row.station_id == "sk-5141"]
         self.assertEqual(["water_level"], [row.parameter for row in station_observations])
 
-    def test_shmu_suspect_temperature_is_local_to_observation(self):
+    def test_shmu_high_temperature_is_preserved_without_local_threshold(self):
         adapter = get_adapter("sk")
         result = adapter.parse(load_fixture_payloads(FIXTURES / "sk"))
-        suspect = [
+        observations = [
             row for row in result.observations
             if row.station_id == "sk-5141" and row.parameter == "water_temperature"
         ]
-        self.assertEqual(1, len(suspect))
-        self.assertEqual(46.2, suspect[0].value)
-        self.assertEqual("suspect", suspect[0].canonical_quality_flag)
-        self.assertIn(
+        self.assertEqual(1, len(observations))
+        high = observations[0]
+        self.assertEqual(46.2, high.value)
+        self.assertEqual("provisional", high.canonical_quality_flag)
+        self.assertNotEqual("outside_plausible_water_temperature_range", high.source_quality_code)
+        self.assertNotIn(
             "outside_plausible_water_temperature_range",
-            suspect[0].source_quality_code,
+            {issue.code for issue in result.issues},
         )
-        issues = [
-            issue for issue in result.issues
-            if issue.code == "outside_plausible_water_temperature_range"
-        ]
-        self.assertEqual(1, len(issues))
-        self.assertEqual("warning", issues[0].severity)
         self.assertEqual("complete", result.status)
         self.assertTrue(result.publishable)
-        self.assertNotIn(suspect[0], result.usable_observations)
+        self.assertIn(high, result.usable_observations)
         self.assertTrue(any(
             row.station_id == "sk-5141" and row.parameter == "water_level"
             for row in result.usable_observations
@@ -55,23 +51,12 @@ class InternationalLiveVariantTests(unittest.TestCase):
         with TemporaryDirectory() as temporary:
             output = Path(temporary)
             write_result(result, output)
-            written_observations = json.loads(
-                (output / "observations.json").read_text(encoding="utf-8")
-            )
-            written_issues = json.loads(
-                (output / "issues.json").read_text(encoding="utf-8")
-            )
-        written_suspect = next(
-            row for row in written_observations
-            if row["station_id"] == "sk-5141"
-            and row["parameter"] == "water_temperature"
-        )
-        self.assertEqual(46.2, written_suspect["value"])
-        self.assertEqual("suspect", written_suspect["canonical_quality_flag"])
-        self.assertIn(
-            "outside_plausible_water_temperature_range",
-            {issue["code"] for issue in written_issues},
-        )
+            written_observations = json.loads((output / "observations.json").read_text(encoding="utf-8"))
+            written_issues = json.loads((output / "issues.json").read_text(encoding="utf-8"))
+        written = next(row for row in written_observations if row["station_id"] == "sk-5141" and row["parameter"] == "water_temperature")
+        self.assertEqual(46.2, written["value"])
+        self.assertEqual("provisional", written["canonical_quality_flag"])
+        self.assertNotIn("outside_plausible_water_temperature_range", {issue["code"] for issue in written_issues})
 
     def test_hydroinfo_iso_8859_2_without_http_charset_is_lossless(self):
         adapter = get_adapter("hu")

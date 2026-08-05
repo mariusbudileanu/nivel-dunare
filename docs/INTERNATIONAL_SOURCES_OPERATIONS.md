@@ -1,88 +1,57 @@
-# Running the international source adapters
+# International source operations
 
-The adapters are isolated candidate-data collectors. They do not update `public/`, canonical files or AFDJ data.
+## Safe local checks
 
-## Local contract test
+Fixture-only integration check (never publishes):
 
-From the repository root:
-
-```powershell
-python -m scripts.ingest_danube_sources `
-  --source all `
-  --fixture-root tests/fixtures/international `
-  --output-dir _diagnostics/international/local-fixtures `
-  --archive-root _diagnostics/international/local-fixtures/raw-archive
+```text
+python -m scripts.ingest_danube_sources --source all --fixture-root tests/fixtures/international --output-dir _diagnostics/international/fixtures --archive-root _diagnostics/international/fixtures/raw-archive
+python -m scripts.update_international_data --source all --mode fixtures --action dry-run --output-dir _diagnostics/international/update-fixtures
 ```
 
-On Linux/macOS:
+A named live dry-run uses normal HTTP/TLS validation and stores raw bytes plus metadata under `_diagnostics`:
 
-```bash
-python -m scripts.ingest_danube_sources \
-  --source all \
-  --fixture-root tests/fixtures/international \
-  --output-dir _diagnostics/international/local-fixtures \
-  --archive-root _diagnostics/international/local-fixtures/raw-archive
+```text
+python -m scripts.update_international_data --source scheduled --mode live --action dry-run --output-dir _diagnostics/international/live-dry-run
+python -m scripts.update_international_data --source at --mode live --action dry-run --output-dir _diagnostics/international/live-at
+python -m scripts.update_international_data --source bg --stream manual --mode live --action dry-run --output-dir _diagnostics/international/live-bg-manual
+python -m scripts.update_international_data --source bg --stream automatic --mode live --action dry-run --output-dir _diagnostics/international/live-bg-automatic
 ```
 
-Run one low-volume live source by replacing `de` with `at`, `sk`, `hu`, `hr`, `bg` or `rs`:
+RS selection never opens a client while disabled. Do not use HTTP, `verify=False`, `curl -k`, proxies or certificate exceptions.
 
-```bash
-python -m scripts.ingest_danube_sources \
-  --source de \
-  --output-dir _diagnostics/international/live-de \
-  --archive-root data/archive
-```
+## Public build and validation
 
-`--source all` performs one request per JSON page, two requests for the two-page sources, and one request per SHMÚ station after discovery. There are no retries. Do not run it repeatedly or on a short loop.
+The builder requires a named candidate folder, matching raw archive metadata, the 101-row audit and reviewed coordinate registries. It emits `stations.json`, `streams.json`, `observations.json`, `latest.json`, `forecasts.json`, `sources.json`, `status.json`, `stations.geojson`, `unmapped_stations.json`, and `quality_issues.json`, mirrored byte-for-byte.
 
-For Austria, provide a permanent key only through the environment:
-
-```bash
-export DORIS_PARTNER_KEY='value-provided-by-viadonau'
-python -m scripts.ingest_danube_sources --source at --output-dir _diagnostics/international/live-at
-```
-
-Without it, the public test key is used transparently and the result remains `partial`/non-publishable.
-
-## Outputs
-
-- Raw response: `data/archive/<source>/<YYYY>/<MM>/<timestamp>-<label>.raw.gz`
-- Raw metadata: adjacent `.metadata.json`
-- Candidate records: `<output>/<selector>/stations.json`, `observations.json`, `forecasts.json`
-- Validation: `<output>/<selector>/issues.json` and `summary.json`
-- Aggregate status: `<output>/summary.json`, including usable and suspect observation counts
-
-Exit code `2` means a source could not be safely fetched or parsed. Exit code `3` is returned only when `--require-publishable` is supplied and at least one source is partial/suspended. HTTP or schema failures are never converted into empty successful datasets.
-
-## Hetzner preparation — no production activation
-
-The same commands work on the current Hetzner checkout with Python 3.11+ and no third-party packages. Before any future integration:
-
-1. create a separate unprivileged working directory and archive retention policy;
-2. provide `DORIS_PARTNER_KEY` through a root-readable environment file, never Git;
-3. run each source independently and inspect `publishable` plus critical issues;
-4. keep output outside the AFDJ canonical/public data path;
-5. add locking, notification and a conservative schedule only after source-owner review;
-6. never alter the existing AFDJ service or timer as part of this collector.
-
-This change intentionally creates no cron entry, systemd service or timer.
-
-The complete future migration runbook, including isolated paths, exact per-source/all-source commands, promotion, `DORIS_PARTNER_KEY`, locking, resource controls, retention, logs, fail-closed behavior and AIS isolation, is in [`INTERNATIONAL_HETZNER_MIGRATION.md`](INTERNATIONAL_HETZNER_MIGRATION.md).
-
-## GitHub manual run
-
-Actions → **Test international Danube sources** → **Run workflow**. Select a source and `fixtures` or `live`. The workflow has `contents: read`, uses no secret in fixture mode, performs no commit, and uploads a 14-day artifact containing raw, normalized and validation files.
-
-## Rebuilding the station audit
-
-```bash
+```text
 python -m scripts.build_international_station_audit
+python -m scripts.build_international_public_data --candidate-root <candidate> --archive-root <archive> --operations-state data/reference/international_source_operations.json
+python -m scripts.validate_international_public_data
+python -m scripts.validate_repository
 ```
 
-By default, `last_verified_at` is derived from the audit date recorded in `docs/DANUBE_SOURCE_TECHNICAL_AUDIT.md`. For a deterministic review build against another explicit audit date, use:
+The audit must contain 101 rows: 88 active candidates and 13 suspended RS rows. All 101 have coordinates (50 official, 15 manually verified exact, 36 approximate).
 
-```bash
-python -m scripts.build_international_station_audit --verified-at YYYY-MM-DD
-```
+## Schedules
 
-The builder fails unless the reviewed inventory contains exactly 101 stations: 88 active candidates and 13 suspended Serbian stations. The current inventory has 26 verified coordinate pairs. This makes accidental disappearance or scope drift visible without performing a Serbian live request.
+- General: DE, SK, HU, HR at `37 1 * * *`.
+- AT: manual dispatch only.
+- BG: dedicated local gates at 09:15 manual and 21:15 automatic (`15 6`, `15 7`, `15 18`, `15 19` UTC trigger pairs).
+- RS: no schedule while standard TLS validation fails.
+
+## Last-known-good and retention
+
+Failures are isolated per source and per BG stream. A failed or empty candidate cannot overwrite station, coordinate, history or last-known-good data. Deduplication includes station/stream/parameter/source date plus daypart/window; timestamped feeds use source observation datetime. Raw gzip and metadata are retained in workflow artifacts; public history is bounded by the updater policy and reviewed before extension.
+
+## DoRIS key
+
+Store a permanent key only as the GitHub secret or external environment variable `DORIS_PARTNER_KEY`. Never log, persist in a URL, fixture or artifact, or hardcode it. After provisioning: run AT live dry-run, scan artifacts for the key, validate the preview, then update automation policy in a separately reviewed change.
+
+## Disable, rollback and recovery
+
+To disable one stream, change only its source/stream selector to disabled, retain its last-known-good files and expose the error/timestamps in `sources.json`. Do not delete shared station or coordinate records.
+
+To roll back a bad international publication, restore the last validated international public/reference commit only; do not revert AFDJ, AIS or Hetzner files. Re-run both validators and Pages. To recover a stale source, accept a new capture only after its source date passes the adapter freshness policy; the dynamic stale message then clears automatically.
+
+RS may be reactivated only after both official hostnames are tested with standard TLS, redirect/security behavior is recorded, a low-volume live dry-run parses daily/NRT/forecast pages, all validators pass, and the dedicated schedule is explicitly enabled. Fixtures alone do not satisfy this gate.

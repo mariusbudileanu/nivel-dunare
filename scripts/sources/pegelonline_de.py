@@ -7,6 +7,7 @@ from .base import (
     StationRecord, canonical_station_name, json_load, normalize_iso_datetime,
     parse_optional_float, station_slug,
 )
+from .reference import apply_coordinate_override
 
 
 class PegelonlineAdapter(SourceAdapter):
@@ -52,19 +53,39 @@ class PegelonlineAdapter(SourceAdapter):
             latitude = parse_optional_float(item.get("latitude"))
             longitude = parse_optional_float(item.get("longitude"))
             station_url = f"https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/{source_id}.json"
-            stations.append(StationRecord(
+            station = StationRecord(
                 station_id=sid, source_station_id=source_id, country_code="DE",
                 station_name=canonical, station_name_local=local_name,
                 station_slug=station_slug("DE", local_name), river_name="Danube",
                 latitude=latitude, longitude=longitude,
                 coordinate_source=station_url if latitude is not None else None,
-                coordinate_method="official_rest_payload" if latitude is not None else "unavailable",
+                coordinate_method="official_station_coordinate" if latitude is not None else "unresolved",
                 coordinate_confidence="high" if latitude is not None else "unavailable",
                 source_url=station_url, active=True, last_verified_at=verified,
                 operator_provider_id="pegelonline_de", source_provider_id="pegelonline_de",
                 captured_via_provider_id="pegelonline_de", river_km=parse_optional_float(item.get("km")),
                 inclusion_reason="water.shortname=DONAU and agency is a German WSV office",
-            ))
+                physical_station_id=sid, source_stream_id=source_id,
+                source_stream_type="automatic", is_primary_stream=True,
+                observation_frequency="source timeseries",
+                coordinate_provider="WSV PEGELONLINE" if latitude is not None else None,
+                coordinate_review_status="accepted" if latitude is not None else "unresolved",
+                is_exact_station_location=latitude is not None,
+                coordinate_verified_at=verified if latitude is not None else None,
+                source_crs="EPSG:4326" if latitude is not None else None,
+                source_coordinate_raw=(f"{latitude}|{longitude}" if latitude is not None else None),
+            )
+            kachlet_ids = {
+                "560cf185-0052-4e40-832b-7792b52dd343",
+                "0fd56e0a-e32e-4b56-9cda-e0ce93d715c4",
+            }
+            if source_id in kachlet_ids or canonical.casefold() in {
+                "kachlet wehr up", "kachlet lock up", "kachlet schleuse up",
+            }:
+                station.physical_station_id = "de-560cf185-0052-4e40-832b-7792b52dd343"
+                station.is_primary_stream = source_id == "0fd56e0a-e32e-4b56-9cda-e0ce93d715c4"
+                apply_coordinate_override(station)
+            stations.append(station)
             for series in item.get("timeseries") or []:
                 series_code = str(series.get("shortname", "")).upper()
                 parameter = parameter_map.get(series_code)
@@ -99,6 +120,9 @@ class PegelonlineAdapter(SourceAdapter):
             source_id=self.source_id, country_code=self.country_code, status="complete",
             stations=stations, observations=observations, forecasts=[],
             source_station_count=len(data), excluded_station_count=excluded,
-            notes=["Rows with agency=VIA DONAU are republished Austrian stations and are excluded from the German primary adapter."],
+            notes=[
+                "Rows with agency=VIA DONAU are republished Austrian stations and are excluded from the German primary adapter.",
+                "KACHLET WEHR UP / LOCK UP and KACHLET SCHLEUSE UP share one physical_station_id and official placement; source streams remain traceable without duplicate map markers.",
+            ],
         )
         return self.validate(result, self.capture_time(payloads))

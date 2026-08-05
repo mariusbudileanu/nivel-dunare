@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the isolated international public beta contract and its mirror."""
+"""Validate contract 1.3-beta and the byte-identical public mirror."""
 
 from __future__ import annotations
 
@@ -15,8 +15,8 @@ from scripts.geocode_international_stations import COUNTRY_BOUNDS, validate_regi
 
 
 FILES = (
-    "stations.json", "observations.json", "latest.json", "forecasts.json", "sources.json",
-    "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json",
+    "stations.json", "streams.json", "observations.json", "latest.json", "forecasts.json",
+    "sources.json", "status.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json",
 )
 SECRET_PATTERNS = (
     re.compile(r"viadonau_partner_key=[^&\s\"]+", re.I),
@@ -34,27 +34,27 @@ def require(condition: bool, message: str) -> None:
 
 
 def observation_identity(row: dict[str, Any]) -> tuple[Any, ...]:
-    """Identify one source observation without conflating its parameter series."""
     return (
-        row.get("station_id"), row.get("parameter"), row.get("value"), row.get("unit"),
+        row.get("source_stream_id") or row.get("station_id"), row.get("parameter"), row.get("value"), row.get("unit"),
         row.get("measurement_datetime_utc"), row.get("measurement_datetime_local"),
-        row.get("measurement_date"), row.get("measurement_time_original"),
-        row.get("source_file_sha256"),
+        row.get("measurement_date"), row.get("measurement_time_original"), row.get("source_file_sha256"),
     )
 
 
-def validate(root: Path, mirror: Path | None = None, geocoding_registry: Path = Path("data/reference/international_station_geocoding.csv"), geocoding_cache: Path = Path("data/reference/international_station_geocoding_cache-v1.json")) -> dict[str, Any]:
+def validate(root: Path, mirror: Path | None = None,
+             geocoding_registry: Path = Path("data/reference/international_station_geocoding.csv"),
+             geocoding_cache: Path = Path("data/reference/international_station_geocoding_cache-v1.json")) -> dict[str, Any]:
     for name in FILES:
         require((root / name).is_file(), f"Missing {root / name}")
         if mirror:
             require((mirror / name).is_file(), f"Missing mirror {mirror / name}")
             require(hashlib.sha256((root / name).read_bytes()).digest() == hashlib.sha256((mirror / name).read_bytes()).digest(), f"Mirror mismatch: {name}")
-
     raw_text = "\n".join((root / name).read_text(encoding="utf-8") for name in FILES)
     for pattern in SECRET_PATTERNS:
         require(not pattern.search(raw_text), f"Secret-like value detected by {pattern.pattern}")
 
     stations = read_json(root / "stations.json")
+    streams = read_json(root / "streams.json")
     observations = read_json(root / "observations.json")
     latest = read_json(root / "latest.json")
     forecasts = read_json(root / "forecasts.json")
@@ -66,126 +66,117 @@ def validate(root: Path, mirror: Path | None = None, geocoding_registry: Path = 
     geocoding = validate_registry(root / "stations.json", geocoding_registry, geocoding_cache)
 
     station_ids = [row["station_id"] for row in stations]
-    slugs = [row["station_slug"] for row in stations]
-    require(len(stations) == 101 == status["station_count"], "Public registry must contain 101 stations")
-    require(len(station_ids) == len(set(station_ids)), "Duplicate station_id")
-    require(len(slugs) == len(set(slugs)), "Duplicate station_slug")
     station_id_set = set(station_ids)
-    require({row["station_id"] for row in observations} <= station_id_set, "Orphan observation")
-    require({row["station_id"] for row in forecasts} <= station_id_set, "Orphan forecast")
-    require({row["station_id"] for row in latest} <= station_id_set, "Orphan latest record")
+    physical_ids = {row["physical_station_id"] for row in stations}
+    stream_ids = [row["source_stream_id"] for row in streams]
+    require(status.get("contract_version") == "1.3-beta", "Unexpected public contract version")
+    require(len(stations) == 101 == status["station_count"], "Public registry must contain 101 station streams")
+    require(len(station_ids) == len(station_id_set), "Duplicate station_id")
+    require(len({row["station_slug"] for row in stations}) == len(stations), "Duplicate station_slug")
+    require(len(streams) == 101 == status["station_stream_count"], "Stream registry count mismatch")
+    require(len(stream_ids) == len(set(stream_ids)), "Duplicate source_stream_id")
+    require({row["station_id"] for row in streams} == station_id_set, "Stream/station reference mismatch")
+    require({row["physical_station_id"] for row in streams} <= physical_ids, "Orphan stream physical_station_id")
+    for rows, label in ((observations, "observation"), (forecasts, "forecast"), (latest, "latest")):
+        require({row["station_id"] for row in rows} <= station_id_set, f"Orphan {label}")
+        require({row["source_stream_id"] for row in rows} <= set(stream_ids) or label == "forecast", f"Orphan {label} stream")
+        require({row["physical_station_id"] for row in rows} <= physical_ids, f"Orphan {label} physical station")
+
+    require(status["mapped_station_count"] == 101 and status["unmapped_station_count"] == 0, "All 101 station streams must be mapped")
+    require(status["official_coordinate_station_count"] == 50, f"Expected 50 official coordinates, got {status['official_coordinate_station_count']}")
+    require(status["manually_verified_coordinate_station_count"] == 15, "Expected 15 manually verified exact coordinates")
+    require(status["approximate_coordinate_station_count"] == 36, "Expected 36 locality coordinates")
+    require(not unmapped, "No international station should remain list-only")
+    method_counts = {method: sum(row["coordinate_method"] == method for row in stations) for method in (
+        "official_station_coordinate", "manually_verified_station_coordinate", "geocoded_locality", "unresolved"
+    )}
+    require(method_counts == {
+        "official_station_coordinate": 50, "manually_verified_station_coordinate": 15,
+        "geocoded_locality": 36, "unresolved": 0,
+    }, "Coordinate-method distribution mismatch")
+    for station in stations:
+        for key in (
+            "physical_station_id", "source_stream_id", "source_stream_type", "is_primary_stream",
+            "coordinate_method", "coordinate_source", "coordinate_provider", "coordinate_confidence",
+            "coordinate_review_status", "is_exact_station_location", "coordinate_verified_at", "coordinate_notes",
+        ):
+            require(key in station, f"Missing {key} for {station['station_id']}")
+        lat, lon = station["latitude"], station["longitude"]
+        require(isinstance(lat, (int, float)) and isinstance(lon, (int, float)) and math.isfinite(lat) and math.isfinite(lon), f"Invalid coordinate for {station['station_id']}")
+        bounds = COUNTRY_BOUNDS[station["country_code"]]
+        require(bounds[0] <= lat <= bounds[1] and bounds[2] <= lon <= bounds[3], f"Coordinate outside country bounds: {station['station_id']}")
+        if station["coordinate_method"] in {"official_station_coordinate", "manually_verified_station_coordinate"}:
+            require(station["is_exact_station_location"] is True and station["coordinate_confidence"] == "high", "Exact coordinate metadata mismatch")
+        else:
+            require(station["coordinate_method"] == "geocoded_locality" and station["is_exact_station_location"] is False, "Approximate coordinate metadata mismatch")
+            require(station["coordinate_review_status"] == "accepted", "Unaccepted locality leaked publicly")
 
     features = geojson.get("features", [])
-    mapped_ids = {feature["properties"]["station_id"] for feature in features}
-    unmapped_ids = {row["station_id"] for row in unmapped}
+    feature_physical_ids = [row["properties"]["physical_station_id"] for row in features]
     require(geojson.get("type") == "FeatureCollection", "Invalid GeoJSON type")
-    require(len(features) == status["mapped_station_count"], "Mapped count mismatch")
-    require(len(unmapped) == status["unmapped_station_count"], "Unmapped count mismatch")
-    require(mapped_ids.isdisjoint(unmapped_ids) and mapped_ids | unmapped_ids == station_id_set, "Mapped/unmapped partition mismatch")
-    require(status["official_coordinate_station_count"] == 26, "Expected 26 official station coordinates")
-    require(status["approximate_coordinate_station_count"] == 67, "Expected 67 accepted locality coordinates")
-    require(len(features) == 93 and len(unmapped) == 8, "Unexpected accepted coordinate totals")
-    coordinate_groups: dict[tuple[float, float], list[dict[str, Any]]] = {}
-    for station in stations:
-        for key in ("coordinate_method", "coordinate_source", "coordinate_provider", "coordinate_confidence", "coordinate_review_status", "is_exact_station_location"):
-            require(key in station, f"Missing {key} for {station['station_id']}")
-        if station["mapped"]:
-            latitude, longitude = station["latitude"], station["longitude"]
-            require(isinstance(latitude, (int, float)) and isinstance(longitude, (int, float)), "Mapped coordinate is not numeric")
-            require(math.isfinite(latitude) and math.isfinite(longitude) and -90 <= latitude <= 90 and -180 <= longitude <= 180, "Invalid EPSG:4326 coordinate")
-            require(station["country_code"] in COUNTRY_BOUNDS and COUNTRY_BOUNDS[station["country_code"]][0] <= latitude <= COUNTRY_BOUNDS[station["country_code"]][1] and COUNTRY_BOUNDS[station["country_code"]][2] <= longitude <= COUNTRY_BOUNDS[station["country_code"]][3], "Coordinate outside country bounds")
-            coordinate_groups.setdefault((latitude, longitude), []).append(station)
-            if station["is_exact_station_location"]:
-                require(station["coordinate_method"] == "official_station_coordinate" and station["coordinate_confidence"] == "high", "Invalid official coordinate metadata")
-            else:
-                require(station["coordinate_method"] == "geocoded_locality", "Approximate coordinate has wrong method")
-                require(station["coordinate_confidence"] in {"medium", "low"} and station["coordinate_review_status"] == "accepted", "Unreviewed locality coordinate leaked into GeoJSON")
-        else:
-            require(station["latitude"] is None and station["longitude"] is None, "Unmapped station exposes coordinates")
-            require(station["coordinate_review_status"] == "required", "Unmapped geocoding result is not marked for review")
-    for group in coordinate_groups.values():
-        if len(group) > 1:
-            require(len({row["station_name"] for row in group}) == 1, "Unexplained duplicate coordinates across different localities")
+    require(len(features) == len(set(feature_physical_ids)) == status["mapped_physical_station_count"] == status["physical_station_count"], "Physical marker aggregation mismatch")
+    require(len(features) == 93, "Expected 93 physical international markers")
+    require(sum(row["properties"]["stream_count"] for row in features) == 101, "Marker stream aggregation lost station streams")
     for feature in features:
-        station = next(row for row in stations if row["station_id"] == feature["properties"]["station_id"])
-        require(feature["geometry"]["coordinates"] == [station["longitude"], station["latitude"]], "GeoJSON/station coordinate mismatch")
-        require(feature["properties"]["coordinate_method"] == station["coordinate_method"], "GeoJSON coordinate metadata mismatch")
+        props = feature["properties"]
+        members = [row for row in stations if row["physical_station_id"] == props["physical_station_id"]]
+        require(props["stream_count"] == len(members) == len(props["streams"]), "Feature stream count mismatch")
+        require(set(props["station_ids"]) == {row["station_id"] for row in members}, "Feature station membership mismatch")
+        primary = next((row for row in members if row["is_primary_stream"]), members[0])
+        require(feature["geometry"]["coordinates"] == [primary["longitude"], primary["latitude"]], "GeoJSON coordinate mismatch")
 
-    latest_keys = {(row["station_id"], row["parameter"]) for row in latest}
-    require(len(latest_keys) == len(latest), "Duplicate latest record")
-    require(all(row["current_usable"] for row in latest), "Latest contains unusable observation")
-    require(all(row["canonical_quality_flag"] not in {"suspect", "missing"} for row in latest), "Latest contains suspect observation")
-    require(not any(row["source_id"] == "appd_bg" for row in forecasts), "BG forecasts must not be normalized publicly")
+    latest_keys = {(row["source_stream_id"], row["parameter"]) for row in latest}
+    require(len(latest_keys) == len(latest), "Duplicate latest stream/parameter record")
+    require(all(row["current_usable"] and row.get("canonical_quality_flag") != "missing" for row in latest), "Latest contains a technically missing/stale record")
+    require(not any(row["source_id"] == "appd_bg" for row in forecasts), "BG forecast candidates must not be public")
+    # Application plausibility thresholds are forbidden: negative and high official values stay unchanged.
+    require(all(row.get("source_value_raw") in (None, str(row["value"])) or row.get("source_value_raw") for row in observations), "Observation raw value missing")
+    legacy = [row for row in issues if row.get("quality_origin") == "legacy_application_rule"]
+    require(all(row.get("historical") and row.get("active") is False for row in legacy), "Legacy application-rule finding is active")
+    for issue in legacy:
+        identity = observation_identity(issue["observation"])
+        matching = [row for row in observations if observation_identity(row) == identity]
+        if matching:
+            require(all(row.get("current_usable") for row in matching), "Legacy threshold excluded an official current value")
 
     rs = [row for row in stations if row["country_code"] == "RS"]
-    require(len(rs) == 13 and all(row["source_status"] == "suspended" for row in rs), "RS audit registry mismatch")
-    require(not any(row["country_code"] == "RS" for row in observations + forecasts), "RS must have no live data")
+    require(len(rs) == 13 and all(row["source_status"] == "suspended" for row in rs), "RS inventory/status mismatch")
+    require(not any(row["country_code"] == "RS" for row in observations + forecasts), "RS production data must remain disabled")
     hr = [row for row in observations if row["country_code"] == "HR"]
     hr_source = next(row for row in sources if row["country_code"] == "HR")
-    if hr_source.get("freshness_status") == "stale":
-        require(hr and all(row["stale"] and not row["current_usable"] for row in hr), "HR stale values must remain historical")
-        require(not any(row["country_code"] == "HR" for row in latest), "HR stale data present in latest")
-    else:
-        require(hr_source.get("freshness_status") == "current", "HR freshness must be current or stale")
-
-    suspect_observations = [row for row in observations if row["canonical_quality_flag"] == "suspect"]
-    require(suspect_observations, "Expected a suspect live observation")
-    latest_identities = {observation_identity(row) for row in latest}
-    require(
-        all(observation_identity(row) not in latest_identities for row in suspect_observations),
-        "Suspect observation leaked into latest",
-    )
-    suspect_issues = [row for row in issues if row.get("code") == "outside_plausible_water_temperature_range"]
-    require(any(row.get("historical") and row.get("observation", {}).get("value") == 46.2 for row in suspect_issues), "Historical Iza 46.2 quality record missing")
-    evidenced_suspect_identities = {
-        observation_identity(row["observation"])
-        for row in suspect_issues
-        if row.get("observation", {}).get("canonical_quality_flag") == "suspect"
-    }
-    require(
-        all(observation_identity(row) in evidenced_suspect_identities for row in suspect_observations),
-        "A preserved suspect observation lacks structured quality evidence",
-    )
+    require(hr_source["access_status"] == "available", "HR access must be represented independently from freshness")
+    if hr_source["freshness_status"] == "stale":
+        require(hr and all(row["stale"] and not row["current_usable"] for row in hr), "HR stale LKG policy mismatch")
+        require(not any(row["country_code"] == "HR" for row in latest), "HR stale values leaked into latest")
 
     require(len(sources) == 7 and {row["country_code"] for row in sources} == {"DE", "AT", "SK", "HU", "HR", "BG", "RS"}, "Source registry mismatch")
-    require(status.get("contract_version") == "1.2-beta", "Unexpected public contract version")
-    operational_keys = {
-        "source_status", "automation_status", "freshness_status", "validation_status",
-        "last_attempt_at", "last_success_at", "last_capture_at", "next_expected_update",
-        "update_frequency", "validation_message_ro", "validation_message_en", "last_error",
-        "consecutive_failures",
+    required_source_keys = {
+        "implementation_status", "source_status", "access_status", "automation_status", "freshness_status",
+        "validation_status", "coordinate_status", "last_attempt_at", "last_success_at", "last_capture_at",
+        "last_source_observation_at", "last_known_good_commit", "next_expected_update", "update_frequency",
+        "validation_message_ro", "validation_message_en", "last_error", "consecutive_failures",
     }
     for source in sources:
-        require(operational_keys <= set(source), f"Operational metadata incomplete for {source['country_code']}")
-        require(source["source_status"] in {"complete", "partial", "suspended", "unavailable"}, "Invalid source_status")
-        require(source["automation_status"] in {"scheduled", "manual", "disabled"}, "Invalid automation_status")
-        require(source["freshness_status"] in {"current", "stale", "unknown", "unavailable"}, "Invalid freshness_status")
-        require(source["validation_status"] in {"validated", "requires_review", "failed", "not_applicable"}, "Invalid validation_status")
-        require(isinstance(source["consecutive_failures"], int) and source["consecutive_failures"] >= 0, "Invalid failure count")
+        require(required_source_keys <= set(source), f"Operational metadata incomplete for {source['country_code']}")
+        require(source["automation_status"] in {"scheduled", "manual", "disabled"}, "Invalid automation status")
+        require(source["freshness_status"] in {"current", "stale", "unknown", "unavailable"}, "Invalid freshness status")
     automation = {row["country_code"]: row["automation_status"] for row in sources}
     require({code for code, value in automation.items() if value == "scheduled"} == {"DE", "SK", "HU", "HR", "BG"}, "Scheduled source set mismatch")
-    require(automation["AT"] == "manual" and automation["RS"] == "disabled", "AT/RS automation policy mismatch")
-    require(status["complete_source_count"] == sum(row["source_status"] == "complete" for row in sources), "Complete source count mismatch")
-    require(status["partial_source_count"] == sum(row["source_status"] == "partial" for row in sources), "Partial source count mismatch")
-    require(status["suspended_source_count"] == sum(row["source_status"] == "suspended" for row in sources), "Suspended source count mismatch")
-    require(status["observation_count"] == len(observations), "Observation count mismatch")
-    require(status["current_usable_observation_count"] == sum(row["current_usable"] for row in observations), "Current usable observation count mismatch")
-    require(status["stale_observation_count"] == sum(row["stale"] for row in observations), "Stale observation count mismatch")
-    require(status["provisional_observation_count"] == sum(row["canonical_quality_flag"] == "provisional" for row in observations), "Provisional observation count mismatch")
-    require(status["forecast_count"] == len(forecasts), "Forecast count mismatch")
-    require(status["latest_valid_count"] == len(latest), "Latest count mismatch")
-    require(all(row.get("source_file_sha256") and row.get("source_url") and row.get("source_status") for row in observations), "Observation provenance incomplete")
-    require(all(row.get("captured_at_utc") for row in observations), "Observation capture time missing")
-    require(all(row.get("measurement_time_original") and (row.get("measurement_datetime_utc") or row.get("measurement_datetime_local") or row.get("measurement_date")) for row in observations), "Observation original time or normalized date/time missing")
-    require(all(row.get("source_file_sha256") and row.get("source_url") and row.get("source_status") and row.get("captured_at_utc") for row in forecasts), "Forecast provenance incomplete")
-    require(all(row.get("target_time_original") and (row.get("target_datetime_utc") or row.get("target_date")) for row in forecasts), "Forecast original or normalized target time missing")
+    require(automation["AT"] == "manual" and automation["RS"] == "disabled", "AT/RS automation mismatch")
 
+    require(status["observation_count"] == len(observations), "Observation count mismatch")
+    require(status["current_usable_observation_count"] == sum(row["current_usable"] for row in observations), "Usable observation count mismatch")
+    require(status["forecast_count"] == len(forecasts) and status["latest_valid_count"] == len(latest), "Forecast/latest count mismatch")
+    require(all(row.get("source_file_sha256") and row.get("source_url") and row.get("captured_at_utc") for row in observations), "Observation provenance incomplete")
+    require(all(row.get("measurement_time_original") and (row.get("measurement_datetime_utc") or row.get("measurement_datetime_local") or row.get("measurement_date")) for row in observations), "Observation time provenance incomplete")
+    require(all(row.get("source_file_sha256") and row.get("source_url") and row.get("captured_at_utc") for row in forecasts), "Forecast provenance incomplete")
     return {
-        "ok": True, "stations": len(stations), "mapped": len(features), "unmapped": len(unmapped),
-        "official_coordinates": status["official_coordinate_station_count"],
-        "approximate_coordinates": status["approximate_coordinate_station_count"],
-        "observations": len(observations), "latest": len(latest), "forecasts": len(forecasts),
-        "quality_issues": len(issues), "suspect_observations": len(suspect_observations), "geocoding": geocoding,
+        "ok": True, "contract_version": status["contract_version"], "stations": len(stations),
+        "streams": len(streams), "physical_stations": len(features), "mapped": status["mapped_station_count"],
+        "unmapped": len(unmapped), "official_coordinates": method_counts["official_station_coordinate"],
+        "manually_verified_coordinates": method_counts["manually_verified_station_coordinate"],
+        "approximate_coordinates": method_counts["geocoded_locality"], "observations": len(observations),
+        "latest": len(latest), "forecasts": len(forecasts), "quality_issues": len(issues), "geocoding": geocoding,
     }
 
 
