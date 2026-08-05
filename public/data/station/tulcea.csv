@@ -1,6 +1,7 @@
 ﻿record_type,station_id,display_name,datetime,date,lead_hours,level_cm,variation_cm_24h,water_temperature_c,quality_flag
 observation,ec11d8f6-34c5-4d2d-afc2-4171b759c56a,Tulcea,2026-08-03T03:00:00+03:00,2026-08-03,,21,0,27.5,valid
 observation,ec11d8f6-34c5-4d2d-afc2-4171b759c56a,Tulcea,2026-08-04T03:00:00+03:00,2026-08-04,,24,3,27.5,valid
+observation,ec11d8f6-34c5-4d2d-afc2-4171b759c56a,Tulcea,2026-08-05T03:00:00+03:00,2026-08-05,,22,-2,27.5,valid
 forecast,ec11d8f6-34c5-4d2d-afc2-4171b759c56a,Tulcea,2026-08-07T03:00:00+03:00,2026-08-07,120,14,,,xml_html_value_mismatch
 forecast,ec11d8f6-34c5-4d2d-afc2-4171b759c56a,Tulcea,2026-08-03T03:00:00+03:00,2026-08-03,24,19,,,xml_html_value_mismatch
 forecast,ec11d8f6-34c5-4d2d-afc2-4171b759c56a,Tulcea,2026-08-04T03:00:00+03:00,2026-08-04,48,18,,,valid

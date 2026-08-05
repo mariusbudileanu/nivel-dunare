@@ -1,6 +1,7 @@
 ﻿record_type,station_id,display_name,datetime,date,lead_hours,level_cm,variation_cm_24h,water_temperature_c,quality_flag
 observation,267d20a8-8a85-4d85-97e1-8aee686e9535,Cernavodă,2026-08-03T03:00:00+03:00,2026-08-03,,-213,2,27.5,valid
 observation,267d20a8-8a85-4d85-97e1-8aee686e9535,Cernavodă,2026-08-04T03:00:00+03:00,2026-08-04,,-214,-1,27.5,valid
+observation,267d20a8-8a85-4d85-97e1-8aee686e9535,Cernavodă,2026-08-05T03:00:00+03:00,2026-08-05,,-214,0,27.5,valid
 forecast,267d20a8-8a85-4d85-97e1-8aee686e9535,Cernavodă,2026-08-07T03:00:00+03:00,2026-08-07,120,-227,,,xml_html_value_mismatch
 forecast,267d20a8-8a85-4d85-97e1-8aee686e9535,Cernavodă,2026-08-03T03:00:00+03:00,2026-08-03,24,-218,,,xml_html_value_mismatch
 forecast,267d20a8-8a85-4d85-97e1-8aee686e9535,Cernavodă,2026-08-04T03:00:00+03:00,2026-08-04,48,-220,,,xml_html_value_mismatch

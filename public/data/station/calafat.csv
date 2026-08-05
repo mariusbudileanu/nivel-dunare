@@ -1,6 +1,7 @@
 ﻿record_type,station_id,display_name,datetime,date,lead_hours,level_cm,variation_cm_24h,water_temperature_c,quality_flag
 observation,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-03T03:00:00+03:00,2026-08-03,,-160,-4,27.5,valid
 observation,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-04T03:00:00+03:00,2026-08-04,,-165,-5,27.5,valid
+observation,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-05T03:00:00+03:00,2026-08-05,,-168,-3,27.5,valid
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-07T03:00:00+03:00,2026-08-07,120,-172,,,xml_html_value_mismatch
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-03T03:00:00+03:00,2026-08-03,24,-160,,,xml_html_value_mismatch
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-04T03:00:00+03:00,2026-08-04,48,-164,,,xml_html_value_mismatch
