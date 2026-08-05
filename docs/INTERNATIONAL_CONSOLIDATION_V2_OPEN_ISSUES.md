@@ -5,6 +5,7 @@ Date: 2026-08-05
 ## Active operational limitations
 
 - **Austria:** access works with the permitted public DoRIS test key, but automation remains manual and integration remains partial. A permanent institutional key must be stored only as `DORIS_PARTNER_KEY`, followed by live dry-run, validation and an explicit policy update.
+- **Slovakia:** live discovery on 2026-08-05 exposed a fourteenth official Danube option, `sk-5145` Medveďov, beyond the reviewed 13-station inventory. The fail-soft gate rejects the changed candidate set and preserves the 13-station last-known-good until Medveďov identifiers, coordinates and audit inclusion are reviewed; other countries continue.
 - **Croatia:** the endpoint is accessible and checked daily, but its latest demonstrated observation is 2026-03-12. The last-known-good history is public as stale; no numeric forecast is published.
 - **Bulgaria:** manual and automatic windows are operational observations, not an official APPD publication guarantee. APPD forecast candidates remain outside the public contract until parameter, unit, issue time and target semantics are demonstrated.
 - **Serbia:** the adapter and fixtures are implemented, but production access remains disabled because standard TLS certificate-chain validation failed in the audited environment. No HTTP downgrade, `verify=False`, `curl -k`, proxy or other bypass is permitted. Reactivation requires valid TLS for an official hostname plus a successful live dry-run and validator run.

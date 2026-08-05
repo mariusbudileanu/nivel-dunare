@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
-from scripts.build_international_public_data import SOURCE_POLICY, build
+from scripts.build_international_public_data import EXPECTED_COUNTS, SOURCE_POLICY, build
 from scripts.ingest_danube_sources import run_source
 from scripts.validate_international_public_data import validate
 
@@ -198,8 +198,9 @@ def acceptable(code: str, summary: dict[str, Any], issues: list[dict[str, Any]])
     }
     if summary.get("status") not in expected_statuses[code]:
         return False, f"unexpected adapter status {summary.get('status')!r}"
-    if int(summary.get("station_count") or 0) <= 0:
-        return False, "empty station set"
+    station_count = int(summary.get("station_count") or 0)
+    if station_count != EXPECTED_COUNTS[code]:
+        return False, f"unexpected station count: expected {EXPECTED_COUNTS[code]}, got {station_count}"
     if int(summary.get("observation_count") or 0) <= 0:
         return False, "empty observation set"
     return True, None

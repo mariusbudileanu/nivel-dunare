@@ -15,7 +15,7 @@ Hydrological values are reproduced as provided by official sources. Numeric plau
 |---|---|---|---|---|---:|---|---:|---:|---|---|
 | DE | available | scheduled | daily 01:37 UTC | current | 18 / 17 | 18 official | 50 | 0 | complete | Kachlet's legacy and current source objects are two streams at one physical location; migration map retained. |
 | AT | available | manual | workflow dispatch | current | 9 / 9 | 9 official | 18 | 476 | partial | Public DoRIS test key only; add `DORIS_PARTNER_KEY` after institutional approval. |
-| SK | available | scheduled | daily 01:37 UTC | current | 13 / 13 | 1 manual exact + 12 approximate | 51 | 392 | partial | Source-provided provisional status is retained; no local temperature threshold is active. |
+| SK | available | scheduled | daily 01:37 UTC | current LKG | 13 / 13 | 1 manual exact + 12 approximate | 51 | 392 | partial | Source-provided provisional status is retained; no local temperature threshold is active. Live discovery found the additional Medveďov option, which is fail-soft rejected pending inventory and coordinate review. |
 | HU | available | scheduled | daily 01:37 UTC | current | 25 / 25 | 2 manual exact + 23 approximate | 115 retained live-history rows | 0 | complete | The next live publication reparses all three daypart columns; the fixture contract contains 125 rows. |
 | HR | available | scheduled | daily 01:37 UTC check | stale | 3 / 3 | 3 official RIS | 30 historical | 0 | partial | Last source observation is 2026-03-12; recover automatically when a recent source date appears. |
 | BG | available | scheduled by stream | 09:15 / 21:15 Europe/Sofia | current | 20 / 13 | 20 official RIS | 46 | 0 | partial | Manual and automatic streams are separate; forecast candidates remain diagnostic-only. |

@@ -118,6 +118,13 @@ class InternationalAutomationTests(unittest.TestCase):
         self.assertTrue(accepted)
         self.assertIsNone(error)
 
+    def test_unexpected_station_addition_is_fail_soft(self):
+        accepted, error = acceptable(
+            "sk", {"status": "complete", "station_count": 14, "observation_count": 27}, [],
+        )
+        self.assertFalse(accepted)
+        self.assertEqual(error, "unexpected station count: expected 13, got 14")
+
     def test_empty_observation_set_cannot_replace_lkg(self):
         accepted, error = acceptable("de", {"status": "complete", "station_count": 18, "observation_count": 0}, [])
         self.assertFalse(accepted)
