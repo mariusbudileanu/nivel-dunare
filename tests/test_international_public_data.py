@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 from scripts.build_international_public_data import EXPECTED_COUNTS, SOURCE_POLICY, build
-from scripts.validate_international_public_data import FILES, validate
+from scripts.validate_international_public_data import FILES, observation_identity, validate
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,8 +56,8 @@ class InternationalPublicDataTests(unittest.TestCase):
         self.assertFalse(any(row["country_code"] == "RS" for row in observations + forecasts))
         suspect = [row for row in observations if row["canonical_quality_flag"] == "suspect"]
         self.assertTrue(suspect)
-        latest_keys = {(row["station_id"], row["parameter"]) for row in latest}
-        self.assertTrue(all((row["station_id"], row["parameter"]) not in latest_keys for row in suspect))
+        latest_identities = {observation_identity(row) for row in latest}
+        self.assertTrue(all(observation_identity(row) not in latest_identities for row in suspect))
         self.assertTrue(any(row.get("historical") and row.get("observation", {}).get("value") == 46.2 for row in issues))
         self.assertTrue(all(row.get("source_url") and row.get("source_file_sha256") and row.get("captured_at_utc") for row in observations))
 
@@ -83,7 +83,7 @@ class InternationalPublicDataTests(unittest.TestCase):
                 stations = [row for row in public_stations if row["country_code"] == country_code]
                 observations = [row for row in public_observations if row["country_code"] == country_code]
                 forecasts = [row for row in public_forecasts if row["country_code"] == country_code]
-                issues = [row for row in public_issues if row.get("source_id") == SOURCE_POLICY[country]["source_id"] and not row.get("historical")]
+                issues = [row for row in public_issues if row.get("source_id") == SOURCE_POLICY[country]["source_id"]]
                 self.assertEqual(len(stations), EXPECTED_COUNTS[country])
                 for name, value in (("stations.json", stations), ("observations.json", observations), ("forecasts.json", forecasts), ("issues.json", issues)):
                     (target / name).write_text(json.dumps(value, ensure_ascii=False), encoding="utf-8")

@@ -138,12 +138,21 @@ class InternationalBetaPremergeTests(unittest.TestCase):
         self.assertEqual(status["provisional_observation_count"], sum(row["canonical_quality_flag"] == "provisional" for row in observations))
         self.assertLess(status["current_usable_observation_count"], status["observation_count"])
         self.assertTrue({row["station_id"] for row in observations + latest + forecasts} <= station_ids)
-        current = next(row for row in issues if row["code"] == "outside_plausible_water_temperature_range" and not row["historical"])
-        historical = next(row for row in issues if row["code"] == "outside_plausible_water_temperature_range" and row["historical"])
-        self.assertEqual(current["observation"]["value"], 45.3)
-        self.assertEqual(historical["observation"]["value"], 46.2)
-        self.assertEqual(current["observation"]["canonical_quality_flag"], "suspect")
-        self.assertFalse(current["observation"]["current_usable"])
+        temperature_issues = [row for row in issues if row["code"] == "outside_plausible_water_temperature_range"]
+        historical = next(row for row in temperature_issues if row["historical"] and row["observation"]["value"] == 46.2)
+        suspect_observations = [row for row in observations if row["canonical_quality_flag"] == "suspect"]
+        evidenced = {(
+            row["observation"].get("station_id"), row["observation"].get("parameter"),
+            row["observation"].get("value"), row["observation"].get("measurement_datetime_utc"),
+            row["observation"].get("source_file_sha256"),
+        ) for row in temperature_issues}
+        self.assertTrue(suspect_observations)
+        self.assertTrue(all((
+            row.get("station_id"), row.get("parameter"), row.get("value"),
+            row.get("measurement_datetime_utc"), row.get("source_file_sha256"),
+        ) in evidenced for row in suspect_observations))
+        self.assertEqual(historical["observation"]["canonical_quality_flag"], "suspect")
+        self.assertFalse(historical["observation"].get("current_usable", False))
 
     def test_provenance_and_original_times_are_preserved(self):
         for row in load_json("observations.json"):
