@@ -1,6 +1,6 @@
 # International beta pre-merge audit
 
-Audit date: 2026-08-04
+Audit date: 2026-08-05
 Branch: `feature/international-map-beta`
 Pull request: `#2`
 Public contract: `1.1-beta`
@@ -13,7 +13,7 @@ This audit covers the beta-publication branch before merge. It does not claim a 
 |---:|---|---|
 | 1 | Beta publication and complete public contract | Complete. Nine documented JSON/GeoJSON files are mirrored byte-for-byte under `data/public/international/` and `public/data/international/`. |
 | 2 | Public builder and validator | Complete. Dedicated deterministic builder and fail-closed validator cover counts, mirrors, references, policy, provenance and quality evidence. |
-| 3 | International map integration | Complete in branch. Existing 23 AFDJ stations are combined in memory with 93 international points (26 exact official + 67 approximate); no Romanian station is duplicated. Six exact-coordinate locality pairs use aggregate markers. |
+| 3 | International map integration | Complete in branch. Existing 23 AFDJ stations are combined in memory with 93 international points (26 exact official + 67 approximate), for 116 mapped station records; no Romanian station is duplicated. Six same-locality Bulgarian automatic/manual pairs use aggregate markers, so the 116 records render as 110 marker icons. |
 | 4 | Coordinate provenance | Complete. 26 exact official coordinates and 67 accepted approximate locality positions are mapped; 8 review-required stations remain in `unmapped_stations.json`. |
 | 5 | Country/source/status/type filters | Complete. Browser checks covered DE, SK, AT-source, suspect and manual-station filters. |
 | 6 | Popups, cards, legend and statistics | Complete. Optional fields are omitted when absent; values, types, forecast availability, source/local/UTC/capture times, quality, status and official links are displayed where available. |
@@ -38,15 +38,16 @@ This audit covers the beta-publication branch before merge. It does not claim a 
 The branch was served locally and exercised in the in-app browser. This was not a Pages deployment.
 
 - application startup: operational (`Date actualizate`);
-- marker count: 49 = 23 AFDJ + 17 DE + 9 AT;
-- list-only stations: 8;
+- mapped station records: 116 = 23 AFDJ + 93 international;
+- rendered marker icons: 110, because six same-locality Bulgarian automatic/manual pairs are represented by aggregate markers;
+- list-only international stations: 8;
 - Leaflet `.leaflet-pane` and `.leaflet-tile`: computed `position: absolute`;
 - basemap: nine complete tiles covered the map viewport;
 - country DE: 17 markers and one list card;
-- country SK: zero markers and 13 list cards;
+- country SK: 12 accepted approximate locality markers and one unresolved list-only card; the source remains `partial`;
 - suspect filter: one Iža card with the localized implausible-temperature warning;
 - viadonau source: nine markers;
-- manual type: eight BG list cards and no invented markers;
+- manual type: seven accepted approximate BG markers and one unresolved list-only card; no coordinate is invented;
 - Austrian popup: official source, partial status, station type, river, level, variation, 119 available forecasts, source local time, timezone, UTC, capture time, observation quality and test-source warning;
 - open Austrian popup: translated from RO to EN without closing; its `Open analysis` action remained functional;
 - no rendered `null` or `undefined` text;
@@ -62,6 +63,9 @@ The branch was served locally and exercised in the in-app browser. This was not 
 | exact official coordinates | 26 |
 | accepted approximate positions | 67 |
 | list-only international stations | 8 |
+| existing AFDJ stations | 23 |
+| total mapped station records | 116 |
+| rendered marker icons after six aggregations | 110 |
 | stations with a usable current value | 83 |
 | published observations | 192 |
 | current-usable observations / latest records | 161 / 161 |
@@ -76,7 +80,7 @@ The branch was served locally and exercised in the in-app browser. This was not 
 
 - Only DE and AT have verified official coordinates suitable for the international map.
 - AT requires a permanent `DORIS_PARTNER_KEY` before production scheduling.
-- SK remains partial and list-only; suspect temperatures remain quality evidence, while valid levels and forecasts stay usable.
+- SK remains partial. Twelve stations are mapped with accepted approximate locality markers and only `sk-5128` remains list-only; suspect temperatures remain quality evidence, while valid levels and forecasts stay usable.
 - HU has date-only observations and no normalized numeric forecast.
 - HR remains stale/suspended and excluded from current metrics.
 - BG institutional IDs and forecast semantics remain unproven; forecasts are not publicly normalized.

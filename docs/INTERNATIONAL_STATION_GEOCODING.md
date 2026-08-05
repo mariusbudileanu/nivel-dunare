@@ -14,6 +14,9 @@ Status: controlled one-time beta run completed on 2026-08-04. This process does 
 | Unresolved results | 5 |
 | International points in GeoJSON | 93 |
 | Stations remaining list-only | 8 |
+| Existing AFDJ stations | 23 |
+| Total mapped station records in the portal | 116 |
+| Rendered marker icons after six aggregations | 110 |
 
 The public Nominatim endpoint was used for a small, one-time task. The run used one machine, one thread, a descriptive User-Agent, no more than one request per 1.1 seconds, no retries, and a persistent cache. There were 75 HTTP queries in total: 69 initial queries and six locality clarifications. The current 75-station inventory has 68 unique final query strings because manual/automatic stations at the same locality share a query.
 
@@ -76,4 +79,4 @@ No station remains ambiguous between two accepted inhabited-place candidates aft
 
 The public station contract exposes `latitude`, `longitude`, `coordinate_method`, `coordinate_source`, `coordinate_provider`, `coordinate_confidence`, `coordinate_review_status` and `is_exact_station_location`. GeoJSON includes accepted official and approximate positions; unresolved/review-required stations remain in `unmapped_stations.json`.
 
-Approximate positions use a diamond marker and an explicit RO/EN warning. Exact official positions use a circle. Same-coordinate manual/automatic stations share an aggregate marker whose popup lists individual station buttons; no random coordinate offset is generated. Approximate positions are excluded from distance, spatial precision, river-kilometre inference and location-based ordering.
+Approximate positions use a diamond marker and an explicit RO/EN warning. The portal Info dialog exposes `© OpenStreetMap contributors, ODbL` in English and the equivalent translated attribution in Romanian. Exact official positions use a circle. Same-coordinate manual/automatic stations share an aggregate marker whose popup lists individual station buttons; no random coordinate offset is generated. Approximate positions are excluded from distance, spatial precision, river-kilometre inference and location-based ordering.

@@ -58,6 +58,9 @@ The promoted live dataset contains:
 | accepted approximate locality positions | 67 |
 | total international GeoJSON points | 93 |
 | stations listed without accepted coordinates | 8 |
+| existing AFDJ stations | 23 |
+| total mapped station records | 116 |
+| rendered marker icons after six aggregations | 110 |
 | stations with a current valid value | 83 |
 | published observations, including labelled stale/suspect evidence | 192 |
 | current usable observations | 161 |
@@ -69,11 +72,13 @@ The promoted live dataset contains:
 | quality issues | 25 |
 | complete / partial / suspended sources | 2 / 3 / 2 |
 
-Every published observation retains station/source identifiers, source URL, source-file SHA-256, capture time, observation time as supplied, quality and source status. Sensitive DoRIS query parameters are removed. GeoJSON contains only DE and AT official high-confidence coordinates.
+Every published observation retains station/source identifiers, source URL, source-file SHA-256, capture time, observation time as supplied, quality and source status. Sensitive DoRIS query parameters are removed. Only the 26 DE/AT features carry exact official coordinates; the other 67 GeoJSON features carry accepted approximate locality positions with explicit method, provider, confidence and precision warnings.
 
 ## Frontend and languages
 
-The existing Romanian AFDJ GeoJSON is loaded unchanged and combined in memory with 93 international GeoJSON features: 26 exact official station coordinates and 67 accepted locality-level positions. Eight review-required stations remain in a separate list. Filters cover country, source, status, station type and coordinate type. Official circles and approximate diamonds are distinguished by shape and text; approximate popups carry an explicit RO/EN precision warning. Same-locality overlaps use a shared aggregate popup with individual station buttons. Full method, provenance and limitations are documented in `INTERNATIONAL_STATION_GEOCODING.md`.
+The existing Romanian AFDJ GeoJSON is loaded unchanged and combined in memory with 93 international GeoJSON features: 26 exact official station coordinates and 67 accepted locality-level positions. This produces 116 mapped station records. Six same-locality Bulgarian automatic/manual pairs use shared aggregate markers, resulting in 110 rendered marker icons. Eight review-required international stations remain in a separate list. Filters cover country, source, status, station type and coordinate type. Official circles and approximate diamonds are distinguished by shape and text; approximate popups carry an explicit RO/EN precision warning. Full method, provenance and limitations are documented in `INTERNATIONAL_STATION_GEOCODING.md`.
+
+The portal Info dialog exposes the geocoding attribution in both languages as `© OpenStreetMap contributors, ODbL` and explains that locality positions are not exact gauge/sensor locations and must not be used for distance, ordering or river-kilometre inference.
 
 The translation mechanism is centralized in `public/assets/js/i18n.js`. It provides matching Romanian and English catalogues, defaults to Romanian, applies URL language before `localStorage`, updates `<html lang>`, preserves the choice, formats with `ro-RO` or `en-GB`, and notifies map, cards, tables, charts, dialogs and filters after a language change. The compact keyboard-accessible EN/RO button is next to Info.
 
