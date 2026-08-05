@@ -33,18 +33,18 @@
     "bg": {
       "access_status": "available",
       "automation_status": "scheduled",
-      "consecutive_failures": 2,
+      "consecutive_failures": 3,
       "coordinate_status": "complete",
       "freshness_status": "current",
-      "last_attempt_at": "2026-08-05T19:44:23.319954+00:00",
+      "last_attempt_at": "2026-08-05T19:46:03.174564+00:00",
       "last_attempt_status": "failed",
       "last_capture_at": "2026-08-05T09:56:08.453784+00:00",
       "last_error": {
-        "code": "SourceAccessError",
-        "message": "current: URLError: <urlopen error timed out>"
+        "code": "SourceStructureError",
+        "message": "APPD station loss: main=8, automatic=11"
       },
-      "last_error_code": "SourceAccessError",
-      "last_error_message": "current: URLError: <urlopen error timed out>",
+      "last_error_code": "SourceStructureError",
+      "last_error_message": "APPD station loss: main=8, automatic=11",
       "last_known_good_at": "2026-08-05T09:55:51.068322+00:00",
       "last_known_good_commit": "d590bb7e3928a0d6d890217a69751f1b4ad85655",
       "last_source_observation_at": "2026-08-05",

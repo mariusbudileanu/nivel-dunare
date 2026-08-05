@@ -1,6 +1,6 @@
 [
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_institutional_station_ids",
     "historical": false,
     "message": "APPD publishes station names and river kilometres but no demonstrated stable institutional IDs; application IDs are not substituted for source_station_id.",
@@ -10,7 +10,7 @@
     "source_status": "partial"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -23,7 +23,7 @@
     "station_name_local": "Bajkal"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -36,7 +36,7 @@
     "station_name_local": "Gomotartsi"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -49,7 +49,7 @@
     "station_name_local": "Kozloduj"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -62,7 +62,7 @@
     "station_name_local": "Lom"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -75,7 +75,7 @@
     "station_name_local": "Lom"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -88,7 +88,7 @@
     "station_name_local": "Malak Preslavets"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -101,7 +101,7 @@
     "station_name_local": "Nikopol"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -114,7 +114,7 @@
     "station_name_local": "Nikopol"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -127,7 +127,7 @@
     "station_name_local": "Novo Selo"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -140,7 +140,7 @@
     "station_name_local": "Novo Selo"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -153,7 +153,7 @@
     "station_name_local": "Oryahovo"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -166,7 +166,7 @@
     "station_name_local": "Oryahovo"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -179,7 +179,7 @@
     "station_name_local": "Ruse"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -192,7 +192,7 @@
     "station_name_local": "Ruse"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -205,7 +205,7 @@
     "station_name_local": "Ryahovo"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -218,7 +218,7 @@
     "station_name_local": "Silistra"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -231,7 +231,7 @@
     "station_name_local": "Silistra"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -244,7 +244,7 @@
     "station_name_local": "Svishtov"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",
@@ -257,7 +257,7 @@
     "station_name_local": "Svishtov"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:37.382974+00:00",
+    "captured_at_utc": "2026-08-05T19:46:04.833307+00:00",
     "code": "missing_source_station_id",
     "historical": false,
     "message": "Official stable station identifier unavailable",

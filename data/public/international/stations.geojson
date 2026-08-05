@@ -1305,7 +1305,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -1492,7 +1492,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -1679,7 +1679,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -1866,7 +1866,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -2165,7 +2165,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -2352,7 +2352,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Same official RIS object intentionally supports manual and automatic APPD streams",
@@ -2617,7 +2617,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -2916,7 +2916,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -3215,7 +3215,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -3514,7 +3514,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -3701,7 +3701,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -4000,7 +4000,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS automatic hydrological station row",
@@ -4299,7 +4299,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-08-05T19:41:37.382974+00:00",
+        "capture_datetime_utc": "2026-08-05T19:46:04.833307+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "official_station_coordinate",
         "coordinate_notes": "Official RIS gauge row",
