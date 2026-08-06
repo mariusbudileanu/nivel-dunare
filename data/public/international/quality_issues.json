@@ -271,7 +271,7 @@
   },
   {
     "active": false,
-    "captured_at_utc": "2026-08-05T19:41:31.208584+00:00",
+    "captured_at_utc": "2026-08-06T04:47:25.544039+00:00",
     "code": "outside_plausible_water_temperature_range",
     "historical": true,
     "message": "Inactive historical application-rule finding; it does not alter or exclude the official value.",
@@ -320,7 +320,7 @@
   },
   {
     "active": false,
-    "captured_at_utc": "2026-08-05T19:41:31.208584+00:00",
+    "captured_at_utc": "2026-08-06T04:47:25.544039+00:00",
     "code": "outside_plausible_water_temperature_range",
     "historical": true,
     "message": "Inactive historical application-rule finding; it does not alter or exclude the official value.",
@@ -379,10 +379,10 @@
     "source_status": "partial"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:34.852397+00:00",
+    "captured_at_utc": "2026-08-06T04:47:31.458217+00:00",
     "code": "stale_source",
     "historical": false,
-    "message": "Latest observation date 2026-03-12 is 146 days old; limit is 7",
+    "message": "Latest observation date 2026-03-12 is 147 days old; limit is 7",
     "record_id": null,
     "severity": "warning",
     "source_id": "vodniputovi_hr",
