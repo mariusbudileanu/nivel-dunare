@@ -10,7 +10,7 @@ import {
 
 const state = {
   status: null, features: [], stations: new Map(), stationData: new Map(),
-  selectedId: null, activeTab: "level", rangePreset: "30d", range: {},
+  selectedId: null, activeTab: "level", rangePreset: "30d", range: {}, selectedDate: null,
   compareIds: [], compareMode: "delta", tableSort: { field: "river_km", direction: 1 },
   filterPredicate: () => true, international: null
 };
@@ -130,11 +130,16 @@ function updateQuery() {
   const station = selectedStation(); if (!station) return;
   const params = new URLSearchParams(location.search);
   params.set("station", station.slug); params.set("range", state.rangePreset || "custom"); params.set("chart", state.activeTab);
+  if (state.selectedDate) params.set("date", state.selectedDate); else params.delete("date");
   history.replaceState(null, "", `${location.pathname}?${params.toString()}${location.hash}`);
 }
 
 async function selectStation(stationId, options = {}) {
   const station = state.stations.get(stationId); if (!station) return;
+  const isStationChange = state.selectedId !== stationId;
+  if ("date" in options) state.selectedDate = options.date || null;
+  else if (isStationChange) state.selectedDate = null;
+  if (isStationChange && state.rangePreset === "custom") state.rangePreset = "30d";
   state.selectedId = stationId; $("#station-select").value = stationId;
   selectMapStation(stationId, { pan: options.pan !== false, openPopup: options.openPopup === true });
   $("#station-title").textContent = station.display_name;
@@ -183,7 +188,7 @@ function populateIssueSelector(issues) {
 async function renderActiveChart() {
   const station = selectedStation(); if (!station) return;
   const data = await getStationData(station);
-  if (state.activeTab === "level") await renderLevel("chart-level", station, data.observations, data.forecasts, state.range);
+  if (state.activeTab === "level") await renderLevel("chart-level", station, data.observations, data.forecasts, state.range, state.selectedDate);
   if (state.activeTab === "variation") await renderVariation("chart-variation", station, data.observations, state.range);
   if (state.activeTab === "temperature") await renderTemperature("chart-temperature", station, data.observations, state.range);
   if (state.activeTab === "history") await renderHistory("chart-history", station, data.observations, data.forecasts, $("#forecast-issue-select").value);
@@ -239,7 +244,13 @@ function renderTable() {
   });
 }
 
-function scrollToAnalysis() { if (matchMedia("(max-width: 1180px)").matches) $(".analysis-panel").scrollIntoView({ behavior: "smooth", block: "start" }); }
+function scrollToAnalysis() {
+  const panel = $(".analysis-panel"); if (!panel) return;
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  panel.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  const heading = $("#station-title");
+  if (heading) { heading.setAttribute("tabindex", "-1"); heading.focus({ preventScroll: true }); }
+}
 
 function renderComparePicker() {
   const picker = $("#compare-picker"); picker.innerHTML = "";
@@ -293,17 +304,17 @@ function renderDownloads() {
   $("#download-list").innerHTML = downloadEntries.map(item => `<a href="${dataUrl(item.path)}" download><span>${localizedDownloadLabel(item)}</span><small>${item.format}</small></a>`).join("");
 }
 function bindEvents(downloads) {
-  $("#station-select").addEventListener("change", event => selectStation(event.target.value));
+  $("#station-select").addEventListener("change", event => { selectStation(event.target.value); scrollToAnalysis(); });
   $("#map-reset").addEventListener("click", resetMap);
   $("#map-fullscreen").addEventListener("click", () => { const panel = $(".map-panel"); panel.classList.toggle("is-fullscreen"); document.body.style.overflow = panel.classList.contains("is-fullscreen") ? "hidden" : ""; refreshMapSize(); });
-  $("#station-search").addEventListener("keydown", event => { if (event.key === "Enter") { const marker = findStation(event.target.value); if (marker) selectStation(marker.properties.station_id, { openPopup: true }); else toast(t("stationNotFound")); } });
+  $("#station-search").addEventListener("keydown", event => { if (event.key === "Enter") { const marker = findStation(event.target.value); if (marker) { selectStation(marker.properties.station_id, { openPopup: true }); scrollToAnalysis(); } else toast(t("stationNotFound")); } });
   $$("[data-range]").forEach(button => button.addEventListener("click", async () => { state.rangePreset = button.dataset.range; const data = await getStationData(selectedStation()); state.range = deriveRange(data.observations); updateRangeUi(); await renderActiveChart(); await renderCompare(); updateQuery(); }));
   [$("#date-from"), $("#date-to")].forEach(input => input.addEventListener("change", async () => { state.rangePreset = "custom"; state.range = { from: $("#date-from").value, to: $("#date-to").value }; updateRangeUi(); await renderActiveChart(); await renderCompare(); updateQuery(); }));
   $("#range-reset").addEventListener("click", async () => { state.rangePreset = "all"; state.range = {}; updateRangeUi(); await renderActiveChart(); await renderCompare(); updateQuery(); });
   $$("[role=tab]").forEach(button => button.addEventListener("click", () => changeTab(button.dataset.tab)));
   $(".tabs").addEventListener("keydown", event => { if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return; const tabs = $$("[role=tab]"); const index = tabs.indexOf(document.activeElement); const next = tabs[(index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length]; next.focus(); next.click(); });
   $("#forecast-issue-select").addEventListener("change", () => renderActiveChart());
-  $$(".chart-tab").forEach(panel => panel.addEventListener("click", event => { const action = event.target.dataset.action; const id = panel.querySelector(".chart")?.id; if (!action || !id) return; if (action === "csv") downloadChartCsv(id); if (action === "png") downloadChartPng(id); if (action === "expand") toggleFullscreen(panel, id); }));
+  $$(".chart-tab").forEach(panel => panel.addEventListener("click", async event => { const action = event.target.dataset.action; const id = panel.querySelector(".chart")?.id; if (!action || !id) return; if (action === "csv") downloadChartCsv(id); if (action === "png") downloadChartPng(id); if (action === "expand") toggleFullscreen(panel, id); if (action === "goto-latest") { state.selectedDate = null; await renderActiveChart(); updateQuery(); } }));
   $("#compare-add").addEventListener("click", () => { $("#compare-picker").hidden = !$("#compare-picker").hidden; });
   $("#compare-mode").addEventListener("change", async event => { state.compareMode = event.target.value; await renderCompare(); });
   $(".comparison-section").addEventListener("click", event => { const action = event.target.dataset.compareAction; if (action === "csv") downloadChartCsv("chart-compare"); if (action === "png") downloadChartPng("chart-compare"); if (action === "expand") toggleFullscreen($(".comparison-section"), "chart-compare"); });
@@ -327,7 +338,7 @@ async function start() {
   try {
     const { status, geojson, downloads, international } = await loadStartupData();
     state.international = international;
-    applyStatus(status); applyInternationalStatus(international); setupStations(geojson); initMap("map", geojson, id => selectStation(id)); bindEvents(downloads);
+    applyStatus(status); applyInternationalStatus(international); setupStations(geojson); initMap("map", geojson, id => { selectStation(id); scrollToAnalysis(); }); bindEvents(downloads);
     initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); });
     onLanguageChange(async () => {
       applyTranslations(); applyStatus(state.status); applyInternationalStatus(state.international); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads();
@@ -338,9 +349,11 @@ async function start() {
     const requested = [...state.stations.values()].find(station => station.slug === requestedSlug) || [...state.stations.values()].find(station => station.slug === "giurgiu") || [...state.stations.values()][0];
     const range = params.get("range"); if (["7d", "30d", "90d", "365d", "all"].includes(range)) state.rangePreset = range;
     const tab = params.get("chart"); if (chartIds[tab]) state.activeTab = tab;
-    await selectStation(requested.station_id, { pan: false });
-    if (state.activeTab !== "level") await changeTab(state.activeTab);
+    const requestedDateParam = params.get("date");
+    const requestedDate = requestedDateParam && /^\d{4}-\d{2}-\d{2}$/.test(requestedDateParam) ? requestedDateParam : null;
     applyTranslations();
+    await selectStation(requested.station_id, { pan: false, date: requestedDate });
+    if (state.activeTab !== "level") await changeTab(state.activeTab);
   } catch (error) {
     console.error(error); $("#system-status").classList.add("warning"); $("#system-status").innerHTML = `<span class="status-dot"></span>${t("unavailable")}`;
     toast(t("unavailable"), 8000);

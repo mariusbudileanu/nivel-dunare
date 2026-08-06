@@ -25,13 +25,15 @@ export function filterByRange(rows, field, range) {
   return rows.filter(row => (!range.from || dateOnly(row[field]) >= range.from) && (!range.to || dateOnly(row[field]) <= range.to));
 }
 
-export async function renderLevel(id, station, observations, forecasts, range) {
+export async function renderLevel(id, station, observations, forecasts, range, selectedDate) {
   const obs = filterByRange(observations, "measurement_datetime", range);
   const issues = [...new Set(forecasts.map(row => row.forecast_issue_datetime))].sort();
   const latestIssue = issues.at(-1);
   const forecast = forecasts.filter(row => row.forecast_issue_datetime === latestIssue && row.forecast_available);
   const observedByDate = new Map(observations.map(row => [row.measurement_date, row]));
   const traces = [];
+  const highlighted = selectedDate ? obs.find(row => row.measurement_date === selectedDate) : null;
+  const currentPoint = highlighted || obs.at(-1);
   if (obs.length) {
     traces.push({
       x: obs.map(row => row.measurement_datetime), y: obs.map(row => row.level_cm),
@@ -40,8 +42,7 @@ export async function renderLevel(id, station, observations, forecasts, range) {
       line: { color: COLORS.observation, width: 3 }, marker: { color: COLORS.observation, size: 7 },
       hovertemplate: `<b>%{x|${plotDateFormat()}}</b><br>${t("level")}: %{y:.0f} cm<br>${t("variation")}: %{customdata[0]:+.0f} cm<br>${t("temperature")}: %{customdata[1]:.1f} °C<br>${t("state")}: %{customdata[2]}<extra>${t("observed")}</extra>`
     });
-    const latest = obs.at(-1);
-    traces.push({ x: [latest.measurement_datetime], y: [latest.level_cm], type: "scatter", mode: "markers", name: t("currentObservation"), marker: { color: COLORS.current, size: 14, line: { color: "white", width: 3 } }, hovertemplate: `${t("currentObservation")}<br>%{x|${plotDateFormat()}}: %{y:.0f} cm<extra></extra>` });
+    if (currentPoint) traces.push({ x: [currentPoint.measurement_datetime], y: [currentPoint.level_cm], type: "scatter", mode: "markers", name: t("currentObservation"), marker: { color: COLORS.current, size: 14, line: { color: "white", width: 3 } }, hovertemplate: `${t("currentObservation")}<br>%{x|${plotDateFormat()}}: %{y:.0f} cm<extra></extra>` });
   }
   if (forecast.length) {
     const custom = forecast.map(row => {
@@ -64,11 +65,27 @@ export async function renderLevel(id, station, observations, forecasts, range) {
     { type: "rect", xref: "x", yref: "paper", x0: latestDate, x1: maxForecast, y0: 0, y1: 1, fillcolor: "rgba(113,97,217,.07)", line: { width: 0 }, layer: "below" },
     { type: "line", xref: "x", yref: "paper", x0: latestDate, x1: latestDate, y0: 0, y1: 1, line: { color: COLORS.current, width: 1.5, dash: "dot" } }
   ] : [];
+  const hasExplicitRange = Boolean(range?.from && range?.to);
+  const xaxisRange = hasExplicitRange ? [range.from, range.to] : defaultViewWindow(obs, currentPoint);
   await Plotly.react(id, traces.length ? traces : noDataTrace(), {
     ...localizedLayout(), shapes, yaxis: { ...baseLayout.yaxis, title: `${t("level")} (cm)` },
-    xaxis: { ...baseLayout.xaxis, rangeslider: { visible: true, thickness: .08 }, range: range?.from && range?.to ? [range.from, range.to] : undefined }
+    xaxis: { ...baseLayout.xaxis, rangeslider: { visible: true, thickness: .08 }, range: xaxisRange }
   }, PLOT_CONFIG);
+  if (xaxisRange) await Plotly.relayout(id, { "xaxis.range": xaxisRange, "xaxis.autorange": false });
   register(id, { title: `${station.display_name} — ${t("chartLevelExportTitle")}`, slug: station.slug, kind: "evolutie_prognoza", range, source: station.source_label || station.source_name || "AFDJ" });
+}
+
+function shiftDateOnly(dateOnly, days) {
+  const [year, month, day] = dateOnly.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day + days)).toISOString().slice(0, 10);
+}
+
+function defaultViewWindow(obs, currentPoint) {
+  if (!currentPoint) return undefined;
+  const earliest = obs[0]?.measurement_date || currentPoint.measurement_date;
+  const startIso = shiftDateOnly(currentPoint.measurement_date, -29);
+  const from = startIso > earliest ? startIso : earliest;
+  return [from, shiftDateOnly(currentPoint.measurement_date, 1)];
 }
 
 export async function renderVariation(id, station, observations, range) {
