@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -114,6 +115,18 @@ def latest_observation_date(rows: list[dict[str, Any]]) -> str | None:
         if value:
             values.append(str(value)[:10])
     return max(values) if values else None
+
+
+def normalized_source_date(value: Any) -> str | None:
+    text = str(value or "").strip()
+    iso = re.search(r"(?<!\d)(\d{4}-\d{2}-\d{2})(?!\d)", text)
+    if iso:
+        return iso.group(1)
+    european = re.search(r"\b(\d{2})\.(\d{2})\.(\d{4})\b", text)
+    if european:
+        day, month, year = european.groups()
+        return f"{year}-{month}-{day}"
+    return None
 
 
 def archive_details(folder: Path, archive_root: Path | None = None, source_id: str | None = None) -> dict[str, Any]:
@@ -335,6 +348,8 @@ def update_state(state: dict[str, Any], code: str, now: datetime, summary: dict[
         "runner": details.get("runner") or item.get("runner"),
         "request_made": details.get("request_made", code != "rs"),
     })
+    if code == "rs":
+        item["update_frequency"] = "every 3 hours plus daily/forecast Europe/Belgrade gates"
     for component_name in component_names:
         component = item.setdefault("components", {}).setdefault(component_name, {})
         component.update({
@@ -436,9 +451,8 @@ def main(argv: list[str] | None = None) -> int:
         latest_date = latest_observation_date(observations)
         if code == "rs":
             forecast_source_dates = [
-                str(row.get("forecast_issue_datetime_utc") or row.get("forecast_issue_time_original") or "")[:10]
-                for row in forecasts
-                if row.get("forecast_issue_datetime_utc") or row.get("forecast_issue_time_original")
+                value for row in forecasts
+                if (value := normalized_source_date(row.get("forecast_issue_datetime_utc") or row.get("forecast_issue_time_original")))
             ]
             details["component_last_source_observation_at"] = {
                 "nrt": latest_observation_date([row for row in observations if row.get("source_stream_type") == "nrt"]),
