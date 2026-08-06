@@ -19,14 +19,14 @@ Hydrological values are reproduced as provided by official sources. Numeric plau
 | HU | available | scheduled | daily 01:37 UTC | current | 25 / 25 | 2 manual exact + 23 approximate | 115 retained live-history rows | 0 | complete | The next live publication reparses all three daypart columns; the fixture contract contains 125 rows. |
 | HR | available | scheduled | daily 01:37 UTC check | stale | 3 / 3 | 3 official RIS | 30 historical | 0 | partial | Last source observation is 2026-03-12; recover automatically when a recent source date appears. |
 | BG | available | scheduled by stream | 09:15 / 21:15 Europe/Sofia | current | 20 / 13 | 20 official RIS | 46 | 0 | partial | Manual and automatic streams are separate; forecast candidates remain diagnostic-only. |
-| RS | TLS failed | disabled | none while disabled | unavailable | 13 / 13 | 12 manual exact + 1 approximate | 0 | 0 | suspended | Parser fixtures contain 75 observations and 32 point forecasts, but production makes no request until standard TLS validation passes. |
+| RS | available through Windows Schannel | dedicated schedule | NRT 3-hourly + daily/forecast DST-safe gates | current after validated publish | 13 / 13 physical; 12 additional NRT streams | 12 manual exact + 1 approximate | live-generated | live-generated | complete/source-provisional | GitHub run `31083512217` validated 13 stations, 2,348 observations and 36 forecasts. Ubuntu/OpenSSL remains unable to build the chain; Windows performs the standard verified collection. |
 
 Counts above describe the committed last-known-good public snapshot before the final live workflow. The final report must use the post-merge artifact and public files, not infer successful live access from fixtures.
 
 ## Pre-merge GitHub validation
 
 - fixtures all-source dry-run `31019609341`: success;
-- final live all-source dry-run `31020421889`: success, public preview validated; DE 18/25/0, AT 9/9/240, HU 25/107/0, HR 3/30/0 and BG 20/46/0 public forecasts accepted; SK returned 14/27/245 but was fail-soft rejected against the reviewed 13-station inventory, and RS made no request while suspended;
+- final live all-source dry-run `31020421889`: success, public preview validated; DE 18/25/0, AT 9/9/240, HU 25/107/0, HR 3/30/0 and BG 20/46/0 public forecasts accepted; SK returned 14/27/245 but was fail-soft rejected against the reviewed 13-station inventory, and RS made no request in that historical pre-remediation run; corrected transport run `31083512217` later demonstrated live Windows/Schannel collection;
 - BG manual dry-run `31020513661`: success, HTTP 200/200, 20 streams, 46 observations, forecast candidates excluded from public output;
 - BG automatic dry-run `31020703686`: success, HTTP 200/200, 20 streams, 46 observations, forecast candidates excluded from public output.
 
@@ -53,7 +53,7 @@ Priority is official station coordinate, manually verified exact coordinate, acc
 
 ## Workflows and last-known-good
 
-The general workflow schedules only DE, SK, HU and HR at `37 1 * * *`. The dedicated BG workflow uses UTC pairs `15 6`, `15 7`, `15 18`, `15 19` and a `Europe/Sofia` gate, so exactly the 09:15 manual or 21:15 automatic window runs across DST. AT is manual. RS is disabled and makes no request.
+The general workflow schedules only DE, SK, HU and HR at `37 1 * * *`. The dedicated BG workflow uses UTC pairs `15 6`, `15 7`, `15 18`, `15 19` and a `Europe/Sofia` gate, so exactly the 09:15 manual or 21:15 automatic window runs across DST. AT is manual. Serbia uses a separate Windows/Schannel collector: NRT every three hours plus daily reconciliation, and DST-safe Europe/Belgrade gates for the daily table and forecast.
 
 The updater isolates every source, merges history by stable stream/date/daypart keys, retains per-source last-known-good state and stages only whitelisted international public/reference paths. Collect jobs use `contents: read`; publication alone uses `contents: write` and `actions: write`. There is no force push, TLS bypass or fixture publication.
 

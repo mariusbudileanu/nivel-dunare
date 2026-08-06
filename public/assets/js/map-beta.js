@@ -45,6 +45,25 @@ function valueLine(label, value, unit = "") {
   return `<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}${unit ? ` ${escapeHtml(unit)}` : ""}</p>`;
 }
 
+function rsStreamLine(stream) {
+  const latest = stream.latest || {};
+  const level = latest.water_level;
+  const discharge = latest.discharge;
+  const temperature = latest.water_temperature;
+  const parts = [t(`stream_${stream.source_stream_type}`)];
+  if (stream.is_primary_stream) parts.push(t("primaryStream"));
+  if (stream.observation_frequency) parts.push(frequencyLabel(stream.observation_frequency));
+  if (level?.value !== null && level?.value !== undefined) parts.push(`${t("currentLevel")}: ${formatNumber(level.value)} ${level.unit || "cm"}`);
+  if (discharge?.value !== null && discharge?.value !== undefined) parts.push(`${t("discharge")}: ${formatNumber(discharge.value)} ${discharge.unit || "m³/s"}`);
+  if (temperature?.value !== null && temperature?.value !== undefined) parts.push(`${t("temperature")}: ${formatNumber(temperature.value, 1)} ${temperature.unit || "°C"}`);
+  const delay = level?.capture_delay_seconds ?? discharge?.capture_delay_seconds ?? temperature?.capture_delay_seconds;
+  if (Number.isFinite(Number(delay))) parts.push(t("captureDelayMinutes", { count: formatNumber(Math.max(0, Number(delay)) / 60, 0) }));
+  const quality = level?.canonical_quality_flag || discharge?.canonical_quality_flag || temperature?.canonical_quality_flag;
+  if (quality) parts.push(qualityLabel(quality));
+  if (stream.source_stream_type === "daily") parts.unshift(t("dailyObservation"));
+  return `<p>${parts.map(escapeHtml).join(" · ")}</p>`;
+}
+
 function coordinateDetails(properties) {
   if (properties.scope !== "international") return "";
   const method = isApproximate(properties) ? t("approximateCoordinates") : isManualCoordinate(properties) ? t("manuallyVerifiedCoordinates") : t("officialCoordinates");
@@ -57,7 +76,7 @@ function coordinateDetails(properties) {
       : valueLine(t("coordinateSource"), coordinateProvenanceLabel(sourceValue))
     : "";
   const warning = isApproximate(properties) ? `<p class="warning-copy coordinate-warning">! ${escapeHtml(t("approximateCoordinateWarning"))}</p>` : "";
-  const streamDetails = (properties.streams || []).length ? `<div class="stream-list"><strong>${escapeHtml(t("streamCount"))}: ${formatNumber(properties.stream_count || properties.streams.length)}</strong>${properties.streams.map(stream => `<p>${escapeHtml(t(`stream_${stream.source_stream_type}`))}${stream.is_primary_stream ? ` · ${escapeHtml(t("primaryStream"))}` : ""}${stream.observation_frequency ? ` · ${escapeHtml(frequencyLabel(stream.observation_frequency))}` : ""}</p>`).join("")}</div>` : "";
+  const streamDetails = (properties.streams || []).length ? `<div class="stream-list"><strong>${escapeHtml(t("streamCount"))}: ${formatNumber(properties.stream_count || properties.streams.length)}</strong>${properties.streams.map(stream => properties.country_code === "RS" ? rsStreamLine(stream) : `<p>${escapeHtml(t(`stream_${stream.source_stream_type}`))}${stream.is_primary_stream ? ` · ${escapeHtml(t("primaryStream"))}` : ""}${stream.observation_frequency ? ` · ${escapeHtml(frequencyLabel(stream.observation_frequency))}` : ""}</p>`).join("")}</div>` : "";
   return `${valueLine(t("coordinateValue"), coordinate)}${valueLine(t("coordinateMethod"), method)}${valueLine(t("coordinateProvider"), coordinateProvenanceLabel(properties.coordinate_provider))}${valueLine(t("coordinateConfidence"), coordinateConfidenceLabel(properties.coordinate_confidence))}${source}${warning}${streamDetails}`;
 }
 
@@ -102,7 +121,7 @@ function popupHtml(properties) {
     ${timeLines}${captureLine}${qualityLine}${coordinateDetails(properties)}
     ${properties.country_code === "AT" ? `<p class="warning-copy">! ${escapeHtml(t("austriaTestSourceWarning"))}</p>` : ""}
     ${properties.country_code === "BG" ? `<p class="warning-copy">! ${escapeHtml(t("appdForecastInactive"))}</p>` : ""}
-    ${properties.country_code === "RS" ? `<p class="warning-copy">! ${escapeHtml(t("rsTlsSuspended"))}</p>` : ""}
+    ${properties.country_code === "RS" ? `<p class="warning-copy">! ${escapeHtml(t(properties.source_status === "suspended" ? "rsTlsSuspended" : "rsProvisionalData"))}</p>` : ""}
     ${properties.country_code === "HR" && properties.freshness_status === "stale" ? `<p class="warning-copy">! ${escapeHtml(t("hrStaleDetail", { date: properties.published_snapshot_date || t("unavailable") }))}</p>` : ""}
     ${properties.country_code === "HR" ? `<p class="warning-copy">${escapeHtml(t("hrForecastDisclaimer"))}</p>` : ""}
     ${isInternational ? `${valueLine(t("accessStatus"), statusLabel(properties.access_status || "unavailable"))}${valueLine(t("automationStatus"), statusLabel(properties.automation_status || "unavailable"))}${valueLine(t("freshnessStatus"), statusLabel(properties.freshness_status || "unavailable"))}${valueLine(t("validationStatus"), statusLabel(properties.validation_status || "unavailable"))}` : ""}

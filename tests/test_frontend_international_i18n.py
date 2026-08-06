@@ -62,6 +62,17 @@ class InternationalFrontendI18nTests(unittest.TestCase):
         for name in ("stations.json", "latest.json", "forecasts.json", "stations.geojson", "unmapped_stations.json", "quality_issues.json"):
             self.assertIn(name, international)
 
+    def test_serbia_active_popup_is_bilingual_and_stream_specific(self):
+        ro = "Date automate provizorii. Valorile sunt publicate exact așa cum sunt furnizate de RHMZ Serbia. Sursa precizează că datele nu sunt încă verificate și pot întârzia din cauza telemetriei sau a funcționării sistemului."
+        en = "Provisional automatic data. Values are published exactly as provided by RHMZ Serbia. The source states that the data have not yet been validated and may be delayed because of telemetry or system issues."
+        self.assertIn(ro, self.i18n)
+        self.assertIn(en, self.i18n)
+        for value in ("stream_nrt", "captureDelayMinutes", "dailyObservation", "frequencyVariable"):
+            self.assertIn(value, self.i18n)
+        self.assertIn('properties.source_status === "suspended" ? "rsTlsSuspended" : "rsProvisionalData"', self.map_beta)
+        self.assertIn("rsStreamLine", self.map_beta)
+        self.assertIn("capture_delay_seconds", self.map_beta)
+
     def test_user_visible_templates_coalesce_optional_values(self):
         self.assertIn("String(value ?? \"\")", self.beta)
         self.assertIn("String(value ?? \"\")", self.map_beta)

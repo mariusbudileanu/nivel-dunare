@@ -44,6 +44,7 @@ OPERATIONAL_KEYS = (
     "last_error_code", "last_error_message", "last_error", "consecutive_failures",
     "published_snapshot_date", "next_expected_update", "update_frequency", "source_observation_frequency",
     "last_known_good_at", "validation_message_ro", "validation_message_en", "data_policy_ro", "data_policy_en",
+    "transport", "runner", "request_made", "components",
 )
 DATA_POLICY = {
     "ro": "Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.",

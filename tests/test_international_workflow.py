@@ -11,6 +11,7 @@ from scripts.update_international_data import SCHEDULED_SOURCES
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "update-international-data.yml"
 BG_WORKFLOW = ROOT / ".github" / "workflows" / "update-bg-danube-streams.yml"
+RS_WORKFLOW = ROOT / ".github" / "workflows" / "update-serbia-data.yml"
 
 
 class InternationalWorkflowTests(unittest.TestCase):
@@ -18,6 +19,7 @@ class InternationalWorkflowTests(unittest.TestCase):
     def setUpClass(cls):
         cls.workflow = WORKFLOW.read_text(encoding="utf-8")
         cls.bg_workflow = BG_WORKFLOW.read_text(encoding="utf-8")
+        cls.rs_workflow = RS_WORKFLOW.read_text(encoding="utf-8")
 
     def test_cron_contains_only_scheduled_source_selector(self):
         self.assertIn('- cron: "37 1 * * *"', self.workflow)
@@ -35,6 +37,18 @@ class InternationalWorkflowTests(unittest.TestCase):
         self.assertIn("source=bg", self.bg_workflow)
         self.assertIn('-f stream="$STREAM"', self.bg_workflow)
         self.assertNotIn("contents: write", self.bg_workflow)
+
+    def test_rs_windows_handoff_schedules_and_write_boundary(self):
+        for cron in ("17 */3 * * *", "47 0 * * *", "20 8 * * *", "20 9 * * *", "35 10 * * *", "35 11 * * *"):
+            self.assertIn(f'- cron: "{cron}"', self.rs_workflow)
+        self.assertIn("runs-on: windows-latest", self.rs_workflow)
+        self.assertIn("curl.exe --version", self.rs_workflow)
+        self.assertIn("serbia-schannel-handoff", self.rs_workflow)
+        self.assertIn("--precollected-root", self.rs_workflow)
+        before_publish, publish = self.rs_workflow.split("\n  publish:\n", 1)
+        self.assertNotIn("contents: write", before_publish)
+        self.assertIn("contents: write", publish)
+        self.assertNotIn("--force", self.rs_workflow)
 
     def test_write_permissions_exist_only_in_publish_job(self):
         before_publish, publish = self.workflow.split("\n  publish:\n", 1)

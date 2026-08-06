@@ -1,24 +1,22 @@
 # International consolidation v2 — open issues
 
-Date: 2026-08-05
+Date: 2026-08-06
 
 ## Active operational limitations
 
-- **Austria:** access works with the permitted public DoRIS test key, but automation remains manual and integration remains partial. A permanent institutional key must be stored only as `DORIS_PARTNER_KEY`, followed by live dry-run, validation and an explicit policy update.
-- **Slovakia:** live discovery on 2026-08-05 exposed a fourteenth official Danube option, `sk-5145` Medveďov, beyond the reviewed 13-station inventory. The fail-soft gate rejects the changed candidate set and preserves the 13-station last-known-good until Medveďov identifiers, coordinates and audit inclusion are reviewed; other countries continue.
-- **Croatia:** the endpoint is accessible and checked daily, but its latest demonstrated observation is 2026-03-12. The last-known-good history is public as stale; no numeric forecast is published.
-- **Bulgaria:** manual and automatic windows are operational observations, not an official APPD publication guarantee. APPD forecast candidates remain outside the public contract until parameter, unit, issue time and target semantics are demonstrated.
-- **Serbia:** the adapter and fixtures are implemented, but production access remains disabled because standard TLS certificate-chain validation failed in the audited environment. No HTTP downgrade, `verify=False`, `curl -k`, proxy or other bypass is permitted. Reactivation requires valid TLS for an official hostname plus a successful live dry-run and validator run.
-- **Locality coordinates:** 36 locations are approximate OpenStreetMap/Nominatim locality centres. They are visibly distinguished and cannot be used for distance, precision, river-kilometre inference or station ordering.
-- **Kachlet:** PEGELONLINE exposes a legacy and a current source object. They are retained as two source streams at one physical location and one map marker; the migration map must be preserved.
-- **Committed HU history:** the pre-merge last-known-good snapshot predates the three-daypart parser output for older rows. The fixture demonstrates 125 observations (three water-level dayparts plus current morning parameters). The post-merge live publisher must validate and publish new daypart records without rewriting older source facts.
+- **Austria:** automation remains manual pending a permanent institutional `DORIS_PARTNER_KEY`.
+- **Slovakia:** Medveďov (`sk-5145`) remains outside the reviewed 13-station contract until identifiers, coordinates and Danube association are audited. The existing 13-station last-known-good remains fail-soft.
+- **Croatia:** the accessible source remains stale; no numeric forecast is published.
+- **Bulgaria:** forecast candidates remain outside the public contract until their semantics are demonstrated.
+- **Serbia transport:** Ubuntu/OpenSSL cannot build the RHMZ chain with its standard trust bundle (`unable to get local issuer certificate`). Windows GitHub Actions `curl.exe`/Schannel validates both official hostnames and receives HTTP 200. Production collection therefore runs in a separate read-only Windows job and hands immutable payloads to Linux validation. No HTTP downgrade, custom CA, `verify=False`, `curl -k`, proxy or hostname-verification exception is used.
+- **Serbia data:** observations are source-provisional and unvalidated. A failed NRT, daily or forecast component preserves its own last-known-good. Range pages are evidence, not point forecasts.
+- **Locality coordinates:** 36 locations are approximate OpenStreetMap/Nominatim locality centres and retain `© OpenStreetMap contributors, ODbL` attribution.
+- **Kachlet:** the legacy and current source objects remain separate streams at one physical location.
 
 ## Not active issues
 
-- The former numeric-temperature plausibility rule is removed. Its two historical SHMU findings are inactive audit evidence and do not classify, hide or exclude official values.
-- There are no unmapped international station streams in contract `1.3-beta`.
-- There are no public APPD forecast rows and no public RHMZ observation/forecast rows while RS is disabled.
+- Serbia is no longer intentionally disabled: workflow run `31083512217` demonstrated standard HTTPS success on `windows-latest`, and the live candidate contained 13 stations, 2,348 observations and 36 point forecasts.
+- The former numeric-temperature plausibility rule remains inactive legacy evidence.
+- There are no unmapped international station records.
 
-## Reactivation gates
-
-For any disabled or failed stream: capture raw response with normal security validation, pass adapter/schema/reference checks, run a dry-run against last-known-good, validate the public preview and mirrors, inspect source timestamps/units, then change only that stream's operational state. Other sources and the AFDJ pipeline must remain untouched.
+Exact current publication counts and source state must be read from the generated public contract. See `RHMZ_SERBIA_LIVE_INTEGRATION.md` for the evidence and repeat commands.

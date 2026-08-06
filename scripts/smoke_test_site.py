@@ -88,8 +88,10 @@ def check_base(base: str) -> dict[str, object]:
     }
     if stream_coordinate_counts != {"official_station_coordinate": 50, "manually_verified_station_coordinate": 15, "geocoded_locality": 36}:
         raise AssertionError(f"Clase de coordonate per flux neașteptate: {stream_coordinate_counts}")
-    if len(international["streams.json"]) != 101 or len(international["unmapped_stations.json"]) != 0:
-        raise AssertionError("Contractul internațional trebuie să aibă 101 fluxuri și zero stații necartografiate")
+    rs_active = any(row.get("country_code") == "RS" for row in international["observations.json"])
+    expected_stream_count = 113 if rs_active else 101
+    if len(international["streams.json"]) != expected_stream_count or len(international["unmapped_stations.json"]) != 0:
+        raise AssertionError(f"Unexpected international contract: {len(international['streams.json'])} streams, {len(international['unmapped_stations.json'])} unmapped stations")
     for language in ("ro", "en"):
         localized_index = fetch(base, f"?lang={language}", "text/html").decode("utf-8")
         if 'id="language-button"' not in localized_index or 'assets/js/app.js' not in localized_index:

@@ -110,6 +110,8 @@ class RhmzSerbiaIntegrationTests(unittest.TestCase):
             ROOT / "scripts" / "sources" / "hidmet_rs.py",
             ROOT / "scripts" / "diagnose_rhmz_access.py",
             ROOT / ".github" / "workflows" / "test-international-sources.yml",
+            ROOT / ".github" / "workflows" / "update-serbia-data.yml",
+            ROOT / "scripts" / "collect_rhmz_windows.py",
         ]
         text = "\n".join(path.read_text(encoding="utf-8") for path in paths).casefold()
         forbidden = ["verify" + "=false", "--" + "insecure", "curl " + "-k", "http:" + "//hidmet"]
@@ -118,6 +120,28 @@ class RhmzSerbiaIntegrationTests(unittest.TestCase):
         self.assertIn("windows-latest", text)
         self.assertIn("invoke-webrequest", text)
         self.assertIn("openssl s_client", text)
+
+    def test_collection_profiles_support_overlap_and_component_isolation(self) -> None:
+        expected = {"all": (10076, 36), "nrt": (10037, 0), "daily": (39, 0), "forecast": (0, 36)}
+        for profile, counts in expected.items():
+            adapter = HidmetAdapter()
+            adapter.collection_profile = profile
+            result = adapter.parse(self.payloads)
+            self.assertEqual(counts, (len(result.observations), len(result.forecasts)))
+            self.assertEqual(13, len(result.stations))
+
+    def test_windows_handoff_and_three_hour_workflow_are_explicit(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "update-serbia-data.yml").read_text(encoding="utf-8")
+        collector = (ROOT / "scripts" / "collect_rhmz_windows.py").read_text(encoding="utf-8")
+        self.assertIn("runs-on: windows-latest", workflow)
+        self.assertIn('cron: "17 */3 * * *"', workflow)
+        self.assertIn("Europe/Belgrade", workflow)
+        self.assertIn("serbia-schannel-handoff", workflow)
+        self.assertIn("actions/download-artifact", workflow)
+        self.assertIn("--precollected-root", workflow)
+        self.assertIn("curl.exe/Schannel", collector)
+        self.assertIn('"--location"', collector)
+        self.assertIn('"--max-time"', collector)
 
 
 if __name__ == "__main__":

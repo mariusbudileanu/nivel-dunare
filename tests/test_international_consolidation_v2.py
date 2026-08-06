@@ -105,7 +105,13 @@ class InternationalConsolidationV2Tests(unittest.TestCase):
         hr = next(row for row in sources if row["country_code"] == "HR")
         self.assertEqual(("available", "scheduled", "stale", "partial"), (hr["access_status"], hr["automation_status"], hr["freshness_status"], hr["source_status"]))
         rs = next(row for row in sources if row["country_code"] == "RS")
-        self.assertEqual(("tls_failed", "disabled", "unavailable", "technical_validation_failed"), (rs["access_status"], rs["automation_status"], rs["freshness_status"], rs["validation_status"]))
+        rs_observations = [row for row in public_json("observations.json") if row["country_code"] == "RS"]
+        if rs_observations:
+            self.assertEqual(("available", "scheduled", "current", "source_provisional"), (rs["access_status"], rs["automation_status"], rs["freshness_status"], rs["validation_status"]))
+            self.assertTrue(rs["request_made"])
+            self.assertEqual("curl.exe/Schannel", rs["transport"])
+        else:  # The committed pre-activation LKG remains valid until the first live publish.
+            self.assertEqual(("tls_failed", "disabled", "unavailable", "technical_validation_failed"), (rs["access_status"], rs["automation_status"], rs["freshness_status"], rs["validation_status"]))
 
 
 if __name__ == "__main__":

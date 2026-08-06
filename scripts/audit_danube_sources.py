@@ -101,7 +101,7 @@ SOURCES: dict[str, dict[str, Any]] = {
         "country_name": "Serbia", "provider_id": "hidmet_rs",
         "provider_name": "Republic Hydrometeorological Service of Serbia (RHMZ)",
         "url": "https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/index.php",
-        "initial_url": "http://www.hidmet.gov.rs/",
+        "initial_url": "https://www.hidmet.gov.rs/",
         "endpoint_type": "official-html", "documented": False,
         "evidence_url": "https://www.hidmet.gov.rs/eng/hidrologija/naslovna_stanje.php",
         "terms_url": "https://www.hidmet.gov.rs/eng/o_nama/kontakt.php",

@@ -38,7 +38,7 @@ OPERATIONAL_POLICY = {
     "hu": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "technical_validation_passed", "validation_message_ro": "Sursa oferă data și partea zilei; aplicația nu inventează ore sau fusuri.", "validation_message_en": "The source provides date and daypart; the application does not invent times or time zones."},
     "hr": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "stale", "validation_status": "technical_validation_passed", "validation_message_ro": "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.", "validation_message_en": "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source."},
     "bg": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional", "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.", "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive."},
-    "rs": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional", "validation_message_ro": "Date automate provizorii. Valorile sunt publicate exact așa cum sunt furnizate de RHMZ Serbia. Sursa precizează că datele nu sunt încă verificate și pot întârzia din cauza telemetriei sau a funcționării sistemului.", "validation_message_en": "Provisional automated data. Values are published exactly as supplied by RHMZ Serbia. The source states that the data have not yet been verified and may be delayed by telemetry or system operation."},
+    "rs": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional", "validation_message_ro": "Date automate provizorii. Valorile sunt publicate exact așa cum sunt furnizate de RHMZ Serbia. Sursa precizează că datele nu sunt încă verificate și pot întârzia din cauza telemetriei sau a funcționării sistemului.", "validation_message_en": "Provisional automatic data. Values are published exactly as provided by RHMZ Serbia. The source states that the data have not yet been validated and may be delayed because of telemetry or system issues."},
 }
 
 
@@ -122,12 +122,15 @@ def archive_details(folder: Path, archive_root: Path | None = None, source_id: s
         source_archive = archive_root / source_id
         manifest = [read_json(path) for path in sorted(source_archive.rglob("*.metadata.json"))] if source_archive.is_dir() else []
     captures = [item.get("captured_at_utc") for item in manifest if item.get("captured_at_utc")]
+    collection = read_json(folder / "collection.json", {})
     return {
         "payload_count": len(manifest),
         "http_statuses": [item.get("http_status") for item in manifest],
         "content_types": [item.get("content_type") for item in manifest],
-        "last_capture_at": max(captures) if captures else None,
+        "last_capture_at": max(captures) if captures else collection.get("captured_at_utc"),
         "payload_sha256": [item.get("content_sha256") for item in manifest],
+        "transport": collection.get("transport"), "runner": collection.get("runner"),
+        "request_made": collection.get("request_made") if collection else bool(manifest),
     }
 
 
@@ -165,6 +168,8 @@ def default_state(public_root: Path, commit_sha: str | None) -> dict[str, Any]:
             "published_snapshot_date": prior.get("published_snapshot_date") or latest_observation_date(source_rows(public_root, code)["observations"]),
             "next_expected_update": prior.get("next_expected_update"),
             "update_frequency": ("every 3 hours plus daily/forecast Europe/Belgrade gates" if code == "rs" else ("09:15/21:15 Europe/Sofia by stream" if code == "bg" else ("daily at 01:37 UTC" if policy["automation_status"] == "scheduled" else ("manual" if code == "at" else "disabled")))),
+            "transport": prior.get("transport"), "runner": prior.get("runner"),
+            "request_made": prior.get("request_made"),
             "components": prior.get("components", {}) if code == "rs" else prior.get("components"),
         }
     return result
@@ -296,13 +301,17 @@ def update_state(state: dict[str, Any], code: str, now: datetime, summary: dict[
             "last_error_message": message,
             "last_error": {"code": summary.get("error_type") or "validation_failed", "message": message},
             "consecutive_failures": int(item.get("consecutive_failures") or 0) + 1,
+            "transport": details.get("transport") or item.get("transport"),
+            "runner": details.get("runner") or item.get("runner"),
+            "request_made": details.get("request_made", code != "rs"),
         })
         for component_name in component_names:
             component = item.setdefault("components", {}).setdefault(component_name, {})
             component.update({
                 "last_attempt_at": now.isoformat(), "last_attempt_status": "failed", "last_error": message,
                 "consecutive_failures": int(component.get("consecutive_failures") or 0) + 1,
-                "request_made": True,
+                "transport": details.get("transport"), "runner": details.get("runner"),
+                "request_made": details.get("request_made", True),
             })
         return
     stale = code == "hr" and summary.get("status") in {"partial", "suspended"}
@@ -322,14 +331,19 @@ def update_state(state: dict[str, Any], code: str, now: datetime, summary: dict[
         "last_error_code": None, "last_error_message": None, "last_error": None,
         "consecutive_failures": 0,
         "published_snapshot_date": latest_date or item.get("published_snapshot_date"),
+        "transport": details.get("transport") or item.get("transport"),
+        "runner": details.get("runner") or item.get("runner"),
+        "request_made": details.get("request_made", code != "rs"),
     })
     for component_name in component_names:
         component = item.setdefault("components", {}).setdefault(component_name, {})
         component.update({
             "last_attempt_at": now.isoformat(), "last_attempt_status": "success",
             "last_success_at": now.isoformat(), "last_capture_at": details.get("last_capture_at"),
-            "last_source_observation_at": latest_date or details.get("last_capture_at"),
-            "last_error": None, "consecutive_failures": 0, "request_made": True,
+            "last_source_observation_at": details.get("component_last_source_observation_at", {}).get(component_name) or latest_date or details.get("last_capture_at"),
+            "last_error": None, "consecutive_failures": 0,
+            "transport": details.get("transport"), "runner": details.get("runner"),
+            "request_made": details.get("request_made", True),
         })
 
 
@@ -347,6 +361,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--operations-state", type=Path, default=Path("data/reference/international_source_operations.json"))
     parser.add_argument("--audit-csv", type=Path, default=Path("docs/INTERNATIONAL_STATIONS_AUDIT.csv"))
     parser.add_argument("--geocoding-registry", type=Path, default=Path("data/reference/international_station_geocoding.csv"))
+    parser.add_argument("--precollected-root", type=Path, help="Validated Windows candidate handoff (RS only)")
+    parser.add_argument("--precollected-archive", type=Path, help="Raw Windows archive handoff (RS only)")
     args = parser.parse_args(argv)
     if args.source == "bg" and args.stream not in {"all", "manual", "automatic"}:
         parser.error("BG --stream must be all, manual, or automatic")
@@ -356,12 +372,16 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--stream is valid only with --source bg or rs")
     if args.mode == "fixtures" and args.action == "publish":
         parser.error("fixture data cannot be published")
+    if args.precollected_root and (args.source != "rs" or args.mode != "live"):
+        parser.error("--precollected-root is valid only with --source rs --mode live")
+    if bool(args.precollected_root) != bool(args.precollected_archive):
+        parser.error("both precollected handoff paths are required")
 
     now = datetime.now(timezone.utc)
     stamp = now.strftime("%Y%m%dT%H%M%SZ")
     output_dir = args.output_dir or Path("_diagnostics/international") / f"update-{stamp}"
     run_results = output_dir / "results"
-    archive_root = output_dir / "raw-archive"
+    archive_root = args.precollected_archive or (output_dir / "raw-archive")
     candidates = output_dir / "combined-candidates"
     selected = selected_sources(args.source)
     commit_sha = os.environ.get("GITHUB_SHA") or os.environ.get("INTERNATIONAL_BASE_COMMIT")
@@ -389,10 +409,17 @@ def main(argv: list[str] | None = None) -> int:
             aggregate_rows.append({"source": code, "status": prior_source.get("adapter_live_status", "unavailable")})
             continue
         try:
-            summary = run_source(
-                code, run_results, archive_root, fixture_root,
-                args.stream if code == "rs" else "all", args.rs_period,
-            )
+            if code == "rs" and args.precollected_root:
+                run_results = args.precollected_root
+                aggregate = read_json(run_results / "summary.json", {})
+                summary = next((row for row in aggregate.get("sources", []) if row.get("source") == "rs"), None)
+                if not summary:
+                    raise ValueError("Precollected RS summary is missing")
+            else:
+                summary = run_source(
+                    code, run_results, archive_root, fixture_root,
+                    args.stream if code == "rs" else "all", args.rs_period,
+                )
         except Exception as exc:  # isolate an unexpected adapter defect to this source
             summary = {
                 "source": code, "adapter": SOURCE_POLICY[code]["source_id"], "status": "failed",
@@ -405,7 +432,19 @@ def main(argv: list[str] | None = None) -> int:
         details = archive_details(folder, archive_root, SOURCE_POLICY[code]["source_id"])
         accepted, error = acceptable(code, summary, issues, args.stream if code == "rs" else "all")
         observations = read_json(folder / "observations.json", []) if summary.get("status") != "failed" else []
+        forecasts = read_json(folder / "forecasts.json", []) if summary.get("status") != "failed" else []
         latest_date = latest_observation_date(observations)
+        if code == "rs":
+            forecast_source_dates = [
+                str(row.get("forecast_issue_datetime_utc") or row.get("forecast_issue_time_original") or "")[:10]
+                for row in forecasts
+                if row.get("forecast_issue_datetime_utc") or row.get("forecast_issue_time_original")
+            ]
+            details["component_last_source_observation_at"] = {
+                "nrt": latest_observation_date([row for row in observations if row.get("source_stream_type") == "nrt"]),
+                "daily": latest_observation_date([row for row in observations if row.get("source_stream_type") == "daily"]),
+                "forecast": max(forecast_source_dates) if forecast_source_dates else None,
+            }
         if accepted and args.mode == "live":
             replace_candidate(candidates, code, folder, previous[code], args.stream if code in {"bg", "rs"} else "all")
         if args.mode == "live":
@@ -417,6 +456,7 @@ def main(argv: list[str] | None = None) -> int:
             "publication_status": ("fixture-only" if args.mode == "fixtures" else ("candidate" if accepted else "last-known-good")),
             "latest_observation_date": latest_date, "warnings": [row for row in issues if row.get("severity") != "critical"],
             "blocker": error, "request_made": args.mode == "live",
+            "transport": details.get("transport"), "runner": details.get("runner"),
             "collection_profile": args.stream if code == "rs" else "all",
         }
         reports.append(report); aggregate_rows.append(summary)

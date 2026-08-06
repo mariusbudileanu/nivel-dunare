@@ -151,7 +151,7 @@ function renderUnmapped() {
       <p class="warning-copy">! ${escapeHtml(t("coordinateReviewRequired"))} (${escapeHtml(coordinateConfidenceLabel(station.coordinate_confidence))})</p>
       ${issueCodes.map(code => `<p class="warning-copy">! ${escapeHtml(issueLabel(code))}</p>`).join("")}
       ${station.country_code === "HR" ? `<p class="warning-copy">◷ ${escapeHtml(t("stale"))}</p>` : ""}
-      ${station.country_code === "RS" ? `<p class="warning-copy">⏸ TLS: ${escapeHtml(statusLabel("suspended"))}</p>` : ""}
+      ${station.country_code === "RS" ? `<p class="warning-copy">${escapeHtml(t(station.source_status === "suspended" ? "rsTlsSuspended" : "rsProvisionalData"))}</p>` : ""}
       ${station.source_url ? `<a href="${escapeHtml(station.source_url)}" target="_blank" rel="noopener">${escapeHtml(t("officialSource"))}</a>` : ""}
     </article>`;
   }).join("");
