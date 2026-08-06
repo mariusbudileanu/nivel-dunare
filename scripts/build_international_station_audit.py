@@ -37,9 +37,8 @@ SOURCE_RULES = {
         "observation_quality_summary": "RIS-identified manual and automatic streams retained; forecast semantics remain inactive",
     },
     "hidmet_rs": {
-        "country": "rs", "implementation_status": "suspended", "latest_live_status": "suspended",
-        "observation_quality_summary": "no live observations collected because TLS validation failed",
-        "included": False,
+        "country": "rs", "implementation_status": "complete", "latest_live_status": "complete",
+        "observation_quality_summary": "official daily values and source-declared provisional NRT values retained without reinterpretation",
     },
 }
 
@@ -99,8 +98,6 @@ def transform(source, rule, row, verified_at):
         review_reasons.append("official WGS84 coordinates unavailable")
     if rule["latest_live_status"] != "complete":
         review_reasons.append(f"latest live status {rule['latest_live_status']}")
-    if source == "hidmet_rs":
-        review_reasons.append("live access suspended because TLS certificate-chain validation failed; no bypass used")
     coordinate_source = row["metadata_url"] if source == "pegelonline_de" else row["source_url"]
     return {
         "adapter": source,
@@ -124,6 +121,11 @@ def transform(source, rule, row, verified_at):
         "active": row["active"],
         "last_verified_at": verified_at,
         "station_type": station_type,
+        "physical_station_id": application_id,
+        "source_stream_id": (f"{source_id}:daily" if source == "hidmet_rs" and source_id == "42040" else (f"{source_id}:nrt" if source == "hidmet_rs" else source_id)),
+        "source_stream_type": ("daily" if source == "hidmet_rs" and source_id == "42040" else ("nrt" if source == "hidmet_rs" else "observed")),
+        "is_primary_stream": True,
+        "observation_frequency": ("daily after the official 10:00 local update" if source == "hidmet_rs" and source_id == "42040" else ("variable" if source == "hidmet_rs" else "")),
         "included": "yes" if included else "no",
         "review_required": "yes" if review_reasons or not included else "no",
         "review_reason": "; ".join(review_reasons),
@@ -154,9 +156,9 @@ def build(
     rows.sort(key=lambda row: (row["country_code"], row["adapter"], row["station_slug"]))
     active_count = sum(row["included"] == "yes" for row in rows)
     suspended_count = sum(row["implementation_status"] == "suspended" for row in rows)
-    if (len(rows), active_count, suspended_count) != (101, 88, 13):
+    if (len(rows), active_count, suspended_count) != (101, 101, 0):
         raise ValueError(
-            "Expected 101 audited rows: 88 active candidates and 13 suspended; "
+            "Expected 101 audited rows: 101 active candidates and none suspended; "
             f"got total={len(rows)}, active={active_count}, suspended={suspended_count}"
         )
     output_path.parent.mkdir(parents=True, exist_ok=True)

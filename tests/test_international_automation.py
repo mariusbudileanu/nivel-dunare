@@ -73,11 +73,26 @@ class InternationalAutomationTests(unittest.TestCase):
         self.assertEqual(next_scheduled("bg", summer), "2026-08-05T18:15:00+00:00")
         self.assertEqual(next_scheduled("bg", winter), "2026-01-05T07:15:00+00:00")
         self.assertEqual(next_scheduled("de", summer), "2026-08-06T01:37:00+00:00")
+        self.assertEqual(next_scheduled("rs", summer), "2026-08-05T15:17:00+00:00")
     def test_operational_policy_keeps_dimensions_separate(self):
         self.assertEqual(OPERATIONAL_POLICY["at"]["automation_status"], "manual")
-        self.assertEqual(OPERATIONAL_POLICY["rs"]["automation_status"], "disabled")
+        self.assertEqual(OPERATIONAL_POLICY["rs"]["automation_status"], "scheduled")
         self.assertEqual(OPERATIONAL_POLICY["hr"]["freshness_status"], "stale")
         self.assertEqual(OPERATIONAL_POLICY["de"]["validation_status"], "source_validated")
+
+    def test_rs_component_state_is_fail_soft_and_records_transport(self):
+        state = operation_state("rs")
+        now = datetime(2026, 8, 6, 9, 0, tzinfo=timezone.utc)
+        details = {"last_capture_at": now.isoformat(), "transport": "curl.exe/Schannel", "runner": "Windows", "request_made": True, "component_last_source_observation_at": {"nrt": "2026-08-06", "daily": "2026-08-05", "forecast": "2026-08-06"}}
+        update_state(state, "rs", now, {"status": "complete"}, True, None, details, "2026-08-06", "base", "nrt")
+        nrt = state["sources"]["rs"]["components"]["nrt"]
+        self.assertEqual((nrt["last_attempt_status"], nrt["transport"], nrt["runner"], nrt["request_made"]), ("success", "curl.exe/Schannel", "Windows", True))
+        self.assertEqual("2026-08-06", nrt["last_source_observation_at"])
+        update_state(state, "rs", now, {"status": "failed", "error_type": "SourceAccessError"}, False, "forecast unavailable", details, None, "base", "forecast")
+        components = state["sources"]["rs"]["components"]
+        self.assertEqual("success", components["nrt"]["last_attempt_status"])
+        self.assertEqual("failed", components["forecast"]["last_attempt_status"])
+        self.assertEqual(1, components["forecast"]["consecutive_failures"])
 
     def test_failed_attempt_preserves_last_known_good(self):
         state = operation_state("de")
@@ -189,12 +204,19 @@ class InternationalAutomationTests(unittest.TestCase):
             self.assertEqual(details["http_statuses"], [503])
             self.assertEqual(details["content_types"], ["text/html"])
 
-    def test_rs_path_makes_no_adapter_request(self):
+    def test_rs_path_makes_standard_adapter_request(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             state_path = root / "state.json"
-            with patch("scripts.update_international_data.materialize_candidates", return_value={}), \
-                 patch("scripts.update_international_data.run_source") as run_source, \
+            previous = {"rs": {"stations": [], "observations": [], "forecasts": [], "issues": []}}
+            adapter_summary = {
+                "source": "rs", "adapter": "hidmet_rs", "status": "complete", "publishable": True,
+                "station_count": 13, "observation_count": 100, "forecast_count": 36,
+                "output": str(root / "output" / "results" / "rs"),
+            }
+            with patch("scripts.update_international_data.materialize_candidates", return_value=previous), \
+                 patch("scripts.update_international_data.run_source", return_value=adapter_summary) as run_source, \
+                 patch("scripts.update_international_data.replace_candidate") as replace_candidate, \
                  patch("scripts.update_international_data.build", return_value={"station_count": 101}), \
                  patch("scripts.update_international_data.validate", return_value={"ok": True}), \
                  contextlib.redirect_stdout(io.StringIO()):
@@ -204,11 +226,13 @@ class InternationalAutomationTests(unittest.TestCase):
                     "--mirror-root", str(root / "mirror"), "--operations-state", str(state_path),
                 ])
             self.assertEqual(result, 0)
-            run_source.assert_not_called()
+            run_source.assert_called_once()
+            self.assertEqual(run_source.call_args.args[-2:], ("all", 7))
+            replace_candidate.assert_called_once()
             summary = json.loads((root / "output" / "update-summary.json").read_text(encoding="utf-8"))
             rs = summary["sources"][0]
-            self.assertFalse(rs["request_made"])
-            self.assertEqual(rs["payload_count"], 0)
+            self.assertTrue(rs["request_made"])
+            self.assertEqual(rs["collection_profile"], "all")
 
     def test_unexpected_adapter_failure_is_isolated_and_keeps_lkg(self):
         with tempfile.TemporaryDirectory() as temporary:

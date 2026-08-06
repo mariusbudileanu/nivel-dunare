@@ -31,7 +31,8 @@ class InternationalPublicDataTests(unittest.TestCase):
         self.assertEqual(SOURCE_POLICY["hr"]["status"], "partial")
         self.assertFalse(SOURCE_POLICY["hr"]["current"])
         self.assertFalse(SOURCE_POLICY["bg"]["forecasts"])
-        self.assertFalse(SOURCE_POLICY["rs"]["observations"])
+        self.assertTrue(SOURCE_POLICY["rs"]["observations"])
+        self.assertTrue(SOURCE_POLICY["rs"]["forecasts"])
         self.assertTrue((ROOT / "data" / "public" / "latest.geojson").is_file())
         self.assertTrue((PUBLIC_ROOT / "stations.geojson").is_file())
 
@@ -52,8 +53,17 @@ class InternationalPublicDataTests(unittest.TestCase):
         self.assertEqual(sum(not feature["properties"]["is_exact_station_location"] for feature in features), 36)
         self.assertFalse(any(row["country_code"] == "HR" for row in latest))
         self.assertFalse(any(row["source_id"] == "appd_bg" for row in forecasts))
-        self.assertEqual(len([row for row in stations if row["country_code"] == "RS"]), 13)
-        self.assertFalse(any(row["country_code"] == "RS" for row in observations + forecasts))
+        rs_stations = [row for row in stations if row["country_code"] == "RS"]
+        rs_observations = [row for row in observations if row["country_code"] == "RS"]
+        rs_forecasts = [row for row in forecasts if row["country_code"] == "RS"]
+        self.assertEqual(len(rs_stations), 13)
+        if rs_observations:
+            self.assertEqual(12, len({row["source_stream_id"] for row in rs_observations if row["source_stream_type"] == "nrt"}))
+            self.assertEqual(13, len({row["station_id"] for row in rs_observations if row["source_stream_type"] == "daily"}))
+            self.assertTrue(rs_forecasts)
+            self.assertTrue(all(row["canonical_quality_flag"] == "provisional" for row in rs_observations if row["source_stream_type"] == "nrt"))
+        else:
+            self.assertFalse(rs_forecasts)
         self.assertFalse(any(row["canonical_quality_flag"] == "suspect" for row in observations))
         high = [row for row in observations if row["country_code"] == "SK" and row["parameter"] == "water_temperature" and float(row["value"]) > 45]
         self.assertTrue(high)

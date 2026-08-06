@@ -81,13 +81,14 @@ export const translations = {
   physicalStations: "Amplasamente fizice", manuallyVerifiedCoordinateStations: "Cu coordonate exacte verificate manual",
   manuallyVerifiedCoordinates: "Coordonate exacte verificate manual", activeQualityIssues: "Probleme active de calitate",
   streamType: "Tip flux", allStreams: "Toate fluxurile", stream_manual: "Manual", stream_automatic: "Automat",
-  stream_daily: "Zilnic", stream_daily_manual: "Zilnic / manual", stream_observed: "Observații",
+  stream_daily: "Zilnic", stream_daily_manual: "Zilnic / manual", stream_nrt: "Automat NRT", stream_observed: "Observații",
   accessStatus: "Acces", automationStatus: "Automatizare", freshnessStatus: "Prospețime",
   validationStatus: "Validare", coordinateStatus: "Coordonate", available: "Disponibil", scheduled: "Programat", disabled: "Dezactivat", current: "Actual", validated: "Validat", requiresReview: "Necesită verificare", tlsValidationFailed: "Validarea TLS a eșuat", notApplicable: "Nu se aplică", unknown: "Necunoscut",
-  manualCoordinateLegend: "poziție exactă verificată manual", streamCount: "Fluxuri", primaryStream: "Flux principal", frequencyDailyCron: "zilnic la 01:37 UTC", frequencyDaily: "zilnic", frequencyManual: "manual", frequencyDisabled: "dezactivat", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia, în funcție de flux", manualVerificationProvider: "verificare manuală", projectOwnerCoordinateSource: "coordonată de stație verificată manual și furnizată de proprietarul proiectului",
+  manualCoordinateLegend: "poziție exactă verificată manual", streamCount: "Fluxuri", primaryStream: "Flux principal", frequencyDailyCron: "zilnic la 01:37 UTC", frequencyDaily: "zilnic", frequencyManual: "manual", frequencyDisabled: "dezactivat", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia, în funcție de flux", frequencyMinutes: "{count} minute", frequencyVariable: "variabilă (mediană {count} minute)", frequencyUnknown: "necunoscută", captureDelayMinutes: "Întârziere la captură: {count} minute", dailyObservation: "Observație zilnică", manualVerificationProvider: "verificare manuală", projectOwnerCoordinateSource: "coordonată de stație verificată manual și furnizată de proprietarul proiectului",
   appdForecastInactive: "Prognozele APPD nu sunt activate în contractul public.",
   hrForecastDisclaimer: "Prognozele nivelului apei sunt realizate pentru sprijinirea navigației în siguranță. Potrivit sursei, acestea sunt mai fiabile în perioadele cu niveluri scăzute, iar în perioadele cu niveluri ridicate nu trebuie considerate relevante.",
   rsTlsSuspended: "Automatizarea RHMZ este suspendată după eșecul validării TLS standard; nu sunt folosite metode nesigure.",
+  rsProvisionalData: "Date automate provizorii. Valorile sunt publicate exact așa cum sunt furnizate de RHMZ Serbia. Sursa precizează că datele nu sunt încă verificate și pot întârzia din cauza telemetriei sau a funcționării sistemului.",
   hrStaleDetail: "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.",
   infoStatus: "Accesul, automatizarea, prospețimea, validarea sursei, calitatea observației și calitatea coordonatei sunt dimensiuni separate. Etichetele furnizate de sursă, inclusiv provisional, sunt păstrate. Valorile oficiale nu sunt clasificate sau excluse prin praguri locale de plauzibilitate.",
   infoMap: "Cercul indică o coordonată oficială exactă, conturul dublu o coordonată exactă verificată manual, iar rombul centrul aproximativ al localității obținut prin OpenStreetMap Nominatim (© OpenStreetMap contributors, ODbL). Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.",
@@ -175,13 +176,14 @@ export const translations = {
   physicalStations: "Physical locations", manuallyVerifiedCoordinateStations: "With manually verified exact coordinates",
   manuallyVerifiedCoordinates: "Manually verified exact coordinates", activeQualityIssues: "Active quality issues",
   streamType: "Stream type", allStreams: "All streams", stream_manual: "Manual", stream_automatic: "Automatic",
-  stream_daily: "Daily", stream_daily_manual: "Daily / manual", stream_observed: "Observations",
+  stream_daily: "Daily", stream_daily_manual: "Daily / manual", stream_nrt: "Automatic NRT", stream_observed: "Observations",
   accessStatus: "Access", automationStatus: "Automation", freshnessStatus: "Freshness",
   validationStatus: "Validation", coordinateStatus: "Coordinates", available: "Available", scheduled: "Scheduled", disabled: "Disabled", current: "Current", validated: "Validated", requiresReview: "Requires review", tlsValidationFailed: "TLS validation failed", notApplicable: "Not applicable", unknown: "Unknown",
-  manualCoordinateLegend: "manually verified exact position", streamCount: "Streams", primaryStream: "Primary stream", frequencyDailyCron: "daily at 01:37 UTC", frequencyDaily: "daily", frequencyManual: "manual", frequencyDisabled: "disabled", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia by stream", manualVerificationProvider: "manual verification", projectOwnerCoordinateSource: "project-owner supplied manually verified station coordinate",
+  manualCoordinateLegend: "manually verified exact position", streamCount: "Streams", primaryStream: "Primary stream", frequencyDailyCron: "daily at 01:37 UTC", frequencyDaily: "daily", frequencyManual: "manual", frequencyDisabled: "disabled", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia by stream", frequencyMinutes: "{count} minutes", frequencyVariable: "variable (median {count} minutes)", frequencyUnknown: "unknown", captureDelayMinutes: "Capture delay: {count} minutes", dailyObservation: "Daily observation", manualVerificationProvider: "manual verification", projectOwnerCoordinateSource: "project-owner supplied manually verified station coordinate",
   appdForecastInactive: "APPD forecasts are not activated in the public contract.",
   hrForecastDisclaimer: "Water-level forecasts are produced to support safe navigation. According to the source, they are more reliable during low-water conditions and should not be considered relevant during high-water conditions.",
   rsTlsSuspended: "RHMZ automation is suspended after standard TLS validation failed; no unsafe method is used.",
+  rsProvisionalData: "Provisional automatic data. Values are published exactly as provided by RHMZ Serbia. The source states that the data have not yet been validated and may be delayed because of telemetry or system issues.",
   hrStaleDetail: "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source.",
   infoStatus: "Access, automation, freshness, source validation, observation quality and coordinate quality are separate dimensions. Source-provided labels, including provisional, are retained. Official values are not classified or excluded through local plausibility thresholds.",
   infoMap: "A circle marks an exact official coordinate, a double outline marks a manually verified exact coordinate, and a diamond marks an approximate locality centre obtained through OpenStreetMap Nominatim (© OpenStreetMap contributors, ODbL). Approximate positions are not used for distances, ordering or river kilometre.",
@@ -214,7 +216,16 @@ export function statusLabel(status) { return t({ complete: "complete", partial: 
 export function qualityLabel(quality) { return t({ observed: "valid", valid: "valid", provisional: "provisional", suspect: "suspect", missing: "unavailable" }[quality] || "unavailable"); }
 export function stationTypeLabel(type) { return t({ gauge: "gauge", hydrometric: "hydrometric", manual: "manual", automatic: "automatic", automated: "automatic" }[type] || "unavailable"); }
 export function coordinateConfidenceLabel(value) { return t({ high: "highConfidence", medium: "mediumConfidence", low: "lowConfidence", unresolved: "unresolvedConfidence" }[value] || "unresolvedConfidence"); }
-export function frequencyLabel(value) { return t({ "daily at 01:37 UTC": "frequencyDailyCron", daily: "frequencyDaily", manual: "frequencyManual", disabled: "frequencyDisabled", "09:15/21:15 Europe/Sofia by stream": "frequencyBgByStream" }[value] || value); }
+export function frequencyLabel(value) {
+  const normalized = String(value || "unknown").trim();
+  const exactMinutes = normalized.match(/^(\d+) minutes?$/i);
+  if (exactMinutes) return t("frequencyMinutes", { count: exactMinutes[1] });
+  const variable = normalized.match(/^variable \(median (\d+) minutes?\)$/i);
+  if (variable) return t("frequencyVariable", { count: variable[1] });
+  if (normalized === "unknown") return t("frequencyUnknown");
+  if (normalized.startsWith("daily after")) return t("frequencyDaily");
+  return t({ "daily at 01:37 UTC": "frequencyDailyCron", daily: "frequencyDaily", manual: "frequencyManual", disabled: "frequencyDisabled", "09:15/21:15 Europe/Sofia by stream": "frequencyBgByStream", "every 3 hours plus daily/forecast Europe/Belgrade gates": "frequencyVariable" }[normalized] || normalized);
+}
 export function coordinateProvenanceLabel(value) { return t({ "manual verification": "manualVerificationProvider", "Project-owner supplied manually verified station coordinate": "projectOwnerCoordinateSource" }[value] || value); }
 export function issueLabel(code) { return t({ outside_plausible_water_temperature_range: "issueOutsideTemperatureRange", missing_source_station_id: "issueMissingStationId", missing_institutional_station_ids: "issueMissingStationId" }[code] || "issueGeneric"); }
 

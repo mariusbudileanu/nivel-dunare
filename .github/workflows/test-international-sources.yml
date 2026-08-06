@@ -8,29 +8,20 @@ on:
         required: true
         default: all
         type: choice
-        options:
-          - all
-          - de
-          - at
-          - sk
-          - hu
-          - hr
-          - bg
-          - rs
+        options: [all, de, at, sk, hu, hr, bg, rs]
       mode:
         description: Fixture contract test or one low-volume live collection
         required: true
         default: fixtures
         type: choice
-        options:
-          - fixtures
-          - live
+        options: [fixtures, live]
 
 permissions:
   contents: read
 
 jobs:
   test-source:
+    if: ${{ !(inputs.source == 'rs' && inputs.mode == 'live') }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -38,7 +29,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - name: Confirm diagnostic dependency set
+      - name: Confirm dependency set
         run: |
           python --version
           echo "Adapters use the Python standard library only."
@@ -69,5 +60,96 @@ jobs:
         with:
           name: international-danube-${{ inputs.source }}-${{ inputs.mode }}-${{ github.run_id }}
           path: _diagnostics/international/github-*
+          if-no-files-found: error
+          retention-days: 14
+
+  diagnose-serbia:
+    if: ${{ inputs.source == 'rs' && inputs.mode == 'live' }}
+    name: Serbia standard TLS (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install pinned diagnostic clients
+        run: python -m pip install --disable-pip-version-check requests==2.34.2 certifi==2026.7.22
+      - name: Record client versions
+        shell: pwsh
+        run: |
+          $output = "_diagnostics/rhmz/github-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT-${{ runner.os }}"
+          New-Item -ItemType Directory -Force -Path $output | Out-Null
+          python --version 2>&1 | Tee-Object -FilePath "$output/python-version.txt"
+          $curl = if ('${{ runner.os }}' -eq 'Windows') { 'curl.exe' } else { 'curl' }
+          & $curl --version 2>&1 | Tee-Object -FilePath "$output/curl-version.txt"
+          if (Get-Command openssl -ErrorAction SilentlyContinue) {
+            openssl version -a 2>&1 | Tee-Object -FilePath "$output/openssl-version.txt"
+          }
+      - name: DNS, TLS and HTTP diagnostic
+        shell: pwsh
+        run: |
+          $output = "_diagnostics/rhmz/github-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT-${{ runner.os }}"
+          python -m scripts.diagnose_rhmz_access `
+            --environment-label "github-${{ runner.os }}" `
+            --output-dir "$output/transport" 2>&1 | Tee-Object -FilePath "$output/diagnostic.log"
+      - name: OpenSSL chain and hostname evidence
+        if: ${{ runner.os == 'Linux' }}
+        shell: bash
+        run: |
+          output="_diagnostics/rhmz/github-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${{ runner.os }}"
+          set +e
+          for host in www.hidmet.gov.rs hidmet.gov.rs; do
+            {
+              echo | openssl s_client -connect "${host}:443" -servername "$host" \
+                -verify_hostname "$host" -showcerts -verify_return_error
+            } >"$output/openssl-${host}.txt" 2>&1
+            echo "$?" >"$output/openssl-${host}.exit-code.txt"
+          done
+          exit 0
+      - name: Windows Schannel and Invoke-WebRequest evidence
+        if: ${{ runner.os == 'Windows' }}
+        shell: pwsh
+        run: |
+          $output = "_diagnostics/rhmz/github-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT-${{ runner.os }}"
+          $results = @()
+          foreach ($url in @(
+            'https://www.hidmet.gov.rs/eng/osmotreni/stanje_voda.php',
+            'https://hidmet.gov.rs/eng/osmotreni/stanje_voda.php'
+          )) {
+            try {
+              $response = Invoke-WebRequest -Uri $url -MaximumRedirection 10 -TimeoutSec 30
+              $results += [ordered]@{
+                url=$url; status=[int]$response.StatusCode; content_type=$response.Headers['Content-Type'];
+                bytes=[Text.Encoding]::UTF8.GetByteCount($response.Content);
+                starts_html=($response.Content -match '<html|<!DOCTYPE html');
+                has_table=($response.Content -match '<table')
+              }
+            } catch {
+              $results += [ordered]@{url=$url; status=$null; error=$_.Exception.ToString()}
+            }
+          }
+          $results | ConvertTo-Json -Depth 6 | Set-Content -Encoding utf8 "$output/invoke-webrequest.json"
+      - name: Collect and validate live Serbia candidates
+        shell: pwsh
+        run: |
+          $output = "_diagnostics/rhmz/github-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT-${{ runner.os }}"
+          python -m scripts.ingest_danube_sources `
+            --source rs `
+            --output-dir "$output/candidates" `
+            --archive-root "$output/raw-archive" 2>&1 | Tee-Object -FilePath "$output/adapter.log"
+          $code = $LASTEXITCODE
+          Set-Content -Encoding ascii -Path "$output/adapter-exit-code.txt" -Value $code
+          exit 0
+      - name: Upload complete Serbia diagnostic
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: rhmz-standard-tls-${{ runner.os }}-${{ github.run_id }}
+          path: _diagnostics/rhmz/github-*
           if-no-files-found: error
           retention-days: 14

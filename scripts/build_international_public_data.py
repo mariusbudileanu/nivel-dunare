@@ -23,7 +23,7 @@ SOURCE_POLICY = {
     "hu": {"source_id": "hydroinfo_hu", "status": "complete", "observations": True, "forecasts": False, "current": True, "label": "OVF Hydroinfo"},
     "hr": {"source_id": "vodniputovi_hr", "status": "partial", "observations": True, "forecasts": False, "current": False, "label": "Croatian waterways / DHMZ", "note": "Access remains available; the last official observations are stale and retained as last-known-good."},
     "bg": {"source_id": "appd_bg", "status": "partial", "observations": True, "forecasts": False, "current": True, "label": "APPD", "note": "Twenty RIS-identified streams at thirteen physical gauges; forecast candidates are not public until semantics are demonstrated."},
-    "rs": {"source_id": "hidmet_rs", "status": "suspended", "observations": False, "forecasts": False, "current": False, "label": "RHMZ / Hidmet", "note": "Production access is disabled after standard TLS validation failed; no scheduled request is made."},
+    "rs": {"source_id": "hidmet_rs", "status": "complete", "observations": True, "forecasts": True, "current": True, "label": "RHMZ / Hidmet", "note": "Thirteen physical gauges: twelve provisional NRT streams, thirteen daily streams, and the central official point forecast."},
 }
 
 EXPECTED_COUNTS = {"de": 18, "at": 9, "sk": 13, "hu": 25, "hr": 3, "bg": 20, "rs": 13}
@@ -35,7 +35,7 @@ DEFAULT_OPERATIONAL_FIELDS = {
     "hu": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "technical_validation_passed"},
     "hr": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "stale", "validation_status": "technical_validation_passed"},
     "bg": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional"},
-    "rs": {"access_status": "tls_failed", "automation_status": "disabled", "freshness_status": "unavailable", "validation_status": "technical_validation_failed"},
+    "rs": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional"},
 }
 OPERATIONAL_KEYS = (
     "access_status", "automation_status", "freshness_status", "validation_status", "coordinate_status",
@@ -44,6 +44,7 @@ OPERATIONAL_KEYS = (
     "last_error_code", "last_error_message", "last_error", "consecutive_failures",
     "published_snapshot_date", "next_expected_update", "update_frequency", "source_observation_frequency",
     "last_known_good_at", "validation_message_ro", "validation_message_en", "data_policy_ro", "data_policy_en",
+    "transport", "runner", "request_made", "components",
 )
 DATA_POLICY = {
     "ro": "Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.",
@@ -185,7 +186,7 @@ def enrich_observation(row: dict[str, Any], station: dict[str, Any], policy: dic
     result.update({
         "country_code": station["country_code"], "station_name": station["station_name"],
         "station_name_local": station["station_name_local"], "source_id": policy["source_id"],
-        "source_status": policy["status"], "source_url": sanitize_url(station.get("source_url")),
+        "source_status": policy["status"], "source_url": sanitize_url(result.get("source_url") or station.get("source_url")),
         "physical_station_id": result.get("physical_station_id") or station["physical_station_id"],
         "source_stream_id": result.get("source_stream_id") or station["source_stream_id"],
         "source_stream_type": result.get("source_stream_type") or station["source_stream_type"],
@@ -202,7 +203,7 @@ def enrich_forecast(row: dict[str, Any], station: dict[str, Any], policy: dict[s
     result.update({
         "country_code": station["country_code"], "station_name": station["station_name"],
         "station_name_local": station["station_name_local"], "source_id": policy["source_id"],
-        "source_status": policy["status"], "source_url": sanitize_url(station.get("source_url")),
+        "source_status": policy["status"], "source_url": sanitize_url(result.get("source_url") or station.get("source_url")),
         "physical_station_id": result.get("physical_station_id") or station["physical_station_id"],
         "source_stream_id": result.get("source_stream_id") or f"{station['source_stream_id']}:forecast",
         "captured_at_utc": captures.get(result.get("source_file_sha256", "")) or result.get("captured_at_utc") or result.get("capture_at"),
@@ -264,19 +265,37 @@ def _rs_inventory(audit_csv: Path, policy: dict[str, Any]) -> list[dict[str, Any
 
 
 def _stream_rows(stations: list[dict[str, Any]], observations: list[dict[str, Any]], forecasts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Build observation streams independently from physical station records."""
     obs_count = defaultdict(int)
     forecast_count = defaultdict(int)
+    first_observation: dict[str, dict[str, Any]] = {}
     for row in observations:
-        obs_count[row["source_stream_id"]] += 1
+        stream_id = row["source_stream_id"]
+        obs_count[stream_id] += 1
+        first_observation.setdefault(stream_id, row)
     for row in forecasts:
         forecast_count[row["source_stream_id"]] += 1
-    return [{
+    station_lookup = {row["station_id"]: row for row in stations}
+    result = [{
         "station_id": row["station_id"], "physical_station_id": row["physical_station_id"],
         "source_stream_id": row["source_stream_id"], "source_stream_type": row["source_stream_type"],
         "is_primary_stream": row["is_primary_stream"], "observation_frequency": row.get("observation_frequency"),
         "country_code": row["country_code"], "source_id": row["source_id"],
         "observation_count": obs_count[row["source_stream_id"]], "forecast_count": forecast_count[row["source_stream_id"]],
     } for row in stations]
+    known = {row["source_stream_id"] for row in result}
+    for stream_id, observation in sorted(first_observation.items()):
+        if stream_id in known:
+            continue
+        station = station_lookup[observation["station_id"]]
+        result.append({
+            "station_id": station["station_id"], "physical_station_id": station["physical_station_id"],
+            "source_stream_id": stream_id, "source_stream_type": observation["source_stream_type"],
+            "is_primary_stream": False, "observation_frequency": observation.get("observation_frequency"),
+            "country_code": station["country_code"], "source_id": station["source_id"],
+            "observation_count": obs_count[stream_id], "forecast_count": forecast_count[stream_id],
+        })
+    return result
 
 
 def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root: Path, mirror_root: Path | None = None,
@@ -299,9 +318,9 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
     forecasts: list[dict[str, Any]] = []
     quality_issues: list[dict[str, Any]] = []
     for code, policy in policies.items():
-        if code == "rs":
-            continue
         folder = candidate_root / code
+        if code == "rs" and not (folder / "stations.json").is_file():
+            continue
         source_stations = read_json(folder / "stations.json")
         if len(source_stations) != EXPECTED_COUNTS[code]:
             raise ValueError(f"{code}: expected {EXPECTED_COUNTS[code]} stations, got {len(source_stations)}")
@@ -324,7 +343,8 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
             forecasts.extend(enrich_forecast(row, current_lookup[row["station_id"]], policy, captures) for row in read_json(folder / "forecasts.json"))
         for issue in read_json(folder / "issues.json"):
             quality_issues.append({**issue, "source_id": policy["source_id"], "source_status": policy["status"], "captured_at_utc": source_captures.get(policy["source_id"]) or issue.get("captured_at_utc"), "historical": issue.get("historical", False)})
-    stations.extend(_rs_inventory(audit_csv, policies["rs"]))
+    if not any(row["country_code"] == "RS" for row in stations):
+        stations.extend(_rs_inventory(audit_csv, policies["rs"]))
     apply_coordinate_registry(stations, geocoding_registry)
     station_lookup = {row["station_id"]: row for row in stations}
     if len(station_lookup) != 101:
@@ -334,9 +354,9 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
     for row in observations:
         station = station_lookup[row["station_id"]]
         row["physical_station_id"] = station["physical_station_id"]
-        row["source_stream_id"] = station["source_stream_id"]
-        row["source_stream_type"] = station["source_stream_type"]
-        row["is_primary_stream"] = station["is_primary_stream"]
+        row["source_stream_id"] = row.get("source_stream_id") or station["source_stream_id"]
+        row["source_stream_type"] = row.get("source_stream_type") or station["source_stream_type"]
+        row["is_primary_stream"] = row.get("is_primary_stream", station["is_primary_stream"])
     for row in forecasts:
         station = station_lookup[row["station_id"]]
         row["physical_station_id"] = station["physical_station_id"]
@@ -394,6 +414,10 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
     latest_per_stream = defaultdict(dict)
     for row in latest:
         latest_per_stream[row["source_stream_id"]][row["parameter"]] = row
+    streams = _stream_rows(stations, observations, forecasts)
+    streams_by_physical: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for stream in streams:
+        streams_by_physical[stream["physical_station_id"]].append(stream)
     features = []
     for physical_id, group in sorted(grouped.items()):
         mapped_group = [row for row in group if row["mapped"]]
@@ -408,18 +432,17 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
         )}
         properties.update({
             "physical_station_id": physical_id, "station_ids": [row["station_id"] for row in group],
-            "stream_count": len(group), "streams": [{
+            "stream_count": len(streams_by_physical[physical_id]), "streams": [{
                 "station_id": row["station_id"], "source_stream_id": row["source_stream_id"],
                 "source_stream_type": row["source_stream_type"], "is_primary_stream": row["is_primary_stream"],
                 "observation_frequency": row.get("observation_frequency"), "latest": latest_per_stream[row["source_stream_id"]],
-            } for row in group],
+            } for row in streams_by_physical[physical_id]],
         })
         for parameter in ("water_level", "discharge", "water_temperature", "ice_condition"):
             properties[parameter] = latest_per_stream[primary["source_stream_id"]].get(parameter)
         features.append({"type": "Feature", "geometry": {"type": "Point", "coordinates": [primary["longitude"], primary["latitude"]]}, "properties": properties})
 
     unmapped = [row for row in stations if not row["mapped"]]
-    streams = _stream_rows(stations, observations, forecasts)
     sources = []
     for code, policy in policies.items():
         operational = {**DEFAULT_OPERATIONAL_FIELDS[code], **operations_by_code.get(code, {})}
@@ -430,7 +453,7 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
             "station_count": EXPECTED_COUNTS[code], "physical_station_count": len({row["physical_station_id"] for row in stations if row["country_code"] == code.upper()}),
             "observation_count": sum(row["source_id"] == policy["source_id"] for row in observations),
             "forecast_count": sum(row["source_id"] == policy["source_id"] for row in forecasts),
-            "adapter_live_status": aggregate_by_source.get(code, {}).get("status", "suspended" if code == "rs" else "unavailable"),
+            "adapter_live_status": aggregate_by_source.get(code, {}).get("status", "unavailable"),
             "note": policy.get("note"), "live_run_id": live_run_id,
         }
         for key in OPERATIONAL_KEYS:

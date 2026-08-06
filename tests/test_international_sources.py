@@ -34,7 +34,7 @@ class InternationalAdapterTests(unittest.TestCase):
             "hu": ("complete", 25, 125, 0),
             "hr": ("complete", 3, 6, 0),
             "bg": ("partial", 20, 48, 30),
-            "rs": ("complete", 13, 75, 32),
+            "rs": ("complete", 13, 10076, 36),
         }
         for source, values in expected.items():
             with self.subTest(source=source):
@@ -162,8 +162,8 @@ class InternationalAdapterTests(unittest.TestCase):
             generated = Path(directory) / "audit.csv"
             rows = build(Path("docs/DANUBE_STATION_INVENTORY.csv"), generated)
             self.assertEqual(101, len(rows))
-            self.assertEqual(88, len([row for row in rows if row["included"] == "yes"]))
-            self.assertEqual(13, len([row for row in rows if row["implementation_status"] == "suspended"]))
+            self.assertEqual(101, len([row for row in rows if row["included"] == "yes"]))
+            self.assertEqual(0, len([row for row in rows if row["implementation_status"] == "suspended"]))
             self.assertEqual(101, len([row for row in rows if row["latitude"]]))
             self.assertEqual(
                 Path("docs/INTERNATIONAL_STATIONS_AUDIT.csv").read_text(encoding="utf-8"),
@@ -183,9 +183,11 @@ class InternationalAdapterTests(unittest.TestCase):
 
             rs_rows = [row for row in rows if row["country_code"] == "RS"]
             self.assertEqual(13, len(rs_rows))
-            self.assertTrue(all(row["included"] == "no" for row in rs_rows))
-            self.assertTrue(all(row["review_required"] == "yes" for row in rs_rows))
-            self.assertTrue(all("TLS certificate-chain validation failed" in row["review_reason"] for row in rs_rows))
+            self.assertTrue(all(row["included"] == "yes" for row in rs_rows))
+            self.assertTrue(all(row["implementation_status"] == "complete" for row in rs_rows))
+            self.assertEqual(12, sum(row["source_stream_type"] == "nrt" for row in rs_rows))
+            self.assertEqual(1, sum(row["source_stream_type"] == "daily" for row in rs_rows))
+            self.assertTrue(all("TLS" not in row["review_reason"] for row in rs_rows))
             self.assertIn(("Bačka Palanka", "Backa Palanka"), {
                 (row["station_name_local"], row["station_name"]) for row in rs_rows
             })

@@ -1,6 +1,6 @@
 # International GitHub automation
 
-The fail-soft publisher uses `.github/workflows/update-international-data.yml`. Its scheduled selector contains DE, SK, HU and HR at `37 1 * * *`. AT is dispatch-only. RS records disabled state without opening a client.
+The fail-soft publisher uses `.github/workflows/update-international-data.yml`. Its scheduled selector contains DE, SK, HU and HR at `37 1 * * *`. AT is dispatch-only. Serbia uses the separate `.github/workflows/update-serbia-data.yml`: Windows/Schannel collection, immutable artifact handoff, Linux validation and controlled publication.
 
 Bulgaria is removed from the general selector. `.github/workflows/update-bg-danube-streams.yml` uses UTC triggers `15 6`, `15 7`, `15 18`, `15 19`; a `Europe/Sofia` gate accepts only 09:15 for `manual` and 21:15 for `automatic`, making the schedule DST-safe.
 

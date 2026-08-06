@@ -1,15 +1,3225 @@
-<!doctype html><html><body><table>
-<tr><td><a href="prognoza.php?hm_id=42010">Bezdan</a></td></tr>
-<tr><td><a href="prognoza.php?hm_id=42015">Apatin</a></td></tr>
-<tr><td><a href="prognoza.php?hm_id=42020">Bogojevo</a></td></tr>
-<tr><td><a href="prognoza.php?hm_id=42030">Bačka Palanka</a></td></tr>
-<tr><td><a href="prognoza.php?hm_id=42035">Novi Sad</a></td></tr>
-<tr><td><a href="bezprognoza.php?hm_id=42040">Slankamen</a></td></tr>
-<tr><td><a href="prognoza.php?hm_id=42045">Zemun</a></td></tr>
-<tr><td><a href="prognoza.php?hm_id=42050">Pančevo</a></td></tr>
-<tr><td><a href="opseg.php?hm_id=42055">Smederevo</a></td></tr>
-<tr><td><a href="bezprognoza.php?hm_id=42060">Banatska Palanka</a></td></tr>
-<tr><td><a href="prognoza.php?hm_id=42065">Veliko Gradište</a></td></tr>
-<tr><td><a href="bezprognoza.php?hm_id=42070">Golubac</a></td></tr>
-<tr><td><a href="bezprognoza.php?hm_id=42095">Prahovo</a></td></tr>
-</table></body></html>
+ 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2JH4B24N2V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2JH4B24N2V');
+</script>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+
+<meta name="classification" content="meteorološki podaci" />
+<meta name="keywords" content="Југослав, Николић, Николиц, Југослав Николић, Проф, проф, Др, др, Проф др Југослав Николић, Jugoslav, Nikolić, Nikolic, Prof dr Jugoslav Nikolic, Prof dr Jugoslav Nikolić, direktor, директор,  RHMZ, Republički hidrometeorološki zavod Srbije, Republika Srbija, meteorologija, klima, klimatologija, agrometeorologija, mreža osmatračkih stanica, bdenje, meteorološko bdenje, radarska slika, satelitska slika, stanje vremena, temperatura, vlažnost, pritisak, atmosfersko stanje, pojave, stanje voda, vodostaj, protok, tendencija vodostaja, redovna odbrana, vanredna odbrana, radarski centri, led, oluja, sneg, meteo forum, produkti, bilteni, upozorenja, najave" />
+<title>Republic Hydrometeorological Service of Serbia Kneza Višeslava 66 Beograd::::::::::::::::::::::::::::::::::::::::::::::::::::::</title><link rel="shortcut icon" href="https://www.hidmet.gov.rs/favicon.ico" />
+
+<link href="../../repository/css/hidmet.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../repository/css/layout.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../repository/css/font.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../repository/css/print.css" rel="stylesheet" type="text/css" media="print" />
+<link href="../../repository/css/mobil.css" rel="stylesheet" type="text/css" media="handheld" />
+
+<script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-171209-1";
+urchinTracker();
+</script>
+</head>
+<body>
+
+<div id="header">
+<div id="naziv">
+<a href="https://www.srbija.gov.rs/" target="_blank"><img src="https://www.hidmet.gov.rs/zastava_new.png" alt="Serbian Goverment" width="218" height="70" /></a>
+</div><!-- close div#naziv -->
+<div id="naslov">
+<img src="https://www.hidmet.gov.rs/header_new_eng.png" alt="Republic Hydrometeorological servise of Serbia" width="670" height="70" usemap="#Map" />
+<map name="Map" id="Map">
+<area shape="rect" coords="500,22,670,50" href="mailto:office@hidmet.gov.rs" alt="office@hidmet.gov.rs" />
+</map>
+</div><!-- close div#naslov -->
+
+<div id="baner">
+<a href="https://www.hidmet.gov.rs/"><img src="https://www.hidmet.gov.rs/logo_new.png" alt="RHMSS" width="120" height="70" /></a></div><!-- close div#baner -->
+
+</div><!-- close div#header -->
+
+<div id="content">
+<div id="sadrzaj">
+<div style="padding: 0 20px 0 20px;">
+
+<h1>
+Hydrological data: &nbsp;THURSDAY&nbsp;06.08.2026.&nbsp;&nbsp;time:&nbsp;8:00&nbsp;(06:00 UTC)
+&nbsp;&nbsp;<a href="stanje_voda.rss"><img src="../../repository/ikonice/xml/rss_ikona.gif" alt="Hydrological data" /></a>
+&nbsp;&nbsp;
+<a href="stanje_voda.xml"><img src="../../repository/ikonice/xml/atom_ikona.gif" alt="Hydrological data" /></a></h1>
+<table summary="Water status">
+ <thead>
+   <tr>
+    <th>&nbsp;River&nbsp;</th>
+	<th>&nbsp;<br />&nbsp;</th>
+	<th>&nbsp;Hydrological&nbsp;<br />&nbsp;station&nbsp;</th>
+	<th>Hourly<br />data</th> <!--Prazna celija za ikonu casovnih vrednosti -->
+	<th>Annual<br />report</th> <!--Prazna celija za ikonu godisnjeg pregleda -->
+	<th>&nbsp;Water stage&nbsp;<br />&nbsp;<br />&nbsp;(cm)</th>
+	<th>&nbsp;Change of&nbsp;<br />&nbsp;water stage&nbsp;<br />&nbsp;(cm)</th>
+	<th>&nbsp;Flow&nbsp;<br />&nbsp;rate &nbsp;<br />&nbsp;(m<sup>3</sup>/s)</th>
+	<th>&nbsp;Water&nbsp;<br />&nbsp;temperature&nbsp;<br />&nbsp;(°C)</th>
+	<th>&nbsp;Tendency of&nbsp;<br />&nbsp;water stage&nbsp;<br />&nbsp;</th>
+	  	 <!--
+	<th>Water<br />quality<br />&nbsp;</th>
+	--> 
+   </tr>
+  </thead>
+ <tfoot>
+  <tr>
+  <td class="levo" colspan="11">
+  &nbsp;Data updating is every day at 10 o’clock.(local time)<br />  
+  &nbsp;Choose <a class="zhuta" href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/index.php" >map</a> to view the network of reporting hydrological stations in Serbia<br /></td>
+  </tr>
+  </tfoot>	
+
+                             <tr> 
+                <td class="bela75 levo">&nbsp;DUNAV</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=42010">BEZDAN</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42010&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=42010">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-167</td> 
+                <td class="bela75 ">&nbsp;2</td>
+                <td class="bela75 ">&nbsp;735</td>
+                <td class="bela75 ">&nbsp;28.2</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;DUNAV</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=42015">APATIN</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42015&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-110</td> 
+                <td class="siva75 ">&nbsp;2</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;27.8</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DUNAV</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=42020">BOGOJEVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42020&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=42020">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-103</td> 
+                <td class="bela75 ">&nbsp;2</td>
+                <td class="bela75 ">&nbsp;765</td>
+                <td class="bela75 ">&nbsp;-</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;DUNAV</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=42030">BAČKA PALANKA </a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42030&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-87</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;27.2</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DUNAV</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=42035">NOVI SAD</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42035&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=42035">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-72</td> 
+                <td class="bela75 ">&nbsp;1</td>
+                <td class="bela75 ">&nbsp;770</td>
+                <td class="bela75 ">&nbsp;27.0</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;DUNAV</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42040">SLANKAMEN</a></td>
+				<td class="siva75">
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				22</td> 
+                <td class="siva75 ">&nbsp;-3</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;27.2</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DUNAV</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=42045">ZEMUN</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42045&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=42045">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				168</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;27.6</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;DUNAV</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=42050">PANČEVO</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42050&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				213</td> 
+                <td class="siva75 ">&nbsp;-2</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DUNAV</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/opseg.php?hm_id=42055">SMEDEREVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42055&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=42055">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				414</td> 
+                <td class="bela75 ">&nbsp;-3</td>
+                <td class="bela75 ">&nbsp;1350</td>
+                <td class="bela75 ">&nbsp;-</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;DUNAV</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42060">BANATSKA PALANKA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42060&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				655</td> 
+                <td class="siva75 ">&nbsp;-3</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DUNAV</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/opseg.php?hm_id=42065">VELIKO GRADIŠTE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42065&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				721</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;-</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;DUNAV</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42070">GOLUBAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42070&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				655</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DUNAV</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42095">PRAHOVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42095&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-124</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;-</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TISA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=44010">NOVI KNEŽEVAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=44010&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				130</td> 
+                <td class="siva75 ">&nbsp;-3</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;27.0</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;TISA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=44020">SENTA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=44020&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=44020">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				208</td> 
+                <td class="bela75 ">&nbsp;-2</td>
+                <td class="bela75 ">&nbsp;120</td>
+                <td class="bela75 ">&nbsp;27.5</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TISA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=44030">NOVI BEČEJ</a></td>
+				<td class="siva75">
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				299</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;26.5</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;TISA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=44035">BRANA NOVI BEČEJ GV</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=44035&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				379</td> 
+                <td class="bela75 ">&nbsp;-3</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TISA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=44040">TITEL</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=44040&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=44040">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				22</td> 
+                <td class="siva75 ">&nbsp;-3</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;ZLATICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=44028">VRBICA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=44028&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				105</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;STARI BEGEJ</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=44201">HETIN</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=44201&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-</td> 
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;PLOVNI BEGEJ</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=44211">SRPSKI ITEBEJ GV</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=44211&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				385</td> 
+                <td class="bela75 ">&nbsp;5</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;PLOVNI BEGEJ</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=44212">SRPSKI ITEBEJ DV</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=44212&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				232</td> 
+                <td class="siva75 ">&nbsp;-5</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;SAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45084">JAMENA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45084&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				120</td> 
+                <td class="bela75 ">&nbsp;1</td>
+                <td class="bela75 ">&nbsp;215</td>
+                <td class="bela75 ">&nbsp;-</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;SAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=45090">SREMSKA MITROVICA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45090&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=45090">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				32</td> 
+                <td class="siva75 ">&nbsp;12</td>
+                <td class="siva75 ">&nbsp;401</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;SAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=45094">ŠABAC</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45094&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=45094">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-77</td> 
+                <td class="bela75 ">&nbsp;9</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;25.3</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;SAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45096">BELJIN</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45096&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				38</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;SAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=45099">BEOGRAD</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45099&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=45099">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				126</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;28.6</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;DRINA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45865">BAJINA BAŠTA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45865&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				45</td> 
+                <td class="siva75 ">&nbsp;18</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DRINA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/opseg.php?hm_id=45882">RADALJ</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45882&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				35</td> 
+                <td class="bela75 ">&nbsp;-48</td>
+                <td class="bela75 ">&nbsp;53.7</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;DRINA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45885">BADOVINCI</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45885&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-67</td> 
+                <td class="siva75 ">&nbsp;14</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;LIM</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45836">BRODAREVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45836&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				62</td> 
+                <td class="bela75 ">&nbsp;-2</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;LIM</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45837">PRIJEPOLJE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45837&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				30</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;31.0</td>
+                <td class="siva75 ">&nbsp;18.9</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;LIM</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45842">PRIBOJ</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45842&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-39</td> 
+                <td class="bela75 ">&nbsp;1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;MILEŠEVKA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45838">PRIJEPOLJE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45838&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				14</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;VAPA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45843">ČEDOVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45843&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				80</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JADAR</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45890">ZAVLAKA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45890&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-15</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;JADAR</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45892">LEŠNICA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45892&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-31</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;0.650</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;STUDVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=99302">MOROVIĆ</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=99302&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				204</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;KOLUBARA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45905">VALJEVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45905&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				4</td> 
+                <td class="bela75 ">&nbsp;-2</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;KOLUBARA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45908">SLOVAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45908&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				167</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;KOLUBARA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/opseg.php?hm_id=45910">BELI BROD</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45910&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-16</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;0.870</td>
+                <td class="bela75 ">&nbsp;24.3</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;KOLUBARA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45920">DRAŽEVAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45920&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				46</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;25.5</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;TOPČIDERSKA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45098">RAKOVICA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45098&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				29</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JABLANICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45903">SEDLARI</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45903&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				19</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;OBNICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45904">BELO POLJE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45904&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-8</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;GRADAC</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45902">DEGURIĆ</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45902&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-25</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;RIBNICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45906">MIONICA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45906&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-8</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;LJIG</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45909">BOGOVAĐA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45909&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				41</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;0.023</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;PEŠTAN</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/?hm_id=45912">ZEOKE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45912&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				71</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TAMNAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45914">KOCELJEVA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45914&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				17</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;0.717</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;TAMNAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45917">ĆEMANOV MOST</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45917&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				35</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;0.534</td>
+                <td class="bela75 ">&nbsp;21.9</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;UB</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=45916">UB</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=45916&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				21</td> 
+                <td class="siva75 ">&nbsp;1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;TAMIŠ</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42401">JAŠA TOMIĆ</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42401&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				60</td> 
+                <td class="bela75 ">&nbsp;-2</td>
+                <td class="bela75 ">&nbsp;4.75</td>
+                <td class="bela75 ">&nbsp;29.8</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TAMIŠ</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42411">SEČANJ</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42411&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				248</td> 
+                <td class="siva75 ">&nbsp;-3</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;VELIKA MORAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=47010">VARVARIN</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47010&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=47010">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-199</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;60</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;VELIKA MORAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=47030">ĆUPRIJA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47030&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-106</td> 
+                <td class="siva75 ">&nbsp;1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;24.0</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;VELIKA MORAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=47040">BAGRDAN</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47040&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-25</td> 
+                <td class="bela75 ">&nbsp;1</td>
+                <td class="bela75 ">&nbsp;65</td>
+                <td class="bela75 ">&nbsp;-</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;VELIKA MORAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=47090">LJUBIČEVSKI MOST</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47090&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+				
+<a href="../hidrologija/godisnje/godisnjak.php?sifra=47090">&nbsp;<img src="../../repository/ikonice/tendencije/izv.gif" width="8" height="10" /></a></td>
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-377</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/stag.gif" alt="stag" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;CRNICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47025">PARAĆIN</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47025&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				33</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;RAVANICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47029">ĆUPRIJA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47029&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-3</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;LUGOMIR</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47035">MAJUR</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47035&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				19</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;0.091</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;BELICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47038">JAGODINA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47038&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				31</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;LEPENICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47057">BATOČINA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47057&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				53</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;RESAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47063">MANASTIR MANASIJA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47063&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				16</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;RESAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47067">SVILAJNAC</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47067&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-45</td> 
+                <td class="bela75 ">&nbsp;2</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JASENICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47075">SMEDEREVSKA PALANKA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47075&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				44</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;0.160</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;KUBRŠNICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47076">SMEDEREVSKA PALANKA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47076&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				67</td> 
+                <td class="bela75 ">&nbsp;1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JUŽNA MORAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47528">VRANJSKI PRIBOJ</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47528&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-</td> 
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;JUŽNA MORAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47530">VLADIČIN HAN</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47530&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				52</td> 
+                <td class="bela75 ">&nbsp;17</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JUŽNA MORAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47540">GRDELICA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47540&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				56</td> 
+                <td class="siva75 ">&nbsp;5</td>
+                <td class="siva75 ">&nbsp;19.8</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;JUŽNA MORAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/opseg.php?hm_id=47550">KORVINGRAD</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47550&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-179</td> 
+                <td class="bela75 ">&nbsp;22</td>
+                <td class="bela75 ">&nbsp;15.2</td>
+                <td class="bela75 ">&nbsp;23.7</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JUŽNA MORAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=47570">ALEKSINAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47570&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-118</td> 
+                <td class="siva75 ">&nbsp;3</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;JUŽNA MORAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47590">MOJSINJE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47590&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				8</td> 
+                <td class="bela75 ">&nbsp;-8</td>
+                <td class="bela75 ">&nbsp;15.0</td>
+                <td class="bela75 ">&nbsp;24.4</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;VLASINA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47630">SVOĐE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47630&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				29</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;VLASINA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47640">VLASOTINCE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47640&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				8</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;1.12</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;LUŽNICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47620">SVOĐE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47620&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-66</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;VETERNICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47665">LESKOVAC</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47665&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				26</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;0.366</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JABLANICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47720">SIJARINSKA BANJA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47720&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				21</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;JABLANICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47740">PEČENJEVCE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47740&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				11</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;0.222</td>
+                <td class="bela75 ">&nbsp;27.5</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;PUSTA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47548">PUKOVAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47548&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				8</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;TOPLICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47850">PEPELJEVAC</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47850&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-16</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;0.455</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TOPLICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47880">PROKUPLJE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47880&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-19</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;TOPLICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47890">DOLJEVAC</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47890&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-23</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;2.98</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;KOSANICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47855">VISOKA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47855&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-55</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;NIŠAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47910">DIMITROVGRAD</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47910&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				39</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;NIŠAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47920">PIROT</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47920&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-77</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;1.70</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;NIŠAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47950">BELA PALANKA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47950&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				26</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;NIŠAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47990">NIŠ</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47990&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				50</td> 
+                <td class="siva75 ">&nbsp;-12</td>
+                <td class="siva75 ">&nbsp;7.40</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;GABERSKA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47911">MRTVINE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47911&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				61</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JERMA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47912">STRAZIMIROVCI</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47912&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				33</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;JERMA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47914">TRNSKI ODOROVCI</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47914&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				55</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TEMSKA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47945">STANIČENJE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47945&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				17</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;KUTINSKA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47975">RADIKINA BARA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47975&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				12</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;VISOČICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/?hm_id=47939">IZATOVAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47939&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				34</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DOJKINAČKA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47946">VISOČKA RŽANA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47946&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				30</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TOPONIČKA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47562">GORNJA TOPONICA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47562&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				88</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;MORAVICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47580">ŽUČKOVAC</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47580&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				35</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;MORAVICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47589">ALEKSINAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47589&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				12</td> 
+                <td class="siva75 ">&nbsp;1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;ZAPADNA MORAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47101">KRATOVSKA STENA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47101&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				194</td> 
+                <td class="bela75 ">&nbsp;2</td>
+                <td class="bela75 ">&nbsp;8.48</td>
+                <td class="bela75 ">&nbsp;-</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;ZAPADNA MORAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47115">ČAČAK</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47115&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-6</td> 
+                <td class="siva75 ">&nbsp;1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;ZAPADNA MORAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/opseg.php?hm_id=47120">MILOČAJ</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47120&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-93</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;ZAPADNA MORAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47150">TRSTENIK</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47150&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-79</td> 
+                <td class="siva75 ">&nbsp;-3</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;ZAPADNA MORAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/prognoza.php?hm_id=47195">JASIKA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47195&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-143</td> 
+                <td class="bela75 ">&nbsp;1</td>
+                <td class="bela75 ">&nbsp;31.6</td>
+                <td class="bela75 ">&nbsp;25.3</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;SKRAPEŽ</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47495">POŽEGA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47495&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				11</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;MORAVICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47350">ARILJE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47350&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-52</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;VELIKI RZAV</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=99266">KRUŠČICA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=99266&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				57</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;VELIKI RZAV</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=99108">RADOBUĐA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=99108&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				54</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;BJELICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47105">GUČA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47105&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				36</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;KAMENICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47112">PRIJEVOR</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47112&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				7</td> 
+                <td class="bela75 ">&nbsp;-3</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;ČEMERNICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=99073">GORNJA GOREVNICA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=99073&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				33</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;DIČINA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47121">BRĐANI</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47121&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				49</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;IBAR</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47260">RAŠKA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47260&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				163</td> 
+                <td class="siva75 ">&nbsp;1</td>
+                <td class="siva75 ">&nbsp;16.3</td>
+                <td class="siva75 ">&nbsp;20.6</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;IBAR</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47290">UŠĆE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47290&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				67</td> 
+                <td class="bela75 ">&nbsp;-2</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;IBAR</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47296">MATARUŠKA BANJA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47296&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-17</td> 
+                <td class="siva75 ">&nbsp;-2</td>
+                <td class="siva75 ">&nbsp;22.1</td>
+                <td class="siva75 ">&nbsp;20.7</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/kv_vode.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;IBAR</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47299">KRALJEVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47299&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				3</td> 
+                <td class="bela75 ">&nbsp;-3</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;RAŠKA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47265">NOVI PAZAR</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47265&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				20</td> 
+                <td class="siva75 ">&nbsp;2</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;RAŠKA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47269">RAŠKA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47269&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				95</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;JOŠANICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47278">BILJANOVAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47278&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-7</td> 
+                <td class="siva75 ">&nbsp;6</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;STUDENICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47285">MLANČA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47285&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				13</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;STUDENICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47288">UŠĆE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47288&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-21</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;LOPATNICA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47294">BOGUTOVAC</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47294&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				100</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;RASINA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47168">RAVNI</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47168&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				43</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;RASINA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=47175">BIVOLJE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47175&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-7</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;BORAČKA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/?hm_id=47156">BORAČ</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=47156&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				39</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;MLAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42520">GORNJAK</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42520&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				37</td> 
+                <td class="bela75 ">&nbsp;-6</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;MLAVA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42527">VELIKO SELO</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42527&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				38</td> 
+                <td class="siva75 ">&nbsp;3</td>
+                <td class="siva75 ">&nbsp;2.10</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;MLAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42535">BRATINAC</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42535&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-12</td> 
+                <td class="bela75 ">&nbsp;1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;VITOVNICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42540">KULA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42540&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				62</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;NERA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42660">KUSIĆ</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42660&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				26</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;2.34</td>
+                <td class="bela75 ">&nbsp;24.0</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;NERA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42670">VRAČEV GAJ</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42670&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				25</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;BRZAVA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42480">MARKOVIĆEVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42480&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-154</td> 
+                <td class="bela75 ">&nbsp;-2</td>
+                <td class="bela75 ">&nbsp;1.50</td>
+                <td class="bela75 ">&nbsp;25.0</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;MORAVICA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42485">VATIN</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42485&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-</td> 
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 ">&nbsp;-</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;KARAŠ</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42610">KUŠTILJ</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42610&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-32</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;KARAŠ</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42615">DOBRIČEVO</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42615&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				253</td> 
+                <td class="siva75 ">&nbsp;-1</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;PEK</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42720">KUČEVO</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42720&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				17</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;CRNAJKA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42760">CRNAJKA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42760&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				14</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;CRNI TIMOK</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42911">BOGOVINA</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42911&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				3</td> 
+                <td class="bela75 ">&nbsp;-1</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;CRNI TIMOK</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42914">GAMZIGRAD</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42914&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				30</td> 
+                <td class="siva75 ">&nbsp;-2</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;ZLOTSKA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42912">ZLOT</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42912&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-7</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;BELI TIMOK</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42921">KNJAŽEVAC</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42921&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				29</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;2.39</td>
+                <td class="siva75 ">&nbsp;22.4</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;BELI TIMOK</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42925">VRATARNICA</a></td>
+				<td class="bela75">
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-10</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;BELI TIMOK</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42929">ZAJEČAR</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42929&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				-98</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;1.56</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;VELIKI TIMOK</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42901">ČOKONJAR</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42901&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				56</td> 
+                <td class="bela75 ">&nbsp;17</td>
+                <td class="bela75 ">&nbsp;2.32</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;GRLIŠKA</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42926">GRLIŠTE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42926&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				94</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;SVRLJIŠKI TIMOK</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42931">RGOŠTE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42931&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				51</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;TRGOVIŠKI TIMOK</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=42935">DONJA KAMENICA</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=42935&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				0</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;LJUBATSKA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=64129">BOSILJGRAD</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=64129&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				21</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="siva75 levo">&nbsp;BRANKOVAČKA
+</td>
+				<td class="siva75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="siva75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=64111">RIBARCE</a></td>
+				<td class="siva75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=64111&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="siva75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="siva75 ">&nbsp;
+				26</td> 
+                <td class="siva75 ">&nbsp;0</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 ">&nbsp;*</td>
+                <td class="siva75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="siva75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                            <tr> 
+                <td class="bela75 levo">&nbsp;PČINJA</td>
+				<td class="bela75"><img src="../../repository/ikonice/tendencije/0.gif" alt="Flood alert" width="10" height="10" /></td>
+                <td class="bela75 levo">&nbsp;<a href="https://www.hidmet.gov.rs/eng/hidrologija/izvestajne/bezprognoza.php?hm_id=63410">BARBACE</a></td>
+				<td class="bela75">
+<a href="../osmotreni/nrt_tabela_grafik.php?hm_id=63410&period=7">&nbsp;<img src="../../repository/ikonice/tendencije/nrt.gif" /></a></td>
+				<td class="bela75">
+	
+               <!-- <td class=" ">&nbsp;</td> -->
+				<td class="bela75 ">&nbsp;
+				-35</td> 
+                <td class="bela75 ">&nbsp;0</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 ">&nbsp;*</td>
+                <td class="bela75 "><img src="../../repository/ikonice/tendencije/nema.gif" alt="nema" width="10" height="10" /></td>
+								<!--
+				<td class="bela75">
+								<a href="kvalitet_voda.php"><img src="../../repository/ikonice/tendencije/0.gif" alt="Kvalitet voda" width="17" height="10" /></a></td>
+				-->
+              </tr>
+                </table>
+<!--*) Hydrological station Miločaj is temporarily out of order due to the regulation works at the Zapadna Morava river.<br /> -->
+<!--**) Water levels in the profile of the Bagrdan hydrological station are under the influence of works on the construction of a bridge 1 km downstream from the station profile.<br /><br />   -->
+<br />
+Choose name of hydrological station for more information.<br />
+Chose icon <img src="../../repository/ikonice/tendencije/nrt.gif" /> for real-time data report.<br />
+Choose report icon <img src="../../repository/ikonice/tendencije/izv.gif" /> for annual report of water stage for actual year.<br />
+Take a look of water stage <a href="https://www.hidmet.gov.rs/eng/hidrologija/godisnje/index.php">annual report</a> for actual year.<br />
+Choose &quot;H<sub>2</sub>0&quot; for water quality data.<br /><br />
+Legend:<br />
+<table summary="Water status - Legend:">
+<tr>
+<td class="siva75 levo"><img src="../../repository/ikonice/tendencije/1.gif" alt="Level for first flood alert is overcome." width="10" height="10" /></td>
+<td class="siva75 levo">Level for first flood alert is overcome.</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+   <td class="bela75 levo">First flood alert is announced when water stages in the river reach established treshold which is determined for every river section on the basis of  hydrological-hydraulics studies, condition of embankments, vulnerability of defending area etc. Most frequently, that level matches the elevation of embankment base.    </td>
+  </tr>
+<tr>
+<td class="siva75 levo"><img src="../../repository/ikonice/tendencije/5.gif" alt="Level for second flood alert is overcome." width="10" height="10" /></td>
+<td class="siva75 levo">Level for second flood alert is overcome.</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+   <td class="bela75 levo">Second flood alert is announced when water stages reach established treshold. Most frequently, that level is one meter below the embankment crown.</td>
+  </tr>
+<tr>
+<td class="siva75 levo"><img src="../../repository/ikonice/tendencije/0.gif" alt="Change of water stage" width="10" height="10" /></td>
+<td class="siva75 levo">Change of water stage: 24 hour change</td>
+</tr>
+<tr>
+<td class="bela75 levo"><img src="../../repository/ikonice/tendencije/0.gif" alt="Change of water stage" width="10" height="10" /></td>
+<td class="bela75 levo">Tendency of water level:&nbsp;<img src="../../repository/ikonice/tendencije/rast.gif"  alt="Rising" width="10" height="10" />&nbsp;water stage rising,&nbsp;<img src="../../repository/ikonice/tendencije/pad.gif"  alt="Falling" width="10" height="10" />&nbsp;water stage falling,&nbsp;<img src="../../repository/ikonice/tendencije/stag.gif" alt="Stagnation" width="10" height="10" />&nbsp;water stage stagnation&nbsp;</td>
+</tr>
+<tr>
+<td class="siva75 levo">-</td>
+<td class="siva75 levo">Data is unavailable at this moment</td>
+</tr>
+<td class="bela75 levo">*</td>
+<td class="bela75 levo">Data is not issued</td>
+</tr>
+</table>
+
+</div>
+</div><!-- close div#sadrzaj -->
+ 
+<script type="text/javascript">
+function mailpage()
+{
+  mail_str = "mailto:?subject=Link ka stranici RHMZ" ;
+   mail_str += "&pound;body= RHMZ - Republicki hidrometeoroloski zavod Srbije";
+  mail_str += ". Link: " + location.href; 
+  location.href = mail_str;
+}
+</script>
+
+<div id="copyright" style="border:none; border-top:1px solid #00b0f0; margin-bottom:20px;">
+<table style="border:none; font-size:11px;">
+
+<tr>
+<td style="text-align:left;">
+<a href="http://www.hidmet.gov.rs/eng/orhmz/imenik.php"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/form.png" width="16" height="16" alt="Contact" />&nbsp;&nbsp;Contact</a><br />
+<a href="http://www.hidmet.gov.rs/eng/servisi/pretraga.php"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/search.png" width="16" height="16" alt="Search" />&nbsp;&nbsp;Search &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><br />
+<a href="http://www.hidmet.gov.rs/eng/mapa/index.php"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/site_map.png" width="16" height="16" alt="Site map" />&nbsp;&nbsp;Site map</a><br />
+</td>
+<td style="text-align:left;">
+<a href="http://worldweather.wmo.int"><img src="http://www.hidmet.gov.rs/repository/slike/naslovna/wmo.jpg" width="16" height="16" alt="WMO service" />&nbsp;&nbsp;WMO - World Weather Information Service</a><br />
+
+
+</td>
+<td style="text-align:left;">
+<a href="http://www.hidmet.gov.rs/index_eng.php"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/home.png" width="16" height="16" alt="Home"/>&nbsp;&nbsp;Home</a><br />
+
+<a href="javascript:print()"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/printer.png" alt="Print" /></a>&nbsp;&nbsp;<a href="javascript:print()">Page print</a><br />
+<a href="http://www.hidmet.gov.rs/data/download/Zakon_ENG.pdf"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/mime_pdf.png" width="16" height="16" alt="Law on meteorological and hydrological activities" />&nbsp;&nbsp;Law on met. and hyd. act.</a><br />
+</td>
+</tr>
+
+<tr><td>&nbsp;</td><td></td><td></td></tr>
+
+<tr>
+<td></td>
+<td style="text-align:left;">
+&copy;&nbsp;2026&nbsp;Copyright&nbsp;RHMS&nbsp;of&nbsp;Serbia
+</td>
+<td></td>
+</tr>
+</table>
+</div><!-- close #copyright -->  
+</div><!-- close div#content -->
+
+
+<div id="meni">
+<div id="jezik">
+<a href="https://www.hidmet.gov.rs/index.php" style="font-size:8px;"><img src="https://www.hidmet.gov.rs/latin/srp_zas.gif" alt="Srpski" width="13" height="8" title="Српски" />&nbsp;Ћирилица</a> &nbsp;
+<a href="https://www.hidmet.gov.rs/index_lat.php" style="font-size:8px;"><img src="https://www.hidmet.gov.rs/latin/srp_zas.gif" alt="Srpski" width="13" height="8" title="Srpski" />&nbsp;Latinica</a> &nbsp;
+<a href="https://www.hidmet.gov.rs/index_eng.php" style="font-size:8px;"><img src="https://www.hidmet.gov.rs/eng/eng_zas.gif" alt="English" width="13" height="8" title="English" />&nbsp;English</a>
+</div><!-- close #links -->
+<div style="text-align:center; margin-top:5px;">
+<a href="../orhmz/direktor.php"><img src="https://www.hidmet.gov.rs/direktor_eng.png" alt="Direktor RHMZ" width="150" height="212" /></a> 
+</div> 
+
+<div id="links">
+<ul>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/osmotreni/naslovna.php">Actual data</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/index.php">Weather in Serbia</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/padavine.php">Precipitation in Serbia</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/sneg.php">Snow in Serbia</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/evropa.php">Weather in Europe</a></li>
+
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/stanje_voda.php">Hydrological data</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/nrt_index.php">Automatic hydrological stations</a></li>
+
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/radarska.php">Current radar images</a></li>
+
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/satelit.php">Satellite image</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/automatske.php">Automatic weather stations</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/analiza.php">Analysis</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/podzemne_automatske_pocetna.php">Reporting groundwater station</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/prognoza/naslovna_prognoza.php">Forecast</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/prognoza/naslovna_numerika.php">Numerical Weather Prediction</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/meteorologija/index.php">Meteorology</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/hidrologija/index.php">Hydrology</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/ipcc/index.php">Climate changes - IPCC</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/orhmz/index.php">About us</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/orhmz/novosti.php">News</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/projekti/index.php">Projects</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/servisi/index.php">Services</a></li>
+</ul>
+</div><!-- close #links -->
+
+
+</div><!-- close div#meni -->
+</body>
+</html>

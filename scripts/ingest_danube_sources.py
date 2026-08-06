@@ -38,8 +38,12 @@ def _fetch_all(adapter, archive_root: Path) -> tuple[dict[str, FetchedPayload], 
     return payloads, archive
 
 
-def run_source(source: str, output_root: Path, archive_root: Path, fixture_root: Path | None = None) -> dict[str, Any]:
+def run_source(source: str, output_root: Path, archive_root: Path, fixture_root: Path | None = None,
+               collection_profile: str = "all", nrt_period: int = 7) -> dict[str, Any]:
     adapter = get_adapter(source)
+    if source == "rs":
+        adapter.collection_profile = collection_profile
+        adapter.nrt_period = nrt_period
     source_output = output_root / source
     source_output.mkdir(parents=True, exist_ok=True)
     try:
@@ -82,6 +86,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--archive-root", type=Path, default=Path("data/archive"))
     parser.add_argument("--fixture-root", type=Path)
+    parser.add_argument("--rs-profile", choices=["all", "nrt", "daily", "forecast"], default="all")
+    parser.add_argument("--rs-period", choices=[7, 30], type=int, default=7)
     parser.add_argument("--require-publishable", action="store_true")
     return parser
 
@@ -91,7 +97,10 @@ def main(argv: list[str] | None = None) -> int:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output_root = args.output_dir or Path("_diagnostics/international") / stamp
     sources = list(ADAPTERS) if args.source == "all" else [args.source]
-    summaries = [run_source(source, output_root, args.archive_root, args.fixture_root) for source in sources]
+    summaries = [run_source(
+        source, output_root, args.archive_root, args.fixture_root,
+        args.rs_profile if source == "rs" else "all", args.rs_period,
+    ) for source in sources]
     aggregate = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "fixture_mode": bool(args.fixture_root), "sources": summaries,

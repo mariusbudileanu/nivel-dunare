@@ -1,14 +1,4353 @@
-<!doctype html><html><body><table>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42010">Bezdan</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42015">Apatin</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42020">Bogojevo</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42030">Bačka Palanka</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42035">Novi Sad</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42045">Zemun</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42050">Pančevo</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42055">Smederevo</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42060">Banatska Palanka</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42065">Veliko Gradište</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42070">Golubac</a></td></tr>
-<tr><td><a href="nrt_tabela_grafik.php?hm_id=42095">Prahovo</a></td></tr>
-</table></body></html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2JH4B24N2V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2JH4B24N2V');
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="classification" content="meteorološki podaci" />
+<meta name="keywords" content="RHMZ, Republički hidrometeorološki zavod Srbije, Republika Srbija, meteorologija, klima, klimatologija,
+agrometeorologija, mreža osmatračkih stanica, bdenje, meteorološko bdenje, radarska slika, satelitska slika, stanje vremena, temperatura,
+vlažnost, pritisak, atmosfersko stanje, pojave, stanje voda, vodostaj, protok, tendencija vodostaja, redovna odbrana, vanredna odbrana,
+kvalitet vazduha, kvalitet voda, ibar, fenol, odbrana od grada, radarski centri, grad, led, oluja, sneg, meteo forum, produkti, bilteni, upozorenja, najave" />
+<title>РХМЗ - Републички Хидрометеоролошки завод Србије Кнеза Вишеслава 66 Београд::::::::::::::::::::::::::::::::::::::::::::::::::::::</title><link rel="shortcut icon" href="https://www.hidmet.gov.rs/favicon.ico" />
+
+
+<link href="../../repository/css/hidmet.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../repository/css/layout.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../repository/css/font.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../../stil/print.css" rel="stylesheet" type="text/css" media="print" />
+<link href="../../../stil/mobil.css" rel="stylesheet" type="text/css" media="handheld" />
+
+<!-- jQuery in the head (ideally) -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<!-- CSS file -->
+<!-- <link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.0/jquery.qtip.min.css" />-->
+<link type="text/css" rel="stylesheet" href="../prognoza/hbv/qtip.css" /> 
+
+<!-- Include either the minifed or production version, not both -->
+ <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.0/jquery.qtip.min.js"></script> 
+<!--<script type="text/javascript" src="jquery.qtip.min.js"></script>-->
+
+<!-- Optional: imagesLoaded dependancy to better support images inside your tooltips -->
+ <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.1/jquery.imagesloaded.min.js"></script> 
+<!--<script type="text/javascript" src="imagesloaded.min.js"></script>-->
+<!--
+<script type="text/javascript">// Create the tooltips only when document ready
+$(document).ready(function()
+{
+   	$('area[id^="area_"]').each(function()
+	{
+			$(this).qtip(
+      {
+content: $('#data_' + $(this).attr('id')),
+show: {
+},
+hide: {
+fixed: true,
+delay: 180
+},
+style: {
+//width: 600,
+//height: 400
+},
+position: {
+viewport: $(window)
+      }
+      });
+   });
+});
+</script>
+-->
+<script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-171209-1";
+urchinTracker();
+</script>
+</head>
+<body>
+
+<div id="header">
+<div id="naziv">
+<a href="https://www.srbija.gov.rs/" target="_blank"><img src="https://www.hidmet.gov.rs/zastava_new.png" title="Serbian Goverment" width="218" height="70" /></a>
+</div><!-- close div#naziv -->
+<div id="naslov">
+<img src="https://www.hidmet.gov.rs/header_new_eng.png" title="Republic Hydrometeorological servise of Serbia" width="670" height="70" usemap="#Map" />
+<map name="Map" id="Map">
+<area shape="rect" coords="500,22,670,50" href="mailto:office@hidmet.gov.rs" title="office@hidmet.gov.rs" />
+</map>
+</div><!-- close div#naslov -->
+
+<div id="baner">
+<a href="https://www.hidmet.gov.rs/"><img src="https://www.hidmet.gov.rs/logo_new.png" title="RHMSS" width="120" height="70" /></a></div><!-- close div#baner -->
+
+</div><!-- close div#header -->
+
+<div id="content">
+<div id="sadrzaj">
+<h1>
+Surface Water Reporting Network - real time data<br/>
+Time in the table corresponds to the Coordinated Universal Time plus one hour: UTC +1<br/>(Central European Time)
+</h1>
+
+<div id="slika"><img src="../../repository/slike_eng/hidrologija/izvestajne/srbija_nrt_t.png?rand=693" width="770" height="1151" usemap="#Map2" />
+  <map name="Map2" id="Map2">
+    <!--<area id="area_99007" shape="poly" coords="262,707,260,727,251,725,250,767,325,768,326,727,277,727,261,705,261,705,261,707" href="nrt_tabela_grafik.php?hm_id=99007&amp;period=7" title="Bedina Varoš" /> -->
+    <area id="area_64111" shape="rect" coords="664,995,759,1032" href="nrt_tabela_grafik.php?hm_id=64111&amp;period=7" title="Ribarce" />
+    <area id="area_47156" shape="poly" coords="259,588,259,606,335,606,333,588" href="nrt_tabela_grafik.php?hm_id=47156&amp;period=7" title="Borač" />
+    <area id="area_99057" shape="poly" coords="313,572,314,588,349,587,349,604,367,588,409,588,406,572" href="nrt_tabela_grafik.php?hm_id=99057&amp;period=7" title="Dragušica" />
+    <area id="area_99266" shape="poly" coords="132,657,131,677,237,676,235,660,187,660,171,646,164,657" href="nrt_tabela_grafik.php?hm_id=99266&amp;period=7" title="Kruščica" />
+    <area id="area_47920" shape="poly" coords="674,816,686,821,689,788,754,788,754,806,691,807" href="nrt_tabela_grafik.php?hm_id=47920&amp;period=7" title="Pirot" />
+    <area id="area_47910" shape="poly" coords="692,809,691,823,731,823,724,839,740,831,742,822,765,823,765,808" href="nrt_tabela_grafik.php?hm_id=47910&amp;period=7" title="Dimitrovgrad" />
+    <area id="area_42931" shape="poly" coords="617,740,634,735,625,746,633,755,633,764,578,765,577,753,621,754,617,739" href="nrt_tabela_grafik.php?hm_id=42931&amp;period=7" title="Rgošte" />
+    <area id="area_42030" shape="poly" coords="107,237,105,255,117,241,169,237,171,218,64,218,64,237,106,237" href="nrt_tabela_grafik.php?hm_id=42030&amp;period=7" title="Bačka Palanka" />
+    <area id="area_42070" shape="rect" coords="501,381,607,405" href="nrt_tabela_grafik.php?hm_id=42070&amp;period=7" title="Golubac" />
+    <area id="area_45098" shape="rect" coords="259,397,351,422" href="nrt_tabela_grafik.php?hm_id=45098&amp;period=7" title="Rakovica" />
+    <area id="area_42720" shape="rect" coords="489,434,576,460" href="nrt_tabela_grafik.php?hm_id=42720&amp;period=7" title="Kučevo" />
+    <area id="area_47530" shape="rect" coords="508,914,644,945" href="nrt_tabela_grafik.php?hm_id=47530&amp;period=7" title="Vladičin Han" />
+    <area id="area_42050" shape="rect" coords="284,335,370,365" href="nrt_tabela_grafik.php?hm_id=42050&amp;period=7" title="Pančevo" />
+    <area id="area_99079" shape="rect" coords="173,674,259,705" href="nrt_tabela_grafik.php?hm_id=99079&amp;period=7" title="Gradina" />
+    <area id="area_42914" shape="rect" coords="491,577,622,604" href="nrt_tabela_grafik.php?hm_id=42914&amp;period=7" title="Gamzigrad" />
+    <area id="area_45837" shape="rect" coords="133,752,259,785" href="nrt_tabela_grafik.php?hm_id=45837&amp;period=7" title="Prijepolje" />
+    <area id="area_47665" shape="rect" coords="483,844,589,872" href="nrt_tabela_grafik.php?hm_id=47665&amp;period=7" title="Leskovac" />
+    <area id="area_47850" shape="rect" coords="329,775,462,810" href="nrt_tabela_grafik.php?hm_id=47850&amp;period=7" title="Pepeljevac" />
+    <area id="area_47990" shape="rect" coords="561,734,621,763" href="nrt_tabela_grafik.php?hm_id=47990&amp;period=7" title="Niš" />
+    <area id="area_47550" shape="rect" coords="551,777,685,811" href="nrt_tabela_grafik.php?hm_id=47550&amp;period=7" title="Korvingrad" />
+    <area id="area_47530" shape="rect" coords="534,874,630,911" href="nrt_tabela_grafik.php?hm_id=47540&amp;period=7" title="Grdelica" />
+    <area id="area_47528" shape="rect" coords="513,946,674,981" href="nrt_tabela_grafik.php?hm_id=47528&amp;period=7" title="Vranjski Priboj" />
+    <area id="area_47590" shape="rect" coords="469,667,570,695" href="nrt_tabela_grafik.php?hm_id=47590&amp;period=7" title="Mojsinje" />
+    <area id="area_47195" shape="rect" coords="410,687,476,726" href="nrt_tabela_grafik.php?hm_id=47195&amp;period=7" title="Jasika" />
+    <area id="area_47120" shape="rect" coords="311,620,408,660" href="nrt_tabela_grafik.php?hm_id=47120&amp;period=7" title="Miločaj" />
+    <area id="area_47101" shape="rect" coords="176,612,298,649" href="nrt_tabela_grafik.php?hm_id=47101&amp;period=7" title="Kratovska stena" />
+    <area id="area_47105" shape="rect" coords="245,645,295,682" href="nrt_tabela_grafik.php?hm_id=47105&amp;period=7" title="Guča" />
+    <area id="area_47035" shape="rect" coords="370,583,449,616" href="nrt_tabela_grafik.php?hm_id=47035&amp;period=7" title="Majur" />
+    <area id="area_47040" shape="rect" coords="330,550,432,580" href="nrt_tabela_grafik.php?hm_id=47040&amp;period=7" title="Bagrdan" />
+    <area id="area_42010" shape="rect" coords="16,75,114,102" href="nrt_tabela_grafik.php?hm_id=42010&period=7" alt = "Bezdan" />
+    <area id="area_42060" shape="rect" coords="372,332,461,370" href="nrt_tabela_grafik.php?hm_id=42060&period=7" title="Banatska Palanka" />
+    <area id="area_44020" shape="rect" coords="152,61,234,87" href="nrt_tabela_grafik.php?hm_id=44020&amp;period=7" title="Senta" />
+    <area id="area_42660" shape="rect" coords="478,312,560,352" href="nrt_tabela_grafik.php?hm_id=42660&period=7" title="Kusić" />
+    <area id="area_45917" shape="rect" coords="94,435,221,462" href="nrt_tabela_grafik.php?hm_id=45917&amp;period=7" title="Ćemanov most" />
+    <area id="area_45905" shape="poly" coords="166,533,166,552,252,554,251,535,191,535,190,514" href="nrt_tabela_grafik.php?hm_id=45905&amp;period=7" title="Valjevo" />
+    <area id="area_45882" shape="rect" coords="61,461,138,498" href="nrt_tabela_grafik.php?hm_id=45882&period=7" title="Radalj" />
+    <area id="area_42035" shape="rect" coords="159,187,218,249" href="nrt_tabela_grafik.php?hm_id=42035&amp;period=7" title="Novi Sad" />
+    <area id="area_42929" shape="rect" coords="556,608,631,640" href="nrt_tabela_grafik.php?hm_id=42929&period=7" title="Zaječar" />
+    <area id="area_47010" shape="rect" coords="468,634,576,669" href="nrt_tabela_grafik.php?hm_id=47010&period=7" title="Varvarin" />
+    <area id="area_45909" shape="rect" coords="257,491,373,529" href="nrt_tabela_grafik.php?hm_id=45909&period=7" title="Bogovađa" />
+    <area id="area_47890" shape="poly" coords="444,759,548,759,542,798,526,781,501,781,444,781" href="nrt_tabela_grafik.php?hm_id=47890&period=7" title="Doljevac" />
+    <area id="area_44212" shape="poly" coords="246,184,314,184,351,171,350,200,248,200" href="nrt_tabela_grafik.php?hm_id=44212&amp;period=7" title="Srpski Itebej DV" />
+    <area id="area_42527" shape="poly" coords="458,435,454,458,524,456,526,493,453,493,442,445,441,444" href="nrt_tabela_grafik.php?hm_id=42527&period=7" title="Veliko Selo" />
+    <area id="area_47090" shape="rect" coords="413,408,531,434" href="nrt_tabela_grafik.php?hm_id=47090&amp;period=7" title="Ljubičevski most" />
+    <area id="area_42901" shape="rect" coords="592,533,677,574" href="nrt_tabela_grafik.php?hm_id=42901&period=7" title="Čokonjar" />
+    <area id="area_45908" shape="rect" coords="146,472,231,502" href="nrt_tabela_grafik.php?hm_id=45908&period=7" title="Slovac" />
+    <area id="area_42045" shape="rect" coords="203,345,289,376" href="nrt_tabela_grafik.php?hm_id=42045&amp;period=7" title="Zemun" />
+    <area id="area_45084" shape="rect" coords="11,330,80,379" href="nrt_tabela_grafik.php?hm_id=45084&period=7" title="Jamena" />
+    <area id="area_45099" shape="rect" coords="247,371,329,403" href="nrt_tabela_grafik.php?hm_id=45099&amp;period=7" title="Beograd" />
+    <area id="area_45865" shape="poly" coords="135,585,137,600,96,600,96,620,230,620,228,600,155,600" href="nrt_tabela_grafik.php?hm_id=45865&amp;period=7" title="Bajina Bašta" />
+    <area id="area_45892" shape="rect" coords="86,401,199,433" href="nrt_tabela_grafik.php?hm_id=45892&amp;period=7" title="Lešnica" />
+    <area id="area_44010" shape="rect" coords="229,0,354,45" href="nrt_tabela_grafik.php?hm_id=44010&amp;period=7" title="Novi Kneževac" />
+    <area id="area_45910" shape="rect" coords="259,451,331,490" href="nrt_tabela_grafik.php?hm_id=45910&amp;period=7" title="Beli Brod" />
+    <area id="area_44201" shape="rect" coords="340,133,426,153" href="nrt_tabela_grafik.php?hm_id=44201&amp;period=7" title="Hetin" />
+    <area id="area_45920" shape="rect" coords="252,418,375,443" href="nrt_tabela_grafik.php?hm_id=45920&amp;period=7" title="Draževac" />
+    <area id="area_44035" shape="rect" coords="237,106,334,163" href="nrt_tabela_grafik.php?hm_id=44035&amp;period=7" title="Brana Novi Bečej GV" />
+    <area id="area_47075" shape="rect" coords="389,487,404,509" href="nrt_tabela_grafik.php?hm_id=47075&amp;period=7" title="Smederevska Palanka (Jasenica)" />
+    <area id="area_47076" shape="poly" coords="332,443,331,480,371,493,387,483,418,481,417,443" href="nrt_tabela_grafik.php?hm_id=47076&amp;period=7" title="Smederevska Palanka (Kubršnica)" />
+    <area id="area_47296" shape="rect" coords="267,683,397,714" href="nrt_tabela_grafik.php?hm_id=47296&amp;period=7" title="Mataruška Banja" />
+    <area id="area_42610" shape="poly" coords="376,284,476,286,473,312,457,305,434,305,374,306" href="nrt_tabela_grafik.php?hm_id=42610&amp;period=7" title="Kuštilj" />
+    <area id="area_42055" shape="poly" coords="343,377,342,398,364,398,376,431,386,425,376,398,462,399,461,378,416,378" href="nrt_tabela_grafik.php?hm_id=42055&amp;period=7" title="Smederevo" />
+    <area id="area_42485" shape="rect" coords="374,260,452,283" href="nrt_tabela_grafik.php?hm_id=42485&amp;period=7" title="Vatin" />
+    <area id="area_42615" shape="poly" coords="346,331,424,331,466,347,472,334,455,311,374,311,346,311,346,319" href="nrt_tabela_grafik.php?hm_id=42615&amp;period=7" title="Dobričevo" />
+    <area id="area_47260" shape="rect" coords="326,752,415,774" href="nrt_tabela_grafik.php?hm_id=47260&amp;period=7" title="Raška" />
+    <area id="area_42020" shape="rect" coords="58,158,175,183" href="nrt_tabela_grafik.php?hm_id=42020&amp;period=7" title="Bogojevo" />
+    <area id="area_42480" shape="rect" coords="264,220,397,257" href="nrt_tabela_grafik.php?hm_id=42480&period=7" title="Markovićevo" />
+    <area id="area_44211" shape="poly" coords="244,163,313,163,327,162,345,152,353,179,244,179" href="nrt_tabela_grafik.php?hm_id=44211&amp;period=7" title="Srpski Itebej GV" />
+    <area id="area_42401" shape="rect" coords="349,173,489,209" href="nrt_tabela_grafik.php?hm_id=42401&period=7" title="Jaša Tomić" />
+    <area id="area_42670" shape="rect" coords="465,354,595,385" href="nrt_tabela_grafik.php?hm_id=42670&amp;period=7" title="Vračev Gaj" />
+    <area id="area_47570" shape="poly" coords="523,686,526,714,538,705,651,703,651,684,543,685" href="nrt_tabela_grafik.php?hm_id=47570&amp;period=7" title="Aleksinac" />
+    <area id="area_47290" shape="rect" coords="331,711,406,734" href="nrt_tabela_grafik.php?hm_id=47290&amp;period=7" title="Ušće" />
+    <area id="area_47740" shape="rect" coords="439,813,567,844" href="nrt_tabela_grafik.php?hm_id=47740&amp;period=7" title="Pečenjevce" />
+    <area id="area_47640" shape="poly" coords="575,817,576,834,593,839,596,850,617,838,696,839,696,817" href="nrt_tabela_grafik.php?hm_id=47640&amp;period=7" title="Vlasotince" />
+  <area id="area_47067" shape="rect" coords="429,524,545,547" href="nrt_tabela_grafik.php?hm_id=47067&amp;period=7" title="Svilajnac" />
+  <area id="area_47063" shape="poly" coords="469,543,584,543,585,563,506,563,498,573,476,560,470,554" href="nrt_tabela_grafik.php?hm_id=47063&amp;period=7" title="Manastir Manasija" />
+  <area id="area_44028" shape="rect" coords="265,44,361,69" href="nrt_tabela_grafik.php?hm_id=44028&amp;period=7" title="Vrbica" />
+  <area id="area_47620" shape="rect" coords="634,843,718,866" href="nrt_tabela_grafik.php?hm_id=47620&amp;period=7" title="Svođe" />
+  <area id="area_44040" shape="rect" coords="270,272,351,300" href="nrt_tabela_grafik.php?hm_id=44040&amp;period=7" title="Titel" />
+  <area id="area_47548" shape="rect" coords="463,795,556,818" href="nrt_tabela_grafik.php?hm_id=47548&amp;period=7" title="Pukovac" />
+  <area id="area_45090" shape="rect" coords="68,292,195,328" href="nrt_tabela_grafik.php?hm_id=45090&period=7" title="Sremska Mitrovica" />
+  <area id="area_45836" shape="rect" coords="169,785,307,808" href="nrt_tabela_grafik.php?hm_id=45836&amp;period=7" title="Brodarevo" />
+  <area id="area_45916" shape="rect" coords="229,456,254,490" href="nrt_tabela_grafik.php?hm_id=45916&amp;period=7" title="Ub" />
+  <area id="area_42935" shape="poly" coords="647,724,655,716,661,709,667,718,669,728,685,728,713,732,734,767,632,767,631,735,638,727,645,727" href="nrt_tabela_grafik.php?hm_id=42935&amp;period=7" title="Donja Kamenica" />
+  <area id="area_47562" shape="rect" coords="533,706,640,737" href="nrt_tabela_grafik.php?hm_id=47562&amp;period=7" title="Gornja Toponica" /> 
+  <area id="area_47168" shape="poly" coords="429,738,496,738,496,758,445,757,445,755,422,765,426,746" href="nrt_tabela_grafik.php?hm_id=47168&amp;period=7" title="Ravni" />
+  <area id="area_45839" shape="rect" coords="144,702,258,728" href="nrt_tabela_grafik.php?hm_id=45839&amp;period=7" title="Bistrica" />
+  <area id="area_42921" shape="rect" coords="636,698,766,719" href="nrt_tabela_grafik.php?hm_id=42921&amp;period=7" title="Knjaževac" />
+  </map>
+</div>
+<!-- Kreiranje div tagova - tabela -->
+
+<div style="display:none;">
+	<div id="data_area_42010" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42010&period=7"><strong>BEZDAN</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-167</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42010&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42015" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42015&period=7"><strong>APATIN</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-110</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42015&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42020" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42020&period=7"><strong>BOGOJEVO</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-103</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42020&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42030" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42030&period=7"><strong>BAČKA PALANKA </strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-86</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42030&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42035" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42035&period=7"><strong>NOVI SAD</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-64</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42035&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42045" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42045&period=7"><strong>ZEMUN</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>168</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42045&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42050" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42050&period=7"><strong>PANČEVO</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>213</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42050&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42055" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42055&period=7"><strong>SMEDEREVO</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>414</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42055&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42060" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42060&period=7"><strong>BANATSKA PALANKA</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>655</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42060&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42065" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42065&period=7"><strong>VELIKO GRADIŠTE</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>721</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42065&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42070" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42070&period=7"><strong>GOLUBAC</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>653</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42070&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42095" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42095&period=7"><strong>PRAHOVO</strong></a></td>
+<td>River:<br /><strong>DUNAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-123</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42095&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_44010" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=44010&period=7"><strong>NOVI KNEŽEVAC</strong></a></td>
+<td>River:<br /><strong>TISA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>132</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=44010&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_44020" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=44020&period=7"><strong>SENTA</strong></a></td>
+<td>River:<br /><strong>TISA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>207</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=44020&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_44035" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=44035&period=7"><strong>BRANA NOVI BEČEJ GV</strong></a></td>
+<td>River:<br /><strong>TISA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>379</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=44035&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_44040" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=44040&period=7"><strong>TITEL</strong></a></td>
+<td>River:<br /><strong>TISA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>22</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=44040&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_44028" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=44028&period=7"><strong>VRBICA</strong></a></td>
+<td>River:<br /><strong>ZLATICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>105</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=44028&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_44201" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=44201&period=7"><strong>HETIN</strong></a></td>
+<td>River:<br /><strong>STARI BEGEJ</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-114</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=44201&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_44211" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=44211&period=7"><strong>SRPSKI ITEBEJ GV</strong></a></td>
+<td>River:<br /><strong>PLOVNI BEGEJ</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>385</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=44211&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_44212" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=44212&period=7"><strong>SRPSKI ITEBEJ DV</strong></a></td>
+<td>River:<br /><strong>PLOVNI BEGEJ</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>232</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=44212&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45084" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45084&period=7"><strong>JAMENA</strong></a></td>
+<td>River:<br /><strong>SAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>127</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45084&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45090" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45090&period=7"><strong>SREMSKA MITROVICA</strong></a></td>
+<td>River:<br /><strong>SAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>33</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45090&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45094" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45094&period=7"><strong>ŠABAC</strong></a></td>
+<td>River:<br /><strong>SAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-79</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45094&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45096" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45096&period=7"><strong>BELJIN</strong></a></td>
+<td>River:<br /><strong>SAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>39</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45096&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45099" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45099&period=7"><strong>BEOGRAD</strong></a></td>
+<td>River:<br /><strong>SAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>126</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45099&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45865" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45865&period=7"><strong>BAJINA BAŠTA</strong></a></td>
+<td>River:<br /><strong>DRINA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>20</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45865&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45882" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45882&period=7"><strong>RADALJ</strong></a></td>
+<td>River:<br /><strong>DRINA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>89</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45882&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45885" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45885&period=7"><strong>BADOVINCI</strong></a></td>
+<td>River:<br /><strong>DRINA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-73</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45885&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45836" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45836&period=7"><strong>BRODAREVO</strong></a></td>
+<td>River:<br /><strong>LIM</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>62</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45836&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45837" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45837&period=7"><strong>PRIJEPOLJE</strong></a></td>
+<td>River:<br /><strong>LIM</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>30</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45837&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45842" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45842&period=7"><strong>PRIBOJ</strong></a></td>
+<td>River:<br /><strong>LIM</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-37</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45842&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45838" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45838&period=7"><strong>PRIJEPOLJE</strong></a></td>
+<td>River:<br /><strong>MILEŠEVKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>14</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45838&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45839" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45839&period=7"><strong>BISTRICA</strong></a></td>
+<td>River:<br /><strong>BISTRICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>35</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45839&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45843" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45843&period=7"><strong>ČEDOVO</strong></a></td>
+<td>River:<br /><strong>VAPA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>80</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45843&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45890" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45890&period=7"><strong>ZAVLAKA</strong></a></td>
+<td>River:<br /><strong>JADAR</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-15</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45890&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45892" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45892&period=7"><strong>LEŠNICA</strong></a></td>
+<td>River:<br /><strong>JADAR</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-31</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45892&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_99302" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=99302&period=7"><strong>MOROVIĆ</strong></a></td>
+<td>River:<br /><strong>STUDVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>204</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=99302&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45905" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45905&period=7"><strong>VALJEVO</strong></a></td>
+<td>River:<br /><strong>KOLUBARA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>4</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45905&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45908" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45908&period=7"><strong>SLOVAC</strong></a></td>
+<td>River:<br /><strong>KOLUBARA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>167</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45908&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45910" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45910&period=7"><strong>BELI BROD</strong></a></td>
+<td>River:<br /><strong>KOLUBARA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-16</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45910&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45920" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45920&period=7"><strong>DRAŽEVAC</strong></a></td>
+<td>River:<br /><strong>KOLUBARA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>46</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45920&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45098" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45098&period=7"><strong>RAKOVICA</strong></a></td>
+<td>River:<br /><strong>TOPČIDERSKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>29</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45098&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45903" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45903&period=7"><strong>SEDLARI</strong></a></td>
+<td>River:<br /><strong>JABLANICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>19</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45903&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45904" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45904&period=7"><strong>BELO POLJE</strong></a></td>
+<td>River:<br /><strong>OBNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-8</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45904&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45902" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45902&period=7"><strong>DEGURIĆ</strong></a></td>
+<td>River:<br /><strong>GRADAC</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>-25</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45902&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45906" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45906&period=7"><strong>MIONICA</strong></a></td>
+<td>River:<br /><strong>RIBNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-8</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45906&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45909" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45909&period=7"><strong>BOGOVAĐA</strong></a></td>
+<td>River:<br /><strong>LJIG</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>41</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45909&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45912" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45912&period=7"><strong>ZEOKE</strong></a></td>
+<td>River:<br /><strong>PEŠTAN</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>71</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45912&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45914" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45914&period=7"><strong>KOCELJEVA</strong></a></td>
+<td>River:<br /><strong>TAMNAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>16</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45914&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45917" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45917&period=7"><strong>ĆEMANOV MOST</strong></a></td>
+<td>River:<br /><strong>TAMNAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>35</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45917&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_45916" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=45916&period=7"><strong>UB</strong></a></td>
+<td>River:<br /><strong>UB</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>21</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=45916&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42401" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42401&period=7"><strong>JAŠA TOMIĆ</strong></a></td>
+<td>River:<br /><strong>TAMIŠ</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>60</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42401&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42411" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42411&period=7"><strong>SEČANJ</strong></a></td>
+<td>River:<br /><strong>TAMIŠ</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>248</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42411&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47010" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47010&period=7"><strong>VARVARIN</strong></a></td>
+<td>River:<br /><strong>VELIKA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-199</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47010&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47030" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47030&period=7"><strong>ĆUPRIJA</strong></a></td>
+<td>River:<br /><strong>VELIKA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-104</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47030&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47040" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47040&period=7"><strong>BAGRDAN</strong></a></td>
+<td>River:<br /><strong>VELIKA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-25</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47040&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47090" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47090&period=7"><strong>LJUBIČEVSKI MOST</strong></a></td>
+<td>River:<br /><strong>VELIKA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-378</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47090&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47025" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47025&period=7"><strong>PARAĆIN</strong></a></td>
+<td>River:<br /><strong>CRNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>33</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47025&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47029" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47029&period=7"><strong>ĆUPRIJA</strong></a></td>
+<td>River:<br /><strong>RAVANICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-3</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47029&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47035" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47035&period=7"><strong>MAJUR</strong></a></td>
+<td>River:<br /><strong>LUGOMIR</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>18</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47035&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47038" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47038&period=7"><strong>JAGODINA</strong></a></td>
+<td>River:<br /><strong>BELICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>30</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47038&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47057" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47057&period=7"><strong>BATOČINA</strong></a></td>
+<td>River:<br /><strong>LEPENICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>53</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47057&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47063" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47063&period=7"><strong>MANASTIR MANASIJA</strong></a></td>
+<td>River:<br /><strong>RESAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>16</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47063&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47067" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47067&period=7"><strong>SVILAJNAC</strong></a></td>
+<td>River:<br /><strong>RESAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-46</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47067&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47075" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47075&period=7"><strong>SMEDEREVSKA PALANKA</strong></a></td>
+<td>River:<br /><strong>JASENICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>44</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47075&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47076" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47076&period=7"><strong>SMEDEREVSKA PALANKA</strong></a></td>
+<td>River:<br /><strong>KUBRŠNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:15</strong></td>
+<td>Water level (cm):<br /><strong>67</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47076&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47530" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47530&period=7"><strong>VLADIČIN HAN</strong></a></td>
+<td>River:<br /><strong>JUŽNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>52</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47530&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47540" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47540&period=7"><strong>GRDELICA</strong></a></td>
+<td>River:<br /><strong>JUŽNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>56</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47540&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47550" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47550&period=7"><strong>KORVINGRAD</strong></a></td>
+<td>River:<br /><strong>JUŽNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-179</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47550&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47570" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47570&period=7"><strong>ALEKSINAC</strong></a></td>
+<td>River:<br /><strong>JUŽNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-118</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47570&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47590" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47590&period=7"><strong>MOJSINJE</strong></a></td>
+<td>River:<br /><strong>JUŽNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>8</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47590&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47630" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47630&period=7"><strong>SVOĐE</strong></a></td>
+<td>River:<br /><strong>VLASINA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>30</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47630&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47640" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47640&period=7"><strong>VLASOTINCE</strong></a></td>
+<td>River:<br /><strong>VLASINA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>8</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47640&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47620" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47620&period=7"><strong>SVOĐE</strong></a></td>
+<td>River:<br /><strong>LUŽNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-65</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47620&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47665" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47665&period=7"><strong>LESKOVAC</strong></a></td>
+<td>River:<br /><strong>VETERNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>25</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47665&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47720" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47720&period=7"><strong>SIJARINSKA BANJA</strong></a></td>
+<td>River:<br /><strong>JABLANICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>21</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47720&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47740" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47740&period=7"><strong>PEČENJEVCE</strong></a></td>
+<td>River:<br /><strong>JABLANICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>11</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47740&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47548" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47548&period=7"><strong>PUKOVAC</strong></a></td>
+<td>River:<br /><strong>PUSTA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>7</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47548&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47850" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47850&period=7"><strong>PEPELJEVAC</strong></a></td>
+<td>River:<br /><strong>TOPLICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-16</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47850&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47880" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47880&period=7"><strong>PROKUPLJE</strong></a></td>
+<td>River:<br /><strong>TOPLICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-19</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47880&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47890" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47890&period=7"><strong>DOLJEVAC</strong></a></td>
+<td>River:<br /><strong>TOPLICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-23</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47890&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47855" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47855&period=7"><strong>VISOKA</strong></a></td>
+<td>River:<br /><strong>KOSANICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-55</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47855&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47910" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47910&period=7"><strong>DIMITROVGRAD</strong></a></td>
+<td>River:<br /><strong>NIŠAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>38</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47910&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47920" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47920&period=7"><strong>PIROT</strong></a></td>
+<td>River:<br /><strong>NIŠAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-77</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47920&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47950" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47950&period=7"><strong>BELA PALANKA</strong></a></td>
+<td>River:<br /><strong>NIŠAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>27</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47950&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47990" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47990&period=7"><strong>NIŠ</strong></a></td>
+<td>River:<br /><strong>NIŠAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>53</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47990&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47911" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47911&period=7"><strong>MRTVINE</strong></a></td>
+<td>River:<br /><strong>GABERSKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>61</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47911&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47912" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47912&period=7"><strong>STRAZIMIROVCI</strong></a></td>
+<td>River:<br /><strong>JERMA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>33</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47912&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47914" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47914&period=7"><strong>TRNSKI ODOROVCI</strong></a></td>
+<td>River:<br /><strong>JERMA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>55</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47914&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47945" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47945&period=7"><strong>STANIČENJE</strong></a></td>
+<td>River:<br /><strong>TEMSKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>16</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47945&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47975" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47975&period=7"><strong>RADIKINA BARA</strong></a></td>
+<td>River:<br /><strong>KUTINSKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>12</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47975&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47939" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47939&period=7"><strong>IZATOVAC</strong></a></td>
+<td>River:<br /><strong>VISOČICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>34</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47939&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47946" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47946&period=7"><strong>VISOČKA RŽANA</strong></a></td>
+<td>River:<br /><strong>DOJKINAČKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>30</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47946&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47562" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47562&period=7"><strong>GORNJA TOPONICA</strong></a></td>
+<td>River:<br /><strong>TOPONIČKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>88</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47562&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47580" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47580&period=7"><strong>ŽUČKOVAC</strong></a></td>
+<td>River:<br /><strong>MORAVICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>36</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47580&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47589" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47589&period=7"><strong>ALEKSINAC</strong></a></td>
+<td>River:<br /><strong>MORAVICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:15</strong></td>
+<td>Water level (cm):<br /><strong>12</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47589&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47101" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47101&period=7"><strong>KRATOVSKA STENA</strong></a></td>
+<td>River:<br /><strong>ZAPADNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>197</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47101&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47115" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47115&period=7"><strong>ČAČAK</strong></a></td>
+<td>River:<br /><strong>ZAPADNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-6</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47115&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47120" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47120&period=7"><strong>MILOČAJ</strong></a></td>
+<td>River:<br /><strong>ZAPADNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-95</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47120&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47150" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47150&period=7"><strong>TRSTENIK</strong></a></td>
+<td>River:<br /><strong>ZAPADNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-79</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47150&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47195" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47195&period=7"><strong>JASIKA</strong></a></td>
+<td>River:<br /><strong>ZAPADNA MORAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-143</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47195&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47445" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47445&period=7"><strong>ŠENGOLJ</strong></a></td>
+<td>River:<br /><strong>ĐETINJA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 05:20</strong></td>
+<td>Water level (cm):<br /><strong>82</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47445&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47495" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47495&period=7"><strong>POŽEGA</strong></a></td>
+<td>River:<br /><strong>SKRAPEŽ</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>12</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47495&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47350" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47350&period=7"><strong>ARILJE</strong></a></td>
+<td>River:<br /><strong>MORAVICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-52</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47350&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_99266" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=99266&period=7"><strong>KRUŠČICA</strong></a></td>
+<td>River:<br /><strong>VELIKI RZAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>57</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=99266&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_99108" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=99108&period=7"><strong>RADOBUĐA</strong></a></td>
+<td>River:<br /><strong>VELIKI RZAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>55</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=99108&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_99241" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=99241&period=7"><strong>KRUŠČICA</strong></a></td>
+<td>River:<br /><strong>MALI RZAV</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 05:00</strong></td>
+<td>Water level (cm):<br /><strong>12</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=99241&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47105" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47105&period=7"><strong>GUČA</strong></a></td>
+<td>River:<br /><strong>BJELICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>36</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47105&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47112" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47112&period=7"><strong>PRIJEVOR</strong></a></td>
+<td>River:<br /><strong>KAMENICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>7</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47112&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_99073" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=99073&period=7"><strong>GORNJA GOREVNICA</strong></a></td>
+<td>River:<br /><strong>ČEMERNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>33</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=99073&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47121" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47121&period=7"><strong>BRĐANI</strong></a></td>
+<td>River:<br /><strong>DIČINA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>49</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47121&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47260" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47260&period=7"><strong>RAŠKA</strong></a></td>
+<td>River:<br /><strong>IBAR</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>163</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47260&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47290" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47290&period=7"><strong>UŠĆE</strong></a></td>
+<td>River:<br /><strong>IBAR</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>67</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47290&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47296" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47296&period=7"><strong>MATARUŠKA BANJA</strong></a></td>
+<td>River:<br /><strong>IBAR</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-17</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47296&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47299" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47299&period=7"><strong>KRALJEVO</strong></a></td>
+<td>River:<br /><strong>IBAR</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>3</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47299&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47265" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47265&period=7"><strong>NOVI PAZAR</strong></a></td>
+<td>River:<br /><strong>RAŠKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>20</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47265&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47269" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47269&period=7"><strong>RAŠKA</strong></a></td>
+<td>River:<br /><strong>RAŠKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>95</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47269&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47278" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47278&period=7"><strong>BILJANOVAC</strong></a></td>
+<td>River:<br /><strong>JOŠANICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-12</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47278&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47285" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47285&period=7"><strong>MLANČA</strong></a></td>
+<td>River:<br /><strong>STUDENICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>13</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47285&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47288" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47288&period=7"><strong>UŠĆE</strong></a></td>
+<td>River:<br /><strong>STUDENICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-21</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47288&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47294" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47294&period=7"><strong>BOGUTOVAC</strong></a></td>
+<td>River:<br /><strong>LOPATNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>100</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47294&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47168" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47168&period=7"><strong>RAVNI</strong></a></td>
+<td>River:<br /><strong>RASINA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>42</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47168&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47175" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47175&period=7"><strong>BIVOLJE</strong></a></td>
+<td>River:<br /><strong>RASINA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-7</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47175&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_47156" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=47156&period=7"><strong>BORAČ</strong></a></td>
+<td>River:<br /><strong>BORAČKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>39</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=47156&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42520" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42520&period=7"><strong>GORNJAK</strong></a></td>
+<td>River:<br /><strong>MLAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>37</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42520&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42527" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42527&period=7"><strong>VELIKO SELO</strong></a></td>
+<td>River:<br /><strong>MLAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>37</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42527&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42535" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42535&period=7"><strong>BRATINAC</strong></a></td>
+<td>River:<br /><strong>MLAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-10</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42535&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42540" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42540&period=7"><strong>KULA</strong></a></td>
+<td>River:<br /><strong>VITOVNICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>62</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42540&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42660" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42660&period=7"><strong>KUSIĆ</strong></a></td>
+<td>River:<br /><strong>NERA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>22</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42660&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42670" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42670&period=7"><strong>VRAČEV GAJ</strong></a></td>
+<td>River:<br /><strong>NERA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>25</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42670&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42480" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42480&period=7"><strong>MARKOVIĆEVO</strong></a></td>
+<td>River:<br /><strong>BRZAVA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-155</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42480&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42485" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42485&period=7"><strong>VATIN</strong></a></td>
+<td>River:<br /><strong>MORAVICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-77700</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42485&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42610" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42610&period=7"><strong>KUŠTILJ</strong></a></td>
+<td>River:<br /><strong>KARAŠ</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-32</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42610&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42615" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42615&period=7"><strong>DOBRIČEVO</strong></a></td>
+<td>River:<br /><strong>KARAŠ</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>254</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42615&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42720" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42720&period=7"><strong>KUČEVO</strong></a></td>
+<td>River:<br /><strong>PEK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>17</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42720&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42760" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42760&period=7"><strong>CRNAJKA</strong></a></td>
+<td>River:<br /><strong>CRNAJKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>14</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42760&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42911" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42911&period=7"><strong>BOGOVINA</strong></a></td>
+<td>River:<br /><strong>CRNI TIMOK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>3</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42911&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42914" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42914&period=7"><strong>GAMZIGRAD</strong></a></td>
+<td>River:<br /><strong>CRNI TIMOK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>30</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42914&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42912" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42912&period=7"><strong>ZLOT</strong></a></td>
+<td>River:<br /><strong>ZLOTSKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-7</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42912&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42921" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42921&period=7"><strong>KNJAŽEVAC</strong></a></td>
+<td>River:<br /><strong>BELI TIMOK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>30</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42921&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42925" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42925&period=7"><strong>VRATARNICA</strong></a></td>
+<td>River:<br /><strong>BELI TIMOK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-10</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42925&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42929" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42929&period=7"><strong>ZAJEČAR</strong></a></td>
+<td>River:<br /><strong>BELI TIMOK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-98</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42929&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42901" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42901&period=7"><strong>ČOKONJAR</strong></a></td>
+<td>River:<br /><strong>VELIKI TIMOK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>57</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42901&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42926" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42926&period=7"><strong>GRLIŠTE</strong></a></td>
+<td>River:<br /><strong>GRLIŠKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>94</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42926&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42931" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42931&period=7"><strong>RGOŠTE</strong></a></td>
+<td>River:<br /><strong>SVRLJIŠKI TIMOK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>51</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42931&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_42935" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=42935&period=7"><strong>DONJA KAMENICA</strong></a></td>
+<td>River:<br /><strong>TRGOVIŠKI TIMOK</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>0</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=42935&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_64109" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=64109&period=7"><strong>RIBARCE</strong></a></td>
+<td>River:<br /><strong>DRAGOVIŠTICA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 03:00</strong></td>
+<td>Water level (cm):<br /><strong>23</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=64109&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_64129" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=64129&period=7"><strong>BOSILJGRAD</strong></a></td>
+<td>River:<br /><strong>LJUBATSKA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>21</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=64129&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_64111" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=64111&period=7"><strong>RIBARCE</strong></a></td>
+<td>River:<br /><strong>BRANKOVAČKA
+</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 06:00</strong></td>
+<td>Water level (cm):<br /><strong>26</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=64111&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<div style="display:none;">
+	<div id="data_area_63410" style="width:550px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station:<br /><a href="nrt_tabela_grafik.php?hm_id=63410&period=7"><strong>BARBACE</strong></a></td>
+<td>River:<br /><strong>PČINJA</strong></td>
+<td>Date&nbsp;and&nbsp;time:<br /><strong>06.08.26 07:00</strong></td>
+<td>Water level (cm):<br /><strong>-36</strong></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><img src="nrt_grafika.php?nrt_id=63410&period=7" /></td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - tabela -->   
+
+<!-- Kreiranje div tagova - stanice bez podataka -->
+		
+<div style="display:none;">
+	<div id="data_area_42770" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>CRNAJKA</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_45922" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>OBRENOVAC</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_47123" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>PRELJINA</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_47160" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>RIBNICA</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_47165" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>BRUS</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_47283" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>DEVIĆI</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_47460" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>KOSJERIĆ</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_47528" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>VRANJSKI PRIBOJ</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_47830" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>DONJA SELOVA</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_99079" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>GRADINA</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+		
+<div style="display:none;">
+	<div id="data_area_99057" style="width:550px; height:30px; display:block;">
+	
+<table border="1" style="font-size:12px; padding:5px;">	
+<tr height="30">
+<td>Station: <strong>DRAGUŠICA</strong> - data currently not available.</td>
+</tr>
+</table>
+	</div>
+</div>
+<!-- Kraj - kreiranje div tagova - stanice bez podataka -->   
+
+</div>
+<!-- close div#slika-->
+
+<!-- Tabela sa podacima --> 
+<div style="margin-left: 20px; width: 740px; position:absolute; top:1250px;">
+<!--<div style="margin-left: 20px; width: 740px;"> -->
+<table>
+  <tr>
+<!--    <td class="plavapozadina levo">&nbsp;</td>-->
+    <td class="plavapozadina levo">Station</td>
+    <td class="plavapozadina levo">River</td>
+	<td class="plavapozadina levo">Date&nbsp;and&nbsp;time</td>
+	<td class="plavapozadina levo" style="text-align:center;">Water level (cm)</td>
+  </tr>
+   <tfoot>
+  <tr>
+  <td class="levo" colspan="4">Select name of hydrological station for tabular and graphical data presentation for the last 7 and 30 days.<br />Note: <br />
+Data is provisional, unchecked, and has not been validated to remove invalid values.
+Data may be inaccurate due to instrument errors, malfunctions or physical changes at the measurement site.
+Data may be delayed due to telemetry or system issues. Data are updated several times a day.</td>
+  </tr>
+  </tfoot>
+  <tr>
+<!--<td class="siva75 levo">&nbsp;1.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42010&period=7">BEZDAN</a></td>
+<td class="siva75 levo">DUNAV</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-167</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;2.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42015&period=7">APATIN</a></td>
+<td class="bela75 levo">DUNAV</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-110</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;3.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42020&period=7">BOGOJEVO</a></td>
+<td class="siva75 levo">DUNAV</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-103</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;4.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42030&period=7">BAČKA PALANKA </a></td>
+<td class="bela75 levo">DUNAV</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-86</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;5.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42035&period=7">NOVI SAD</a></td>
+<td class="siva75 levo">DUNAV</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-64</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;6.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42045&period=7">ZEMUN</a></td>
+<td class="bela75 levo">DUNAV</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+168</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;7.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42050&period=7">PANČEVO</a></td>
+<td class="siva75 levo">DUNAV</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+213</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;8.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42055&period=7">SMEDEREVO</a></td>
+<td class="bela75 levo">DUNAV</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+414</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;9.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42060&period=7">BANATSKA PALANKA</a></td>
+<td class="siva75 levo">DUNAV</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+655</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;10.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42065&period=7">VELIKO GRADIŠTE</a></td>
+<td class="bela75 levo">DUNAV</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+721</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;11.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42070&period=7">GOLUBAC</a></td>
+<td class="siva75 levo">DUNAV</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+653</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;12.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42095&period=7">PRAHOVO</a></td>
+<td class="bela75 levo">DUNAV</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-123</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;13.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=44010&period=7">NOVI KNEŽEVAC</a></td>
+<td class="siva75 levo">TISA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+132</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;14.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=44020&period=7">SENTA</a></td>
+<td class="bela75 levo">TISA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+207</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;15.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=44035&period=7">BRANA NOVI BEČEJ GV</a></td>
+<td class="siva75 levo">TISA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+379</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;16.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=44040&period=7">TITEL</a></td>
+<td class="bela75 levo">TISA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+22</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;17.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=44028&period=7">VRBICA</a></td>
+<td class="siva75 levo">ZLATICA</td>
+<td class="siva75 levo">06.08.26 06:00</td>
+<td class="siva75 levo" style="text-align:center;">
+105</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;18.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=44201&period=7">HETIN</a></td>
+<td class="bela75 levo">STARI BEGEJ</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-114</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;19.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=44211&period=7">SRPSKI ITEBEJ GV</a></td>
+<td class="siva75 levo">PLOVNI BEGEJ</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+385</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;20.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=44212&period=7">SRPSKI ITEBEJ DV</a></td>
+<td class="bela75 levo">PLOVNI BEGEJ</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+232</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;21.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45084&period=7">JAMENA</a></td>
+<td class="siva75 levo">SAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+127</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;22.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45090&period=7">SREMSKA MITROVICA</a></td>
+<td class="bela75 levo">SAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+33</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;23.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45094&period=7">ŠABAC</a></td>
+<td class="siva75 levo">SAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-79</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;24.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45096&period=7">BELJIN</a></td>
+<td class="bela75 levo">SAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+39</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;25.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45099&period=7">BEOGRAD</a></td>
+<td class="siva75 levo">SAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+126</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;26.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45865&period=7">BAJINA BAŠTA</a></td>
+<td class="bela75 levo">DRINA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+20</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;27.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45882&period=7">RADALJ</a></td>
+<td class="siva75 levo">DRINA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+89</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;28.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45885&period=7">BADOVINCI</a></td>
+<td class="bela75 levo">DRINA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-73</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;29.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45836&period=7">BRODAREVO</a></td>
+<td class="siva75 levo">LIM</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+62</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;30.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45837&period=7">PRIJEPOLJE</a></td>
+<td class="bela75 levo">LIM</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+30</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;31.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45842&period=7">PRIBOJ</a></td>
+<td class="siva75 levo">LIM</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-37</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;32.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45838&period=7">PRIJEPOLJE</a></td>
+<td class="bela75 levo">MILEŠEVKA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+14</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;33.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45839&period=7">BISTRICA</a></td>
+<td class="siva75 levo">BISTRICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+35</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;34.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45843&period=7">ČEDOVO</a></td>
+<td class="bela75 levo">VAPA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+80</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;35.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45890&period=7">ZAVLAKA</a></td>
+<td class="siva75 levo">JADAR</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-15</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;36.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45892&period=7">LEŠNICA</a></td>
+<td class="bela75 levo">JADAR</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-31</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;37.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=99302&period=7">MOROVIĆ</a></td>
+<td class="siva75 levo">STUDVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+204</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;38.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45905&period=7">VALJEVO</a></td>
+<td class="bela75 levo">KOLUBARA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+4</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;39.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45908&period=7">SLOVAC</a></td>
+<td class="siva75 levo">KOLUBARA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+167</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;40.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45910&period=7">BELI BROD</a></td>
+<td class="bela75 levo">KOLUBARA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-16</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;41.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45920&period=7">DRAŽEVAC</a></td>
+<td class="siva75 levo">KOLUBARA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+46</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;42.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45098&period=7">RAKOVICA</a></td>
+<td class="bela75 levo">TOPČIDERSKA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+29</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;43.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45903&period=7">SEDLARI</a></td>
+<td class="siva75 levo">JABLANICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+19</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;44.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45904&period=7">BELO POLJE</a></td>
+<td class="bela75 levo">OBNICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-8</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;45.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45902&period=7">DEGURIĆ</a></td>
+<td class="siva75 levo">GRADAC</td>
+<td class="siva75 levo">06.08.26 06:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-25</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;46.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45906&period=7">MIONICA</a></td>
+<td class="bela75 levo">RIBNICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-8</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;47.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45909&period=7">BOGOVAĐA</a></td>
+<td class="siva75 levo">LJIG</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+41</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;48.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45912&period=7">ZEOKE</a></td>
+<td class="bela75 levo">PEŠTAN</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+71</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;49.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45914&period=7">KOCELJEVA</a></td>
+<td class="siva75 levo">TAMNAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+16</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;50.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45917&period=7">ĆEMANOV MOST</a></td>
+<td class="bela75 levo">TAMNAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+35</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;51.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=45916&period=7">UB</a></td>
+<td class="siva75 levo">UB</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+21</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;52.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42401&period=7">JAŠA TOMIĆ</a></td>
+<td class="bela75 levo">TAMIŠ</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+60</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;53.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42411&period=7">SEČANJ</a></td>
+<td class="siva75 levo">TAMIŠ</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+248</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;54.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47010&period=7">VARVARIN</a></td>
+<td class="bela75 levo">VELIKA MORAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-199</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;55.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47030&period=7">ĆUPRIJA</a></td>
+<td class="siva75 levo">VELIKA MORAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-104</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;56.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47040&period=7">BAGRDAN</a></td>
+<td class="bela75 levo">VELIKA MORAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-25</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;57.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47090&period=7">LJUBIČEVSKI MOST</a></td>
+<td class="siva75 levo">VELIKA MORAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-378</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;58.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47025&period=7">PARAĆIN</a></td>
+<td class="bela75 levo">CRNICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+33</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;59.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47029&period=7">ĆUPRIJA</a></td>
+<td class="siva75 levo">RAVANICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-3</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;60.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47035&period=7">MAJUR</a></td>
+<td class="bela75 levo">LUGOMIR</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+18</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;61.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47038&period=7">JAGODINA</a></td>
+<td class="siva75 levo">BELICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+30</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;62.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47057&period=7">BATOČINA</a></td>
+<td class="bela75 levo">LEPENICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+53</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;63.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47063&period=7">MANASTIR MANASIJA</a></td>
+<td class="siva75 levo">RESAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+16</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;64.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47067&period=7">SVILAJNAC</a></td>
+<td class="bela75 levo">RESAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-46</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;65.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47075&period=7">SMEDEREVSKA PALANKA</a></td>
+<td class="siva75 levo">JASENICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+44</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;66.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47076&period=7">SMEDEREVSKA PALANKA</a></td>
+<td class="bela75 levo">KUBRŠNICA</td>
+<td class="bela75 levo">06.08.26 07:15</td>
+<td class="bela75 levo" style="text-align:center;">
+67</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;67.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47530&period=7">VLADIČIN HAN</a></td>
+<td class="siva75 levo">JUŽNA MORAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+52</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;68.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47540&period=7">GRDELICA</a></td>
+<td class="bela75 levo">JUŽNA MORAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+56</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;69.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47550&period=7">KORVINGRAD</a></td>
+<td class="siva75 levo">JUŽNA MORAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-179</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;70.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47570&period=7">ALEKSINAC</a></td>
+<td class="bela75 levo">JUŽNA MORAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-118</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;71.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47590&period=7">MOJSINJE</a></td>
+<td class="siva75 levo">JUŽNA MORAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+8</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;72.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47630&period=7">SVOĐE</a></td>
+<td class="bela75 levo">VLASINA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+30</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;73.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47640&period=7">VLASOTINCE</a></td>
+<td class="siva75 levo">VLASINA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+8</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;74.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47620&period=7">SVOĐE</a></td>
+<td class="bela75 levo">LUŽNICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-65</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;75.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47665&period=7">LESKOVAC</a></td>
+<td class="siva75 levo">VETERNICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+25</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;76.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47720&period=7">SIJARINSKA BANJA</a></td>
+<td class="bela75 levo">JABLANICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+21</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;77.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47740&period=7">PEČENJEVCE</a></td>
+<td class="siva75 levo">JABLANICA</td>
+<td class="siva75 levo">06.08.26 06:00</td>
+<td class="siva75 levo" style="text-align:center;">
+11</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;78.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47548&period=7">PUKOVAC</a></td>
+<td class="bela75 levo">PUSTA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+7</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;79.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47850&period=7">PEPELJEVAC</a></td>
+<td class="siva75 levo">TOPLICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-16</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;80.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47880&period=7">PROKUPLJE</a></td>
+<td class="bela75 levo">TOPLICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-19</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;81.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47890&period=7">DOLJEVAC</a></td>
+<td class="siva75 levo">TOPLICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-23</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;82.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47855&period=7">VISOKA</a></td>
+<td class="bela75 levo">KOSANICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-55</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;83.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47910&period=7">DIMITROVGRAD</a></td>
+<td class="siva75 levo">NIŠAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+38</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;84.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47920&period=7">PIROT</a></td>
+<td class="bela75 levo">NIŠAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-77</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;85.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47950&period=7">BELA PALANKA</a></td>
+<td class="siva75 levo">NIŠAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+27</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;86.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47990&period=7">NIŠ</a></td>
+<td class="bela75 levo">NIŠAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+53</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;87.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47911&period=7">MRTVINE</a></td>
+<td class="siva75 levo">GABERSKA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+61</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;88.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47912&period=7">STRAZIMIROVCI</a></td>
+<td class="bela75 levo">JERMA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+33</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;89.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47914&period=7">TRNSKI ODOROVCI</a></td>
+<td class="siva75 levo">JERMA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+55</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;90.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47945&period=7">STANIČENJE</a></td>
+<td class="bela75 levo">TEMSKA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+16</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;91.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47975&period=7">RADIKINA BARA</a></td>
+<td class="siva75 levo">KUTINSKA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+12</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;92.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47939&period=7">IZATOVAC</a></td>
+<td class="bela75 levo">VISOČICA</td>
+<td class="bela75 levo">06.08.26 06:00</td>
+<td class="bela75 levo" style="text-align:center;">
+34</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;93.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47946&period=7">VISOČKA RŽANA</a></td>
+<td class="siva75 levo">DOJKINAČKA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+30</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;94.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47562&period=7">GORNJA TOPONICA</a></td>
+<td class="bela75 levo">TOPONIČKA</td>
+<td class="bela75 levo">06.08.26 06:00</td>
+<td class="bela75 levo" style="text-align:center;">
+88</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;95.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47580&period=7">ŽUČKOVAC</a></td>
+<td class="siva75 levo">MORAVICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+36</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;96.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47589&period=7">ALEKSINAC</a></td>
+<td class="bela75 levo">MORAVICA</td>
+<td class="bela75 levo">06.08.26 07:15</td>
+<td class="bela75 levo" style="text-align:center;">
+12</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;97.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47101&period=7">KRATOVSKA STENA</a></td>
+<td class="siva75 levo">ZAPADNA MORAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+197</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;98.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47115&period=7">ČAČAK</a></td>
+<td class="bela75 levo">ZAPADNA MORAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-6</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;99.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47120&period=7">MILOČAJ</a></td>
+<td class="siva75 levo">ZAPADNA MORAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-95</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;100.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47150&period=7">TRSTENIK</a></td>
+<td class="bela75 levo">ZAPADNA MORAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-79</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;101.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47195&period=7">JASIKA</a></td>
+<td class="siva75 levo">ZAPADNA MORAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-143</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;102.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47445&period=7">ŠENGOLJ</a></td>
+<td class="bela75 levo">ĐETINJA</td>
+<td class="bela75 levo">06.08.26 05:20</td>
+<td class="bela75 levo" style="text-align:center;">
+82</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;103.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47495&period=7">POŽEGA</a></td>
+<td class="siva75 levo">SKRAPEŽ</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+12</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;104.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47350&period=7">ARILJE</a></td>
+<td class="bela75 levo">MORAVICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-52</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;105.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=99266&period=7">KRUŠČICA</a></td>
+<td class="siva75 levo">VELIKI RZAV</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+57</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;106.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=99108&period=7">RADOBUĐA</a></td>
+<td class="bela75 levo">VELIKI RZAV</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+55</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;107.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=99241&period=7">KRUŠČICA</a></td>
+<td class="siva75 levo">MALI RZAV</td>
+<td class="siva75 levo">06.08.26 05:00</td>
+<td class="siva75 levo" style="text-align:center;">
+12</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;108.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47105&period=7">GUČA</a></td>
+<td class="bela75 levo">BJELICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+36</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;109.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47112&period=7">PRIJEVOR</a></td>
+<td class="siva75 levo">KAMENICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+7</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;110.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=99073&period=7">GORNJA GOREVNICA</a></td>
+<td class="bela75 levo">ČEMERNICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+33</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;111.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47121&period=7">BRĐANI</a></td>
+<td class="siva75 levo">DIČINA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+49</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;112.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47260&period=7">RAŠKA</a></td>
+<td class="bela75 levo">IBAR</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+163</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;113.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47290&period=7">UŠĆE</a></td>
+<td class="siva75 levo">IBAR</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+67</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;114.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47296&period=7">MATARUŠKA BANJA</a></td>
+<td class="bela75 levo">IBAR</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-17</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;115.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47299&period=7">KRALJEVO</a></td>
+<td class="siva75 levo">IBAR</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+3</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;116.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47265&period=7">NOVI PAZAR</a></td>
+<td class="bela75 levo">RAŠKA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+20</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;117.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47269&period=7">RAŠKA</a></td>
+<td class="siva75 levo">RAŠKA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+95</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;118.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47278&period=7">BILJANOVAC</a></td>
+<td class="bela75 levo">JOŠANICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-12</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;119.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47285&period=7">MLANČA</a></td>
+<td class="siva75 levo">STUDENICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+13</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;120.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47288&period=7">UŠĆE</a></td>
+<td class="bela75 levo">STUDENICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-21</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;121.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47294&period=7">BOGUTOVAC</a></td>
+<td class="siva75 levo">LOPATNICA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+100</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;122.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47168&period=7">RAVNI</a></td>
+<td class="bela75 levo">RASINA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+42</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;123.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47175&period=7">BIVOLJE</a></td>
+<td class="siva75 levo">RASINA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-7</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;124.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=47156&period=7">BORAČ</a></td>
+<td class="bela75 levo">BORAČKA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+39</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;125.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42520&period=7">GORNJAK</a></td>
+<td class="siva75 levo">MLAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+37</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;126.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42527&period=7">VELIKO SELO</a></td>
+<td class="bela75 levo">MLAVA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+37</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;127.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42535&period=7">BRATINAC</a></td>
+<td class="siva75 levo">MLAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-10</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;128.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42540&period=7">KULA</a></td>
+<td class="bela75 levo">VITOVNICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+62</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;129.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42660&period=7">KUSIĆ</a></td>
+<td class="siva75 levo">NERA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+22</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;130.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42670&period=7">VRAČEV GAJ</a></td>
+<td class="bela75 levo">NERA</td>
+<td class="bela75 levo">06.08.26 06:00</td>
+<td class="bela75 levo" style="text-align:center;">
+25</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;131.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42480&period=7">MARKOVIĆEVO</a></td>
+<td class="siva75 levo">BRZAVA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-155</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;132.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42485&period=7">VATIN</a></td>
+<td class="bela75 levo">MORAVICA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+dry river bed</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;133.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42610&period=7">KUŠTILJ</a></td>
+<td class="siva75 levo">KARAŠ</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-32</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;134.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42615&period=7">DOBRIČEVO</a></td>
+<td class="bela75 levo">KARAŠ</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+254</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;135.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42720&period=7">KUČEVO</a></td>
+<td class="siva75 levo">PEK</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+17</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;136.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42760&period=7">CRNAJKA</a></td>
+<td class="bela75 levo">CRNAJKA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+14</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;137.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42911&period=7">BOGOVINA</a></td>
+<td class="siva75 levo">CRNI TIMOK</td>
+<td class="siva75 levo">06.08.26 06:00</td>
+<td class="siva75 levo" style="text-align:center;">
+3</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;138.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42914&period=7">GAMZIGRAD</a></td>
+<td class="bela75 levo">CRNI TIMOK</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+30</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;139.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42912&period=7">ZLOT</a></td>
+<td class="siva75 levo">ZLOTSKA</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-7</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;140.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42921&period=7">KNJAŽEVAC</a></td>
+<td class="bela75 levo">BELI TIMOK</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+30</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;141.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42925&period=7">VRATARNICA</a></td>
+<td class="siva75 levo">BELI TIMOK</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+-10</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;142.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42929&period=7">ZAJEČAR</a></td>
+<td class="bela75 levo">BELI TIMOK</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-98</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;143.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42901&period=7">ČOKONJAR</a></td>
+<td class="siva75 levo">VELIKI TIMOK</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+57</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;144.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42926&period=7">GRLIŠTE</a></td>
+<td class="bela75 levo">GRLIŠKA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+94</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;145.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42931&period=7">RGOŠTE</a></td>
+<td class="siva75 levo">SVRLJIŠKI TIMOK</td>
+<td class="siva75 levo">06.08.26 07:00</td>
+<td class="siva75 levo" style="text-align:center;">
+51</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;146.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=42935&period=7">DONJA KAMENICA</a></td>
+<td class="bela75 levo">TRGOVIŠKI TIMOK</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+0</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;147.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=64109&period=7">RIBARCE</a></td>
+<td class="siva75 levo">DRAGOVIŠTICA</td>
+<td class="siva75 levo">06.08.26 03:00</td>
+<td class="siva75 levo" style="text-align:center;">
+23</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;148.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=64129&period=7">BOSILJGRAD</a></td>
+<td class="bela75 levo">LJUBATSKA</td>
+<td class="bela75 levo">06.08.26 06:00</td>
+<td class="bela75 levo" style="text-align:center;">
+21</td>
+</tr>
+                <tr>
+<!--<td class="siva75 levo">&nbsp;149.</td>-->
+<td class="siva75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=64111&period=7">RIBARCE</a></td>
+<td class="siva75 levo">BRANKOVAČKA
+</td>
+<td class="siva75 levo">06.08.26 06:00</td>
+<td class="siva75 levo" style="text-align:center;">
+26</td>
+</tr>
+                <tr>
+<!--<td class="bela75 levo">&nbsp;150.</td>-->
+<td class="bela75 levo">&nbsp;<a href="nrt_tabela_grafik.php?hm_id=63410&period=7">BARBACE</a></td>
+<td class="bela75 levo">PČINJA</td>
+<td class="bela75 levo">06.08.26 07:00</td>
+<td class="bela75 levo" style="text-align:center;">
+-36</td>
+</tr>
+              </table>
+</div>
+<!-- Kraj tabele sa podacima --> 
+
+</div><!-- close div#sadrzaj -->
+
+<div style="height:1500px;">
+<br />
+</div>
+<script type="text/javascript">
+function mailpage()
+{
+  mail_str = "mailto:?subject=Link ka stranici RHMZ" ;
+   mail_str += "&pound;body= RHMZ - Republicki hidrometeoroloski zavod Srbije";
+  mail_str += ". Link: " + location.href; 
+  location.href = mail_str;
+}
+</script>
+
+<div id="copyright" style="border:none; border-top:1px solid #00b0f0; margin-bottom:20px;">
+<table style="border:none; font-size:11px;">
+
+<tr>
+<td style="text-align:left;">
+<a href="http://www.hidmet.gov.rs/eng/orhmz/imenik.php"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/form.png" width="16" height="16" alt="Contact" />&nbsp;&nbsp;Contact</a><br />
+<a href="http://www.hidmet.gov.rs/eng/servisi/pretraga.php"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/search.png" width="16" height="16" alt="Search" />&nbsp;&nbsp;Search &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><br />
+<a href="http://www.hidmet.gov.rs/eng/mapa/index.php"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/site_map.png" width="16" height="16" alt="Site map" />&nbsp;&nbsp;Site map</a><br />
+</td>
+<td style="text-align:left;">
+<a href="http://worldweather.wmo.int"><img src="http://www.hidmet.gov.rs/repository/slike/naslovna/wmo.jpg" width="16" height="16" alt="WMO service" />&nbsp;&nbsp;WMO - World Weather Information Service</a><br />
+
+
+</td>
+<td style="text-align:left;">
+<a href="http://www.hidmet.gov.rs/index_eng.php"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/home.png" width="16" height="16" alt="Home"/>&nbsp;&nbsp;Home</a><br />
+
+<a href="javascript:print()"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/printer.png" alt="Print" /></a>&nbsp;&nbsp;<a href="javascript:print()">Page print</a><br />
+<a href="http://www.hidmet.gov.rs/data/download/Zakon_ENG.pdf"><img src="http://www.hidmet.gov.rs/repository/slike/ikone/copy/mime_pdf.png" width="16" height="16" alt="Law on meteorological and hydrological activities" />&nbsp;&nbsp;Law on met. and hyd. act.</a><br />
+</td>
+</tr>
+
+<tr><td>&nbsp;</td><td></td><td></td></tr>
+
+<tr>
+<td></td>
+<td style="text-align:left;">
+&copy;&nbsp;2026&nbsp;Copyright&nbsp;RHMS&nbsp;of&nbsp;Serbia
+</td>
+<td></td>
+</tr>
+</table>
+</div><!-- close #copyright --> 
+</div><!-- close div#content -->
+
+<div id="meni">
+<div id="jezik">
+<a href="https://www.hidmet.gov.rs/index.php" style="font-size:8px;"><img src="https://www.hidmet.gov.rs/latin/srp_zas.gif" alt="Srpski" width="13" height="8" title="Српски" />&nbsp;Ћирилица</a> &nbsp;
+<a href="https://www.hidmet.gov.rs/index_lat.php" style="font-size:8px;"><img src="https://www.hidmet.gov.rs/latin/srp_zas.gif" alt="Srpski" width="13" height="8" title="Srpski" />&nbsp;Latinica</a> &nbsp;
+<a href="https://www.hidmet.gov.rs/index_eng.php" style="font-size:8px;"><img src="https://www.hidmet.gov.rs/eng/eng_zas.gif" alt="English" width="13" height="8" title="English" />&nbsp;English</a>
+</div><!-- close #links -->
+<div style="text-align:center; margin-top:5px;">
+<a href="../orhmz/direktor.php"><img src="https://www.hidmet.gov.rs/direktor_eng.png" title="Direktor RHMZ" width="150" height="212" /></a> 
+</div> 
+
+<div id="links">
+<ul>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/osmotreni/naslovna.php">Actual data</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/index.php">Weather in Serbia</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/padavine.php">Precipitation in Serbia</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/sneg.php">Snow in Serbia</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/evropa.php">Weather in Europe</a></li>
+
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/stanje_voda.php">Hydrological data</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/nrt_index.php">Automatic hydrological stations</a></li>
+
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/radarska.php">Current radar images</a></li>
+
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/satelit.php">Satellite image</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/automatske.php">Automatic weather stations</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/analiza.php">Analysis</a></li>
+<li class="nav1"><a href="https://www.hidmet.gov.rs/eng/osmotreni/podzemne_automatske_pocetna.php">Reporting groundwater station</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/prognoza/naslovna_prognoza.php">Forecast</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/prognoza/naslovna_numerika.php">Numerical Weather Prediction</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/meteorologija/index.php">Meteorology</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/hidrologija/index.php">Hydrology</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/ipcc/index.php">Climate changes - IPCC</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/orhmz/index.php">About us</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/orhmz/novosti.php">News</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/projekti/index.php">Projects</a></li>
+<li class="nav"><a href="https://www.hidmet.gov.rs/eng/servisi/index.php">Services</a></li>
+</ul>
+</div><!-- close #links -->
+
+
+</div><!-- close div#meni -->
+
+</body>
+</html>
