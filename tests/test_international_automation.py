@@ -17,6 +17,7 @@ from scripts.update_international_data import (
     archive_details,
     main,
     next_scheduled,
+    normalized_source_date,
     replace_candidate,
     selected_sources,
     update_state,
@@ -88,11 +89,17 @@ class InternationalAutomationTests(unittest.TestCase):
         nrt = state["sources"]["rs"]["components"]["nrt"]
         self.assertEqual((nrt["last_attempt_status"], nrt["transport"], nrt["runner"], nrt["request_made"]), ("success", "curl.exe/Schannel", "Windows", True))
         self.assertEqual("2026-08-06", nrt["last_source_observation_at"])
+        self.assertEqual("every 3 hours plus daily/forecast Europe/Belgrade gates", state["sources"]["rs"]["update_frequency"])
         update_state(state, "rs", now, {"status": "failed", "error_type": "SourceAccessError"}, False, "forecast unavailable", details, None, "base", "forecast")
         components = state["sources"]["rs"]["components"]
         self.assertEqual("success", components["nrt"]["last_attempt_status"])
         self.assertEqual("failed", components["forecast"]["last_attempt_status"])
         self.assertEqual(1, components["forecast"]["consecutive_failures"])
+
+    def test_rs_source_dates_are_normalized_without_inventing_time(self):
+        self.assertEqual("2026-08-06", normalized_source_date("06.08.2026; first alert=500 cm"))
+        self.assertEqual("2026-08-06", normalized_source_date("2026-08-06T06:00:00+00:00"))
+        self.assertIsNone(normalized_source_date("unknown"))
 
     def test_failed_attempt_preserves_last_known_good(self):
         state = operation_state("de")
