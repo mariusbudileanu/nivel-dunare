@@ -85,7 +85,8 @@ jobs:
           $output = "_diagnostics/rhmz/github-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT-${{ runner.os }}"
           New-Item -ItemType Directory -Force -Path $output | Out-Null
           python --version 2>&1 | Tee-Object -FilePath "$output/python-version.txt"
-          curl.exe --version 2>&1 | Tee-Object -FilePath "$output/curl-version.txt"
+          $curl = if ('${{ runner.os }}' -eq 'Windows') { 'curl.exe' } else { 'curl' }
+          & $curl --version 2>&1 | Tee-Object -FilePath "$output/curl-version.txt"
           if (Get-Command openssl -ErrorAction SilentlyContinue) {
             openssl version -a 2>&1 | Tee-Object -FilePath "$output/openssl-version.txt"
           }
