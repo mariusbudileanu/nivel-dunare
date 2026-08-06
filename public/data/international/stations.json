@@ -3678,7 +3678,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -3727,7 +3727,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -3776,7 +3776,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -3825,7 +3825,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -3874,7 +3874,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -3923,7 +3923,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -3972,7 +3972,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -4021,7 +4021,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -4070,7 +4070,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -4119,7 +4119,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4168,7 +4168,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -4217,7 +4217,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -4266,7 +4266,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-06T08:36:48.872574+00:00",
+    "capture_datetime_utc": "2026-08-06T09:00:34.091886+00:00",
     "captured_via_provider_id": "hidmet_rs",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -4287,7 +4287,7 @@
     "longitude": 20.381901105003795,
     "mapped": true,
     "measuring_point_uid": null,
-    "observation_frequency": "variable (median 60 minutes)",
+    "observation_frequency": "60 minutes",
     "official_station_number": null,
     "operator_provider_id": "hidmet_rs",
     "physical_station_id": "rs-42045",

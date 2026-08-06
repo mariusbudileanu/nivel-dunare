@@ -1048,7 +1048,7 @@
     "forecast_count": 0,
     "is_primary_stream": true,
     "observation_count": 713,
-    "observation_frequency": "variable (median 60 minutes)",
+    "observation_frequency": "60 minutes",
     "physical_station_id": "rs-42045",
     "source_id": "hidmet_rs",
     "source_stream_id": "42045:nrt",
