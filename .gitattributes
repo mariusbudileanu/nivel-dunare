@@ -1,0 +1,2 @@
+# Official raw HTML fixtures are retained byte-for-byte, including source whitespace.
+tests/fixtures/international/rs/*.html -text whitespace=-trailing-space,-space-before-tab

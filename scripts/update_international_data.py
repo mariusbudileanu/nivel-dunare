@@ -38,7 +38,7 @@ OPERATIONAL_POLICY = {
     "hu": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "technical_validation_passed", "validation_message_ro": "Sursa oferă data și partea zilei; aplicația nu inventează ore sau fusuri.", "validation_message_en": "The source provides date and daypart; the application does not invent times or time zones."},
     "hr": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "stale", "validation_status": "technical_validation_passed", "validation_message_ro": "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.", "validation_message_en": "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source."},
     "bg": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional", "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.", "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive."},
-    "rs": {"access_status": "tls_failed", "automation_status": "disabled", "freshness_status": "unavailable", "validation_status": "technical_validation_failed", "validation_message_ro": "Integrarea este pregătită, dar automatizarea rămâne suspendată după eșecul validării TLS standard; nu se fac cereri programate.", "validation_message_en": "The integration is prepared, but automation remains suspended after standard TLS validation failed; no scheduled requests are made."},
+    "rs": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional", "validation_message_ro": "Date automate provizorii. Valorile sunt publicate exact așa cum sunt furnizate de RHMZ Serbia. Sursa precizează că datele nu sunt încă verificate și pot întârzia din cauza telemetriei sau a funcționării sistemului.", "validation_message_en": "Provisional automated data. Values are published exactly as supplied by RHMZ Serbia. The source states that the data have not yet been verified and may be delayed by telemetry or system operation."},
 }
 
 
@@ -148,7 +148,7 @@ def default_state(public_root: Path, commit_sha: str | None) -> dict[str, Any]:
             "source_status": SOURCE_POLICY[code]["status"],
             **policy,
             "last_attempt_at": prior.get("last_attempt_at"),
-            "last_attempt_status": prior.get("last_attempt_status", "suspended" if code == "rs" else "unknown"),
+            "last_attempt_status": prior.get("last_attempt_status", "unknown"),
             "last_success_at": prior.get("last_success_at") or capture,
             "last_successful_fetch_at": prior.get("last_successful_fetch_at") or prior.get("last_success_at") or capture,
             "last_success_capture_at": prior.get("last_success_capture_at") or capture,
@@ -164,12 +164,19 @@ def default_state(public_root: Path, commit_sha: str | None) -> dict[str, Any]:
             "consecutive_failures": int(prior.get("consecutive_failures") or 0),
             "published_snapshot_date": prior.get("published_snapshot_date") or latest_observation_date(source_rows(public_root, code)["observations"]),
             "next_expected_update": prior.get("next_expected_update"),
-            "update_frequency": ("09:15/21:15 Europe/Sofia by stream" if code == "bg" else ("daily at 01:37 UTC" if policy["automation_status"] == "scheduled" else ("manual" if code == "at" else "disabled"))),
+            "update_frequency": ("every 3 hours plus daily/forecast Europe/Belgrade gates" if code == "rs" else ("09:15/21:15 Europe/Sofia by stream" if code == "bg" else ("daily at 01:37 UTC" if policy["automation_status"] == "scheduled" else ("manual" if code == "at" else "disabled")))),
+            "components": prior.get("components", {}) if code == "rs" else prior.get("components"),
         }
     return result
 
 
 def next_scheduled(code: str, now: datetime) -> str:
+    if code == "rs":
+        candidate = now.replace(minute=17, second=0, microsecond=0)
+        while candidate <= now or candidate.hour % 3:
+            candidate += timedelta(hours=1)
+            candidate = candidate.replace(minute=17)
+        return candidate.isoformat()
     if code != "bg":
         next_day = (now + timedelta(days=1)).date()
         return datetime(next_day.year, next_day.month, next_day.day, 1, 37, tzinfo=timezone.utc).isoformat()
@@ -185,7 +192,7 @@ def next_scheduled(code: str, now: datetime) -> str:
     return min(candidates).astimezone(timezone.utc).isoformat()
 
 
-def acceptable(code: str, summary: dict[str, Any], issues: list[dict[str, Any]]) -> tuple[bool, str | None]:
+def acceptable(code: str, summary: dict[str, Any], issues: list[dict[str, Any]], stream: str = "all") -> tuple[bool, str | None]:
     if summary.get("status") == "failed":
         return False, str(summary.get("error") or "adapter failed")
     critical = {row.get("code") for row in issues if row.get("severity") == "critical"}
@@ -195,13 +202,17 @@ def acceptable(code: str, summary: dict[str, Any], issues: list[dict[str, Any]])
     expected_statuses = {
         "de": {"complete"}, "at": {"complete", "partial"}, "sk": {"complete", "partial"},
         "hu": {"complete"}, "hr": {"complete", "partial", "suspended"}, "bg": {"complete", "partial"},
+        "rs": {"complete"},
     }
     if summary.get("status") not in expected_statuses[code]:
         return False, f"unexpected adapter status {summary.get('status')!r}"
     station_count = int(summary.get("station_count") or 0)
     if station_count != EXPECTED_COUNTS[code]:
         return False, f"unexpected station count: expected {EXPECTED_COUNTS[code]}, got {station_count}"
-    if int(summary.get("observation_count") or 0) <= 0:
+    if code == "rs" and stream == "forecast":
+        if int(summary.get("forecast_count") or 0) <= 0:
+            return False, "empty forecast set"
+    elif int(summary.get("observation_count") or 0) <= 0:
         return False, "empty observation set"
     return True, None
 
@@ -211,8 +222,6 @@ def materialize_candidates(public_root: Path, candidate_root: Path) -> dict[str,
         shutil.rmtree(candidate_root)
     result = {}
     for code in ALL_SOURCES:
-        if code == "rs":
-            continue
         rows = source_rows(public_root, code)
         result[code] = rows
         folder = candidate_root / code
@@ -241,6 +250,22 @@ def replace_candidate(candidate_root: Path, code: str, new_folder: Path,
     station_ids = {row["station_id"] for row in all_stations}
     old_observations = [raw_candidate(row) for row in previous["observations"] if row.get("station_id") in station_ids]
     old_forecasts = [raw_candidate(row) for row in previous["forecasts"] if row.get("station_id") in station_ids]
+    if code == "rs":
+        if stream not in {"all", "nrt", "daily", "forecast"}:
+            raise ValueError(f"Unsupported RS stream selector: {stream}")
+        if stream in {"nrt", "daily"}:
+            retained = [row for row in old_observations if row.get("source_stream_type") != stream]
+            observations = dedupe(retained + [row for row in old_observations if row.get("source_stream_type") == stream] + new_observations, "observations")
+            forecasts = old_forecasts
+        elif stream == "forecast":
+            observations = old_observations
+            forecasts = new_forecasts
+        else:
+            observations = dedupe(old_observations + new_observations, "observations")
+            forecasts = new_forecasts
+    else:
+        observations = dedupe(old_observations + new_observations, "observations")
+        forecasts = [] if code == "bg" else dedupe(old_forecasts + new_forecasts, "forecasts")
     old_issues = []
     for row in previous["issues"]:
         if row.get("historical"):
@@ -250,27 +275,19 @@ def replace_candidate(candidate_root: Path, code: str, new_folder: Path,
             historical.update({"historical": True, "active": False})
             old_issues.append(historical)
     write_json(folder / "stations.json", all_stations)
-    write_json(folder / "observations.json", dedupe(old_observations + new_observations, "observations"))
-    write_json(folder / "forecasts.json", [] if code == "bg" else dedupe(old_forecasts + new_forecasts, "forecasts"))
+    write_json(folder / "observations.json", observations)
+    write_json(folder / "forecasts.json", forecasts)
     write_json(folder / "issues.json", dedupe(old_issues + new_issues, "issues"))
 
 
 def update_state(state: dict[str, Any], code: str, now: datetime, summary: dict[str, Any],
                  accepted: bool, error: str | None, details: dict[str, Any], latest_date: str | None,
-                 commit_sha: str | None) -> None:
+                 commit_sha: str | None, stream: str = "all") -> None:
     item = state["sources"][code]
     item["last_attempt_at"] = now.isoformat()
     if item["automation_status"] == "scheduled":
         item["next_expected_update"] = next_scheduled(code, now)
-    if code == "rs":
-        item.update({
-            "last_attempt_status": "suspended", "source_status": "suspended",
-            "freshness_status": "unavailable", "validation_status": "technical_validation_failed",
-            "last_error_code": "tls_certificate_validation",
-            "last_error_message": "TLS certificate-chain validation failed; no request was made.",
-            "last_error": {"code": "tls_certificate_validation", "message": "No request was made."},
-        })
-        return
+    component_names = ("nrt", "daily", "forecast") if code == "rs" and stream == "all" else ((stream,) if code == "rs" else ())
     if not accepted:
         message = error or "source capture rejected"
         item.update({
@@ -280,6 +297,13 @@ def update_state(state: dict[str, Any], code: str, now: datetime, summary: dict[
             "last_error": {"code": summary.get("error_type") or "validation_failed", "message": message},
             "consecutive_failures": int(item.get("consecutive_failures") or 0) + 1,
         })
+        for component_name in component_names:
+            component = item.setdefault("components", {}).setdefault(component_name, {})
+            component.update({
+                "last_attempt_at": now.isoformat(), "last_attempt_status": "failed", "last_error": message,
+                "consecutive_failures": int(component.get("consecutive_failures") or 0) + 1,
+                "request_made": True,
+            })
         return
     stale = code == "hr" and summary.get("status") in {"partial", "suspended"}
     source_status = "partial" if stale else SOURCE_POLICY[code]["status"]
@@ -299,13 +323,22 @@ def update_state(state: dict[str, Any], code: str, now: datetime, summary: dict[
         "consecutive_failures": 0,
         "published_snapshot_date": latest_date or item.get("published_snapshot_date"),
     })
+    for component_name in component_names:
+        component = item.setdefault("components", {}).setdefault(component_name, {})
+        component.update({
+            "last_attempt_at": now.isoformat(), "last_attempt_status": "success",
+            "last_success_at": now.isoformat(), "last_capture_at": details.get("last_capture_at"),
+            "last_source_observation_at": latest_date or details.get("last_capture_at"),
+            "last_error": None, "consecutive_failures": 0, "request_made": True,
+        })
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", choices=["all", "scheduled", *ALL_SOURCES], default="scheduled")
     parser.add_argument("--mode", choices=["fixtures", "live"], default="live")
-    parser.add_argument("--stream", choices=["all", "manual", "automatic"], default="all", help="BG publication stream selector")
+    parser.add_argument("--stream", choices=["all", "manual", "automatic", "nrt", "daily", "forecast"], default="all", help="BG or RS component selector")
+    parser.add_argument("--rs-period", choices=[7, 30], type=int, default=7, help="RHMZ NRT overlap/backfill period")
     parser.add_argument("--action", choices=["dry-run", "publish"], default="dry-run")
     parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--fixture-root", type=Path, default=Path("tests/fixtures/international"))
@@ -315,8 +348,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--audit-csv", type=Path, default=Path("docs/INTERNATIONAL_STATIONS_AUDIT.csv"))
     parser.add_argument("--geocoding-registry", type=Path, default=Path("data/reference/international_station_geocoding.csv"))
     args = parser.parse_args(argv)
-    if args.stream != "all" and args.source != "bg":
-        parser.error("--stream is valid only with --source bg")
+    if args.source == "bg" and args.stream not in {"all", "manual", "automatic"}:
+        parser.error("BG --stream must be all, manual, or automatic")
+    if args.source == "rs" and args.stream not in {"all", "nrt", "daily", "forecast"}:
+        parser.error("RS --stream must be all, nrt, daily, or forecast")
+    if args.source not in {"bg", "rs"} and args.stream != "all":
+        parser.error("--stream is valid only with --source bg or rs")
     if args.mode == "fixtures" and args.action == "publish":
         parser.error("fixture data cannot be published")
 
@@ -351,16 +388,11 @@ def main(argv: list[str] | None = None) -> int:
         if code not in selected:
             aggregate_rows.append({"source": code, "status": prior_source.get("adapter_live_status", "unavailable")})
             continue
-        if code == "rs":
-            summary = {"source": "rs", "status": "suspended", "publishable": False, "station_count": 13, "observation_count": 0, "forecast_count": 0}
-            details = {"payload_count": 0, "http_statuses": [], "content_types": [], "last_capture_at": None, "payload_sha256": []}
-            if args.mode == "live":
-                update_state(state, code, now, summary, False, None, details, None, commit_sha)
-            report = {**summary, **details, "accepted_for_publication": False, "request_made": False, "blocker": "TLS certificate-chain validation"}
-            reports.append(report); aggregate_rows.append(summary)
-            continue
         try:
-            summary = run_source(code, run_results, archive_root, fixture_root)
+            summary = run_source(
+                code, run_results, archive_root, fixture_root,
+                args.stream if code == "rs" else "all", args.rs_period,
+            )
         except Exception as exc:  # isolate an unexpected adapter defect to this source
             summary = {
                 "source": code, "adapter": SOURCE_POLICY[code]["source_id"], "status": "failed",
@@ -371,20 +403,21 @@ def main(argv: list[str] | None = None) -> int:
         folder = run_results / code
         issues = read_json(folder / "issues.json", [])
         details = archive_details(folder, archive_root, SOURCE_POLICY[code]["source_id"])
-        accepted, error = acceptable(code, summary, issues)
+        accepted, error = acceptable(code, summary, issues, args.stream if code == "rs" else "all")
         observations = read_json(folder / "observations.json", []) if summary.get("status") != "failed" else []
         latest_date = latest_observation_date(observations)
         if accepted and args.mode == "live":
-            replace_candidate(candidates, code, folder, previous[code], args.stream if code == "bg" else "all")
+            replace_candidate(candidates, code, folder, previous[code], args.stream if code in {"bg", "rs"} else "all")
         if args.mode == "live":
-            update_state(state, code, now, summary, accepted, error, details, latest_date, commit_sha)
+            update_state(state, code, now, summary, accepted, error, details, latest_date, commit_sha, args.stream if code == "rs" else "all")
         report = {
             **summary, **details, "accepted_for_publication": accepted,
             "parser_status": "success" if summary.get("status") != "failed" else "failed",
             "validator_status": "accepted" if accepted else "failed",
             "publication_status": ("fixture-only" if args.mode == "fixtures" else ("candidate" if accepted else "last-known-good")),
             "latest_observation_date": latest_date, "warnings": [row for row in issues if row.get("severity") != "critical"],
-            "blocker": error,
+            "blocker": error, "request_made": args.mode == "live",
+            "collection_profile": args.stream if code == "rs" else "all",
         }
         reports.append(report); aggregate_rows.append(summary)
 

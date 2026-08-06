@@ -73,7 +73,7 @@ def validate(root: Path, mirror: Path | None = None,
     require(len(stations) == 101 == status["station_count"], "Public registry must contain 101 station streams")
     require(len(station_ids) == len(station_id_set), "Duplicate station_id")
     require(len({row["station_slug"] for row in stations}) == len(stations), "Duplicate station_slug")
-    require(len(streams) == 101 == status["station_stream_count"], "Stream registry count mismatch")
+    require(len(streams) == status["station_stream_count"] and len(streams) in {101, 113}, "Stream registry count mismatch")
     require(len(stream_ids) == len(set(stream_ids)), "Duplicate source_stream_id")
     require({row["station_id"] for row in streams} == station_id_set, "Stream/station reference mismatch")
     require({row["physical_station_id"] for row in streams} <= physical_ids, "Orphan stream physical_station_id")
@@ -116,12 +116,14 @@ def validate(root: Path, mirror: Path | None = None,
     require(geojson.get("type") == "FeatureCollection", "Invalid GeoJSON type")
     require(len(features) == len(set(feature_physical_ids)) == status["mapped_physical_station_count"] == status["physical_station_count"], "Physical marker aggregation mismatch")
     require(len(features) == 93, "Expected 93 physical international markers")
-    require(sum(row["properties"]["stream_count"] for row in features) == 101, "Marker stream aggregation lost station streams")
+    require(sum(row["properties"]["stream_count"] for row in features) == len(streams), "Marker stream aggregation lost observation streams")
     for feature in features:
         props = feature["properties"]
         members = [row for row in stations if row["physical_station_id"] == props["physical_station_id"]]
-        require(props["stream_count"] == len(members) == len(props["streams"]), "Feature stream count mismatch")
+        member_streams = [row for row in streams if row["physical_station_id"] == props["physical_station_id"]]
+        require(props["stream_count"] == len(member_streams) == len(props["streams"]), "Feature stream count mismatch")
         require(set(props["station_ids"]) == {row["station_id"] for row in members}, "Feature station membership mismatch")
+        require({row["source_stream_id"] for row in props["streams"]} == {row["source_stream_id"] for row in member_streams}, "Feature stream membership mismatch")
         primary = next((row for row in members if row["is_primary_stream"]), members[0])
         require(feature["geometry"]["coordinates"] == [primary["longitude"], primary["latitude"]], "GeoJSON coordinate mismatch")
 
@@ -140,8 +142,25 @@ def validate(root: Path, mirror: Path | None = None,
             require(all(row.get("current_usable") for row in matching), "Legacy threshold excluded an official current value")
 
     rs = [row for row in stations if row["country_code"] == "RS"]
-    require(len(rs) == 13 and all(row["source_status"] == "suspended" for row in rs), "RS inventory/status mismatch")
-    require(not any(row["country_code"] == "RS" for row in observations + forecasts), "RS production data must remain disabled")
+    rs_observations = [row for row in observations if row["country_code"] == "RS"]
+    rs_forecasts = [row for row in forecasts if row["country_code"] == "RS"]
+    rs_streams = [row for row in streams if row["country_code"] == "RS"]
+    rs_active = bool(rs_observations)
+    require(len(rs) == 13, "RS station inventory mismatch")
+    if rs_active:
+        require(all(row["source_status"] == "complete" for row in rs), "Active RS source status mismatch")
+        require(len(rs_streams) == 25, "RS must publish 12 NRT and 13 daily observation streams")
+        require(sum(row["source_stream_type"] == "nrt" for row in rs_streams) == 12, "RS NRT stream count mismatch")
+        require(sum(row["source_stream_type"] == "daily" for row in rs_streams) == 13, "RS daily stream count mismatch")
+        require(rs_forecasts, "RS central point forecasts missing")
+        require(all(row.get("canonical_quality_flag") == "provisional" for row in rs_observations if row.get("source_stream_type") == "nrt"), "RS NRT quality must remain provisional")
+        require(all(row.get("measurement_datetime_local", "").endswith("+01:00") for row in rs_observations if row.get("source_stream_type") == "nrt"), "RS source-declared NRT offset missing")
+        require(any(float(row["value"]) < 0 for row in rs_observations if isinstance(row.get("value"), (int, float))), "RS negative official level was not preserved")
+        require(any(row.get("source_value_raw") in {"*", "-"} for row in rs_observations), "RS missing markers were not preserved")
+        require(not any(row.get("canonical_quality_flag") == "missing" for row in latest if row["country_code"] == "RS"), "RS missing value leaked into latest")
+    else:
+        require(all(row["source_status"] in {"suspended", "complete"} for row in rs), "Prepared RS inventory/status mismatch")
+        require(not rs_forecasts and len(rs_streams) == 13, "Legacy RS disabled-data contract mismatch")
     hr = [row for row in observations if row["country_code"] == "HR"]
     hr_source = next(row for row in sources if row["country_code"] == "HR")
     require(hr_source["access_status"] == "available", "HR access must be represented independently from freshness")
@@ -161,8 +180,10 @@ def validate(root: Path, mirror: Path | None = None,
         require(source["automation_status"] in {"scheduled", "manual", "disabled"}, "Invalid automation status")
         require(source["freshness_status"] in {"current", "stale", "unknown", "unavailable"}, "Invalid freshness status")
     automation = {row["country_code"]: row["automation_status"] for row in sources}
-    require({code for code, value in automation.items() if value == "scheduled"} == {"DE", "SK", "HU", "HR", "BG"}, "Scheduled source set mismatch")
-    require(automation["AT"] == "manual" and automation["RS"] == "disabled", "AT/RS automation mismatch")
+    expected_scheduled = {"DE", "SK", "HU", "HR", "BG"} | ({"RS"} if automation["RS"] == "scheduled" else set())
+    require({code for code, value in automation.items() if value == "scheduled"} == expected_scheduled, "Scheduled source set mismatch")
+    require(automation["AT"] == "manual", "AT automation mismatch")
+    require(automation["RS"] in {"scheduled", "disabled"}, "RS automation mismatch")
 
     require(status["observation_count"] == len(observations), "Observation count mismatch")
     require(status["current_usable_observation_count"] == sum(row["current_usable"] for row in observations), "Usable observation count mismatch")

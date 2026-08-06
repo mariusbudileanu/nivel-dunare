@@ -31,7 +31,8 @@ class InternationalPublicDataTests(unittest.TestCase):
         self.assertEqual(SOURCE_POLICY["hr"]["status"], "partial")
         self.assertFalse(SOURCE_POLICY["hr"]["current"])
         self.assertFalse(SOURCE_POLICY["bg"]["forecasts"])
-        self.assertFalse(SOURCE_POLICY["rs"]["observations"])
+        self.assertTrue(SOURCE_POLICY["rs"]["observations"])
+        self.assertTrue(SOURCE_POLICY["rs"]["forecasts"])
         self.assertTrue((ROOT / "data" / "public" / "latest.geojson").is_file())
         self.assertTrue((PUBLIC_ROOT / "stations.geojson").is_file())
 

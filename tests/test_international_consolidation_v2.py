@@ -84,7 +84,7 @@ class InternationalConsolidationV2Tests(unittest.TestCase):
 
     def test_serbia_fixture_combines_daily_nrt_and_demonstrated_forecasts(self):
         result = get_adapter("rs").parse(load_fixture_payloads(FIXTURES / "rs"))
-        self.assertEqual((13, 75, 32), (len(result.stations), len(result.observations), len(result.forecasts)))
+        self.assertEqual((13, 10076, 36), (len(result.stations), len(result.observations), len(result.forecasts)))
         self.assertEqual(12, sum(row.source_stream_type == "nrt" for row in result.stations))
         station_rows = [row for row in result.observations if row.station_id == "rs-42010"]
         self.assertEqual({"daily", "nrt"}, {row.source_stream_type for row in station_rows})
