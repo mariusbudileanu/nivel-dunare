@@ -14,13 +14,17 @@ function escapeHtml(value) {
 }
 
 function trendClass(properties) {
-  if (properties.quality_flag === "suspect") return "suspect";
-  if (properties.quality_flag === "provisional") return "provisional";
-  if (properties.freshness_status === "stale") return "stale";
-  if (["suspended", "unavailable"].includes(properties.source_status)) return properties.source_status;
-  if (properties.scope === "international") return properties.source_status === "partial" ? "partial" : "international";
-  const value = Number(properties.variation_cm_24h);
+  const raw = properties.variation_cm_24h;
+  if (raw === null || raw === undefined || raw === "") return "none";
+  const value = Number(raw);
+  if (Number.isNaN(value)) return "none";
   return value > 0 ? "up" : value < 0 ? "down" : "still";
+}
+
+function needsAttention(properties) {
+  return properties.quality_flag === "suspect"
+    || ["suspended", "unavailable"].includes(properties.source_status)
+    || properties.access_status === "unavailable" || properties.access_status === "tls_failed";
 }
 
 function isApproximate(properties) {
@@ -33,9 +37,10 @@ function isManualCoordinate(properties) {
 
 function markerIcon(properties, selected = false, count = 1) {
   const approximate = isApproximate(properties);
+  const flagged = needsAttention(properties);
   return L.divIcon({
     className: "station-marker-wrap",
-    html: `<div class="station-marker ${trendClass(properties)}${approximate ? " approximate" : isManualCoordinate(properties) ? " manual-coordinate" : " official-coordinate"}${selected ? " selected" : ""}${count > 1 ? " aggregate" : ""}" aria-hidden="true">${count > 1 ? `<span>${count}</span>` : ""}</div>`,
+    html: `<div class="station-marker ${trendClass(properties)}${approximate ? " approximate" : isManualCoordinate(properties) ? " manual-coordinate" : " official-coordinate"}${selected ? " selected" : ""}${count > 1 ? " aggregate" : ""}${flagged ? " flagged" : ""}" aria-hidden="true">${count > 1 ? `<span>${count}</span>` : ""}</div>`,
     iconSize: count > 1 ? [25, 25] : [18, 18], iconAnchor: count > 1 ? [12, 12] : [9, 9], popupAnchor: [0, -10],
   });
 }
@@ -80,12 +85,32 @@ function coordinateDetails(properties) {
   return `${valueLine(t("coordinateValue"), coordinate)}${valueLine(t("coordinateMethod"), method)}${valueLine(t("coordinateProvider"), coordinateProvenanceLabel(properties.coordinate_provider))}${valueLine(t("coordinateConfidence"), coordinateConfidenceLabel(properties.coordinate_confidence))}${source}${warning}${streamDetails}`;
 }
 
-function popupHtml(properties) {
-  const isInternational = properties.scope === "international";
-  const variation = properties.variation_cm_24h == null ? null : Number(properties.variation_cm_24h);
-  const observation = properties.water_level || properties.discharge || properties.water_temperature;
-  const localName = properties.station_name_local && properties.station_name_local !== properties.display_name
-    ? `<p class="popup-local-name">${escapeHtml(properties.station_name_local)}</p>` : "";
+function trendInfo(properties) {
+  const key = trendClass(properties);
+  const labels = { up: t("trendUp"), down: t("trendDown"), still: t("trendStill"), none: t("noTrendAvailable") };
+  const symbols = { up: "▲", down: "▼", still: "■", none: "•" };
+  return { key, symbol: symbols[key], label: labels[key] };
+}
+
+function freshnessWord(properties) {
+  if (properties.freshness_status === "stale") return t("stale");
+  if (properties.freshness_status === "unavailable" || properties.access_status === "unavailable" || properties.access_status === "tls_failed") return t("unavailable");
+  if (properties.quality_flag === "provisional" || properties.validation_status === "source_provisional") return t("provisional");
+  return t("current");
+}
+
+function popupObservationTime(properties, isInternational, observation) {
+  if (isInternational && observation) {
+    if (observation.measurement_date && !observation.measurement_datetime_local && !observation.measurement_datetime_utc) return formatDate(observation.measurement_date);
+    const localValue = observation.measurement_datetime_local || observation.measurement_time_original;
+    if (localValue) return formatDate(localValue, true, observation.measurement_timezone || "");
+    if (observation.measurement_datetime_utc) return `${formatDate(observation.measurement_datetime_utc, true, "UTC")} UTC`;
+    return t("unavailable");
+  }
+  return properties.measurement_datetime ? formatDate(properties.measurement_datetime, true) : t("unavailable");
+}
+
+function popupDetailsBody(properties, isInternational, observation) {
   const sourceLink = properties.source_url
     ? `<p><a href="${escapeHtml(properties.source_url)}" target="_blank" rel="noopener">${escapeHtml(t("officialSource"))}</a></p>` : "";
   let timeLines = "";
@@ -100,21 +125,15 @@ function popupHtml(properties) {
       }
       if (observation.measurement_datetime_utc) timeLines += valueLine(t("utcTime"), `${formatDate(observation.measurement_datetime_utc, true, "UTC")} UTC`);
     }
-  } else if (properties.measurement_datetime) {
-    timeLines = valueLine(t("lastObservation"), formatDate(properties.measurement_datetime, true));
   }
   const captureLine = isInternational && properties.capture_datetime_utc
     ? valueLine(t("captureTime"), `${formatDate(properties.capture_datetime_utc, true, "UTC")} UTC`) : "";
   const qualityLine = isInternational && observation?.canonical_quality_flag
     ? `<p><strong>${escapeHtml(t("observationQuality"))}:</strong> <span class="status-tag ${escapeHtml(observation.canonical_quality_flag)}">${escapeHtml(qualityLabel(observation.canonical_quality_flag))}</span></p>` : "";
-  return `<div class="station-popup">
-    <h3>${escapeHtml(properties.display_name)}</h3>${localName}
-    <p>${escapeHtml(countryName(properties.country_code))} · ${escapeHtml(properties.source_label || properties.source_name || "")}</p>
+  return `
     ${isInternational ? valueLine(t("stationType"), stationTypeLabel(properties.station_type)) : ""}
     ${isInternational && properties.river_name ? valueLine(t("riverLabel"), t("river")) : ""}
     ${properties.river_km == null ? "" : `<p>${escapeHtml(t("kilometre"))} ${formatNumber(properties.river_km)}</p>`}
-    ${valueLine(t("currentLevel"), properties.level_cm == null ? null : formatNumber(properties.level_cm), "cm")}
-    ${valueLine(t("variation24"), variation == null ? null : `${variation > 0 ? "+" : ""}${formatNumber(variation)}`, "cm")}
     ${valueLine(t("temperature"), properties.water_temperature_c == null ? null : formatNumber(properties.water_temperature_c, 1), "°C")}
     ${valueLine(t("discharge"), properties.discharge_m3_s == null ? null : formatNumber(properties.discharge_m3_s), "m³/s")}
     ${properties.forecast_count ? valueLine(t("availableForecasts"), formatNumber(properties.forecast_count)) : ""}
@@ -126,7 +145,29 @@ function popupHtml(properties) {
     ${properties.country_code === "HR" ? `<p class="warning-copy">${escapeHtml(t("hrForecastDisclaimer"))}</p>` : ""}
     ${isInternational ? `${valueLine(t("accessStatus"), statusLabel(properties.access_status || "unavailable"))}${valueLine(t("automationStatus"), statusLabel(properties.automation_status || "unavailable"))}${valueLine(t("freshnessStatus"), statusLabel(properties.freshness_status || "unavailable"))}${valueLine(t("validationStatus"), statusLabel(properties.validation_status || "unavailable"))}` : ""}
     ${isInternational ? `<p><strong>${escapeHtml(t("sourceStatus"))}:</strong> <span class="status-tag ${escapeHtml(properties.source_status)}">${escapeHtml(statusLabel(properties.source_status))}</span></p>` : ""}
-    ${sourceLink}
+    ${sourceLink}`;
+}
+
+function popupHtml(properties) {
+  const isInternational = properties.scope === "international";
+  const observation = properties.water_level || properties.discharge || properties.water_temperature;
+  const localName = properties.station_name_local && properties.station_name_local !== properties.display_name
+    ? `<p class="popup-local-name">${escapeHtml(properties.station_name_local)}</p>` : "";
+  const trend = trendInfo(properties);
+  return `<div class="station-popup">
+    <h3>${escapeHtml(properties.display_name)}</h3>${localName}
+    <p>${escapeHtml(countryName(properties.country_code))} · ${escapeHtml(properties.source_label || properties.source_name || "")}</p>
+    <dl class="popup-compact">
+      <div><dt>${escapeHtml(t("currentLevel"))}</dt><dd>${properties.level_cm == null ? "—" : `${formatNumber(properties.level_cm)} cm`}</dd></div>
+      <div><dt>${escapeHtml(t("trend"))}</dt><dd class="popup-trend ${trend.key}">${trend.symbol} ${escapeHtml(trend.label)}</dd></div>
+      <div><dt>${escapeHtml(t("lastObservation"))}</dt><dd>${escapeHtml(popupObservationTime(properties, isInternational, observation))}</dd></div>
+      <div><dt>${escapeHtml(t("state"))}</dt><dd>${escapeHtml(freshnessWord(properties))}</dd></div>
+    </dl>
+    ${isApproximate(properties) ? `<p class="warning-copy coordinate-warning">! ${escapeHtml(t("approximateCoordinateWarning"))}</p>` : ""}
+    <details class="popup-details">
+      <summary>${escapeHtml(t("showDetails"))}</summary>
+      ${popupDetailsBody(properties, isInternational, observation)}
+    </details>
     <button class="button primary compact" type="button" data-open-station="${escapeHtml(properties.station_id)}">${escapeHtml(t("openAnalysis"))}</button>
   </div>`;
 }
@@ -143,7 +184,7 @@ function groupPopupHtml(propertiesList) {
 }
 
 function bindPopup(group) {
-  group.marker.bindPopup(groupPopupHtml(group.visibleProperties), { maxWidth: 360 });
+  group.marker.bindPopup(groupPopupHtml(group.visibleProperties), { maxWidth: 320, minWidth: 280 });
 }
 
 function bindOpenAnalysisButtons(root) {

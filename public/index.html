@@ -126,20 +126,28 @@
         </div>
         <div id="map" role="application" aria-label="Hartă interactivă cu stațiile hidrometrice" data-i18n-aria-label="mapAria"></div>
         <div class="map-legend" aria-label="Legendă hartă" data-i18n-aria-label="mapLegend">
-          <span><i class="legend-dot up"></i> <span data-i18n="trendUp">creștere</span></span>
-          <span><i class="legend-dot down"></i> <span data-i18n="trendDown">scădere</span></span>
-          <span><i class="legend-dot still"></i> <span data-i18n="trendStill">staționare</span></span>
-          <span><i class="legend-dot alert"></i> <span data-i18n="qualityWarning">atenționare</span></span>
-          <span><i class="legend-dot international"></i> <span data-i18n="complete">complet internațional</span></span>
-          <span><i class="legend-dot partial"></i> <span data-i18n="partial">parțial</span></span>
-          <span><i class="legend-dot provisional"></i> <span data-i18n="provisional">provizoriu</span></span>
-          <span><i class="legend-dot suspect"></i> <span data-i18n="suspect">suspect</span></span>
-          <span><i class="legend-dot stale"></i> <span data-i18n="stale">date vechi</span></span>
-          <span><i class="legend-dot suspended"></i> <span data-i18n="suspended">suspendat</span></span>
-          <span><i class="legend-dot unavailable"></i> <span data-i18n="unavailable">indisponibil</span></span>
-          <span><i class="legend-dot coordinate-official"></i> <span data-i18n="officialCoordinateLegend">poziție oficială exactă</span></span>
-          <span><i class="legend-dot coordinate-manual"></i> <span data-i18n="manualCoordinateLegend">poziție exactă verificată manual</span></span>
-          <span><i class="legend-dot coordinate-approximate"></i> <span data-i18n="approximateCoordinateLegend">poziție aproximativă a localității</span></span>
+          <div class="map-legend-primary">
+            <span><i class="legend-dot up"></i> <span data-i18n="trendUp">creștere</span></span>
+            <span><i class="legend-dot down"></i> <span data-i18n="trendDown">scădere</span></span>
+            <span><i class="legend-dot still"></i> <span data-i18n="trendStill">staționare</span></span>
+            <span><i class="legend-dot none"></i> <span data-i18n="noTrendAvailable">fără tendință disponibilă</span></span>
+            <span><i class="legend-dot group">2</i> <span data-i18n="stationGroupLegend">grup de stații</span></span>
+          </div>
+          <details class="map-legend-secondary">
+            <summary data-i18n="otherSymbolsLegend">Alte simboluri și precizia pozițiilor</summary>
+            <div class="legend-technical">
+              <span><i class="legend-dot coordinate-official"></i> <span data-i18n="officialCoordinateLegend">poziție oficială exactă</span></span>
+              <span><i class="legend-dot coordinate-manual"></i> <span data-i18n="manualCoordinateLegend">poziție exactă verificată manual</span></span>
+              <span><i class="legend-dot coordinate-approximate"></i> <span data-i18n="approximateCoordinateLegend">poziție aproximativă a localității</span></span>
+              <span><i class="legend-dot complete"></i> <span data-i18n="complete">complet</span></span>
+              <span><i class="legend-dot partial"></i> <span data-i18n="partial">parțial</span></span>
+              <span><i class="legend-dot provisional"></i> <span data-i18n="provisional">provizoriu</span></span>
+              <span><i class="legend-dot suspect"></i> <span data-i18n="suspect">suspect</span></span>
+              <span><i class="legend-dot stale"></i> <span data-i18n="stale">date vechi</span></span>
+              <span><i class="legend-dot suspended"></i> <span data-i18n="suspended">suspendat</span></span>
+              <span><i class="legend-dot unavailable"></i> <span data-i18n="unavailable">indisponibil</span></span>
+            </div>
+          </details>
         </div>
       </article>
 

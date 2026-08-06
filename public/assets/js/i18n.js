@@ -102,7 +102,8 @@ export const translations = {
   manualUpdateLabel: "Actualizare manuală", manualUpdateInfo: "Surse care nu sunt încă incluse într-un program automat și sunt actualizate prin declanșare manuală.",
   unavailableSourcesLabel: "Surse indisponibile", unavailableSourcesInfo: "Surse care nu au putut furniza date în ultima verificare. Portalul poate păstra ultima versiune validă disponibilă.",
   moreInfo: "Detalii", monitoredLocations: "Amplasamente monitorizate", dataStreams: "Fluxuri de date", currentObservationStations: "Stații cu observații curente", noTrendAvailable: "Fără tendință disponibilă",
-  learnMore: "Află mai multe", filtersLabel: "Filtre", filtersTitle: "Filtrează harta și lista", extraTechnicalDetails: "Detalii tehnice suplimentare pe sursă"
+  learnMore: "Află mai multe", filtersLabel: "Filtre", filtersTitle: "Filtrează harta și lista", extraTechnicalDetails: "Detalii tehnice suplimentare pe sursă",
+  stationGroupLegend: "grup de stații", otherSymbolsLegend: "Alte simboluri și precizia pozițiilor"
   },
   en: {
     appTitle: "Danube Water Levels", appSubtitle: "Daily monitoring of water levels and hydrological forecasts",
@@ -207,7 +208,8 @@ export const translations = {
   manualUpdateLabel: "Manual update", manualUpdateInfo: "Sources not yet included in an automated schedule, updated through manual triggering.",
   unavailableSourcesLabel: "Unavailable sources", unavailableSourcesInfo: "Sources that could not provide data at the last check. The portal may keep the last valid available version.",
   moreInfo: "Details", monitoredLocations: "Monitored locations", dataStreams: "Data streams", currentObservationStations: "Stations with current observations", noTrendAvailable: "No trend available",
-  learnMore: "Learn more", filtersLabel: "Filters", filtersTitle: "Filter the map and list", extraTechnicalDetails: "Extra technical details per source"
+  learnMore: "Learn more", filtersLabel: "Filters", filtersTitle: "Filter the map and list", extraTechnicalDetails: "Extra technical details per source",
+  stationGroupLegend: "station group", otherSymbolsLegend: "Other symbols and location accuracy"
   },
 };
 
