@@ -2,6 +2,7 @@
 observation,1a87220f-e0ae-4cf3-b921-e1e5b73f5f75,Baziaș,2026-08-03T03:00:00+03:00,2026-08-03,,544,0,28,valid
 observation,1a87220f-e0ae-4cf3-b921-e1e5b73f5f75,Baziaș,2026-08-04T03:00:00+03:00,2026-08-04,,544,0,28,valid
 observation,1a87220f-e0ae-4cf3-b921-e1e5b73f5f75,Baziaș,2026-08-05T03:00:00+03:00,2026-08-05,,544,0,28,valid
+observation,1a87220f-e0ae-4cf3-b921-e1e5b73f5f75,Baziaș,2026-08-06T03:00:00+03:00,2026-08-06,,542,-2,28,valid
 forecast,1a87220f-e0ae-4cf3-b921-e1e5b73f5f75,Baziaș,2026-08-07T03:00:00+03:00,2026-08-07,120,,,,missing_forecast_encoded_as_zero
 forecast,1a87220f-e0ae-4cf3-b921-e1e5b73f5f75,Baziaș,2026-08-03T03:00:00+03:00,2026-08-03,24,,,,missing_forecast_encoded_as_zero
 forecast,1a87220f-e0ae-4cf3-b921-e1e5b73f5f75,Baziaș,2026-08-04T03:00:00+03:00,2026-08-04,48,,,,missing_forecast_encoded_as_zero

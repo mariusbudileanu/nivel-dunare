@@ -2,6 +2,7 @@
 observation,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-03T03:00:00+03:00,2026-08-03,,963,-1,28,valid
 observation,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-04T03:00:00+03:00,2026-08-04,,964,1,28,valid
 observation,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-05T03:00:00+03:00,2026-08-05,,961,-3,28,valid
+observation,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-06T03:00:00+03:00,2026-08-06,,960,-1,28,valid
 forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-07T03:00:00+03:00,2026-08-07,120,,,,missing_forecast_encoded_as_zero
 forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-03T03:00:00+03:00,2026-08-03,24,,,,missing_forecast_encoded_as_zero
 forecast,841d8091-d02e-4c06-8391-7f5aa233b244,Drencova,2026-08-04T03:00:00+03:00,2026-08-04,48,,,,missing_forecast_encoded_as_zero

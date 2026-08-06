@@ -2,6 +2,7 @@
 observation,b5ab6a64-d495-4137-b6a3-4c98d96836c9,Corabia,2026-08-03T03:00:00+03:00,2026-08-03,,-127,-1,27.5,valid
 observation,b5ab6a64-d495-4137-b6a3-4c98d96836c9,Corabia,2026-08-04T03:00:00+03:00,2026-08-04,,-129,-2,27.5,valid
 observation,b5ab6a64-d495-4137-b6a3-4c98d96836c9,Corabia,2026-08-05T03:00:00+03:00,2026-08-05,,-131,-2,27.5,valid
+observation,b5ab6a64-d495-4137-b6a3-4c98d96836c9,Corabia,2026-08-06T03:00:00+03:00,2026-08-06,,-134,-3,28,valid
 forecast,b5ab6a64-d495-4137-b6a3-4c98d96836c9,Corabia,2026-08-07T03:00:00+03:00,2026-08-07,120,-142,,,xml_html_value_mismatch
 forecast,b5ab6a64-d495-4137-b6a3-4c98d96836c9,Corabia,2026-08-03T03:00:00+03:00,2026-08-03,24,-129,,,xml_html_value_mismatch
 forecast,b5ab6a64-d495-4137-b6a3-4c98d96836c9,Corabia,2026-08-04T03:00:00+03:00,2026-08-04,48,-133,,,xml_html_value_mismatch
