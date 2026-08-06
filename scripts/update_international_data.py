@@ -29,7 +29,6 @@ SOURCE_ID_TO_CODE = {value["source_id"]: key for key, value in SOURCE_POLICY.ite
 PUBLIC_ENRICHMENT_KEYS = {
     "country_code", "station_name", "station_name_local", "source_id",
     "source_status", "source_url", "current_usable", "stale",
-    "physical_station_id", "source_stream_id", "source_stream_type", "is_primary_stream",
 }
 ALLOWED_CRITICAL: dict[str, set[str]] = {}
 OPERATIONAL_POLICY = {

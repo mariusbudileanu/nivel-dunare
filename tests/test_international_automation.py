@@ -18,6 +18,7 @@ from scripts.update_international_data import (
     main,
     next_scheduled,
     normalized_source_date,
+    raw_candidate,
     replace_candidate,
     selected_sources,
     update_state,
@@ -100,6 +101,22 @@ class InternationalAutomationTests(unittest.TestCase):
         self.assertEqual("2026-08-06", normalized_source_date("06.08.2026; first alert=500 cm"))
         self.assertEqual("2026-08-06", normalized_source_date("2026-08-06T06:00:00+00:00"))
         self.assertIsNone(normalized_source_date("unknown"))
+
+    def test_public_refresh_preserves_stream_provenance(self):
+        public_row = {
+            "station_id": "rs-42010", "country_code": "RS", "station_name": "Bezdan",
+            "source_id": "rhmz_rs", "source_status": "complete", "current_usable": True,
+            "physical_station_id": "rs-42010", "source_stream_id": "42010:daily",
+            "source_stream_type": "daily", "is_primary_stream": False,
+            "parameter": "water_level", "canonical_quality_flag": "observed",
+        }
+        candidate = raw_candidate(public_row)
+        self.assertNotIn("country_code", candidate)
+        self.assertNotIn("station_name", candidate)
+        self.assertEqual("rs-42010", candidate["physical_station_id"])
+        self.assertEqual("42010:daily", candidate["source_stream_id"])
+        self.assertEqual("daily", candidate["source_stream_type"])
+        self.assertFalse(candidate["is_primary_stream"])
 
     def test_failed_attempt_preserves_last_known_good(self):
         state = operation_state("de")
