@@ -91,15 +91,23 @@
     </section>
 
     <section class="surface filters-panel" aria-labelledby="filters-title">
-      <div class="panel-heading"><div><p class="eyebrow" data-i18n="filtersLabel">Filtre</p><h2 id="filters-title" data-i18n="filtersTitle">Filtrează harta și lista</h2></div></div>
-      <div class="international-filters" aria-label="Filtre internaționale" data-i18n-aria-label="internationalFiltersAria">
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="filtersLabel">Filtre</p><h2 id="filters-title" data-i18n="filtersTitle">Filtrează harta și lista</h2></div>
+        <div class="filters-toolbar">
+          <span id="active-filters-count" class="active-filters-count"></span>
+          <button class="button ghost compact" id="filters-reset" type="button" data-i18n="reset">Resetare</button>
+          <button class="button secondary compact" id="advanced-filters-toggle" type="button" aria-expanded="false" aria-controls="advanced-filters" data-i18n="advancedFilters">Filtre avansate</button>
+        </div>
+      </div>
+      <div class="international-filters primary-filters" aria-label="Filtre internaționale" data-i18n-aria-label="internationalFiltersAria">
         <label><span data-i18n="country">Țară</span><select id="country-filter"></select></label>
+        <label><span data-i18n="freshnessStatus">Prospețime</span><select id="freshness-filter"></select></label>
+      </div>
+      <div class="international-filters advanced-filters" id="advanced-filters" hidden>
         <label><span data-i18n="source">Administrație / sursă</span><select id="source-filter"></select></label>
         <label><span data-i18n="trend">Tendință</span><select id="trend-filter"></select></label>
         <label><span data-i18n="accessStatus">Acces</span><select id="access-filter"></select></label>
         <label><span data-i18n="sourceStatus">Status sursă</span><select id="status-filter"></select></label>
         <label><span data-i18n="automationStatus">Automatizare</span><select id="automation-filter"></select></label>
-        <label><span data-i18n="freshnessStatus">Prospețime</span><select id="freshness-filter"></select></label>
         <label><span data-i18n="observationQuality">Calitatea observației</span><select id="quality-filter"></select></label>
         <label><span data-i18n="stationType">Tip stație</span><select id="type-filter"></select></label>
         <label><span data-i18n="streamType">Tip flux</span><select id="stream-filter"></select></label>
@@ -232,14 +240,9 @@
     </section>
 
     <section class="surface station-table-section" id="stations" aria-labelledby="table-title">
-      <div class="panel-heading"><div><p class="eyebrow" data-i18n="allStations">Toate stațiile</p><h2 id="table-title" data-i18n="reportedSituation">Situația raportată</h2></div><div class="table-tools"><input id="table-search" type="search" placeholder="Caută…" data-i18n-placeholder="search" aria-label="Caută în tabel" data-i18n-aria-label="tableSearchAria"><select id="table-filter" aria-label="Filtrează după tendință" data-i18n-aria-label="trendFilterAria"><option value="all" data-i18n="allStates">Toate stările</option><option value="up" data-i18n="rising">Creștere</option><option value="down" data-i18n="falling">Scădere</option><option value="still" data-i18n="stationary">Staționare</option><option value="alert" data-i18n="warnings">Atenționări</option></select><button class="button secondary compact" id="table-csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button></div></div>
-      <p class="table-caption" data-i18n="tableOrder">Ordine implicită: kilometrul fluvial crescător. Selectează un rând pentru analiza stației.</p>
-      <div class="table-scroll">
-        <table id="stations-table">
-          <thead><tr><th data-sort="display_name" scope="col" data-i18n="station">Stație</th><th data-sort="river_km" scope="col" data-i18n="kilometre">Km</th><th data-sort="level_cm" scope="col" data-i18n="level">Nivel</th><th data-sort="variation_cm_24h" scope="col" data-i18n="variation">Variație</th><th data-sort="water_temperature_c" scope="col" data-i18n="temperature">Temperatură</th><th data-sort="measurement_datetime" scope="col" data-i18n="observationDate">Data observației</th><th scope="col" data-i18n="state">Stare</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="allStations">Toate stațiile</p><h2 id="table-title" data-i18n="stationsAndObservations">Stații și observații</h2></div><div class="table-tools"><input id="table-search" type="search" placeholder="Caută…" data-i18n-placeholder="search" aria-label="Caută în tabel" data-i18n-aria-label="tableSearchAria"><select id="table-filter" aria-label="Filtrează după tendință" data-i18n-aria-label="trendFilterAria"><option value="all" data-i18n="allStates">Toate stările</option><option value="up" data-i18n="rising">Creștere</option><option value="down" data-i18n="falling">Scădere</option><option value="still" data-i18n="stationary">Staționare</option><option value="none" data-i18n="noTrendAvailable">Fără tendință disponibilă</option></select><button class="button secondary compact" id="table-csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button><button class="button ghost compact" id="table-csv-all" type="button" data-i18n="downloadAllStations">Descarcă toate stațiile</button></div></div>
+      <p class="table-caption" data-i18n="tableOrder">Grupate pe țări, în ordine aval-amonte. Selectează un rând pentru analiza stației.</p>
+      <div id="stations-accordion" class="stations-accordion"></div>
     </section>
   </main>
 

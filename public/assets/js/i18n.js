@@ -47,7 +47,7 @@ export const translations = {
     evolutionForecast: "Evoluție și prognoză", dailyVariation: "Variație zilnică", previousForecasts: "Prognoze anterioare", forecastEvaluation: "Evaluarea prognozelor",
     downloadCsv: "Descarcă CSV", expand: "Extinde", downloadPng: "Descarcă PNG", closeAction: "Închide", insufficientData: "Nu există încă suficiente date pentru această selecție.", gotoLatestObservation: "Mergi la ultima observație",
     compareAnalysis: "Analiză comparativă", compareStations: "Compară stații", chooseStations: "Alege stații", noStationSelected: "Nicio stație selectată", allStations: "Toate stațiile", reportedSituation: "Situația raportată",
-    search: "Caută…", allStates: "Toate stările", tableOrder: "Ordine implicită: kilometrul fluvial crescător. Selectează un rând pentru analiza stației.",
+    search: "Caută…", allStates: "Toate stările", tableOrder: "Grupate pe țări, în ordine aval-amonte. Selectează un rând pentru analiza stației.",
     level: "Nivel", variation: "Variație", observationDate: "Data observației", state: "Stare", technicalDetails: "Detalii tehnice", downloadCatalog: "Catalog descărcări", officialAfdj: "Sursa oficială AFDJ",
     observed: "Observat", forecasted: "Prognozat", currentObservation: "Observația curentă", selectedForecast: "Prognoza selectată", horizon: "Orizont", changeFirstDay: "Schimbare față de prima zi",
     levelEvolutionTitle: "Evoluția nivelului și prognoza", gaugeReference: "cm față de mira stației", dailyVariationSubtitle: "schimbare în 24 h, cm", degreesCelsius: "grade Celsius",
@@ -81,7 +81,7 @@ export const translations = {
   physicalStations: "Amplasamente fizice", manuallyVerifiedCoordinateStations: "Cu coordonate exacte verificate manual",
   manuallyVerifiedCoordinates: "Coordonate exacte verificate manual", activeQualityIssues: "Probleme active de calitate",
   streamType: "Tip flux", allStreams: "Toate fluxurile", stream_manual: "Manual", stream_automatic: "Automat",
-  stream_daily: "Zilnic", stream_daily_manual: "Zilnic / manual", stream_nrt: "Automat NRT", stream_observed: "Observații",
+  stream_daily: "Zilnic", stream_daily_manual: "Zilnic / manual", stream_nrt: "Automat NRT", stream_observed: "Observații", stream_forecast: "Prognoză",
   accessStatus: "Acces", automationStatus: "Automatizare", freshnessStatus: "Prospețime",
   validationStatus: "Validare", coordinateStatus: "Coordonate", available: "Disponibil", scheduled: "Programat", disabled: "Dezactivat", current: "Actual", validated: "Validat", requiresReview: "Necesită verificare", tlsValidationFailed: "Validarea TLS a eșuat", notApplicable: "Nu se aplică", unknown: "Necunoscut",
   manualCoordinateLegend: "poziție exactă verificată manual", streamCount: "Fluxuri", primaryStream: "Flux principal", frequencyDailyCron: "zilnic la 01:37 UTC", frequencyDaily: "zilnic", frequencyManual: "manual", frequencyDisabled: "dezactivat", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia, în funcție de flux", frequencyMinutes: "{count} minute", frequencyVariable: "variabilă (mediană {count} minute)", frequencyRsSchedule: "la fiecare 3 ore, plus ferestre zilnice \u0219i de prognoz\u0103 Europe/Belgrade", frequencyUnknown: "necunoscută", captureDelayMinutes: "Întârziere la captură: {count} minute", dailyObservation: "Observație zilnică", manualVerificationProvider: "verificare manuală", projectOwnerCoordinateSource: "coordonată de stație verificată manual și furnizată de proprietarul proiectului",
@@ -103,7 +103,10 @@ export const translations = {
   unavailableSourcesLabel: "Surse indisponibile", unavailableSourcesInfo: "Surse care nu au putut furniza date în ultima verificare. Portalul poate păstra ultima versiune validă disponibilă.",
   moreInfo: "Detalii", monitoredLocations: "Amplasamente monitorizate", dataStreams: "Fluxuri de date", currentObservationStations: "Stații cu observații curente", noTrendAvailable: "Fără tendință disponibilă",
   learnMore: "Află mai multe", filtersLabel: "Filtre", filtersTitle: "Filtrează harta și lista", extraTechnicalDetails: "Detalii tehnice suplimentare pe sursă",
-  stationGroupLegend: "grup de stații", otherSymbolsLegend: "Alte simboluri și precizia pozițiilor"
+  stationGroupLegend: "grup de stații", otherSymbolsLegend: "Alte simboluri și precizia pozițiilor",
+  stationsAndObservations: "Stații și observații", countryStationsCount: "{count} stații", countryLocationsStreamsCount: "{locations} amplasamente / {streams} fluxuri",
+  advancedFilters: "Filtre avansate", activeFiltersCount: "{count} filtre active", downloadAllStations: "Descarcă toate stațiile",
+  approximateOrderNote: "Ordine geografică aproximativă, calculată din coordonate — sursa nu publică kilometraj fluvial pentru această țară."
   },
   en: {
     appTitle: "Danube Water Levels", appSubtitle: "Daily monitoring of water levels and hydrological forecasts",
@@ -153,7 +156,7 @@ export const translations = {
     evolutionForecast: "Evolution and forecast", dailyVariation: "Daily variation", previousForecasts: "Previous forecasts", forecastEvaluation: "Forecast evaluation",
     downloadCsv: "Download CSV", expand: "Expand", downloadPng: "Download PNG", closeAction: "Close", insufficientData: "There is not enough data for this selection yet.", gotoLatestObservation: "Go to latest observation",
     compareAnalysis: "Comparative analysis", compareStations: "Compare stations", chooseStations: "Choose stations", noStationSelected: "No station selected", allStations: "All stations", reportedSituation: "Reported situation",
-    search: "Search…", allStates: "All states", tableOrder: "Default order: ascending river kilometre. Select a row for station analysis.",
+    search: "Search…", allStates: "All states", tableOrder: "Grouped by country, downstream to upstream. Select a row for station analysis.",
     level: "Level", variation: "Variation", observationDate: "Observation date", state: "State", technicalDetails: "Technical details", downloadCatalog: "Download catalogue", officialAfdj: "Official AFDJ source",
     observed: "Observed", forecasted: "Forecast", currentObservation: "Current observation", selectedForecast: "Selected forecast", horizon: "Horizon", changeFirstDay: "Change from first day",
     levelEvolutionTitle: "Level evolution and forecast", gaugeReference: "cm relative to the station gauge", dailyVariationSubtitle: "change over 24 h, cm", degreesCelsius: "degrees Celsius",
@@ -187,7 +190,7 @@ export const translations = {
   physicalStations: "Physical locations", manuallyVerifiedCoordinateStations: "With manually verified exact coordinates",
   manuallyVerifiedCoordinates: "Manually verified exact coordinates", activeQualityIssues: "Active quality issues",
   streamType: "Stream type", allStreams: "All streams", stream_manual: "Manual", stream_automatic: "Automatic",
-  stream_daily: "Daily", stream_daily_manual: "Daily / manual", stream_nrt: "Automatic NRT", stream_observed: "Observations",
+  stream_daily: "Daily", stream_daily_manual: "Daily / manual", stream_nrt: "Automatic NRT", stream_observed: "Observations", stream_forecast: "Forecast",
   accessStatus: "Access", automationStatus: "Automation", freshnessStatus: "Freshness",
   validationStatus: "Validation", coordinateStatus: "Coordinates", available: "Available", scheduled: "Scheduled", disabled: "Disabled", current: "Current", validated: "Validated", requiresReview: "Requires review", tlsValidationFailed: "TLS validation failed", notApplicable: "Not applicable", unknown: "Unknown",
   manualCoordinateLegend: "manually verified exact position", streamCount: "Streams", primaryStream: "Primary stream", frequencyDailyCron: "daily at 01:37 UTC", frequencyDaily: "daily", frequencyManual: "manual", frequencyDisabled: "disabled", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia by stream", frequencyMinutes: "{count} minutes", frequencyVariable: "variable (median {count} minutes)", frequencyRsSchedule: "every 3 hours, plus daily and forecast Europe/Belgrade gates", frequencyUnknown: "unknown", captureDelayMinutes: "Capture delay: {count} minutes", dailyObservation: "Daily observation", manualVerificationProvider: "manual verification", projectOwnerCoordinateSource: "project-owner supplied manually verified station coordinate",
@@ -209,7 +212,10 @@ export const translations = {
   unavailableSourcesLabel: "Unavailable sources", unavailableSourcesInfo: "Sources that could not provide data at the last check. The portal may keep the last valid available version.",
   moreInfo: "Details", monitoredLocations: "Monitored locations", dataStreams: "Data streams", currentObservationStations: "Stations with current observations", noTrendAvailable: "No trend available",
   learnMore: "Learn more", filtersLabel: "Filters", filtersTitle: "Filter the map and list", extraTechnicalDetails: "Extra technical details per source",
-  stationGroupLegend: "station group", otherSymbolsLegend: "Other symbols and location accuracy"
+  stationGroupLegend: "station group", otherSymbolsLegend: "Other symbols and location accuracy",
+  stationsAndObservations: "Stations and observations", countryStationsCount: "{count} stations", countryLocationsStreamsCount: "{locations} locations / {streams} streams",
+  advancedFilters: "Advanced filters", activeFiltersCount: "{count} active filters", downloadAllStations: "Download all stations",
+  approximateOrderNote: "Approximate geographic order, computed from coordinates — the source does not publish a river kilometre for this country."
   },
 };
 

@@ -11,7 +11,7 @@ import {
 const state = {
   status: null, features: [], stations: new Map(), stationData: new Map(),
   selectedId: null, activeTab: "level", rangePreset: "30d", range: {}, selectedDate: null,
-  compareIds: [], compareMode: "delta", tableSort: { field: "river_km", direction: 1 },
+  compareIds: [], compareMode: "delta",
   filterPredicate: () => true, international: null
 };
 
@@ -29,12 +29,59 @@ function toast(message, timeout = 3200) {
   clearTimeout(toast.timer); toast.timer = setTimeout(() => { element.hidden = true; }, timeout);
 }
 
-function trend(value, quality = "valid") {
-  if (quality !== "valid") return { key: "alert", symbol: "!", label: t("qualityWarning") };
+function trend(value) {
+  if (value === null || value === undefined || value === "" || Number.isNaN(Number(value))) return { key: "none", symbol: "•", label: t("noTrendAvailable") };
   const number = Number(value);
   if (number > 0) return { key: "up", symbol: "+", label: t("trendUp") };
   if (number < 0) return { key: "down", symbol: "−", label: t("trendDown") };
   return { key: "still", symbol: "0", label: t("trendStill") };
+}
+
+function stationFreshness(properties) {
+  if (properties.freshness_status === "stale") return { key: "stale", label: t("stale") };
+  if (properties.freshness_status === "unavailable" || properties.access_status === "unavailable" || properties.access_status === "tls_failed") return { key: "unavailable", label: t("unavailable") };
+  if (properties.quality_flag === "provisional" || properties.validation_status === "source_provisional") return { key: "provisional", label: t("provisional") };
+  return { key: "current", label: t("current") };
+}
+
+const STREAM_BADGE_KEYS = { manual: "stream_manual", automatic: "stream_automatic", nrt: "stream_automatic", daily: "stream_daily", daily_manual: "stream_daily", forecast: "stream_forecast" };
+function streamBadges(properties) {
+  return [...new Set((properties.streams || []).map(stream => STREAM_BADGE_KEYS[stream.source_stream_type]).filter(Boolean))];
+}
+
+const COUNTRY_ORDER = ["RO", "BG", "RS", "HR", "HU", "SK", "AT", "DE"];
+// RS/HU/SK currently publish no river_km at all (data/reference/ris_station_registry.csv
+// only has waterway_km for HR and BG). For these three, within-country order is computed
+// from station coordinates (principal-axis projection) rather than a sourced chainage
+// value - it is an approximation, not an official kilometre, and is labelled as such in
+// the station list. The projection naturally comes out upstream-first for all three and
+// needs reversing; verified against a real neighbouring river_km, not assumed:
+//  RS: rs-bezdan (45.844,18.858) sits on Croatia's Batina gauge (45.846,18.855; real
+//      waterway_km 1424.6, HR's highest/most-upstream station) -> Bezdan is RS's
+//      upstream end.
+//  HU: hu-mohacs (45.993,18.682) is ~25 km from that same Batina gauge -> Mohács is
+//      HU's downstream end, not its upstream one.
+//  SK: sk-devin/-devin-lom sit at the Austrian border (the Morava confluence); Austria's
+//      own lowest real river_km station (Thebnerstraßl, km 1879) is the closest AT gauge
+//      to Devín, confirming Devín is SK's upstream end.
+const GEOGRAPHIC_ORDER_REVERSED = new Set(["RS", "HU", "SK"]);
+
+function computeAxisOrder(rows) {
+  const n = rows.length;
+  const meanLat = rows.reduce((sum, row) => sum + row.latitude, 0) / n;
+  const meanLon = rows.reduce((sum, row) => sum + row.longitude, 0) / n;
+  let sxx = 0, syy = 0, sxy = 0;
+  rows.forEach(row => { const dx = row.longitude - meanLon, dy = row.latitude - meanLat; sxx += dx * dx; syy += dy * dy; sxy += dx * dy; });
+  const theta = 0.5 * Math.atan2(2 * sxy, sxx - syy);
+  const vx = Math.cos(theta), vy = Math.sin(theta);
+  return [...rows].sort((a, b) => ((a.longitude - meanLon) * vx + (a.latitude - meanLat) * vy) - ((b.longitude - meanLon) * vx + (b.latitude - meanLat) * vy));
+}
+
+function orderWithinCountry(countryCode, rows) {
+  if (rows.every(row => row.river_km != null)) return [...rows].sort((a, b) => a.river_km - b.river_km);
+  if (!rows.every(row => Number.isFinite(row.latitude) && Number.isFinite(row.longitude))) return [...rows].sort((a, b) => a.display_name.localeCompare(b.display_name, getLocale()));
+  const axisOrder = computeAxisOrder(rows);
+  return GEOGRAPHIC_ORDER_REVERSED.has(countryCode) ? axisOrder.reverse() : axisOrder;
 }
 
 function selectedStation() { return state.stations.get(state.selectedId); }
@@ -237,32 +284,61 @@ async function changeTab(tab) {
 
 function filteredTableFeatures() {
   const query = $("#table-search").value.trim().toLocaleLowerCase(getLocale()); const filter = $("#table-filter").value;
-  const rows = state.features.filter(feature => {
-    const p = feature.properties; const t = trend(p.variation_cm_24h, p.quality_flag);
-    return state.filterPredicate(p) && (!query || `${p.display_name} ${p.station_name_local || ""}`.toLocaleLowerCase(getLocale()).includes(query)) && (filter === "all" || t.key === filter);
-  });
-  const { field, direction } = state.tableSort;
-  return rows.sort((a, b) => {
-    const av = a.properties[field], bv = b.properties[field];
-    const numeric = ["river_km", "level_cm", "variation_cm_24h", "water_temperature_c"].includes(field);
-    return direction * (numeric ? Number(av) - Number(bv) : String(av).localeCompare(String(bv), getLocale()));
+  return state.features.filter(feature => {
+    const p = feature.properties; const rowTrend = trend(p.variation_cm_24h);
+    return state.filterPredicate(p) && (!query || `${p.display_name} ${p.station_name_local || ""}`.toLocaleLowerCase(getLocale()).includes(query)) && (filter === "all" || rowTrend.key === filter);
   });
 }
 
-function renderTable() {
-  const tbody = $("#stations-table tbody"); tbody.innerHTML = "";
-  const cell = (value, unit = "", digits = 0) => value === null || value === undefined || value === "" ? `<span aria-label="${t("unavailable")}">—</span>` : `${formatNumber(value, digits)}${unit ? ` ${unit}` : ""}`;
+function groupedTableFeatures() {
+  const byCountry = new Map();
   filteredTableFeatures().forEach(feature => {
-    const p = feature.properties; const rowTrend = trend(p.variation_cm_24h, p.quality_flag);
-    const variation = p.variation_cm_24h == null ? null : Number(p.variation_cm_24h);
-    const localName = p.station_name_local && p.station_name_local !== p.display_name ? `<small>${p.station_name_local}</small>` : "";
-    const status = p.scope === "international" ? `<span class="status-tag ${p.source_status}">${statusLabel(p.source_status)}</span>` : `<span class="quality-chip ${p.quality_flag === "valid" ? "" : "warning"}">${p.quality_flag === "valid" ? rowTrend.label : t("qualityWarning")}</span>`;
-    const row = document.createElement("tr"); row.tabIndex = 0; row.dataset.stationId = p.station_id;
-    row.innerHTML = `<td><strong>${p.display_name}</strong>${localName}<small>${countryName(p.country_code)} · ${p.source_label || p.source_name || ""}</small></td><td>${cell(p.river_km)}</td><td>${cell(p.level_cm, "cm")}</td><td>${variation == null ? "—" : `<span class="trend-badge ${rowTrend.key}">${rowTrend.symbol}</span> ${variation > 0 ? "+" : ""}${formatNumber(variation)} cm`}</td><td>${cell(p.water_temperature_c, "°C", 1)}</td><td>${formatDate(p.measurement_datetime)}</td><td>${status}</td>`;
-    row.addEventListener("click", () => { selectStation(p.station_id); scrollToAnalysis(); });
-    row.addEventListener("keydown", event => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); row.click(); } });
-    if (p.station_id === state.selectedId) row.setAttribute("aria-current", "true");
-    tbody.append(row);
+    const cc = feature.properties.country_code;
+    if (!byCountry.has(cc)) byCountry.set(cc, []);
+    byCountry.get(cc).push({ ...feature.properties, latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0] });
+  });
+  const knownFirst = COUNTRY_ORDER.filter(cc => byCountry.has(cc));
+  const rest = [...byCountry.keys()].filter(cc => !COUNTRY_ORDER.includes(cc)).sort();
+  return [...knownFirst, ...rest].map(countryCode => ({
+    countryCode, stations: orderWithinCountry(countryCode, byCountry.get(countryCode)),
+    approximateOrder: !byCountry.get(countryCode).every(row => row.river_km != null),
+  }));
+}
+
+function renderTable() {
+  const container = $("#stations-accordion"); container.innerHTML = "";
+  const query = $("#table-search").value.trim();
+  const selectedCountry = selectedStation()?.country_code;
+  const cell = (value, unit = "", digits = 0) => value === null || value === undefined || value === "" ? `<span aria-label="${t("unavailable")}">—</span>` : `${formatNumber(value, digits)}${unit ? ` ${unit}` : ""}`;
+  const groups = groupedTableFeatures();
+  if (!groups.length) { container.innerHTML = `<p class="empty-state">${t("noFilteredStations")}</p>`; return; }
+  groups.forEach(({ countryCode, stations, approximateOrder }) => {
+    const details = document.createElement("details"); details.className = "country-group"; details.open = Boolean(query) || countryCode === selectedCountry;
+    const streamTotal = stations.reduce((sum, p) => sum + Math.max(1, Number(p.stream_count) || 1), 0);
+    const summaryText = countryCode === "RO" ? t("countryStationsCount", { count: formatNumber(stations.length) })
+      : t("countryLocationsStreamsCount", { locations: formatNumber(stations.length), streams: formatNumber(streamTotal) });
+    const summary = document.createElement("summary"); summary.innerHTML = `<strong>${countryName(countryCode)}</strong> · ${summaryText}`;
+    details.append(summary);
+    if (approximateOrder) { const note = document.createElement("p"); note.className = "approximate-order-note"; note.textContent = t("approximateOrderNote"); details.append(note); }
+    const table = document.createElement("table"); table.className = "country-station-table";
+    table.innerHTML = `<thead><tr><th data-i18n="station">${t("station")}</th><th data-i18n="kilometre">${t("kilometre")}</th><th data-i18n="level">${t("level")}</th><th data-i18n="variation">${t("variation")}</th><th data-i18n="observationDate">${t("observationDate")}</th><th data-i18n="trend">${t("trend")}</th><th data-i18n="freshnessStatus">${t("freshnessStatus")}</th></tr></thead>`;
+    const tbody = document.createElement("tbody");
+    stations.forEach(p => {
+      const rowTrend = trend(p.variation_cm_24h);
+      const freshness = countryCode === "RO" ? { key: "current", label: t("current") } : stationFreshness(p);
+      const variation = p.variation_cm_24h == null ? null : Number(p.variation_cm_24h);
+      const localName = p.station_name_local && p.station_name_local !== p.display_name ? `<small>${p.station_name_local}</small>` : "";
+      const badges = streamBadges(p).map(key => `<span class="stream-chip">${t(key)}</span>`).join("");
+      const row = document.createElement("tr"); row.tabIndex = 0; row.dataset.stationId = p.station_id;
+      row.innerHTML = `<td><strong>${p.display_name}</strong>${localName}${badges ? `<span class="stream-chips">${badges}</span>` : ""}</td><td>${p.river_km == null ? "—" : cell(p.river_km)}</td><td>${cell(p.level_cm, "cm")}</td><td>${variation == null ? "—" : `${variation > 0 ? "+" : ""}${formatNumber(variation)} cm`}</td><td>${formatDate(p.measurement_datetime)}</td><td><span class="trend-badge ${rowTrend.key}">${rowTrend.symbol}</span> ${rowTrend.label}</td><td><span class="quality-chip ${freshness.key}">${freshness.label}</span></td>`;
+      row.addEventListener("click", () => { selectStation(p.station_id); scrollToAnalysis(); });
+      row.addEventListener("keydown", event => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); row.click(); } });
+      if (p.station_id === state.selectedId) row.setAttribute("aria-current", "true");
+      tbody.append(row);
+    });
+    table.append(tbody);
+    const scroll = document.createElement("div"); scroll.className = "country-table-scroll"; scroll.append(table);
+    details.append(scroll); container.append(details);
   });
 }
 
@@ -276,7 +352,7 @@ function scrollToAnalysis() {
 
 function renderComparePicker() {
   const picker = $("#compare-picker"); picker.innerHTML = "";
-  [...state.stations.values()].sort((a, b) => a.river_km - b.river_km).forEach(station => {
+  [...state.stations.values()].sort((a, b) => (a.river_km ?? Number.POSITIVE_INFINITY) - (b.river_km ?? Number.POSITIVE_INFINITY)).forEach(station => {
     const label = document.createElement("label");
     label.innerHTML = `<input type="checkbox" value="${station.station_id}" ${state.compareIds.includes(station.station_id) ? "checked" : ""}> ${station.display_name}`;
     label.querySelector("input").addEventListener("change", async event => {
@@ -294,12 +370,23 @@ async function renderCompare() {
   await renderComparison("chart-compare", series, state.compareMode, state.range);
 }
 
-function downloadTableCsv() {
-  const rows = filteredTableFeatures().map(feature => feature.properties);
-  const fields = ["display_name", "river_km", "level_cm", "variation_cm_24h", "water_temperature_c", "measurement_datetime", "quality_flag"];
+function downloadTableCsv(scope = "filtered") {
+  const rows = (scope === "all" ? state.features : filteredTableFeatures()).map(feature => feature.properties);
+  const fields = ["display_name", "country_code", "river_km", "level_cm", "variation_cm_24h", "measurement_datetime"];
   const escape = value => /[",\n]/.test(String(value)) ? `"${String(value).replaceAll('"', '""')}"` : value;
   const content = "\ufeff" + [fields.join(","), ...rows.map(row => fields.map(field => escape(row[field] ?? "")).join(","))].join("\r\n");
-  const url = URL.createObjectURL(new Blob([content], { type: "text/csv;charset=utf-8" })); const link = document.createElement("a"); link.href = url; link.download = "nivel_dunare_situatia_curenta_selectata.csv"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  const url = URL.createObjectURL(new Blob([content], { type: "text/csv;charset=utf-8" }));
+  const link = document.createElement("a"); link.href = url;
+  const dateStamp = new Date().toISOString().slice(0, 10);
+  link.download = `nivel_dunare_statii_${scope === "all" ? "toate" : "filtrate"}_${dateStamp}.csv`;
+  document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+const ADVANCED_FILTER_IDS = ["source-filter", "trend-filter", "access-filter", "status-filter", "automation-filter", "quality-filter", "type-filter", "stream-filter", "coordinate-filter"];
+function updateActiveFilterCount() {
+  const active = ADVANCED_FILTER_IDS.filter(id => document.getElementById(id)?.value && document.getElementById(id).value !== "all").length;
+  const badge = $("#active-filters-count");
+  if (badge) badge.textContent = active > 0 ? t("activeFiltersCount", { count: formatNumber(active) }) : "";
 }
 
 function toggleFullscreen(element, chartId) {
@@ -340,8 +427,11 @@ function bindEvents(downloads) {
   $("#compare-add").addEventListener("click", () => { $("#compare-picker").hidden = !$("#compare-picker").hidden; });
   $("#compare-mode").addEventListener("change", async event => { state.compareMode = event.target.value; await renderCompare(); });
   $(".comparison-section").addEventListener("click", event => { const action = event.target.dataset.compareAction; if (action === "csv") downloadChartCsv("chart-compare"); if (action === "png") downloadChartPng("chart-compare"); if (action === "expand") toggleFullscreen($(".comparison-section"), "chart-compare"); });
-  $("#table-search").addEventListener("input", renderTable); $("#table-filter").addEventListener("change", renderTable); $("#table-csv").addEventListener("click", downloadTableCsv);
-  $$("#stations-table th[data-sort]").forEach(header => header.addEventListener("click", () => { const field = header.dataset.sort; state.tableSort.direction = state.tableSort.field === field ? -state.tableSort.direction : 1; state.tableSort.field = field; renderTable(); }));
+  $("#table-search").addEventListener("input", renderTable); $("#table-filter").addEventListener("change", renderTable);
+  $("#table-csv").addEventListener("click", () => downloadTableCsv("filtered")); $("#table-csv-all").addEventListener("click", () => downloadTableCsv("all"));
+  $("#advanced-filters-toggle").addEventListener("click", () => { const panel = $("#advanced-filters"); panel.hidden = !panel.hidden; $("#advanced-filters-toggle").setAttribute("aria-expanded", String(!panel.hidden)); });
+  $("#filters-reset").addEventListener("click", () => { $$(".international-filters select").forEach(select => { select.value = "all"; select.dispatchEvent(new Event("change")); }); });
+  $$(".international-filters select").forEach(select => select.addEventListener("change", updateActiveFilterCount));
   $("#info-button").addEventListener("click", () => $("#info-dialog").showModal());
   $("#language-button").addEventListener("click", toggleLanguage);
   $("#downloads-button").addEventListener("click", () => $("#downloads-dialog").showModal());
@@ -394,10 +484,10 @@ async function start() {
     const { status, geojson, downloads, international } = await loadStartupData();
     state.international = international;
     applyStatus(status); setupStations(geojson); renderUpdateBar(); renderOverview(); initMap("map", geojson, id => { selectStation(id); scrollToAnalysis(); }); bindEvents(downloads);
-    initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); });
-    initPopovers();
+    initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); updateActiveFilterCount(); });
+    initPopovers(); updateActiveFilterCount();
     onLanguageChange(async () => {
-      applyTranslations(); applyStatus(state.status); renderUpdateBar(); renderOverview(); refreshPopoverLabels(); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads();
+      applyTranslations(); applyStatus(state.status); renderUpdateBar(); renderOverview(); refreshPopoverLabels(); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads(); updateActiveFilterCount();
       if (state.selectedId) await selectStation(state.selectedId, { pan: false });
       await renderCompare();
     });
