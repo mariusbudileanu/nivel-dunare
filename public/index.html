@@ -21,14 +21,6 @@
         <p data-i18n="appSubtitle">Monitorizare zilnică a cotelor și prognozelor hidrologice</p>
       </div>
     </div>
-    <div class="header-meta" aria-live="polite">
-      <span class="status-pill" id="system-status"><span class="status-dot"></span><span data-i18n="loading">Se încarcă</span></span>
-      <span class="meta-item"><small data-i18n="observations">Observații</small><strong id="official-date">—</strong></span>
-      <span class="meta-item"><small data-i18n="lastCapture">Ultima captură</small><strong id="capture-date">—</strong></span>
-      <span class="meta-item"><small data-i18n="internationalRun">Rulare internațională</small><strong id="international-run">—</strong></span>
-      <span class="meta-item"><small data-i18n="successfulSources">Surse actualizate</small><strong id="successful-sources">—</strong></span>
-      <span class="meta-item"><small data-i18n="staleManualUnavailable">Stale / manuale / indisponibile</small><strong id="mixed-source-counts">—</strong></span>
-    </div>
     <div class="header-actions">
       <button class="button secondary" id="info-button" type="button" data-i18n="info">Info</button>
       <button class="button secondary language-button" id="language-button" type="button" aria-label="Switch to English" title="English" data-i18n-aria-label="languageAction" data-i18n-title="languageTitle">EN</button>
@@ -37,27 +29,69 @@
   </header>
 
   <main id="main-content" class="page-shell">
-    <p class="eyebrow section-label" data-i18n="romaniaPanel">România — AFDJ</p>
-    <section class="metric-grid" aria-label="Indicatori generali" data-i18n-aria-label="generalMetricsAria">
-      <article class="metric-card"><span data-i18n="reportedStations">Stații raportate</span><strong id="metric-stations">—</strong><small data-i18n="currentCapture">în captura curentă</small></article>
-      <article class="metric-card rising"><span data-i18n="rising">În creștere</span><strong id="metric-rising">—</strong><small data-i18n="positiveVariation">variație pozitivă</small></article>
-      <article class="metric-card falling"><span data-i18n="falling">În scădere</span><strong id="metric-falling">—</strong><small data-i18n="negativeVariation">variație negativă</small></article>
-      <article class="metric-card stationary"><span data-i18n="stationary">Staționare</span><strong id="metric-stationary">—</strong><small data-i18n="zeroVariation">variație zero</small></article>
-      <article class="metric-card warning"><span data-i18n="warnings">Atenționări</span><strong id="metric-warning">—</strong><small data-i18n="forecastSignals">semnale de validare prognoză</small></article>
+    <section class="update-bar" id="update-bar" aria-label="Starea actualizării" data-i18n-aria-label="updateStatusTitle">
+      <div class="update-item update-item-status">
+        <span class="status-pill" id="system-status"><span class="status-dot"></span><span data-i18n="loading">Se încarcă</span></span>
+        <button class="info-trigger" type="button" aria-expanded="false" data-popover-target="pop-update-status">ⓘ</button>
+        <span class="popover" id="pop-update-status" role="tooltip" hidden data-i18n="updateStatusInfo"></span>
+      </div>
+      <ul class="update-items">
+        <li class="update-item">
+          <span class="update-item-label" data-i18n="latestObservationLabel">Cea mai recentă observație</span>
+          <strong id="stat-latest-observation">—</strong>
+          <button class="info-trigger" type="button" aria-expanded="false" data-popover-target="pop-latest-observation">ⓘ</button>
+          <span class="popover" id="pop-latest-observation" role="tooltip" hidden data-i18n="latestObservationInfo"></span>
+        </li>
+        <li class="update-item">
+          <span class="update-item-label" data-i18n="lastCapture">Ultima captură</span>
+          <strong id="stat-last-capture">—</strong>
+          <button class="info-trigger" type="button" aria-expanded="false" data-popover-target="pop-last-capture">ⓘ</button>
+          <span class="popover" id="pop-last-capture" role="tooltip" hidden data-i18n="lastCaptureInfo"></span>
+        </li>
+        <li class="update-item">
+          <span class="update-item-label" data-i18n="lastSourceRunLabel">Ultima rulare a surselor</span>
+          <strong id="stat-last-run">—</strong>
+          <button class="info-trigger" type="button" aria-expanded="false" data-popover-target="pop-last-run">ⓘ</button>
+          <span class="popover" id="pop-last-run" role="tooltip" hidden data-i18n="lastSourceRunInfo"></span>
+        </li>
+        <li class="update-item">
+          <span class="update-item-label" data-i18n="successfulSources">Surse actualizate</span>
+          <strong id="stat-sources-updated">—</strong>
+          <button class="info-trigger" type="button" aria-expanded="false" data-popover-target="pop-sources-updated">ⓘ</button>
+          <span class="popover" id="pop-sources-updated" role="tooltip" hidden data-i18n="sourcesUpdatedInfo"></span>
+        </li>
+        <li class="update-item">
+          <span class="update-item-label" data-i18n="staleDataLabel">Date vechi</span>
+          <strong id="stat-stale-sources">—</strong>
+          <button class="info-trigger" type="button" aria-expanded="false" data-popover-target="pop-stale-sources">ⓘ</button>
+          <span class="popover" id="pop-stale-sources" role="tooltip" hidden data-i18n="staleDataInfo"></span>
+        </li>
+        <li class="update-item">
+          <span class="update-item-label" data-i18n="manualUpdateLabel">Actualizare manuală</span>
+          <strong id="stat-manual-sources">—</strong>
+          <button class="info-trigger" type="button" aria-expanded="false" data-popover-target="pop-manual-sources">ⓘ</button>
+          <span class="popover" id="pop-manual-sources" role="tooltip" hidden data-i18n="manualUpdateInfo"></span>
+        </li>
+        <li class="update-item">
+          <span class="update-item-label" data-i18n="unavailableSourcesLabel">Surse indisponibile</span>
+          <strong id="stat-unavailable-sources">—</strong>
+          <button class="info-trigger" type="button" aria-expanded="false" data-popover-target="pop-unavailable-sources">ⓘ</button>
+          <span class="popover" id="pop-unavailable-sources" role="tooltip" hidden data-i18n="unavailableSourcesInfo"></span>
+        </li>
+      </ul>
     </section>
 
-    <div class="method-note" role="note">
-      <strong data-i18n="methodTitle">Notă metodologică:</strong> <span data-i18n="methodCopy">cotele sunt raportate la mire locale cu zerouri de referință diferite. Valorile absolute nu sunt direct comparabile între stații.</span>
-    </div>
-
-    <section class="surface global-summary" aria-labelledby="global-summary-title">
-      <div class="panel-heading"><div><p class="eyebrow" data-i18n="globalOverview">Rezumat global</p><h2 id="global-summary-title" data-i18n="globalOverviewTitle">Acoperirea portalului</h2></div></div>
-      <div class="global-metrics" id="global-metrics" aria-live="polite"></div>
+    <section class="surface unified-overview" id="overview" aria-labelledby="overview-title">
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="globalOverview">Rezumat global</p><h2 id="overview-title" data-i18n="globalOverviewTitle">Acoperirea portalului</h2></div></div>
+      <div class="global-metrics" id="overview-metrics" aria-live="polite"></div>
+      <div class="method-note" role="note">
+        <strong data-i18n="methodTitle">Notă metodologică:</strong> <span data-i18n="methodCopy">cotele sunt raportate la mire locale cu zerouri de referință diferite. Valorile absolute nu sunt direct comparabile între stații.</span>
+        <a href="#data-sources" data-i18n="learnMore">Află mai multe</a>
+      </div>
     </section>
 
-    <section class="surface international-beta" aria-labelledby="international-title">
-      <div class="panel-heading beta-heading"><div><p class="eyebrow" data-i18n="betaLabel">Beta</p><h2 id="international-title" data-i18n="betaTitle">Date internaționale beta</h2><p data-i18n="betaCopy">Sursele internaționale au frecvențe și niveluri de maturitate diferite. Valorile suspecte și vechi nu intră în statisticile curente.</p><p class="data-policy" data-i18n="dataPolicy">Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.</p></div><span class="status-tag partial" data-i18n="partial">Parțial</span></div>
-      <div class="international-metrics" id="international-metrics" aria-live="polite"></div>
+    <section class="surface filters-panel" aria-labelledby="filters-title">
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="filtersLabel">Filtre</p><h2 id="filters-title" data-i18n="filtersTitle">Filtrează harta și lista</h2></div></div>
       <div class="international-filters" aria-label="Filtre internaționale" data-i18n-aria-label="internationalFiltersAria">
         <label><span data-i18n="country">Țară</span><select id="country-filter"></select></label>
         <label><span data-i18n="source">Administrație / sursă</span><select id="source-filter"></select></label>
@@ -71,8 +105,12 @@
         <label><span data-i18n="streamType">Tip flux</span><select id="stream-filter"></select></label>
         <label><span data-i18n="coordinateType">Tip coordonate</span><select id="coordinate-filter"></select></label>
       </div>
+      <details class="extra-technical-details">
+        <summary data-i18n="extraTechnicalDetails">Detalii tehnice suplimentare pe sursă</summary>
+        <div class="international-metrics" id="international-metrics" aria-live="polite"></div>
+      </details>
     </section>
-    <section class="surface source-summary-section" aria-labelledby="source-summary-title">
+    <section class="surface source-summary-section" id="data-sources" aria-labelledby="source-summary-title">
       <div class="panel-heading"><div><p class="eyebrow" data-i18n="sourceOverview">Surse</p><h2 id="source-summary-title" data-i18n="sourceOverviewTitle">Starea surselor internaționale</h2></div></div>
       <div class="source-summary-scroll"><table><thead><tr><th data-i18n="country">Țară</th><th data-i18n="source">Sursă</th><th data-i18n="station">Stații</th><th data-i18n="frequency">Frecvență</th><th data-i18n="lastAttempt">Ultima încercare</th><th data-i18n="lastSuccess">Ultimul succes</th><th data-i18n="lastObservation">Ultima observație</th><th data-i18n="accessStatus">Acces</th><th data-i18n="automationStatus">Automatizare</th><th data-i18n="freshnessStatus">Prospețime</th><th data-i18n="sourceStatus">Integrare</th><th data-i18n="validationStatus">Validare</th><th data-i18n="status">Mesaj</th></tr></thead><tbody id="source-summary-body"></tbody></table></div>
     </section>
@@ -105,7 +143,7 @@
         </div>
       </article>
 
-      <article class="surface analysis-panel" aria-labelledby="station-title">
+      <article class="surface analysis-panel" id="station-analysis" aria-labelledby="station-title">
         <div class="station-hero">
           <div>
             <p class="eyebrow" data-i18n="analysis">Analiza stației</p>
@@ -185,7 +223,7 @@
       <div class="chart comparison-chart" id="chart-compare" aria-label="Grafic comparare stații" data-i18n-aria-label="chartCompareAria"></div>
     </section>
 
-    <section class="surface station-table-section" aria-labelledby="table-title">
+    <section class="surface station-table-section" id="stations" aria-labelledby="table-title">
       <div class="panel-heading"><div><p class="eyebrow" data-i18n="allStations">Toate stațiile</p><h2 id="table-title" data-i18n="reportedSituation">Situația raportată</h2></div><div class="table-tools"><input id="table-search" type="search" placeholder="Caută…" data-i18n-placeholder="search" aria-label="Caută în tabel" data-i18n-aria-label="tableSearchAria"><select id="table-filter" aria-label="Filtrează după tendință" data-i18n-aria-label="trendFilterAria"><option value="all" data-i18n="allStates">Toate stările</option><option value="up" data-i18n="rising">Creștere</option><option value="down" data-i18n="falling">Scădere</option><option value="still" data-i18n="stationary">Staționare</option><option value="alert" data-i18n="warnings">Atenționări</option></select><button class="button secondary compact" id="table-csv" type="button" data-i18n="downloadCsv">Descarcă CSV</button></div></div>
       <p class="table-caption" data-i18n="tableOrder">Ordine implicită: kilometrul fluvial crescător. Selectează un rând pentru analiza stației.</p>
       <div class="table-scroll">

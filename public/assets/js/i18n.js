@@ -92,7 +92,17 @@ export const translations = {
   hrStaleDetail: "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.",
   infoStatus: "Accesul, automatizarea, prospețimea, validarea sursei, calitatea observației și calitatea coordonatei sunt dimensiuni separate. Etichetele furnizate de sursă, inclusiv provisional, sunt păstrate. Valorile oficiale nu sunt clasificate sau excluse prin praguri locale de plauzibilitate.",
   infoMap: "Cercul indică o coordonată oficială exactă, conturul dublu o coordonată exactă verificată manual, iar rombul centrul aproximativ al localității obținut prin OpenStreetMap Nominatim (© OpenStreetMap contributors, ODbL). Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.",
-  betaCopy: "Sursele internaționale au frecvențe și dimensiuni operaționale diferite. Valorile sunt reproduse conform surselor oficiale; datele stale nu intră în statisticile curente."
+  betaCopy: "Sursele internaționale au frecvențe și dimensiuni operaționale diferite. Valorile sunt reproduse conform surselor oficiale; datele stale nu intră în statisticile curente.",
+  updateStatusTitle: "Starea actualizării", updateStatusInfo: "Sursele au frecvențe și momente de publicare diferite. Unele se actualizează automat, iar altele pot fi manuale, vechi sau temporar indisponibile.",
+  latestObservationLabel: "Cea mai recentă observație", latestObservationInfo: "Cel mai recent moment de observație publicat de una dintre sursele active. Acesta poate fi diferit de momentul descărcării.",
+  lastCaptureInfo: "Momentul în care aplicația a descărcat ultima captură validă. Datele din captură pot avea un moment de observație anterior.",
+  lastSourceRunLabel: "Ultima rulare a surselor", lastSourceRunInfo: "Momentul ultimei execuții a fluxului care verifică și procesează sursele de date.",
+  sourcesUpdatedInfo: "Numărul surselor pentru care ultima rulare a produs date validate, raportat la numărul total de surse.",
+  staleDataLabel: "Date vechi", staleDataInfo: "Surse accesibile pentru care ultima observație publicată depășește pragul de prospețime.",
+  manualUpdateLabel: "Actualizare manuală", manualUpdateInfo: "Surse care nu sunt încă incluse într-un program automat și sunt actualizate prin declanșare manuală.",
+  unavailableSourcesLabel: "Surse indisponibile", unavailableSourcesInfo: "Surse care nu au putut furniza date în ultima verificare. Portalul poate păstra ultima versiune validă disponibilă.",
+  moreInfo: "Detalii", monitoredLocations: "Amplasamente monitorizate", dataStreams: "Fluxuri de date", currentObservationStations: "Stații cu observații curente", noTrendAvailable: "Fără tendință disponibilă",
+  learnMore: "Află mai multe", filtersLabel: "Filtre", filtersTitle: "Filtrează harta și lista", extraTechnicalDetails: "Detalii tehnice suplimentare pe sursă"
   },
   en: {
     appTitle: "Danube Water Levels", appSubtitle: "Daily monitoring of water levels and hydrological forecasts",
@@ -187,7 +197,17 @@ export const translations = {
   hrStaleDetail: "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source.",
   infoStatus: "Access, automation, freshness, source validation, observation quality and coordinate quality are separate dimensions. Source-provided labels, including provisional, are retained. Official values are not classified or excluded through local plausibility thresholds.",
   infoMap: "A circle marks an exact official coordinate, a double outline marks a manually verified exact coordinate, and a diamond marks an approximate locality centre obtained through OpenStreetMap Nominatim (© OpenStreetMap contributors, ODbL). Approximate positions are not used for distances, ordering or river kilometre.",
-  betaCopy: "International sources have different frequencies and operational dimensions. Values are reproduced from official sources; stale data is excluded from current statistics."
+  betaCopy: "International sources have different frequencies and operational dimensions. Values are reproduced from official sources; stale data is excluded from current statistics.",
+  updateStatusTitle: "Update status", updateStatusInfo: "Sources have different publication times and frequencies. Some update automatically, while others may be manual, stale or temporarily unavailable.",
+  latestObservationLabel: "Latest observation", latestObservationInfo: "The most recent observation moment published by one of the active sources. It may differ from the download moment.",
+  lastCaptureInfo: "The moment the application downloaded the last valid capture. Data in the capture may have an earlier observation moment.",
+  lastSourceRunLabel: "Last source run", lastSourceRunInfo: "The moment of the last execution of the workflow that checks and processes the data sources.",
+  sourcesUpdatedInfo: "The number of sources for which the last run produced validated data, out of the total number of sources.",
+  staleDataLabel: "Stale data", staleDataInfo: "Accessible sources whose last published observation exceeds the freshness threshold.",
+  manualUpdateLabel: "Manual update", manualUpdateInfo: "Sources not yet included in an automated schedule, updated through manual triggering.",
+  unavailableSourcesLabel: "Unavailable sources", unavailableSourcesInfo: "Sources that could not provide data at the last check. The portal may keep the last valid available version.",
+  moreInfo: "Details", monitoredLocations: "Monitored locations", dataStreams: "Data streams", currentObservationStations: "Stations with current observations", noTrendAvailable: "No trend available",
+  learnMore: "Learn more", filtersLabel: "Filters", filtersTitle: "Filter the map and list", extraTechnicalDetails: "Extra technical details per source"
   },
 };
 

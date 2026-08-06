@@ -44,44 +44,66 @@ function valueWithUnit(value, unit, digits = 0) {
 
 function applyStatus(status) {
   state.status = status;
-  $("#official-date").textContent = formatDate(status.latest_measurement_datetime, true);
-  $("#capture-date").textContent = formatDate(status.last_capture_datetime_local, true);
-  $("#metric-stations").textContent = status.station_count;
-  $("#metric-rising").textContent = status.rising_count;
-  $("#metric-falling").textContent = status.falling_count;
-  $("#metric-stationary").textContent = status.stationary_count;
-  $("#metric-warning").textContent = status.ambiguous_zero_count + status.xml_html_mismatch_count;
-  const pill = $("#system-status");
-  const warning = status.system_status !== "operational" || status.xml_html_mismatch_count > 0;
-  pill.classList.toggle("warning", warning);
-  pill.innerHTML = `<span class="status-dot"></span>${warning ? t("attention") : t("updated")}`;
   $("#technical-status").textContent = JSON.stringify(status, null, 2);
   const archiveDays = Math.max(0, (new Date(status.latest_measurement_date) - new Date(status.archive_start_date)) / 86400000);
   if (archiveDays < 30 && !new URLSearchParams(location.search).has("range")) state.rangePreset = "all";
 }
 
-function applyInternationalStatus(international) {
+function latestGlobalObservation() {
+  const candidates = [state.status?.latest_measurement_datetime, ...(state.international?.sources || []).map(source => source.last_source_observation_at)].filter(Boolean);
+  return candidates.reduce((latest, value) => (!latest || new Date(value) > new Date(latest)) ? value : latest, null);
+}
+
+function latestGlobalCapture() {
+  const candidates = [state.status?.last_capture_datetime_local, state.international?.status?.generated_from_capture_utc].filter(Boolean);
+  return candidates.reduce((latest, value) => (!latest || new Date(value) > new Date(latest)) ? value : latest, null);
+}
+
+function renderUpdateBar() {
+  const status = state.status; const international = state.international;
   const sources = international.sources;
   const current = sources.filter(source => source.freshness_status === "current" && source.access_status === "available").length;
   const stale = sources.filter(source => source.freshness_status === "stale").length;
   const manual = sources.filter(source => source.automation_status === "manual").length;
   const unavailable = sources.filter(source => source.freshness_status === "unavailable" || source.access_status !== "available").length;
   const mixed = sources.some(source => source.automation_status !== "scheduled" || source.freshness_status !== "current" || source.source_status !== "complete");
+  const afdjWarning = status.system_status !== "operational" || status.xml_html_mismatch_count > 0;
+  const warning = afdjWarning || mixed;
   const pill = $("#system-status");
-  if (mixed) {
-    pill.classList.add("warning");
-    pill.innerHTML = `<span class="status-dot"></span>${t("mixedUpdateStatus")}`;
-  }
-  $("#international-run").textContent = international.status.generated_from_capture_utc ? formatDate(international.status.generated_from_capture_utc, true) : t("unavailable");
-  $("#successful-sources").textContent = `${formatNumber(current)} / ${formatNumber(sources.length)}`;
-  $("#mixed-source-counts").textContent = `${formatNumber(stale)} / ${formatNumber(manual)} / ${formatNumber(unavailable)}`;
-  const globalValues = [
-    ["totalStations", Number(state.status.station_count) + Number(international.status.station_count)], ["romanianStations", state.status.station_count],
-    ["internationalStations", international.status.station_count], ["mappedStations", Number(state.status.station_count) + Number(international.status.mapped_station_count)],
-    ["currentStations", Number(state.status.station_count) + Number(international.status.current_station_count)], ["countries", new Set(["RO", ...international.stations.map(station => station.country_code)]).size],
-    ["scheduledSources", sources.filter(source => source.automation_status === "scheduled").length], ["manualSources", manual], ["staleOrUnavailableSources", new Set(sources.filter(source => source.freshness_status === "stale" || source.freshness_status === "unavailable").map(source => source.source_id)).size],
+  pill.classList.toggle("warning", warning);
+  pill.innerHTML = `<span class="status-dot"></span>${mixed ? t("mixedUpdateStatus") : warning ? t("attention") : t("updated")}`;
+  $("#stat-latest-observation").textContent = formatDate(latestGlobalObservation(), true);
+  $("#stat-last-capture").textContent = formatDate(latestGlobalCapture(), true);
+  $("#stat-last-run").textContent = international.status.generated_from_capture_utc ? formatDate(international.status.generated_from_capture_utc, true) : t("unavailable");
+  $("#stat-sources-updated").textContent = `${formatNumber(current)} / ${formatNumber(sources.length)}`;
+  $("#stat-stale-sources").textContent = formatNumber(stale);
+  $("#stat-manual-sources").textContent = formatNumber(manual);
+  $("#stat-unavailable-sources").textContent = formatNumber(unavailable);
+}
+
+function overviewTrendBucket(properties) {
+  const variation = properties.variation_cm_24h;
+  if (variation === null || variation === undefined || variation === "") return "none";
+  const number = Number(variation);
+  if (Number.isNaN(number)) return "none";
+  if (number > 0) return "up";
+  if (number < 0) return "down";
+  return "still";
+}
+
+function renderOverview() {
+  const international = state.international;
+  const counts = { up: 0, down: 0, still: 0, none: 0 };
+  state.features.forEach(feature => { counts[overviewTrendBucket(feature.properties)]++; });
+  const monitoredLocations = state.features.length;
+  const dataStreams = Number(state.status.station_count) + Number(international.status.station_count);
+  const countries = new Set(["RO", ...international.stations.map(station => station.country_code)]).size;
+  const currentObservationStations = Number(state.status.station_count) + Number(international.status.current_station_count);
+  const values = [
+    ["monitoredLocations", monitoredLocations, ""], ["dataStreams", dataStreams, ""], ["countries", countries, ""], ["currentObservationStations", currentObservationStations, ""],
+    ["rising", counts.up, "rising"], ["falling", counts.down, "falling"], ["stationary", counts.still, "stationary"], ["noTrendAvailable", counts.none, "warning"],
   ];
-  $("#global-metrics").innerHTML = globalValues.map(([key, value]) => `<div><span>${t(key)}</span><strong>${formatNumber(value)}</strong></div>`).join("");
+  $("#overview-metrics").innerHTML = values.map(([key, value, modifier]) => `<article class="metric-card${modifier ? ` ${modifier}` : ""}"><span>${t(key)}</span><strong>${formatNumber(value)}</strong></article>`).join("");
 }
 function renderStationOptions() {
   const select = $("#station-select");
@@ -332,16 +354,50 @@ function bindEvents(downloads) {
 
 function debounce(fn, wait) { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), wait); }; }
 
+function refreshPopoverLabels() {
+  $$(".info-trigger").forEach(trigger => {
+    const label = trigger.closest(".update-item")?.querySelector(".update-item-label")?.textContent || (trigger.closest(".update-item-status") ? t("updateStatusTitle") : "");
+    trigger.setAttribute("aria-label", label ? `${label} — ${t("moreInfo")}` : t("moreInfo"));
+  });
+}
+
+function initPopovers() {
+  let openPopover = null; let openTrigger = null;
+  function hide() {
+    if (!openPopover) return;
+    openPopover.hidden = true; openTrigger.setAttribute("aria-expanded", "false");
+    openPopover = null; openTrigger = null;
+  }
+  function show(trigger, popover) {
+    if (openPopover && openPopover !== popover) hide();
+    popover.hidden = false; trigger.setAttribute("aria-expanded", "true");
+    openPopover = popover; openTrigger = trigger;
+  }
+  $$(".info-trigger").forEach(trigger => {
+    const popover = document.getElementById(trigger.dataset.popoverTarget); if (!popover) return;
+    trigger.setAttribute("aria-describedby", popover.id);
+    trigger.addEventListener("mouseenter", () => show(trigger, popover));
+    trigger.addEventListener("mouseleave", () => { if (document.activeElement !== trigger) hide(); });
+    trigger.addEventListener("focus", () => show(trigger, popover));
+    trigger.addEventListener("blur", () => hide());
+    trigger.addEventListener("click", event => { event.stopPropagation(); if (openPopover === popover) hide(); else show(trigger, popover); });
+  });
+  document.addEventListener("click", event => { if (openPopover && !event.target.closest(".info-trigger") && !event.target.closest(".popover")) hide(); });
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && openPopover) { const trigger = openTrigger; hide(); trigger?.focus(); } });
+  refreshPopoverLabels();
+}
+
 async function start() {
   initLanguage();
   document.body.classList.add("loading");
   try {
     const { status, geojson, downloads, international } = await loadStartupData();
     state.international = international;
-    applyStatus(status); applyInternationalStatus(international); setupStations(geojson); initMap("map", geojson, id => { selectStation(id); scrollToAnalysis(); }); bindEvents(downloads);
+    applyStatus(status); setupStations(geojson); renderUpdateBar(); renderOverview(); initMap("map", geojson, id => { selectStation(id); scrollToAnalysis(); }); bindEvents(downloads);
     initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); });
+    initPopovers();
     onLanguageChange(async () => {
-      applyTranslations(); applyStatus(state.status); applyInternationalStatus(state.international); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads();
+      applyTranslations(); applyStatus(state.status); renderUpdateBar(); renderOverview(); refreshPopoverLabels(); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads();
       if (state.selectedId) await selectStation(state.selectedId, { pan: false });
       await renderCompare();
     });
