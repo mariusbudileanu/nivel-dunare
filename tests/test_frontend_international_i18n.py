@@ -67,11 +67,12 @@ class InternationalFrontendI18nTests(unittest.TestCase):
         en = "Provisional automatic data. Values are published exactly as provided by RHMZ Serbia. The source states that the data have not yet been validated and may be delayed because of telemetry or system issues."
         self.assertIn(ro, self.i18n)
         self.assertIn(en, self.i18n)
-        for value in ("stream_nrt", "captureDelayMinutes", "dailyObservation", "frequencyVariable"):
+        for value in ("stream_nrt", "captureDelayMinutes", "dailyObservation", "frequencyVariable", "frequencyRsSchedule"):
             self.assertIn(value, self.i18n)
         self.assertIn('properties.source_status === "suspended" ? "rsTlsSuspended" : "rsProvisionalData"', self.map_beta)
         self.assertIn("rsStreamLine", self.map_beta)
         self.assertIn("capture_delay_seconds", self.map_beta)
+        self.assertIn('"every 3 hours plus daily/forecast Europe/Belgrade gates": "frequencyRsSchedule"', self.i18n)
 
     def test_user_visible_templates_coalesce_optional_values(self):
         self.assertIn("String(value ?? \"\")", self.beta)
