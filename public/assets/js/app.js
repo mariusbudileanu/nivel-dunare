@@ -89,6 +89,21 @@ function valueWithUnit(value, unit, digits = 0) {
   return value === null || value === undefined || value === "" ? t("unavailable") : `${formatNumber(value, digits)} ${unit}`;
 }
 
+function afdjSourceEntry(status) {
+  return {
+    source_id: "afdj_ro", country_code: "RO", label: "AFDJ", source_url: "https://www.afdj.ro/ro/cotele-dunarii",
+    physical_station_count: status.station_count, station_count: status.station_count,
+    update_frequency: "5x daily Europe/Bucharest", source_observation_frequency: [],
+    last_attempt_at: status.last_capture_datetime_local, last_success_at: status.last_capture_datetime_local,
+    last_source_observation_at: status.latest_measurement_datetime,
+    access_status: "available", automation_status: "scheduled",
+    freshness_status: status.system_status === "operational" ? "current" : "unavailable",
+    source_status: "complete", validation_status: "not_applicable",
+    validation_message_ro: "Date actualizate automat de pe Hetzner, de 5 ori pe zi (07:00, 10:00, 12:00, 18:00, 21:00 Europe/Bucharest).",
+    validation_message_en: "Data updated automatically from Hetzner, five times a day (07:00, 10:00, 12:00, 18:00, 21:00 Europe/Bucharest).",
+  };
+}
+
 function applyStatus(status) {
   state.status = status;
   $("#technical-status").textContent = JSON.stringify(status, null, 2);
@@ -126,6 +141,7 @@ function renderUpdateBar() {
   $("#stat-stale-sources").textContent = formatNumber(stale);
   $("#stat-manual-sources").textContent = formatNumber(manual);
   $("#stat-unavailable-sources").textContent = formatNumber(unavailable);
+  const footerVersion = $("#footer-contract-version"); if (footerVersion) footerVersion.textContent = international.status.contract_version || t("unavailable");
 }
 
 function overviewTrendBucket(properties) {
@@ -433,6 +449,8 @@ function bindEvents(downloads) {
   $("#filters-reset").addEventListener("click", () => { $$(".international-filters select").forEach(select => { select.value = "all"; select.dispatchEvent(new Event("change")); }); });
   $$(".international-filters select").forEach(select => select.addEventListener("change", updateActiveFilterCount));
   $("#info-button").addEventListener("click", () => $("#info-dialog").showModal());
+  $("#footer-methodology-link")?.addEventListener("click", () => $("#info-dialog").showModal());
+  $("#footer-about-link")?.addEventListener("click", () => $("#info-dialog").showModal());
   $("#language-button").addEventListener("click", toggleLanguage);
   $("#downloads-button").addEventListener("click", () => $("#downloads-dialog").showModal());
   $$('[data-close-dialog]').forEach(button => button.addEventListener("click", () => document.getElementById(button.dataset.closeDialog).close()));
@@ -484,7 +502,7 @@ async function start() {
     const { status, geojson, downloads, international } = await loadStartupData();
     state.international = international;
     applyStatus(status); setupStations(geojson); renderUpdateBar(); renderOverview(); initMap("map", geojson, id => { selectStation(id); scrollToAnalysis(); }); bindEvents(downloads);
-    initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); updateActiveFilterCount(); });
+    initBetaUi(international, predicate => { state.filterPredicate = predicate; filterMap(predicate); renderTable(); updateActiveFilterCount(); }, afdjSourceEntry(status));
     initPopovers(); updateActiveFilterCount();
     onLanguageChange(async () => {
       applyTranslations(); applyStatus(state.status); renderUpdateBar(); renderOverview(); refreshPopoverLabels(); refreshMapLanguage(); renderStationOptions(); renderTable(); renderComparePicker(); renderDownloads(); updateActiveFilterCount();

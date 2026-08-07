@@ -118,10 +118,6 @@
         <div class="international-metrics" id="international-metrics" aria-live="polite"></div>
       </details>
     </section>
-    <section class="surface source-summary-section" id="data-sources" aria-labelledby="source-summary-title">
-      <div class="panel-heading"><div><p class="eyebrow" data-i18n="sourceOverview">Surse</p><h2 id="source-summary-title" data-i18n="sourceOverviewTitle">Starea surselor internaționale</h2></div></div>
-      <div class="source-summary-scroll"><table><thead><tr><th data-i18n="country">Țară</th><th data-i18n="source">Sursă</th><th data-i18n="station">Stații</th><th data-i18n="frequency">Frecvență</th><th data-i18n="lastAttempt">Ultima încercare</th><th data-i18n="lastSuccess">Ultimul succes</th><th data-i18n="lastObservation">Ultima observație</th><th data-i18n="accessStatus">Acces</th><th data-i18n="automationStatus">Automatizare</th><th data-i18n="freshnessStatus">Prospețime</th><th data-i18n="sourceStatus">Integrare</th><th data-i18n="validationStatus">Validare</th><th data-i18n="status">Mesaj</th></tr></thead><tbody id="source-summary-body"></tbody></table></div>
-    </section>
     <section class="dashboard-grid">
       <article class="surface map-panel" aria-labelledby="map-title">
         <div class="panel-heading map-heading">
@@ -244,23 +240,47 @@
       <p class="table-caption" data-i18n="tableOrder">Grupate pe țări, în ordine aval-amonte. Selectează un rând pentru analiza stației.</p>
       <div id="stations-accordion" class="stations-accordion"></div>
     </section>
+
+    <section class="surface source-summary-section" id="data-sources" aria-labelledby="source-summary-title">
+      <div class="panel-heading"><div><p class="eyebrow" data-i18n="sourceOverview">Surse</p><h2 id="source-summary-title" data-i18n="sourceOverviewTitle">Surse de date</h2></div></div>
+      <div class="source-summary-scroll"><table><thead><tr><th data-i18n="country">Țară</th><th data-i18n="source">Administrație / sursă</th><th data-i18n="automationStatus">Automatizare</th><th data-i18n="lastObservation">Ultima observație</th><th data-i18n="state">Stare</th><th data-i18n="detailsColumn">Detalii</th></tr></thead><tbody id="source-summary-body"></tbody></table></div>
+    </section>
   </main>
 
   <footer>
-    <p><strong data-i18n="appTitle">Nivelul Dunării</strong> — <span data-i18n="footerCopy">Date oficiale AFDJ și surse internaționale beta. Aplicație informativă; nu înlocuiește avizele oficiale.</span></p>
-    <p><a href="https://www.afdj.ro/ro/cotele-dunarii" target="_blank" rel="noopener" data-i18n="officialAfdj">Sursa oficială AFDJ</a> · <a href="./data/downloads.json" data-i18n="downloadCatalog">Catalog descărcări</a></p>
+    <div class="footer-credits">
+      <p><strong data-i18n="appTitle">Nivelul Dunării</strong> — <span data-i18n="footerCopy">Date oficiale AFDJ și surse internaționale beta. Aplicație informativă; nu înlocuiește avizele oficiale.</span></p>
+      <p data-i18n="footerHydrologicalCredit">Date hidrologice: AFDJ, APPD, RHMZ/Hidmet, Croatian Waterways/DHMZ, OVF Hydroinfo, SHMÚ, viadonau DoRIS și WSV PEGELONLINE.</p>
+      <p data-i18n="footerMapCredit">Hartă și localizare: OpenStreetMap contributors, CARTO și Nominatim. Interfață cartografică: Leaflet.</p>
+      <p class="footer-policy" data-i18n="dataPolicy">Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.</p>
+    </div>
+    <div class="footer-links-block">
+      <nav class="footer-links" aria-label="Linkuri subsol" data-i18n-aria-label="footerLinksAria">
+        <a href="#data-sources" data-i18n="sourceOverviewTitle">Surse de date</a>
+        <button type="button" class="footer-link-button" id="footer-methodology-link" data-i18n="infoTitle">Ghid și metodologie</button>
+        <button type="button" class="footer-link-button" id="footer-about-link" data-i18n="aboutProjectLink">Despre proiect</button>
+        <a href="https://github.com/mariusbudileanu/nivel-dunare" target="_blank" rel="noopener" data-i18n="sourceCodeLink">Cod sursă</a>
+        <a href="./data/downloads.json" data-i18n="downloadCatalog">Catalog descărcări</a>
+      </nav>
+      <p class="footer-meta"><span data-i18n="betaStatusLabel">Versiune beta</span> · <span data-i18n="contractVersionLabel">Contract</span> <span id="footer-contract-version">—</span></p>
+    </div>
   </footer>
 
   <dialog id="info-dialog" class="modal" aria-labelledby="info-dialog-title">
     <div class="modal-head"><div><p class="eyebrow" data-i18n="infoAbout">Despre aplicație</p><h2 id="info-dialog-title" data-i18n="infoTitle">Ghid și metodologie</h2></div><button class="icon-button" data-close-dialog="info-dialog" aria-label="Închide" data-i18n-aria-label="close">×</button></div>
-    <div class="modal-body info-grid">
-      <section><h3 data-i18n="infoPurposeTitle">Scop și proveniență</h3><p data-i18n="infoPurpose">Portalul reunește observații și prognoze oficiale ale Dunării. România este actualizată automat prin fluxul AFDJ–Hetzner; sursele internaționale sunt publicate separat, în versiune beta, cu frecvențe diferite.</p></section>
-      <section><h3 data-i18n="dataPolicyTitle">Politica valorilor</h3><p data-i18n="dataPolicy">Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.</p></section>
-      <section><h3 data-i18n="infoForecastTitle">Observații și prognoze</h3><p data-i18n="infoForecast">Observațiile descriu măsurători publicate de administrații. Prognozele sunt valori viitoare și sunt afișate numai când parametrul, unitatea și timpul sunt demonstrate.</p></section>
-      <section><h3 data-i18n="infoStatusTitle">Statusuri și calitate</h3><p data-i18n="infoStatus">Statusul sursei este separat de calitatea fiecărei observații. Valorile suspecte sunt păstrate și marcate, dar sunt excluse din valorile curente și statistici.</p></section>
-      <section><h3 data-i18n="infoMapTitle">Coordonate oficiale și aproximative</h3><p data-i18n="infoMap">Cercul indică o coordonată oficială exactă a stației. Rombul indică centrul aproximativ al localității, obținut prin OpenStreetMap Nominatim (© contribuitorii OpenStreetMap, ODbL), nu amplasamentul mirei sau senzorului. Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.</p></section>
-      <section><h3 data-i18n="infoStaleTitle">Date vechi și surse suspendate</h3><p data-i18n="infoStale">Datele vechi nu sunt prezentate drept curente. Sursele suspendate nu sunt interogate prin dezactivarea TLS sau alte metode nesigure.</p></section>
-      <section><h3 data-i18n="infoDisclaimerTitle">Limitare</h3><p data-i18n="infoDisclaimer">Aplicația este informativă și nu înlocuiește avizele oficiale, informațiile de navigație sau deciziile autorităților.</p></section>
+    <div class="modal-body info-accordion">
+      <details open><summary data-i18n="infoWhatTitle">Ce oferă portalul</summary><p data-i18n="infoWhat">Portalul publică observații și prognoze ale nivelului Dunării din opt administrații naționale: AFDJ pentru România și șapte surse internaționale — Germania, Austria, Slovacia, Ungaria, Croația, Bulgaria și Serbia.</p></details>
+      <details><summary data-i18n="infoFrequencyTitle">Frecvența actualizărilor</summary><p data-i18n="infoFrequency">România se actualizează automat de cinci ori pe zi. Fiecare sursă internațională are propria frecvență — de la actualizări la câteva minute (Serbia) la actualizări zilnice sau manuale — vizibile în secțiunea Surse de date.</p></details>
+      <details><summary data-i18n="infoTimingTitle">Observație, captură și publicare</summary><p data-i18n="infoTiming">Observația este momentul măsurătorii raportat de sursă. Captura este momentul în care portalul a descărcat acea observație. Publicarea este momentul în care pagina afișează captura respectivă. Cele trei momente pot diferi.</p></details>
+      <details><summary data-i18n="infoTrendTitle">Tendința hidrologică</summary><p data-i18n="infoTrend">Tendința — creștere, scădere sau staționare — se calculează din variația pe 24 de ore raportată de sursă. Când sursa nu furnizează o variație, tendința este marcată «fără tendință disponibilă», nu staționară.</p></details>
+      <details><summary data-i18n="infoStaleTitle">Prospețimea datelor</summary><p data-i18n="infoStale">Datele vechi nu sunt prezentate drept curente. Sursele suspendate nu sunt interogate prin dezactivarea TLS sau alte metode nesigure.</p></details>
+      <details><summary data-i18n="infoProvisionalTitle">Date automate provizorii</summary><p data-i18n="infoProvisional">Unele fluxuri automate, de exemplu Serbia, sunt publicate ca provizorii de sursă: datele nu sunt încă verificate de administrație și pot întârzia din cauza telemetriei sau a funcționării sistemului.</p></details>
+      <details><summary data-i18n="infoMultiStreamTitle">Stații cu mai multe fluxuri</summary><p data-i18n="infoMultiStream">O stație poate avea mai multe fluxuri — manual, automat, zilnic, prognoză — publicate de aceeași administrație. Harta și lista arată un singur amplasament, cu fluxurile disponibile marcate prin etichete.</p></details>
+      <details><summary data-i18n="infoMapTitle">Coordonate oficiale și aproximative</summary><p data-i18n="infoMap">Cercul indică o coordonată oficială exactă a stației. Rombul indică centrul aproximativ al localității, obținut prin OpenStreetMap Nominatim (© contribuitorii OpenStreetMap, ODbL), nu amplasamentul mirei sau senzorului. Pozițiile aproximative nu sunt folosite pentru distanțe, ordine sau kilometrul fluvial.</p></details>
+      <details><summary data-i18n="infoForecastTitle">Observații și prognoze</summary><p data-i18n="infoForecast">Observațiile descriu măsurători publicate de administrații. Prognozele sunt valori viitoare și sunt afișate numai când parametrul, unitatea și timpul sunt demonstrate.</p></details>
+      <details><summary data-i18n="infoSourcesTitle">Surse</summary><p data-i18n="infoSources">Toate cele opt administrații, inclusiv adresa oficială a fiecăreia, sunt listate în secțiunea Surse de date.</p></details>
+      <details><summary data-i18n="dataPolicyTitle">Politica valorilor</summary><p data-i18n="dataPolicy">Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.</p></details>
+      <details><summary data-i18n="infoDisclaimerTitle">Limitare</summary><p data-i18n="infoDisclaimer">Aplicația este informativă și nu înlocuiește avizele oficiale, informațiile de navigație sau deciziile autorităților.</p></details>
       <details><summary data-i18n="technicalDetails">Detalii tehnice</summary><pre id="technical-status"></pre></details>
     </div>
   </dialog>
