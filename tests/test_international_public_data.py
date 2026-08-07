@@ -10,6 +10,22 @@ from scripts.build_international_public_data import EXPECTED_COUNTS, SOURCE_POLI
 from scripts.validate_international_public_data import FILES, observation_identity, validate
 
 
+def public_root_with_at_scheduled(tmp_root: Path) -> Path:
+    """Copy the committed public contract into tmp_root, flipping AT's
+    automation_status to scheduled - exercises validate()'s automation-set
+    checks against otherwise-real, internally consistent data."""
+    root = tmp_root / "public"
+    root.mkdir()
+    for name in FILES:
+        shutil.copy(PUBLIC_ROOT / name, root / name)
+    sources = load_json(root / "sources.json")
+    for source in sources:
+        if source["country_code"] == "AT":
+            source["automation_status"] = "scheduled"
+    (root / "sources.json").write_text(json.dumps(sources, ensure_ascii=False), encoding="utf-8")
+    return root
+
+
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_ROOT = ROOT / "data" / "public" / "international"
 
@@ -72,6 +88,17 @@ class InternationalPublicDataTests(unittest.TestCase):
         self.assertTrue(any(row.get("observation", {}).get("value") == 46.2 for row in legacy))
         self.assertTrue(all(row.get("historical") and row.get("active") is False for row in legacy))
         self.assertTrue(all(row.get("source_url") and row.get("source_file_sha256") and row.get("captured_at_utc") for row in observations))
+
+    def test_validate_accepts_at_as_a_scheduled_source(self):
+        # Regression: validate() used to hardcode AT as always-manual and
+        # exclude it from the expected "scheduled" set. Flipping AT's
+        # automation_status (P3) without fixing this crashed a live AT
+        # dry-run at the validate() step - after the DoRIS key had already
+        # authenticated successfully, wasting a real API round trip.
+        with tempfile.TemporaryDirectory() as folder:
+            root = public_root_with_at_scheduled(Path(folder))
+            result = validate(root, None)
+            self.assertTrue(result["ok"])
 
     def test_sk_medvedov_station_5145_is_published_with_valid_coordinates(self):
         # SHMU added a 14th Dunaj-tagged station (source_station_id "5145",
