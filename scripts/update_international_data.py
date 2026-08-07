@@ -24,7 +24,7 @@ from scripts.validate_international_public_data import validate
 
 
 ALL_SOURCES = ("de", "at", "sk", "hu", "hr", "bg", "rs")
-SCHEDULED_SOURCES = ("de", "sk", "hu", "hr")
+SCHEDULED_SOURCES = ("de", "sk", "hu", "hr", "at")
 SOURCE_ID_TO_CODE = {value["source_id"]: key for key, value in SOURCE_POLICY.items()}
 PUBLIC_ENRICHMENT_KEYS = {
     "country_code", "station_name", "station_name_local", "source_id",
@@ -33,7 +33,7 @@ PUBLIC_ENRICHMENT_KEYS = {
 ALLOWED_CRITICAL: dict[str, set[str]] = {}
 OPERATIONAL_POLICY = {
     "de": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_validated", "validation_message_ro": "Date actualizate automat și validate.", "validation_message_en": "Automatically updated and validated."},
-    "at": {"access_status": "available", "automation_status": "manual", "freshness_status": "current", "validation_status": "source_provisional", "validation_message_ro": "Cheia DoRIS nu este inclusă; actualizarea rămâne manuală până la configurarea unei chei permanente.", "validation_message_en": "The DoRIS key is not included; updates remain manual until a permanent key is configured."},
+    "at": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional", "validation_message_ro": "Actualizare automată zilnică, cu cheie DoRIS permanentă.", "validation_message_en": "Automatic daily update, with a permanent DoRIS key."},
     "sk": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_provisional", "validation_message_ro": "Valorile oficiale sunt păstrate fără praguri locale de plauzibilitate.", "validation_message_en": "Official values are retained without local plausibility thresholds."},
     "hu": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "technical_validation_passed", "validation_message_ro": "Sursa oferă data și partea zilei; aplicația nu inventează ore sau fusuri.", "validation_message_en": "The source provides date and daypart; the application does not invent times or time zones."},
     "hr": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "stale", "validation_status": "technical_validation_passed", "validation_message_ro": "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.", "validation_message_en": "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source."},

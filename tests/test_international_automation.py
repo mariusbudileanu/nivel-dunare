@@ -63,11 +63,11 @@ def operation_state(code: str) -> dict:
 
 
 class InternationalAutomationTests(unittest.TestCase):
-    def test_schedule_selection_excludes_manual_at_and_disabled_rs(self):
-        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr"))
+    def test_schedule_selection_includes_at_and_excludes_disabled_rs(self):
+        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "at"))
         self.assertEqual(selected_sources("scheduled"), list(SCHEDULED_SOURCES))
         self.assertEqual(selected_sources("all"), list(ALL_SOURCES))
-        self.assertNotIn("at", SCHEDULED_SOURCES)
+        self.assertIn("at", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
 
     def test_next_schedule_uses_dst_safe_bg_windows(self):
@@ -78,7 +78,7 @@ class InternationalAutomationTests(unittest.TestCase):
         self.assertEqual(next_scheduled("de", summer), "2026-08-06T01:37:00+00:00")
         self.assertEqual(next_scheduled("rs", summer), "2026-08-05T15:17:00+00:00")
     def test_operational_policy_keeps_dimensions_separate(self):
-        self.assertEqual(OPERATIONAL_POLICY["at"]["automation_status"], "manual")
+        self.assertEqual(OPERATIONAL_POLICY["at"]["automation_status"], "scheduled")
         self.assertEqual(OPERATIONAL_POLICY["rs"]["automation_status"], "scheduled")
         self.assertEqual(OPERATIONAL_POLICY["hr"]["freshness_status"], "stale")
         self.assertEqual(OPERATIONAL_POLICY["de"]["validation_status"], "source_validated")
