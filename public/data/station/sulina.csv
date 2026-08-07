@@ -3,6 +3,7 @@ observation,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-03T03:00:00+03:0
 observation,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-04T03:00:00+03:00,2026-08-04,,62,0,27.5,valid
 observation,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-05T03:00:00+03:00,2026-08-05,,60,-2,27.5,valid
 observation,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-06T03:00:00+03:00,2026-08-06,,60,0,27.5,valid
+observation,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-07T03:00:00+03:00,2026-08-07,,58,-2,27.5,valid
 forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-07T03:00:00+03:00,2026-08-07,120,,,,missing_forecast_encoded_as_zero
 forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-03T03:00:00+03:00,2026-08-03,24,,,,missing_forecast_encoded_as_zero
 forecast,657e4b68-9e17-4102-a240-b2cf2f34ba27,Sulina,2026-08-04T03:00:00+03:00,2026-08-04,48,,,,missing_forecast_encoded_as_zero

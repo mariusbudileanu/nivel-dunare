@@ -3,6 +3,7 @@ observation,bbf5e3ee-6ed6-4b87-afee-d78643847aea,Orșova,2026-08-03T03:00:00+03:
 observation,bbf5e3ee-6ed6-4b87-afee-d78643847aea,Orșova,2026-08-04T03:00:00+03:00,2026-08-04,,2515,5,28,valid
 observation,bbf5e3ee-6ed6-4b87-afee-d78643847aea,Orșova,2026-08-05T03:00:00+03:00,2026-08-05,,2515,0,28,valid
 observation,bbf5e3ee-6ed6-4b87-afee-d78643847aea,Orșova,2026-08-06T03:00:00+03:00,2026-08-06,,2510,-5,28,valid
+observation,bbf5e3ee-6ed6-4b87-afee-d78643847aea,Orșova,2026-08-07T03:00:00+03:00,2026-08-07,,2508,-2,28,valid
 forecast,bbf5e3ee-6ed6-4b87-afee-d78643847aea,Orșova,2026-08-07T03:00:00+03:00,2026-08-07,120,,,,missing_forecast_encoded_as_zero
 forecast,bbf5e3ee-6ed6-4b87-afee-d78643847aea,Orșova,2026-08-03T03:00:00+03:00,2026-08-03,24,,,,missing_forecast_encoded_as_zero
 forecast,bbf5e3ee-6ed6-4b87-afee-d78643847aea,Orșova,2026-08-04T03:00:00+03:00,2026-08-04,48,,,,missing_forecast_encoded_as_zero

@@ -3,6 +3,7 @@ observation,3d63f295-2216-491e-86ba-a0e19b6b5fa3,Drobeta-Turnu Severin,2026-08-0
 observation,3d63f295-2216-491e-86ba-a0e19b6b5fa3,Drobeta-Turnu Severin,2026-08-04T03:00:00+03:00,2026-08-04,,670,-10,28,valid
 observation,3d63f295-2216-491e-86ba-a0e19b6b5fa3,Drobeta-Turnu Severin,2026-08-05T03:00:00+03:00,2026-08-05,,670,0,28,valid
 observation,3d63f295-2216-491e-86ba-a0e19b6b5fa3,Drobeta-Turnu Severin,2026-08-06T03:00:00+03:00,2026-08-06,,675,5,28,valid
+observation,3d63f295-2216-491e-86ba-a0e19b6b5fa3,Drobeta-Turnu Severin,2026-08-07T03:00:00+03:00,2026-08-07,,675,0,28,valid
 forecast,3d63f295-2216-491e-86ba-a0e19b6b5fa3,Drobeta-Turnu Severin,2026-08-07T03:00:00+03:00,2026-08-07,120,,,,missing_forecast_encoded_as_zero
 forecast,3d63f295-2216-491e-86ba-a0e19b6b5fa3,Drobeta-Turnu Severin,2026-08-03T03:00:00+03:00,2026-08-03,24,,,,missing_forecast_encoded_as_zero
 forecast,3d63f295-2216-491e-86ba-a0e19b6b5fa3,Drobeta-Turnu Severin,2026-08-04T03:00:00+03:00,2026-08-04,48,,,,missing_forecast_encoded_as_zero
