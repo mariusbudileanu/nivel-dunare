@@ -186,9 +186,13 @@ def validate(root: Path, mirror: Path | None = None,
         require(source["automation_status"] in {"scheduled", "manual", "disabled"}, "Invalid automation status")
         require(source["freshness_status"] in {"current", "stale", "unknown", "unavailable"}, "Invalid freshness status")
     automation = {row["country_code"]: row["automation_status"] for row in sources}
-    expected_scheduled = {"DE", "SK", "HU", "HR", "BG"} | ({"RS"} if automation["RS"] == "scheduled" else set())
+    expected_scheduled = (
+        {"DE", "SK", "HU", "HR", "BG"}
+        | ({"RS"} if automation["RS"] == "scheduled" else set())
+        | ({"AT"} if automation["AT"] == "scheduled" else set())
+    )
     require({code for code, value in automation.items() if value == "scheduled"} == expected_scheduled, "Scheduled source set mismatch")
-    require(automation["AT"] == "manual", "AT automation mismatch")
+    require(automation["AT"] in {"scheduled", "manual"}, "AT automation mismatch")
     require(automation["RS"] in {"scheduled", "disabled"}, "RS automation mismatch")
 
     require(status["observation_count"] == len(observations), "Observation count mismatch")
