@@ -24,8 +24,10 @@ class InternationalWorkflowTests(unittest.TestCase):
     def test_cron_contains_only_scheduled_source_selector(self):
         self.assertIn('- cron: "37 1 * * *"', self.workflow)
         self.assertIn('source="scheduled"', self.workflow)
-        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr"))
-        self.assertNotIn("at", SCHEDULED_SOURCES)
+        # AT joined the daily cron once DORIS_PARTNER_KEY was configured with a
+        # real permanent key (P3); RS keeps its own dedicated windows workflow.
+        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "at"))
+        self.assertIn("at", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
 
     def test_bg_uses_dst_safe_dedicated_local_time_windows(self):
