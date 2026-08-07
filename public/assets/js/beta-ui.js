@@ -5,6 +5,10 @@ const filters = { country: "all", source: "all", trend: "all", access: "all", st
 let data;
 let notify = () => {};
 let qualityByStation = new Map();
+let afdjSource = null;
+// Downstream-to-upstream country order; must match app.js's COUNTRY_ORDER (no shared
+// constants module exists between these two files today).
+const COUNTRY_ORDER = ["RO", "BG", "RS", "HR", "HU", "SK", "AT", "DE"];
 
 function displayStatus(station) {
   return station.freshness_status === "stale" ? "stale" : station.source_status;
@@ -68,37 +72,58 @@ function renderMetrics() {
   ];
   document.querySelector("#international-metrics").innerHTML = groups.map(([title, values]) => `<section class="metric-group"><h3>${escapeHtml(t(title))}</h3><div class="metric-items">${values.map(([key, value]) => `<div><span>${escapeHtml(t(key))}</span><strong>${formatNumber(value)}</strong></div>`).join("")}</div></section>`).join("");
 }
+function sourceFrequencySummary(source) {
+  const sourceFrequency = Array.isArray(source.source_observation_frequency) ? source.source_observation_frequency.map(frequencyLabel).join(", ") : source.source_observation_frequency ? frequencyLabel(source.source_observation_frequency) : "";
+  return [source.update_frequency ? frequencyLabel(source.update_frequency) : "", sourceFrequency].filter(Boolean).join(" · ") || t("unavailable");
+}
+
+function detailLine(label, value) {
+  if (value === null || value === undefined || value === "") return "";
+  return `<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</p>`;
+}
+
 function renderSourcesTable() {
   const stationsBySource = new Map();
   for (const station of data.stations) {
     if (!stationsBySource.has(station.source_id)) stationsBySource.set(station.source_id, []);
     stationsBySource.get(station.source_id).push(station);
   }
+  const sources = [...(afdjSource ? [afdjSource] : []), ...data.sources]
+    .sort((a, b) => COUNTRY_ORDER.indexOf(a.country_code) - COUNTRY_ORDER.indexOf(b.country_code));
   const body = document.querySelector("#source-summary-body");
-  body.innerHTML = data.sources.map(source => {
+  body.innerHTML = sources.map((source, index) => {
     const sourceStations = stationsBySource.get(source.source_id) || [];
-    const sourceUrl = sourceStations.find(station => station.source_url)?.source_url;
+    const sourceUrl = source.source_url || sourceStations.find(station => station.source_url)?.source_url;
     const messageTemplate = source[getLanguage() === "en" ? "validation_message_en" : "validation_message_ro"] || t("unavailable");
     const observationDate = source.last_source_observation_at ? formatDate(source.last_source_observation_at, true) : t("unavailable");
     const message = messageTemplate.replaceAll("{date}", observationDate);
-    const sourceFrequency = Array.isArray(source.source_observation_frequency) ? source.source_observation_frequency.map(frequencyLabel).join(", ") : source.source_observation_frequency ? frequencyLabel(source.source_observation_frequency) : "";
-    const frequency = [source.update_frequency ? frequencyLabel(source.update_frequency) : "", sourceFrequency].filter(Boolean).join(" · ") || t("unavailable");
-    return `<tr>
+    const detailId = `source-details-${index}`;
+    return `<tr class="source-row">
       <td>${escapeHtml(countryName(source.country_code))}</td>
       <td>${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(source.label)}</a>` : escapeHtml(source.label)}</td>
-      <td>${formatNumber(source.physical_station_count)} / ${formatNumber(source.station_count)}</td>
-      <td>${escapeHtml(frequency)}</td>
-      <td>${source.last_attempt_at ? escapeHtml(formatDate(source.last_attempt_at, true)) : escapeHtml(t("unavailable"))}</td>
-      <td>${source.last_success_at ? escapeHtml(formatDate(source.last_success_at, true)) : escapeHtml(t("unavailable"))}</td>
+      <td>${escapeHtml(statusLabel(source.automation_status))}</td>
       <td>${escapeHtml(observationDate)}</td>
-      <td><span class="status-tag ${escapeHtml(source.access_status)}">${escapeHtml(statusLabel(source.access_status))}</span></td>
-      <td><span class="status-tag ${escapeHtml(source.automation_status)}">${escapeHtml(statusLabel(source.automation_status))}</span></td>
-      <td><span class="status-tag ${escapeHtml(source.freshness_status)}">${escapeHtml(statusLabel(source.freshness_status))}</span></td>
-      <td><span class="status-tag ${escapeHtml(source.source_status)}">${escapeHtml(statusLabel(source.source_status))}</span></td>
-      <td><span class="status-tag ${escapeHtml(source.validation_status)}">${escapeHtml(statusLabel(source.validation_status))}</span></td>
-      <td>${escapeHtml(message)}</td>
+      <td><span class="status-tag ${escapeHtml(source.source_status)}">${escapeHtml(t("sourceIntegrationBadge", { status: statusLabel(source.source_status) }))}</span> <span class="status-tag ${escapeHtml(source.freshness_status)}">${escapeHtml(t("freshnessBadge", { status: statusLabel(source.freshness_status) }))}</span></td>
+      <td><button type="button" class="button ghost compact source-details-toggle" aria-expanded="false" aria-controls="${detailId}" data-i18n="showDetails">${escapeHtml(t("showDetails"))}</button></td>
+    </tr>
+    <tr class="source-details-row" id="${detailId}" hidden>
+      <td colspan="6">
+        ${detailLine(t("lastAttempt"), source.last_attempt_at ? formatDate(source.last_attempt_at, true) : t("unavailable"))}
+        ${detailLine(t("lastSuccess"), source.last_success_at ? formatDate(source.last_success_at, true) : t("unavailable"))}
+        ${detailLine(t("accessStatus"), statusLabel(source.access_status))}
+        ${detailLine(t("validationStatus"), statusLabel(source.validation_status))}
+        ${detailLine(t("frequency"), sourceFrequencySummary(source))}
+        ${detailLine(t("station"), `${formatNumber(source.physical_station_count)} / ${formatNumber(source.station_count)}`)}
+        <p>${escapeHtml(message)}</p>
+      </td>
     </tr>`;
   }).join("");
+  body.querySelectorAll(".source-details-toggle").forEach(button => button.addEventListener("click", () => {
+    const row = document.getElementById(button.getAttribute("aria-controls"));
+    const expanded = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!expanded)); row.hidden = expanded;
+    button.textContent = expanded ? t("showDetails") : t("hideDetails");
+  }));
 }
 function latestByStation() {
   const grouped = new Map();
@@ -179,8 +204,8 @@ export function matchesFilters(properties) {
     && (filters.coordinate === "all" || coordinateType === filters.coordinate);
 }
 
-export function initBetaUi(international, onFilter) {
-  data = international; notify = onFilter; buildQualityIndex();
+export function initBetaUi(international, onFilter, afdjPseudoSource = null) {
+  data = international; notify = onFilter; afdjSource = afdjPseudoSource; buildQualityIndex();
   for (const [key, selector] of [["country", "#country-filter"], ["source", "#source-filter"], ["trend", "#trend-filter"], ["access", "#access-filter"], ["status", "#status-filter"], ["automation", "#automation-filter"], ["freshness", "#freshness-filter"], ["quality", "#quality-filter"], ["type", "#type-filter"], ["stream", "#stream-filter"], ["coordinate", "#coordinate-filter"]]) {
     document.querySelector(selector).addEventListener("change", event => { filters[key] = event.target.value; renderUnmapped(); notify(matchesFilters); });
   }

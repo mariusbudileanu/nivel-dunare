@@ -66,6 +66,13 @@ export function enrichRomanianFeatures(geojson) {
   };
 }
 
+function cleanForecastIssueDatetime(row) {
+  if (row.forecast_issue_datetime_utc) return row.forecast_issue_datetime_utc;
+  const raw = row.forecast_issue_time_original || "";
+  const match = raw.match(/^(\d{2})\.(\d{2})\.(\d{4})/);
+  return match ? `${match[3]}-${match[2]}-${match[1]}` : raw || null;
+}
+
 export function legacyStationData(data, stationId) {
   const sourceRows = data.observationsByStation.get(stationId) || [];
   const grouped = new Map();
@@ -86,7 +93,7 @@ export function legacyStationData(data, stationId) {
   }
   const observations = [...grouped.values()].filter(row => row.level_cm !== null).sort((a, b) => String(a.measurement_datetime).localeCompare(String(b.measurement_datetime)));
   const forecasts = (data.forecastsByStation.get(stationId) || []).map(row => ({
-    forecast_issue_datetime: row.forecast_issue_datetime_utc || row.forecast_issue_time_original,
+    forecast_issue_datetime: cleanForecastIssueDatetime(row),
     target_datetime: row.target_datetime_utc || row.target_date,
     target_date: (row.target_datetime_utc || row.target_date || "").slice(0, 10),
     forecast_level_cm: row.forecast_value, lead_hours: row.lead_hours,
