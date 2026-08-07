@@ -15,6 +15,7 @@ from scripts.update_international_data import (
     SCHEDULED_SOURCES,
     acceptable,
     archive_details,
+    dedupe,
     main,
     next_scheduled,
     normalized_source_date,
@@ -151,18 +152,52 @@ class InternationalAutomationTests(unittest.TestCase):
 
     def test_sk_suspect_warning_does_not_block_source(self):
         accepted, error = acceptable(
-            "sk", {"status": "partial", "station_count": 13, "observation_count": 26},
+            "sk", {"status": "partial", "station_count": 14, "observation_count": 26},
             [{"severity": "warning", "code": "outside_plausible_water_temperature_range"}],
         )
         self.assertTrue(accepted)
         self.assertIsNone(error)
 
     def test_unexpected_station_addition_is_fail_soft(self):
+        # EXPECTED_COUNTS["sk"] is 14 (SHMU added station 5145/Medvedov in
+        # August 2026, confirmed legitimate and integrated); a further,
+        # still-unexpected addition must still be rejected fail-soft.
         accepted, error = acceptable(
-            "sk", {"status": "complete", "station_count": 14, "observation_count": 27}, [],
+            "sk", {"status": "complete", "station_count": 15, "observation_count": 27}, [],
         )
         self.assertFalse(accepted)
-        self.assertEqual(error, "unexpected station count: expected 13, got 14")
+        self.assertEqual(error, "unexpected station count: expected 14, got 15")
+
+    def test_dedupe_treats_old_and_new_stream_id_format_as_the_same_stream(self):
+        # SHMU's adapter code once emitted bare source_stream_id values ("5127")
+        # and now emits "5127:observed"; SK's already-published observations
+        # still carry the bare form. A source_stream_id format change must not
+        # make dedupe() treat the same underlying reading as two streams.
+        old_format = {
+            "station_id": "sk-5127", "source_stream_id": "5127", "source_stream_type": "observed",
+            "parameter": "water_level", "source_observation_date": "2026-08-07", "value": 205,
+        }
+        new_format = {
+            "station_id": "sk-5127", "source_stream_id": "5127:observed", "source_stream_type": "observed",
+            "parameter": "water_level", "source_observation_date": "2026-08-07", "value": 206,
+        }
+        merged = dedupe([old_format, new_format], "observations")
+        self.assertEqual(len(merged), 1)
+        self.assertEqual(merged[0]["value"], 206)  # the later (new-format) row wins
+
+    def test_dedupe_still_keeps_distinct_stream_types_for_the_same_station(self):
+        # RS reports daily and nrt as genuinely different streams for the same
+        # station_id; a fix for the SK format drift must not merge these.
+        daily = {
+            "station_id": "rs-42010", "source_stream_id": "42010:daily", "source_stream_type": "daily",
+            "parameter": "water_level", "source_observation_date": "2026-08-07", "value": 100,
+        }
+        nrt = {
+            "station_id": "rs-42010", "source_stream_id": "42010:nrt", "source_stream_type": "nrt",
+            "parameter": "water_level", "source_observation_date": "2026-08-07", "value": 101,
+        }
+        merged = dedupe([daily, nrt], "observations")
+        self.assertEqual(len(merged), 2)
 
     def test_empty_observation_set_cannot_replace_lkg(self):
         accepted, error = acceptable("de", {"status": "complete", "station_count": 18, "observation_count": 0}, [])

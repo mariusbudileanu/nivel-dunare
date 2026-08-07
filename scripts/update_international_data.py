@@ -82,8 +82,13 @@ def raw_candidate(row: dict[str, Any]) -> dict[str, Any]:
 def dedupe(rows: list[dict[str, Any]], kind: str) -> list[dict[str, Any]]:
     if kind == "observations":
         def key(row: dict[str, Any]) -> tuple[Any, ...]:
+            # source_stream_type identifies the stream (e.g. "observed", "daily",
+            # "nrt") independently of source_stream_id's exact text, so an
+            # adapter's stream_id formatting change (e.g. SK adding an
+            # ":observed" suffix) does not make dedupe treat an already-published
+            # stream as a brand-new one and duplicate it going forward.
             return (
-                row.get("station_id"), row.get("source_stream_id") or row.get("source_stream_type"),
+                row.get("station_id"), row.get("source_stream_type") or row.get("source_stream_id"),
                 row.get("parameter"), row.get("source_observation_date") or row.get("measurement_date"),
                 row.get("observation_window") or row.get("observation_daypart") or row.get("measurement_time_original"),
             )

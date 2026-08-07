@@ -135,9 +135,9 @@ class InternationalBetaPremergeTests(unittest.TestCase):
         self.assertEqual(status["contract_version"], "1.3-beta")
         rs_active = any(row["country_code"] == "RS" for row in observations)
         expected_source_counts = (3, 4, 0) if rs_active else (2, 4, 1)
-        expected_stream_count = 113 if rs_active else 101
+        expected_stream_count = 114 if rs_active else 102
         self.assertEqual((status["complete_source_count"], status["partial_source_count"], status["suspended_source_count"]), expected_source_counts)
-        self.assertEqual((status["station_stream_count"], status["physical_station_count"]), (expected_stream_count, 93))
+        self.assertEqual((status["station_stream_count"], status["physical_station_count"]), (expected_stream_count, 94))
         self.assertEqual(len(streams), expected_stream_count)
         self.assertEqual(status["observation_count"], len(observations))
         self.assertEqual(status["forecast_count"], len(forecasts))
