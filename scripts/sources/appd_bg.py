@@ -60,7 +60,11 @@ class AppdAdapter(SourceAdapter):
         if len(candidate_tables) < 2:
             raise SourceStructureError("APPD hydrometric and automatic station tables not found")
         main_rows = [r for r in candidate_tables[0]["rows"][1:] if len(r) >= 6]
-        automatic_rows = [r for r in candidate_tables[1]["rows"][1:] if len(r) >= 5]
+        # A named row with fewer cells than usual (observed live: name+km only,
+        # no level/diff/temperature) is a station with no current reading, not
+        # a station gained or lost - it is kept so the roster count stays
+        # accurate, and its missing values are left absent rather than invented.
+        automatic_rows = [r for r in candidate_tables[1]["rows"][1:] if r and r[0]]
         if len(main_rows) < 8 or len(automatic_rows) < 12:
             raise SourceStructureError(f"APPD station loss: main={len(main_rows)}, automatic={len(automatic_rows)}")
 
@@ -96,15 +100,24 @@ class AppdAdapter(SourceAdapter):
                     source_observation_time_raw=measurement_date,
                 ))
         direction_by_row = re.findall(r'<img\s+src=["\'][^"\']*/(down|up|nochange)\.gif', current_text, re.I)
-        for index, row in enumerate(automatic_rows):
+        icon_index = 0
+        for row in automatic_rows:
             local_name, km = row[0], parse_optional_float(row[1])
             station = self._station(local_name, "automatic", km, current)
             stations.append(station)
-            direction = direction_by_row[index].lower() if index < len(direction_by_row) else None
-            direction = "no_change" if direction == "nochange" else direction
+            # The trend icon only exists in the source markup for a row that
+            # has a difference value to show; a name+km-only row (no current
+            # reading) has no icon at all, so it must not consume one meant
+            # for the next station.
+            has_reading = len(row) > 3
+            direction = None
+            if has_reading:
+                direction = direction_by_row[icon_index].lower() if icon_index < len(direction_by_row) else None
+                direction = "no_change" if direction == "nochange" else direction
+                icon_index += 1
             for parameter, value, unit in (
-                ("water_level", parse_optional_float(row[2]), "cm"),
-                ("water_temperature", parse_optional_float(row[4]), "degC"),
+                ("water_level", parse_optional_float(row[2]) if len(row) > 2 else None, "cm"),
+                ("water_temperature", parse_optional_float(row[4]) if len(row) > 4 else None, "degC"),
             ):
                 if value is None:
                     continue
