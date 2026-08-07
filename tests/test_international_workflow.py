@@ -18,27 +18,31 @@ class InternationalWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.workflow = WORKFLOW.read_text(encoding="utf-8")
-        cls.bg_workflow = BG_WORKFLOW.read_text(encoding="utf-8")
         cls.rs_workflow = RS_WORKFLOW.read_text(encoding="utf-8")
 
     def test_cron_contains_only_scheduled_source_selector(self):
         self.assertIn('- cron: "37 1 * * *"', self.workflow)
         self.assertIn('source="scheduled"', self.workflow)
-        # AT joined the daily cron once DORIS_PARTNER_KEY was configured with a
-        # real permanent key (P3); RS keeps its own dedicated windows workflow.
-        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "at"))
+        # AT joined once DORIS_PARTNER_KEY held a real permanent key (P3); BG
+        # joined once its dedicated 09:15/21:15 Europe/Sofia exact-minute gate
+        # was retired for the shared unconditional daily fetch (P4) - both
+        # streams come from the one appd-bg.org page regardless of time of
+        # day. RS keeps its own dedicated windows workflow.
+        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "at", "bg"))
         self.assertIn("at", SCHEDULED_SOURCES)
+        self.assertIn("bg", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
 
-    def test_bg_uses_dst_safe_dedicated_local_time_windows(self):
-        for cron in ("15 6 * * *", "15 7 * * *", "15 18 * * *", "15 19 * * *"):
-            self.assertIn(f'- cron: "{cron}"', self.bg_workflow)
-        self.assertIn("TZ=Europe/Sofia", self.bg_workflow)
-        self.assertIn("09:15", self.bg_workflow)
-        self.assertIn("21:15", self.bg_workflow)
-        self.assertIn("source=bg", self.bg_workflow)
-        self.assertIn('-f stream="$STREAM"', self.bg_workflow)
-        self.assertNotIn("contents: write", self.bg_workflow)
+    def test_bg_dedicated_exact_minute_gate_workflow_was_retired(self):
+        # P4: the 09:15/21:15 Europe/Sofia exact-minute gate was fragile
+        # against GitHub Actions scheduling delays of an hour or more
+        # (observed directly on this repo). BG is fetched by the same
+        # unconditional shared daily cron as DE/SK/HU/HR/AT now, so a delayed
+        # run still collects data - there is no time check left to miss.
+        self.assertFalse(BG_WORKFLOW.exists(), "update-bg-danube-streams.yml should be removed, not left dormant")
+        self.assertNotIn("TZ=Europe/Sofia", self.workflow)
+        self.assertNotIn("09:15", self.workflow)
+        self.assertNotIn("21:15", self.workflow)
 
     def test_rs_windows_handoff_schedules_and_write_boundary(self):
         for cron in ("17 */3 * * *", "47 0 * * *", "20 8 * * *", "20 9 * * *", "35 10 * * *", "35 11 * * *"):

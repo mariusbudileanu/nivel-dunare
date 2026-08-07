@@ -63,20 +63,30 @@ def operation_state(code: str) -> dict:
 
 
 class InternationalAutomationTests(unittest.TestCase):
-    def test_schedule_selection_includes_at_and_excludes_disabled_rs(self):
-        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "at"))
+    def test_schedule_selection_includes_at_and_bg_and_excludes_disabled_rs(self):
+        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "at", "bg"))
         self.assertEqual(selected_sources("scheduled"), list(SCHEDULED_SOURCES))
         self.assertEqual(selected_sources("all"), list(ALL_SOURCES))
         self.assertIn("at", SCHEDULED_SOURCES)
+        self.assertIn("bg", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
 
-    def test_next_schedule_uses_dst_safe_bg_windows(self):
+    def test_next_schedule_no_longer_depends_on_bg_local_time(self):
+        # P4: BG's dedicated 09:15/21:15 Europe/Sofia exact-minute gate is
+        # retired; it now shares the same fixed daily-UTC schedule as
+        # DE/SK/HU/HR/AT, so next_scheduled("bg", ...) must match next_scheduled
+        # for any other non-RS source, at any time of day - including times
+        # nowhere near the old windows (proving a delayed run is never
+        # "missed": there is no local-time check left to fail).
         summer = datetime(2026, 8, 5, 15, 10, tzinfo=timezone.utc)
         winter = datetime(2026, 1, 5, 7, 0, tzinfo=timezone.utc)
-        self.assertEqual(next_scheduled("bg", summer), "2026-08-05T18:15:00+00:00")
-        self.assertEqual(next_scheduled("bg", winter), "2026-01-05T07:15:00+00:00")
+        midday_far_from_old_windows = datetime(2026, 8, 5, 12, 0, tzinfo=timezone.utc)
+        self.assertEqual(next_scheduled("bg", summer), next_scheduled("de", summer))
+        self.assertEqual(next_scheduled("bg", winter), next_scheduled("de", winter))
+        self.assertEqual(next_scheduled("bg", midday_far_from_old_windows), "2026-08-06T01:37:00+00:00")
         self.assertEqual(next_scheduled("de", summer), "2026-08-06T01:37:00+00:00")
         self.assertEqual(next_scheduled("rs", summer), "2026-08-05T15:17:00+00:00")
+
     def test_operational_policy_keeps_dimensions_separate(self):
         self.assertEqual(OPERATIONAL_POLICY["at"]["automation_status"], "scheduled")
         self.assertEqual(OPERATIONAL_POLICY["rs"]["automation_status"], "scheduled")
@@ -292,6 +302,40 @@ class InternationalAutomationTests(unittest.TestCase):
             rs = summary["sources"][0]
             self.assertTrue(rs["request_made"])
             self.assertEqual(rs["collection_profile"], "all")
+
+    def test_scheduled_run_collects_bg_no_matter_when_it_actually_fires(self):
+        # P4 behavioral proof: a "scheduled" run invoked at a wall-clock time
+        # nowhere near BG's old 09:15/21:15 Europe/Sofia windows (simulating a
+        # GitHub Actions run delayed by hours, which has happened for real on
+        # this repo) must still attempt BG - there is no local-time gate left
+        # that could skip it.
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            previous = {code: {"stations": [], "observations": [], "forecasts": [], "issues": []} for code in ALL_SOURCES}
+            adapter_summary = {
+                "adapter": "x", "status": "complete", "publishable": True,
+                "station_count": 1, "observation_count": 1, "forecast_count": 0,
+            }
+            called_sources = []
+
+            def fake_run_source(code, *args, **kwargs):
+                called_sources.append(code)
+                return {**adapter_summary, "source": code, "output": str(root / "output" / "results" / code)}
+
+            with patch("scripts.update_international_data.materialize_candidates", return_value=previous), \
+                 patch("scripts.update_international_data.run_source", side_effect=fake_run_source), \
+                 patch("scripts.update_international_data.replace_candidate"), \
+                 patch("scripts.update_international_data.build", return_value={"station_count": 102}), \
+                 patch("scripts.update_international_data.validate", return_value={"ok": True}), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                result = main([
+                    "--source", "scheduled", "--mode", "live", "--action", "dry-run",
+                    "--output-dir", str(root / "output"), "--public-root", str(root / "public"),
+                    "--mirror-root", str(root / "mirror"), "--operations-state", str(root / "state.json"),
+                ])
+            self.assertEqual(result, 0)
+            self.assertIn("bg", called_sources)
+            self.assertEqual(set(called_sources), set(SCHEDULED_SOURCES))
 
     def test_unexpected_adapter_failure_is_isolated_and_keeps_lkg(self):
         with tempfile.TemporaryDirectory() as temporary:

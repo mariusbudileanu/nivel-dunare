@@ -16,7 +16,6 @@ import shutil
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
-from zoneinfo import ZoneInfo
 
 from scripts.build_international_public_data import EXPECTED_COUNTS, SOURCE_POLICY, build
 from scripts.ingest_danube_sources import run_source
@@ -24,7 +23,7 @@ from scripts.validate_international_public_data import validate
 
 
 ALL_SOURCES = ("de", "at", "sk", "hu", "hr", "bg", "rs")
-SCHEDULED_SOURCES = ("de", "sk", "hu", "hr", "at")
+SCHEDULED_SOURCES = ("de", "sk", "hu", "hr", "at", "bg")
 SOURCE_ID_TO_CODE = {value["source_id"]: key for key, value in SOURCE_POLICY.items()}
 PUBLIC_ENRICHMENT_KEYS = {
     "country_code", "station_name", "station_name_local", "source_id",
@@ -184,7 +183,7 @@ def default_state(public_root: Path, commit_sha: str | None) -> dict[str, Any]:
             "consecutive_failures": int(prior.get("consecutive_failures") or 0),
             "published_snapshot_date": prior.get("published_snapshot_date") or latest_observation_date(source_rows(public_root, code)["observations"]),
             "next_expected_update": prior.get("next_expected_update"),
-            "update_frequency": ("every 3 hours plus daily/forecast Europe/Belgrade gates" if code == "rs" else ("09:15/21:15 Europe/Sofia by stream" if code == "bg" else ("daily at 01:37 UTC" if policy["automation_status"] == "scheduled" else ("manual" if code == "at" else "disabled")))),
+            "update_frequency": ("every 3 hours plus daily/forecast Europe/Belgrade gates" if code == "rs" else ("daily at 01:37 UTC" if policy["automation_status"] == "scheduled" else ("manual" if code == "at" else "disabled"))),
             "transport": prior.get("transport"), "runner": prior.get("runner"),
             "request_made": prior.get("request_made"),
             "components": prior.get("components", {}) if code == "rs" else prior.get("components"),
@@ -199,19 +198,8 @@ def next_scheduled(code: str, now: datetime) -> str:
             candidate += timedelta(hours=1)
             candidate = candidate.replace(minute=17)
         return candidate.isoformat()
-    if code != "bg":
-        next_day = (now + timedelta(days=1)).date()
-        return datetime(next_day.year, next_day.month, next_day.day, 1, 37, tzinfo=timezone.utc).isoformat()
-    sofia = ZoneInfo("Europe/Sofia")
-    local_now = now.astimezone(sofia)
-    candidates = []
-    for day_offset in (0, 1):
-        local_date = (local_now + timedelta(days=day_offset)).date()
-        for hour in (9, 21):
-            candidate = datetime(local_date.year, local_date.month, local_date.day, hour, 15, tzinfo=sofia)
-            if candidate > local_now:
-                candidates.append(candidate)
-    return min(candidates).astimezone(timezone.utc).isoformat()
+    next_day = (now + timedelta(days=1)).date()
+    return datetime(next_day.year, next_day.month, next_day.day, 1, 37, tzinfo=timezone.utc).isoformat()
 
 
 def acceptable(code: str, summary: dict[str, Any], issues: list[dict[str, Any]], stream: str = "all") -> tuple[bool, str | None]:
