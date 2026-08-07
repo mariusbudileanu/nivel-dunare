@@ -97,6 +97,17 @@ class InternationalWorkflowTests(unittest.TestCase):
     def test_artifact_security_and_retention(self):
         self.assertIn("retention-days: 30", self.workflow)
         self.assertIn("Scan product and artifact for secrets", self.workflow)
+
+    def test_rs_windows_job_installs_tzdata_before_zoneinfo_use(self):
+        # windows-latest has no OS-level IANA database; Python's zoneinfo needs the
+        # tzdata PyPI package there or ZoneInfo('Europe/Belgrade') raises
+        # ZoneInfoNotFoundError. Every scheduled run of this step failed with
+        # exactly that error (confirmed via `gh run view`) until an install step
+        # was added ahead of it.
+        self.assertIn("ZoneInfo('Europe/Belgrade')", self.rs_workflow)
+        before_resolve = self.rs_workflow.split("Resolve DST-safe Serbia collection profile", 1)[0]
+        self.assertIn("pip install", before_resolve)
+        self.assertIn("tzdata", before_resolve)
         self.assertIn("Configured DoRIS secret found in persisted output", self.workflow)
         self.assertIn("path.unlink()", self.workflow)
         self.assertIn("raw, candidates, issues, logs and validated product", self.workflow)
