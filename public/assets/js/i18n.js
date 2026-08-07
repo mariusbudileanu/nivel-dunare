@@ -25,7 +25,7 @@ export const translations = {
     unmappedCopy: "Aceste stații sunt consultabile în listă, dar rezultatul de geocodare este nerezolvat sau necesită review.",
     noFilteredStations: "Nicio stație nu corespunde filtrelor curente.", showDetails: "Vezi detalii", hideDetails: "Ascunde detaliile",
     complete: "Complet", partial: "Parțial", provisional: "Provizoriu", suspect: "Valoare suspectă",
-    stale: "Date vechi", suspended: "Sursă suspendată", noVerifiedCoordinates: "Fără coordonate acceptate",
+    stale: "Vechi", suspended: "Sursă suspendată", noVerifiedCoordinates: "Fără coordonate acceptate",
     openAnalysis: "Deschide analiza", date: "Data", status: "Stare", valid: "Validată", trendUp: "creștere",
     trendDown: "scădere", trendStill: "staționare", qualityWarning: "atenționare", noData: "Fără date",
     sourceTime: "Ora locală a sursei", utcTime: "UTC", captureTime: "Data capturii", river: "Dunărea",
@@ -75,6 +75,7 @@ export const translations = {
   frequency: "Frecvență", lastAttempt: "Ultima încercare", lastSuccess: "Ultimul succes",
   sourceValidated: "Validată de sursă", sourceProvisional: "Provizorie la sursă", sourceUnchecked: "Neverificată la sursă", technicalValidationPassed: "Validare tehnică trecută", technicalValidationFailed: "Validare tehnică eșuată", tlsFailed: "TLS eșuat",
   mixedUpdateStatus: "Stare mixtă a actualizării", sourceOverview: "Surse", sourceOverviewTitle: "Surse de date", detailsColumn: "Detalii", lastObservation: "Ultima observație",
+  sourceObservationTimeNote: "Ora ultimei observații este convertită la ora României (Europe/Bucharest). Pentru sursele care publică doar data, fără oră, este afișată doar data.",
   allTrends: "Toate tendințele", trend_up: "Creștere", trend_down: "Scădere", trend_still: "Staționare",
   allAccessStates: "Toate stările de acces", allAutomationStates: "Toate stările de automatizare", allFreshnessStates: "Toate stările de prospețime", allQualityStates: "Toate stările de calitate",
   dataPolicyTitle: "Politica valorilor", dataPolicy: "Valorile sunt reproduse conform surselor oficiale și nu sunt corectate sau reinterpretate de această aplicație.",
@@ -83,7 +84,7 @@ export const translations = {
   streamType: "Tip flux", allStreams: "Toate fluxurile", stream_manual: "Manual", stream_automatic: "Automat",
   stream_daily: "Zilnic", stream_daily_manual: "Zilnic / manual", stream_nrt: "Automat NRT", stream_observed: "Observații", stream_forecast: "Prognoză",
   accessStatus: "Acces", automationStatus: "Automatizare", freshnessStatus: "Prospețime",
-  validationStatus: "Validare", coordinateStatus: "Coordonate", available: "Disponibil", scheduled: "Programat", disabled: "Dezactivat", current: "Actual", validated: "Validat", requiresReview: "Necesită verificare", tlsValidationFailed: "Validarea TLS a eșuat", notApplicable: "Nu se aplică", unknown: "Necunoscut",
+  validationStatus: "Validare", coordinateStatus: "Coordonate", available: "Disponibil", scheduled: "Programat", disabled: "Dezactivat", current: "La zi", validated: "Validat", requiresReview: "Necesită verificare", tlsValidationFailed: "Validarea TLS a eșuat", notApplicable: "Nu se aplică", unknown: "Necunoscut",
   manualCoordinateLegend: "poziție exactă verificată manual", streamCount: "Fluxuri", primaryStream: "Flux principal", frequencyDailyCron: "zilnic la 01:37 UTC", frequencyDaily: "zilnic", frequencyManual: "manual", frequencyDisabled: "dezactivat", frequencyBgByStream: "09:15 / 21:15 Europe/Sofia, în funcție de flux", frequencyMinutes: "{count} minute", frequencyVariable: "variabilă (mediană {count} minute)", frequencyRsSchedule: "la fiecare 3 ore, plus ferestre zilnice \u0219i de prognoz\u0103 Europe/Belgrade", frequencyUnknown: "necunoscută", frequencyDailyTable: "tabel zilnic", frequencySourceTimeseries: "serie temporală a sursei", frequencySourceStatusCadence: "ritm indicat de starea sursei", frequencyAfdjSchedule: "de 5 ori pe zi, Europe/Bucharest", captureDelayMinutes: "Întârziere la captură: {count} minute", dailyObservation: "Observație zilnică", manualVerificationProvider: "verificare manuală", projectOwnerCoordinateSource: "coordonată de stație verificată manual și furnizată de proprietarul proiectului",
   appdForecastInactive: "Prognozele APPD nu sunt activate în contractul public.",
   hrForecastDisclaimer: "Prognozele nivelului apei sunt realizate pentru sprijinirea navigației în siguranță. Potrivit sursei, acestea sunt mai fiabile în perioadele cu niveluri scăzute, iar în perioadele cu niveluri ridicate nu trebuie considerate relevante.",
@@ -107,10 +108,10 @@ export const translations = {
   stationsAndObservations: "Stații și observații", countryStationsCount: "{count} stații", countryLocationsStreamsCount: "{locations} amplasamente / {streams} fluxuri",
   advancedFilters: "Filtre avansate", activeFiltersCount: "{count} filtre active", downloadAllStations: "Descarcă toate stațiile",
   approximateOrderNote: "Ordine geografică aproximativă, calculată din coordonate — sursa nu publică kilometraj fluvial pentru această țară.",
-  sourceIntegrationBadge: "Sursă: {status}", freshnessBadge: "Date: {status}",
+  sourceIntegrationBadge: "Sursă: {status}", freshnessBadge: "Date: {status}", freshnessUnavailable: "Indisponibile",
   footerHydrologicalCredit: "Date hidrologice: AFDJ, APPD, RHMZ/Hidmet, Croatian Waterways/DHMZ, OVF Hydroinfo, SHMÚ, viadonau DoRIS și WSV PEGELONLINE.",
   footerMapCredit: "Hartă și localizare: OpenStreetMap contributors, CARTO și Nominatim. Interfață cartografică: Leaflet.",
-  footerLinksAria: "Linkuri subsol", sourceCodeLink: "Cod sursă", aboutProjectLink: "Despre proiect",
+  footerLinksAria: "Linkuri subsol", sourceCodeLink: "Cod sursă",
   betaStatusLabel: "Versiune beta", contractVersionLabel: "Contract",
   infoWhatTitle: "Ce oferă portalul", infoWhat: "Portalul publică observații și prognoze ale nivelului Dunării din opt administrații naționale: AFDJ pentru România și șapte surse internaționale — Germania, Austria, Slovacia, Ungaria, Croația, Bulgaria și Serbia.",
   infoFrequencyTitle: "Frecvența actualizărilor", infoFrequency: "România se actualizează automat de cinci ori pe zi. Fiecare sursă internațională are propria frecvență — de la actualizări la câteva minute (Serbia) la actualizări zilnice sau manuale — vizibile în secțiunea Surse de date.",
@@ -146,7 +147,7 @@ export const translations = {
     unmappedCopy: "These stations remain available in the list, but their geocoding result is unresolved or requires review.",
     noFilteredStations: "No station matches the current filters.", showDetails: "Show details", hideDetails: "Hide details",
     complete: "Complete", partial: "Partial", provisional: "Provisional", suspect: "Suspect value",
-    stale: "Stale data", suspended: "Source suspended", noVerifiedCoordinates: "No accepted coordinates",
+    stale: "Stale", suspended: "Source suspended", noVerifiedCoordinates: "No accepted coordinates",
     openAnalysis: "Open analysis", date: "Date", status: "Status", valid: "Validated", trendUp: "rising",
     trendDown: "falling", trendStill: "stationary", qualityWarning: "warning", noData: "No data",
     sourceTime: "Source local time", utcTime: "UTC", captureTime: "Capture time", river: "Danube",
@@ -196,6 +197,7 @@ export const translations = {
   frequency: "Frequency", lastAttempt: "Latest attempt", lastSuccess: "Latest success",
   sourceValidated: "Source validated", sourceProvisional: "Source provisional", sourceUnchecked: "Source unchecked", technicalValidationPassed: "Technical validation passed", technicalValidationFailed: "Technical validation failed", tlsFailed: "TLS failed",
   mixedUpdateStatus: "Mixed update status", sourceOverview: "Sources", sourceOverviewTitle: "Data sources", detailsColumn: "Details", lastObservation: "Latest observation",
+  sourceObservationTimeNote: "The latest observation time is converted to Romania time (Europe/Bucharest). For sources that publish only a date, without a time, only the date is shown.",
   allTrends: "All trends", trend_up: "Rising", trend_down: "Falling", trend_still: "Stationary",
   allAccessStates: "All access states", allAutomationStates: "All automation states", allFreshnessStates: "All freshness states", allQualityStates: "All quality states",
   dataPolicyTitle: "Value policy", dataPolicy: "Values are reproduced as provided by the official sources and are not corrected or reinterpreted by this application.",
@@ -228,10 +230,10 @@ export const translations = {
   stationsAndObservations: "Stations and observations", countryStationsCount: "{count} stations", countryLocationsStreamsCount: "{locations} locations / {streams} streams",
   advancedFilters: "Advanced filters", activeFiltersCount: "{count} active filters", downloadAllStations: "Download all stations",
   approximateOrderNote: "Approximate geographic order, computed from coordinates — the source does not publish a river kilometre for this country.",
-  sourceIntegrationBadge: "Source: {status}", freshnessBadge: "Data: {status}",
+  sourceIntegrationBadge: "Source: {status}", freshnessBadge: "Data: {status}", freshnessUnavailable: "Unavailable",
   footerHydrologicalCredit: "Hydrological data: AFDJ, APPD, RHMZ/Hidmet, Croatian Waterways/DHMZ, OVF Hydroinfo, SHMÚ, viadonau DoRIS and WSV PEGELONLINE.",
   footerMapCredit: "Map and location: OpenStreetMap contributors, CARTO and Nominatim. Map interface: Leaflet.",
-  footerLinksAria: "Footer links", sourceCodeLink: "Source code", aboutProjectLink: "About the project",
+  footerLinksAria: "Footer links", sourceCodeLink: "Source code",
   betaStatusLabel: "Beta version", contractVersionLabel: "Contract",
   infoWhatTitle: "What the portal provides", infoWhat: "The portal publishes Danube water-level observations and forecasts from eight national authorities: AFDJ for Romania and seven international sources — Germany, Austria, Slovakia, Hungary, Croatia, Bulgaria and Serbia.",
   infoFrequencyTitle: "Update frequencies", infoFrequency: "Romania updates automatically five times a day. Each international source has its own frequency — from updates every few minutes (Serbia) to daily or manual updates — visible in the Data sources section.",
@@ -265,6 +267,7 @@ export function getLanguage() { return language; }
 export function getLocale() { return language === "en" ? "en-GB" : "ro-RO"; }
 export function countryName(code) { return t(COUNTRY_KEYS[code] || code); }
 export function statusLabel(status) { return t({ complete: "complete", partial: "partial", provisional: "provisional", suspect: "suspect", stale: "stale", suspended: "suspended", unavailable: "unavailable", available: "available", scheduled: "scheduled", manual: "manual", disabled: "disabled", current: "current", validated: "validated", requires_review: "requiresReview", tls_validation_failed: "tlsValidationFailed", tls_failed: "tlsFailed", source_validated: "sourceValidated", source_provisional: "sourceProvisional", source_unchecked: "sourceUnchecked", technical_validation_passed: "technicalValidationPassed", technical_validation_failed: "technicalValidationFailed", not_applicable: "notApplicable", unknown: "unknown" }[status] || "unavailable"); }
+export function freshnessLabel(status) { return t({ current: "current", stale: "stale" }[status] || "freshnessUnavailable"); }
 export function qualityLabel(quality) { return t({ observed: "valid", valid: "valid", provisional: "provisional", suspect: "suspect", missing: "unavailable" }[quality] || "unavailable"); }
 export function stationTypeLabel(type) { return t({ gauge: "gauge", hydrometric: "hydrometric", manual: "manual", automatic: "automatic", automated: "automatic" }[type] || "unavailable"); }
 export function coordinateConfidenceLabel(value) { return t({ high: "highConfidence", medium: "mediumConfidence", low: "lowConfidence", unresolved: "unresolvedConfidence" }[value] || "unresolvedConfidence"); }

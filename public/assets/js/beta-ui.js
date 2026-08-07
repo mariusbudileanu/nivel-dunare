@@ -1,5 +1,5 @@
 import { formatDate, formatNumber } from "./config.js";
-import { applyTranslations, coordinateConfidenceLabel, countryName, frequencyLabel, getLanguage, issueLabel, onLanguageChange, qualityLabel, stationTypeLabel, statusLabel, t } from "./i18n.js";
+import { applyTranslations, coordinateConfidenceLabel, countryName, freshnessLabel, frequencyLabel, getLanguage, issueLabel, onLanguageChange, qualityLabel, stationTypeLabel, statusLabel, t } from "./i18n.js";
 
 const filters = { country: "all", source: "all", trend: "all", access: "all", status: "all", automation: "all", freshness: "all", quality: "all", type: "all", stream: "all", coordinate: "all" };
 let data;
@@ -52,7 +52,7 @@ function renderFilters() {
   access.innerHTML = option("all", t("allAccessStates"), filters.access) + [...new Set(data.sources.map(item => item.access_status))].filter(Boolean).map(value => option(value, statusLabel(value), filters.access)).join("");
   status.innerHTML = option("all", t("allStatuses"), filters.status) + ["complete", "partial", "suspended", "unavailable"].map(value => option(value, `${statusIcon(value)} ${statusLabel(value)}`, filters.status)).join("");
   automation.innerHTML = option("all", t("allAutomationStates"), filters.automation) + ["scheduled", "manual", "disabled"].map(value => option(value, statusLabel(value), filters.automation)).join("");
-  freshness.innerHTML = option("all", t("allFreshnessStates"), filters.freshness) + ["current", "stale", "unavailable"].map(value => option(value, statusLabel(value), filters.freshness)).join("");
+  freshness.innerHTML = option("all", t("allFreshnessStates"), filters.freshness) + ["current", "stale", "unavailable"].map(value => option(value, freshnessLabel(value), filters.freshness)).join("");
   quality.innerHTML = option("all", t("allQualityStates"), filters.quality) + ["observed", "provisional", "unavailable"].map(value => option(value, qualityLabel(value), filters.quality)).join("");
   const types = [...new Set(data.stations.map(station => station.station_type))].sort();
   type.innerHTML = option("all", t("allTypes"), filters.type) + types.map(value => option(value, stationTypeLabel(value), filters.type)).join("");
@@ -82,6 +82,16 @@ function detailLine(label, value) {
   return `<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</p>`;
 }
 
+function sourceLastObservationValue(source, sourceStations) {
+  const stationIds = new Set(sourceStations.map(station => station.station_id));
+  let latestUtc = null;
+  for (const row of data.latest) {
+    if (!stationIds.has(row.station_id) || !row.measurement_datetime_utc) continue;
+    if (!latestUtc || new Date(row.measurement_datetime_utc) > new Date(latestUtc)) latestUtc = row.measurement_datetime_utc;
+  }
+  return latestUtc || source.last_source_observation_at;
+}
+
 function renderSourcesTable() {
   const stationsBySource = new Map();
   for (const station of data.stations) {
@@ -95,7 +105,8 @@ function renderSourcesTable() {
     const sourceStations = stationsBySource.get(source.source_id) || [];
     const sourceUrl = source.source_url || sourceStations.find(station => station.source_url)?.source_url;
     const messageTemplate = source[getLanguage() === "en" ? "validation_message_en" : "validation_message_ro"] || t("unavailable");
-    const observationDate = source.last_source_observation_at ? formatDate(source.last_source_observation_at, true) : t("unavailable");
+    const observationValue = sourceLastObservationValue(source, sourceStations);
+    const observationDate = observationValue ? formatDate(observationValue, true, "Europe/Bucharest") : t("unavailable");
     const message = messageTemplate.replaceAll("{date}", observationDate);
     const detailId = `source-details-${index}`;
     return `<tr class="source-row">
@@ -103,7 +114,7 @@ function renderSourcesTable() {
       <td>${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(source.label)}</a>` : escapeHtml(source.label)}</td>
       <td>${escapeHtml(statusLabel(source.automation_status))}</td>
       <td>${escapeHtml(observationDate)}</td>
-      <td><span class="status-tag ${escapeHtml(source.source_status)}">${escapeHtml(t("sourceIntegrationBadge", { status: statusLabel(source.source_status) }))}</span> <span class="status-tag ${escapeHtml(source.freshness_status)}">${escapeHtml(t("freshnessBadge", { status: statusLabel(source.freshness_status) }))}</span></td>
+      <td><span class="status-tag ${escapeHtml(source.source_status)}">${escapeHtml(t("sourceIntegrationBadge", { status: statusLabel(source.source_status) }))}</span> <span class="status-tag ${escapeHtml(source.freshness_status)}">${escapeHtml(t("freshnessBadge", { status: freshnessLabel(source.freshness_status) }))}</span></td>
       <td><button type="button" class="button ghost compact source-details-toggle" aria-expanded="false" aria-controls="${detailId}" data-i18n="showDetails">${escapeHtml(t("showDetails"))}</button></td>
     </tr>
     <tr class="source-details-row" id="${detailId}" hidden>

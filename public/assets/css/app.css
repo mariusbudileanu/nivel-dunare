@@ -117,9 +117,9 @@ footer { padding:26px clamp(20px,5vw,70px) 40px; border-top:1px solid var(--bord
 .footer-credits p { margin:0; }
 .footer-policy { font-weight:700; color:var(--text-primary); }
 .footer-links-block { display:grid; gap:8px; text-align:right; }
-.footer-links { display:flex; flex-wrap:wrap; gap:6px 14px; justify-content:flex-end; }
-.footer-links a, .footer-link-button { color:var(--primary); text-decoration:none; font-weight:700; font-size:.75rem; }
-.footer-link-button { background:none; border:0; padding:0; cursor:pointer; font-family:inherit; }
+.footer-links { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; justify-content:flex-end; }
+.footer-links a, .footer-link-button { color:var(--primary); text-decoration:none; font-weight:700; font-size:.75rem; line-height:1.4; vertical-align:baseline; }
+.footer-link-button { background:none; border:0; margin:0; padding:0; cursor:pointer; font-family:inherit; }
 .footer-links a:hover, .footer-link-button:hover { text-decoration:underline; }
 .footer-meta { margin:0; color:var(--text-secondary); }
 .modal { width:min(780px,calc(100% - 28px)); max-height:88vh; padding:0; border:1px solid var(--border); border-radius:16px; color:var(--text-primary); box-shadow:0 30px 90px rgba(14,37,53,.3); }.modal::backdrop { background:rgba(18,38,52,.52); backdrop-filter:blur(3px); }.modal-head { padding:16px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); }.modal-head h2 {margin:0}.modal-body { padding:18px; overflow:auto; }.info-accordion { display:grid; gap:8px; }.info-accordion details { border:1px solid var(--border); border-radius:12px; padding:4px 12px; }.info-accordion summary { cursor:pointer; padding:8px 0; font-weight:700; font-size:.86rem; }.info-accordion p{margin:0 0 10px;color:var(--text-secondary);font-size:.78rem}.info-accordion pre{white-space:pre-wrap;font-size:.7rem;margin:0 0 10px}.download-list{display:grid;gap:8px}.download-list a{display:flex;justify-content:space-between;text-decoration:none;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-weight:700}.toast{position:fixed;right:20px;bottom:20px;z-index:3000;max-width:360px;padding:11px 14px;border-radius:10px;background:var(--text-primary);color:white;box-shadow:var(--shadow);font-size:.78rem}.error-page{min-height:100vh;display:grid;place-items:center;padding:20px}.error-page .surface{padding:40px;max-width:500px;text-align:center}

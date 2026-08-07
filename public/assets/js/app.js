@@ -39,7 +39,7 @@ function trend(value) {
 
 function stationFreshness(properties) {
   if (properties.freshness_status === "stale") return { key: "stale", label: t("stale") };
-  if (properties.freshness_status === "unavailable" || properties.access_status === "unavailable" || properties.access_status === "tls_failed") return { key: "unavailable", label: t("unavailable") };
+  if (properties.freshness_status === "unavailable" || properties.access_status === "unavailable" || properties.access_status === "tls_failed") return { key: "unavailable", label: t("freshnessUnavailable") };
   if (properties.quality_flag === "provisional" || properties.validation_status === "source_provisional") return { key: "provisional", label: t("provisional") };
   return { key: "current", label: t("current") };
 }
@@ -450,7 +450,6 @@ function bindEvents(downloads) {
   $$(".international-filters select").forEach(select => select.addEventListener("change", updateActiveFilterCount));
   $("#info-button").addEventListener("click", () => $("#info-dialog").showModal());
   $("#footer-methodology-link")?.addEventListener("click", () => $("#info-dialog").showModal());
-  $("#footer-about-link")?.addEventListener("click", () => $("#info-dialog").showModal());
   $("#language-button").addEventListener("click", toggleLanguage);
   $("#downloads-button").addEventListener("click", () => $("#downloads-dialog").showModal());
   $$('[data-close-dialog]').forEach(button => button.addEventListener("click", () => document.getElementById(button.dataset.closeDialog).close()));
