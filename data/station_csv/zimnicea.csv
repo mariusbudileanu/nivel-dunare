@@ -3,6 +3,7 @@ observation,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-03T03:00:00+03
 observation,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-04T03:00:00+03:00,2026-08-04,,-57,-2,28,valid
 observation,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-05T03:00:00+03:00,2026-08-05,,-60,-3,27.5,valid
 observation,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-06T03:00:00+03:00,2026-08-06,,-64,-4,28,valid
+observation,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-07T03:00:00+03:00,2026-08-07,,-68,-4,28,valid
 forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-07T03:00:00+03:00,2026-08-07,120,-69,,,xml_html_value_mismatch
 forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-03T03:00:00+03:00,2026-08-03,24,-56,,,xml_html_value_mismatch
 forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-04T03:00:00+03:00,2026-08-04,48,-59,,,xml_html_value_mismatch
@@ -18,3 +19,8 @@ forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-06T03:00:00+03:00
 forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-07T03:00:00+03:00,2026-08-07,48,-66,,,valid
 forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-08T03:00:00+03:00,2026-08-08,72,-68,,,valid
 forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-09T03:00:00+03:00,2026-08-09,96,-69,,,valid
+forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-11T03:00:00+03:00,2026-08-11,120,-72,,,valid
+forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-07T03:00:00+03:00,2026-08-07,24,-67,,,valid
+forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-08T03:00:00+03:00,2026-08-08,48,-69,,,valid
+forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-09T03:00:00+03:00,2026-08-09,72,-70,,,valid
+forecast,fda97819-adbe-448c-bb6b-85e4aea435af,Zimnicea,2026-08-10T03:00:00+03:00,2026-08-10,96,-71,,,valid

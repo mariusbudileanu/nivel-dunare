@@ -3,6 +3,7 @@ observation,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-03T03:00:00+03:
 observation,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-04T03:00:00+03:00,2026-08-04,,4,0,27.5,valid
 observation,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-05T03:00:00+03:00,2026-08-05,,4,0,27.5,valid
 observation,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-06T03:00:00+03:00,2026-08-06,,4,0,27.5,valid
+observation,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-07T03:00:00+03:00,2026-08-07,,4,0,28,valid
 forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-07T03:00:00+03:00,2026-08-07,120,-9,,,valid
 forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-03T03:00:00+03:00,2026-08-03,24,0,,,xml_html_value_mismatch
 forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-04T03:00:00+03:00,2026-08-04,48,-2,,,xml_html_value_mismatch
@@ -18,3 +19,8 @@ forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-06T03:00:00+03:00,
 forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-07T03:00:00+03:00,2026-08-07,48,,,,missing_forecast_encoded_as_zero
 forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-08T03:00:00+03:00,2026-08-08,72,-2,,,valid
 forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-09T03:00:00+03:00,2026-08-09,96,-4,,,valid
+forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-11T03:00:00+03:00,2026-08-11,120,-6,,,valid
+forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-07T03:00:00+03:00,2026-08-07,24,1,,,valid
+forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-08T03:00:00+03:00,2026-08-08,48,-1,,,valid
+forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-09T03:00:00+03:00,2026-08-09,72,-3,,,valid
+forecast,cc4f13d6-eccf-48bf-a3b2-2ed3b60e1f63,Brăila,2026-08-10T03:00:00+03:00,2026-08-10,96,-5,,,valid

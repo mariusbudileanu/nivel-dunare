@@ -3,6 +3,7 @@ observation,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-03T03:00:00+03:
 observation,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-04T03:00:00+03:00,2026-08-04,,-165,-5,27.5,valid
 observation,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-05T03:00:00+03:00,2026-08-05,,-168,-3,27.5,valid
 observation,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-06T03:00:00+03:00,2026-08-06,,-170,-2,27.5,valid
+observation,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-07T03:00:00+03:00,2026-08-07,,-170,0,28,valid
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-07T03:00:00+03:00,2026-08-07,120,-172,,,xml_html_value_mismatch
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-03T03:00:00+03:00,2026-08-03,24,-160,,,xml_html_value_mismatch
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-04T03:00:00+03:00,2026-08-04,48,-164,,,xml_html_value_mismatch
@@ -18,3 +19,8 @@ forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-06T03:00:00+03:00,
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-07T03:00:00+03:00,2026-08-07,48,-171,,,valid
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-08T03:00:00+03:00,2026-08-08,72,-172,,,valid
 forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-09T03:00:00+03:00,2026-08-09,96,-173,,,valid
+forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-11T03:00:00+03:00,2026-08-11,120,-174,,,valid
+forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-07T03:00:00+03:00,2026-08-07,24,-171,,,valid
+forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-08T03:00:00+03:00,2026-08-08,48,-172,,,valid
+forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-09T03:00:00+03:00,2026-08-09,72,-173,,,valid
+forecast,a4976c0d-d21d-4bda-b6bc-c19c0edc6123,Calafat,2026-08-10T03:00:00+03:00,2026-08-10,96,-173,,,valid
