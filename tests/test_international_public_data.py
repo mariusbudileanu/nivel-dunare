@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.build_international_public_data import EXPECTED_COUNTS, SOURCE_POLICY, build
+from scripts.build_international_public_data import EXPECTED_COUNTS, SOURCE_POLICY, _stream_rows, build, enrich_observation
 from scripts.validate_international_public_data import FILES, observation_identity, validate
 
 
@@ -22,7 +22,7 @@ class InternationalPublicDataTests(unittest.TestCase):
     def test_committed_public_contract_and_mirror(self):
         result = validate(PUBLIC_ROOT, ROOT / "public" / "data" / "international")
         self.assertTrue(result["ok"])
-        self.assertEqual((result["stations"], result["mapped"], result["unmapped"]), (101, 101, 0))
+        self.assertEqual((result["stations"], result["mapped"], result["unmapped"]), (102, 102, 0))
 
     def test_publication_policy_is_explicit_and_isolated_from_afdj(self):
         self.assertEqual(SOURCE_POLICY["de"]["status"], "complete")
@@ -45,12 +45,12 @@ class InternationalPublicDataTests(unittest.TestCase):
         features = load_json(PUBLIC_ROOT / "stations.geojson")["features"]
         unmapped = load_json(PUBLIC_ROOT / "unmapped_stations.json")
         ids = {row["station_id"] for row in stations}
-        self.assertEqual(len(ids), 101)
+        self.assertEqual(len(ids), 102)
         self.assertTrue({row["station_id"] for row in observations + forecasts + latest} <= ids)
-        self.assertEqual(len(features), 93)
+        self.assertEqual(len(features), 94)
         self.assertEqual(len(unmapped), 0)
         self.assertEqual(sum(feature["properties"]["is_exact_station_location"] for feature in features), 57)
-        self.assertEqual(sum(not feature["properties"]["is_exact_station_location"] for feature in features), 36)
+        self.assertEqual(sum(not feature["properties"]["is_exact_station_location"] for feature in features), 37)
         self.assertFalse(any(row["country_code"] == "HR" for row in latest))
         self.assertFalse(any(row["source_id"] == "appd_bg" for row in forecasts))
         rs_stations = [row for row in stations if row["country_code"] == "RS"]
@@ -72,6 +72,72 @@ class InternationalPublicDataTests(unittest.TestCase):
         self.assertTrue(any(row.get("observation", {}).get("value") == 46.2 for row in legacy))
         self.assertTrue(all(row.get("historical") and row.get("active") is False for row in legacy))
         self.assertTrue(all(row.get("source_url") and row.get("source_file_sha256") and row.get("captured_at_utc") for row in observations))
+
+    def test_sk_medvedov_station_5145_is_published_with_valid_coordinates(self):
+        # SHMU added a 14th Dunaj-tagged station (source_station_id "5145",
+        # "Medveďov - Dunaj") some time before 2026-08-06; confirmed live and not
+        # a rename/duplicate of any existing SK station (see P2 investigation).
+        stations = load_json(PUBLIC_ROOT / "stations.json")
+        medvedov = next((row for row in stations if row["station_id"] == "sk-5145"), None)
+        self.assertIsNotNone(medvedov, "sk-5145 (Medveďov) missing from published stations.json")
+        self.assertEqual(medvedov["country_code"], "SK")
+        self.assertEqual(medvedov["source_station_id"], "5145")
+        self.assertIsNotNone(medvedov["latitude"])
+        self.assertIsNotNone(medvedov["longitude"])
+        self.assertTrue(-90 <= medvedov["latitude"] <= 90)
+        self.assertTrue(-180 <= medvedov["longitude"] <= 180)
+        features = load_json(PUBLIC_ROOT / "stations.geojson")["features"]
+        self.assertTrue(any(f["properties"]["station_id"] == "sk-5145" for f in features))
+        self.assertEqual(EXPECTED_COUNTS["sk"], 14)
+
+    def test_stream_rows_do_not_duplicate_when_stream_id_format_changed(self):
+        # The station's own (fresh) source_stream_id is the new "5127:observed"
+        # format; an already-published observation still under the old bare
+        # "5127" label must not be treated as a second, secondary stream.
+        station = {
+            "station_id": "sk-5127", "physical_station_id": "sk-5127", "source_stream_id": "5127:observed",
+            "source_stream_type": "observed", "is_primary_stream": True, "observation_frequency": None,
+            "country_code": "SK", "source_id": "shmu_sk",
+        }
+        old_format_observation = {
+            "station_id": "sk-5127", "source_stream_id": "5127", "source_stream_type": "observed",
+        }
+        rows = _stream_rows([station], [old_format_observation], [])
+        self.assertEqual(len(rows), 1)
+
+    def test_enrich_observation_canonicalizes_stale_primary_stream_id(self):
+        station = {
+            "country_code": "SK", "station_name": "Devin", "station_name_local": "Devín",
+            "physical_station_id": "sk-5127", "source_stream_id": "5127:observed",
+            "source_stream_type": "observed", "is_primary_stream": True,
+        }
+        policy = {"source_id": "shmu_sk", "status": "partial", "current": True}
+        stale_row = {"source_stream_id": "5127", "source_stream_type": "observed", "source_file_sha256": ""}
+        result = enrich_observation(stale_row, station, policy, {})
+        self.assertEqual(result["source_stream_id"], "5127:observed")
+
+    def test_enrich_observation_keeps_a_genuinely_different_secondary_stream_id(self):
+        station = {
+            "country_code": "RS", "station_name": "Bezdan", "station_name_local": "Bezdan",
+            "physical_station_id": "rs-42010", "source_stream_id": "42010:daily",
+            "source_stream_type": "daily", "is_primary_stream": True,
+        }
+        policy = {"source_id": "hidmet_rs", "status": "complete", "current": True}
+        nrt_row = {"source_stream_id": "42010:nrt", "source_stream_type": "nrt", "source_file_sha256": ""}
+        result = enrich_observation(nrt_row, station, policy, {})
+        self.assertEqual(result["source_stream_id"], "42010:nrt")
+
+    def test_stream_rows_still_separates_distinct_stream_types(self):
+        station = {
+            "station_id": "rs-42010", "physical_station_id": "rs-42010", "source_stream_id": "42010:daily",
+            "source_stream_type": "daily", "is_primary_stream": True, "observation_frequency": None,
+            "country_code": "RS", "source_id": "hidmet_rs",
+        }
+        nrt_observation = {
+            "station_id": "rs-42010", "source_stream_id": "42010:nrt", "source_stream_type": "nrt",
+        }
+        rows = _stream_rows([station], [nrt_observation], [])
+        self.assertEqual(len(rows), 2)
 
     def test_builder_round_trip_from_candidate_shape(self):
         public_stations = load_json(PUBLIC_ROOT / "stations.json")
@@ -135,7 +201,7 @@ class InternationalPublicDataTests(unittest.TestCase):
                 "fixture-test",
                 "live-test",
             )
-            self.assertEqual(status["station_count"], 101)
+            self.assertEqual(status["station_count"], 102)
             self.assertEqual(set(path.name for path in output.iterdir()), set(FILES))
             self.assertTrue(validate(output, mirror)["ok"])
             output_text = "\n".join((output / name).read_text(encoding="utf-8") for name in FILES)

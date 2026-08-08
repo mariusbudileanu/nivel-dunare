@@ -117,9 +117,45 @@ class InternationalGeocodingTests(unittest.TestCase):
             self.assertTrue(official["is_exact_station_location"])
             self.assertEqual(official["coordinate_method"], "official_station_coordinate")
 
+    def test_run_preserves_legacy_registry_rows_no_longer_needing_geocoding(self):
+        # A station that was once locality-geocoded can later be upgraded to an
+        # official/RIS/manual coordinate (this happened for real to BG and HR
+        # stations). It then drops out of run()'s `targets` list. The registry
+        # is documented as "immutable" (validate_registry's docstring) and
+        # validate_registry() enforces a fixed row count for exactly this
+        # reason - run() must not silently drop that row just because the
+        # station no longer needs geocoding today.
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            stations_path = root / "stations.json"
+            registry_path = root / "registry.csv"
+            cache_path = root / "cache.json"
+            upgraded = {
+                "station_id": "hr-upgraded", "station_name": "Legacy", "station_name_local": "Legacy",
+                "country_code": "HR", "is_exact_station_location": True, "mapped": True,
+            }
+            still_needs_geocoding = station("sk-still-needed")
+            stations_path.write_text(json.dumps([upgraded, still_needs_geocoding]), encoding="utf-8")
+            legacy_row = {key: "" for key in FIELDS} | {
+                "station_id": "hr-upgraded", "country_code": "HR", "station_name": "Legacy",
+                "station_name_local": "Legacy", "coordinate_method": "geocoded_locality",
+                "coordinate_provider": PROVIDER, "coordinate_confidence": "medium",
+                "review_status": "accepted", "latitude": "45.0", "longitude": "18.0",
+                "geocoding_query": "Legacy, Croatia", "coordinate_source": "x", "geocoder_result_label": "x",
+                "geocoder_result_type": "x", "geocoded_at": "2026-08-04T12:00:00Z", "source_url": "https://x",
+            }
+            with registry_path.open("w", encoding="utf-8", newline="") as stream:
+                writer = csv.DictWriter(stream, fieldnames=FIELDS)
+                writer.writeheader(); writer.writerow(legacy_row)
+            cache_path.write_text(json.dumps({"cache_version": CACHE_VERSION, "provider": PROVIDER, "queries": {}}), encoding="utf-8")
+            run(stations_path, registry_path, cache_path, live=False)
+            with registry_path.open(encoding="utf-8-sig", newline="") as stream:
+                remaining_ids = {row["station_id"] for row in csv.DictReader(stream)}
+            self.assertIn("hr-upgraded", remaining_ids)
+
     def test_committed_public_contract_separates_coordinate_types(self):
         result = validate(ROOT / "data/public/international", ROOT / "public/data/international")
-        self.assertEqual((result["official_coordinates"], result["manually_verified_coordinates"], result["approximate_coordinates"], result["unmapped"]), (50, 15, 36, 0))
+        self.assertEqual((result["official_coordinates"], result["manually_verified_coordinates"], result["approximate_coordinates"], result["unmapped"]), (50, 15, 37, 0))
         stations = json.loads((ROOT / "data/public/international/stations.json").read_text(encoding="utf-8"))
         approximate = [row for row in stations if row["mapped"] and not row["is_exact_station_location"]]
         unresolved = [row for row in stations if not row["mapped"]]

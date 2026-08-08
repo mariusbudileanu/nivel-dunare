@@ -161,10 +161,10 @@ class InternationalAdapterTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             generated = Path(directory) / "audit.csv"
             rows = build(Path("docs/DANUBE_STATION_INVENTORY.csv"), generated)
-            self.assertEqual(101, len(rows))
-            self.assertEqual(101, len([row for row in rows if row["included"] == "yes"]))
+            self.assertEqual(102, len(rows))
+            self.assertEqual(102, len([row for row in rows if row["included"] == "yes"]))
             self.assertEqual(0, len([row for row in rows if row["implementation_status"] == "suspended"]))
-            self.assertEqual(101, len([row for row in rows if row["latitude"]]))
+            self.assertEqual(102, len([row for row in rows if row["latitude"]]))
             self.assertEqual(
                 Path("docs/INTERNATIONAL_STATIONS_AUDIT.csv").read_text(encoding="utf-8"),
                 generated.read_text(encoding="utf-8"),

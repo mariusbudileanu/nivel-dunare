@@ -203,8 +203,8 @@ def validate_registry(stations_path: Path, registry_path: Path, cache_path: Path
     stations = json.loads(stations_path.read_text(encoding="utf-8"))
     stations_by_id = {row["station_id"]: row for row in stations}
     rows = read_registry(registry_path)
-    if len(rows) != 75 or not set(rows) <= set(stations_by_id):
-        raise ValueError("Geocoding registry must contain 75 known legacy locality targets")
+    if len(rows) != 76 or not set(rows) <= set(stations_by_id):
+        raise ValueError("Geocoding registry must contain 76 known legacy locality targets")
     cache = load_cache(cache_path)
     accepted = 0
     coordinate_groups: dict[tuple[float, float], list[dict[str, str]]] = {}
@@ -289,7 +289,9 @@ def run(stations_path: Path, registry_path: Path, cache_path: Path, *, live: boo
         requested += 1
         last_request_at = time.monotonic()
     rows: list[dict[str, str]] = []
+    target_ids = set()
     for station in targets:
+        target_ids.add(station["station_id"])
         prior = existing.get(station["station_id"])
         if prior and prior.get("review_status") in {"accepted", "rejected"} and not overwrite_reviewed:
             rows.append(prior)
@@ -300,6 +302,13 @@ def run(stations_path: Path, registry_path: Path, cache_path: Path, *, live: boo
             rows.append(classify_results(station, entry.get("results", []), entry.get("requested_at_utc", ""), entry.get("request_url", "")))
         else:
             rows.append(classify_results(station, [], "", ""))
+    # The registry is immutable history: a station that was geocoded here and later
+    # upgraded to an official/RIS/manual coordinate drops out of `targets`, but its
+    # row must stay - validate_registry() enforces a fixed row count for exactly
+    # this reason.
+    for station_id, prior in existing.items():
+        if station_id not in target_ids:
+            rows.append(prior)
     rows.sort(key=lambda row: (row["country_code"], row["station_name"], row["station_id"]))
     write_registry(registry_path, rows)
     report = {

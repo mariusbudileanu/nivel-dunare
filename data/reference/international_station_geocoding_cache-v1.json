@@ -6372,6 +6372,87 @@
         }
       ]
     },
+    "sk|medvedov slovakia": {
+      "country_code": "SK",
+      "query": "Medveďov, Slovakia",
+      "request_url": "https://nominatim.openstreetmap.org/search?q=Medve%C4%8Fov%2C+Slovakia&countrycodes=sk&format=jsonv2&addressdetails=1&namedetails=1&limit=5&dedupe=1&accept-language=en",
+      "requested_at_utc": "2026-08-07T11:42:46Z",
+      "results": [
+        {
+          "address": {
+            "ISO3166-2-lvl4": "SK-TA",
+            "country": "Slovakia",
+            "country_code": "sk",
+            "district": "District of Dunajská Streda",
+            "municipality": "Medveďov",
+            "postcode": "930 07",
+            "region": "Region of Trnava"
+          },
+          "addresstype": "municipality",
+          "boundingbox": [
+            "47.7739960",
+            "47.8191448",
+            "17.6469363",
+            "17.6938194"
+          ],
+          "category": "boundary",
+          "display_name": "Medveďov, District of Dunajská Streda, Region of Trnava, 930 07, Slovakia",
+          "importance": 0.47155967231028945,
+          "lat": "47.8000105",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "lon": "17.6607602",
+          "name": "Medveďov",
+          "namedetails": {
+            "loc_name": "Medve",
+            "name": "Medveďov",
+            "name:de": "Weißkirchen",
+            "name:hu": "Medve",
+            "name:sk": "Medveďov",
+            "ref": "501760"
+          },
+          "osm_id": 2206725,
+          "osm_type": "relation",
+          "place_id": 67118829,
+          "place_rank": 16,
+          "type": "administrative"
+        },
+        {
+          "address": {
+            "ISO3166-2-lvl4": "SK-BC",
+            "country": "Slovakia",
+            "country_code": "sk",
+            "district": "District of Brezno",
+            "hamlet": "Medveďov",
+            "postcode": "977 03",
+            "region": "Region of Banská Bystrica",
+            "village": "Čierny Balog"
+          },
+          "addresstype": "hamlet",
+          "boundingbox": [
+            "48.7289998",
+            "48.7689998",
+            "19.6042412",
+            "19.6442412"
+          ],
+          "category": "place",
+          "display_name": "Medveďov, Čierny Balog, District of Brezno, Region of Banská Bystrica, 977 03, Slovakia",
+          "importance": 0.13338718471046004,
+          "lat": "48.7489998",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "lon": "19.6242412",
+          "name": "Medveďov",
+          "namedetails": {
+            "name": "Medveďov",
+            "name:sk": "Medveďov"
+          },
+          "osm_id": 456680141,
+          "osm_type": "node",
+          "place_id": 189103524,
+          "place_rank": 20,
+          "type": "hamlet"
+        }
+      ]
+    },
     "sk|radvan n dunajom slovakia": {
       "country_code": "SK",
       "query": "Radvaň  n/Dunajom, Slovakia",
