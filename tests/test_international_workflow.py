@@ -18,25 +18,31 @@ class InternationalWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.workflow = WORKFLOW.read_text(encoding="utf-8")
-        cls.bg_workflow = BG_WORKFLOW.read_text(encoding="utf-8")
         cls.rs_workflow = RS_WORKFLOW.read_text(encoding="utf-8")
 
     def test_cron_contains_only_scheduled_source_selector(self):
         self.assertIn('- cron: "37 1 * * *"', self.workflow)
         self.assertIn('source="scheduled"', self.workflow)
-        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr"))
-        self.assertNotIn("at", SCHEDULED_SOURCES)
+        # AT joined once DORIS_PARTNER_KEY held a real permanent key (P3); BG
+        # joined once its dedicated 09:15/21:15 Europe/Sofia exact-minute gate
+        # was retired for the shared unconditional daily fetch (P4) - both
+        # streams come from the one appd-bg.org page regardless of time of
+        # day. RS keeps its own dedicated windows workflow.
+        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "at", "bg"))
+        self.assertIn("at", SCHEDULED_SOURCES)
+        self.assertIn("bg", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
 
-    def test_bg_uses_dst_safe_dedicated_local_time_windows(self):
-        for cron in ("15 6 * * *", "15 7 * * *", "15 18 * * *", "15 19 * * *"):
-            self.assertIn(f'- cron: "{cron}"', self.bg_workflow)
-        self.assertIn("TZ=Europe/Sofia", self.bg_workflow)
-        self.assertIn("09:15", self.bg_workflow)
-        self.assertIn("21:15", self.bg_workflow)
-        self.assertIn("source=bg", self.bg_workflow)
-        self.assertIn('-f stream="$STREAM"', self.bg_workflow)
-        self.assertNotIn("contents: write", self.bg_workflow)
+    def test_bg_dedicated_exact_minute_gate_workflow_was_retired(self):
+        # P4: the 09:15/21:15 Europe/Sofia exact-minute gate was fragile
+        # against GitHub Actions scheduling delays of an hour or more
+        # (observed directly on this repo). BG is fetched by the same
+        # unconditional shared daily cron as DE/SK/HU/HR/AT now, so a delayed
+        # run still collects data - there is no time check left to miss.
+        self.assertFalse(BG_WORKFLOW.exists(), "update-bg-danube-streams.yml should be removed, not left dormant")
+        self.assertNotIn("TZ=Europe/Sofia", self.workflow)
+        self.assertNotIn("09:15", self.workflow)
+        self.assertNotIn("21:15", self.workflow)
 
     def test_rs_windows_handoff_schedules_and_write_boundary(self):
         for cron in ("17 */3 * * *", "47 0 * * *", "20 8 * * *", "20 9 * * *", "35 10 * * *", "35 11 * * *"):
@@ -97,9 +103,41 @@ class InternationalWorkflowTests(unittest.TestCase):
     def test_artifact_security_and_retention(self):
         self.assertIn("retention-days: 30", self.workflow)
         self.assertIn("Scan product and artifact for secrets", self.workflow)
+
+    def test_rs_windows_job_installs_tzdata_before_zoneinfo_use(self):
+        # windows-latest has no OS-level IANA database; Python's zoneinfo needs the
+        # tzdata PyPI package there or ZoneInfo('Europe/Belgrade') raises
+        # ZoneInfoNotFoundError. Every scheduled run of this step failed with
+        # exactly that error (confirmed via `gh run view`) until an install step
+        # was added ahead of it.
+        self.assertIn("ZoneInfo('Europe/Belgrade')", self.rs_workflow)
+        before_resolve = self.rs_workflow.split("Resolve DST-safe Serbia collection profile", 1)[0]
+        self.assertIn("pip install", before_resolve)
+        self.assertIn("tzdata", before_resolve)
         self.assertIn("Configured DoRIS secret found in persisted output", self.workflow)
         self.assertIn("path.unlink()", self.workflow)
         self.assertIn("raw, candidates, issues, logs and validated product", self.workflow)
+
+    def test_source_health_job_runs_only_after_a_real_publish_succeeds(self):
+        # P5: must never fire on a workflow_dispatch dry-run/fixtures test
+        # (where the publish job is skipped, not failed) and must never write
+        # to repository contents - only to issues.
+        self.assertIn("\n  check-source-health:\n", self.workflow)
+        _, health_job = self.workflow.split("\n  check-source-health:\n", 1)
+        self.assertIn("needs: [collect-and-validate, publish]", health_job.split("\n", 3)[0] + health_job.split("\n", 3)[1])
+        self.assertIn(
+            "if: needs.collect-and-validate.result == 'success' && needs.publish.result == 'success'",
+            health_job,
+        )
+        permissions = health_job.split("permissions:", 1)[1].split("steps:", 1)[0]
+        self.assertIn("issues: write", permissions)
+        self.assertNotIn("contents: write", permissions)
+        self.assertIn("ref: main", health_job)
+        self.assertIn("python -m scripts.check_source_health", health_job)
+        self.assertNotIn("check_source_health --dry-run", health_job)
+        publish_start = self.workflow.index("\n  publish:\n")
+        health_start = self.workflow.index("\n  check-source-health:\n")
+        self.assertLess(publish_start, health_start, "check-source-health must be defined after publish")
 
     def test_simulated_afdj_change_is_preserved_and_international_conflict_is_detected(self):
         with tempfile.TemporaryDirectory() as temporary:

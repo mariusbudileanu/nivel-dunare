@@ -9,7 +9,7 @@ from datetime import date
 from pathlib import Path
 
 from scripts.sources.base import canonical_station_name, station_slug
-from scripts.build_international_public_data import apply_coordinate_registry
+from scripts.build_international_public_data import EXPECTED_COUNTS, apply_coordinate_registry
 
 SOURCE_RULES = {
     "pegelonline_de": {
@@ -156,9 +156,10 @@ def build(
     rows.sort(key=lambda row: (row["country_code"], row["adapter"], row["station_slug"]))
     active_count = sum(row["included"] == "yes" for row in rows)
     suspended_count = sum(row["implementation_status"] == "suspended" for row in rows)
-    if (len(rows), active_count, suspended_count) != (101, 101, 0):
+    expected_total = sum(EXPECTED_COUNTS.values())
+    if (len(rows), active_count, suspended_count) != (expected_total, expected_total, 0):
         raise ValueError(
-            "Expected 101 audited rows: 101 active candidates and none suspended; "
+            f"Expected {expected_total} audited rows: {expected_total} active candidates and none suspended; "
             f"got total={len(rows)}, active={active_count}, suspended={suspended_count}"
         )
     output_path.parent.mkdir(parents=True, exist_ok=True)

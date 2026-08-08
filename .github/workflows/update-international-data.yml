@@ -348,3 +348,28 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: gh workflow run deploy-pages.yml --ref main
+
+  check-source-health:
+    needs: [collect-and-validate, publish]
+    if: needs.collect-and-validate.result == 'success' && needs.publish.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Python 3.12
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Sync source-health issue from the just-published state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: python -m scripts.check_source_health

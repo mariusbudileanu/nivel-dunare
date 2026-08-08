@@ -15,6 +15,7 @@ from scripts.update_international_data import (
     SCHEDULED_SOURCES,
     acceptable,
     archive_details,
+    dedupe,
     main,
     next_scheduled,
     normalized_source_date,
@@ -62,22 +63,32 @@ def operation_state(code: str) -> dict:
 
 
 class InternationalAutomationTests(unittest.TestCase):
-    def test_schedule_selection_excludes_manual_at_and_disabled_rs(self):
-        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr"))
+    def test_schedule_selection_includes_at_and_bg_and_excludes_disabled_rs(self):
+        self.assertEqual(SCHEDULED_SOURCES, ("de", "sk", "hu", "hr", "at", "bg"))
         self.assertEqual(selected_sources("scheduled"), list(SCHEDULED_SOURCES))
         self.assertEqual(selected_sources("all"), list(ALL_SOURCES))
-        self.assertNotIn("at", SCHEDULED_SOURCES)
+        self.assertIn("at", SCHEDULED_SOURCES)
+        self.assertIn("bg", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
 
-    def test_next_schedule_uses_dst_safe_bg_windows(self):
+    def test_next_schedule_no_longer_depends_on_bg_local_time(self):
+        # P4: BG's dedicated 09:15/21:15 Europe/Sofia exact-minute gate is
+        # retired; it now shares the same fixed daily-UTC schedule as
+        # DE/SK/HU/HR/AT, so next_scheduled("bg", ...) must match next_scheduled
+        # for any other non-RS source, at any time of day - including times
+        # nowhere near the old windows (proving a delayed run is never
+        # "missed": there is no local-time check left to fail).
         summer = datetime(2026, 8, 5, 15, 10, tzinfo=timezone.utc)
         winter = datetime(2026, 1, 5, 7, 0, tzinfo=timezone.utc)
-        self.assertEqual(next_scheduled("bg", summer), "2026-08-05T18:15:00+00:00")
-        self.assertEqual(next_scheduled("bg", winter), "2026-01-05T07:15:00+00:00")
+        midday_far_from_old_windows = datetime(2026, 8, 5, 12, 0, tzinfo=timezone.utc)
+        self.assertEqual(next_scheduled("bg", summer), next_scheduled("de", summer))
+        self.assertEqual(next_scheduled("bg", winter), next_scheduled("de", winter))
+        self.assertEqual(next_scheduled("bg", midday_far_from_old_windows), "2026-08-06T01:37:00+00:00")
         self.assertEqual(next_scheduled("de", summer), "2026-08-06T01:37:00+00:00")
         self.assertEqual(next_scheduled("rs", summer), "2026-08-05T15:17:00+00:00")
+
     def test_operational_policy_keeps_dimensions_separate(self):
-        self.assertEqual(OPERATIONAL_POLICY["at"]["automation_status"], "manual")
+        self.assertEqual(OPERATIONAL_POLICY["at"]["automation_status"], "scheduled")
         self.assertEqual(OPERATIONAL_POLICY["rs"]["automation_status"], "scheduled")
         self.assertEqual(OPERATIONAL_POLICY["hr"]["freshness_status"], "stale")
         self.assertEqual(OPERATIONAL_POLICY["de"]["validation_status"], "source_validated")
@@ -151,18 +162,52 @@ class InternationalAutomationTests(unittest.TestCase):
 
     def test_sk_suspect_warning_does_not_block_source(self):
         accepted, error = acceptable(
-            "sk", {"status": "partial", "station_count": 13, "observation_count": 26},
+            "sk", {"status": "partial", "station_count": 14, "observation_count": 26},
             [{"severity": "warning", "code": "outside_plausible_water_temperature_range"}],
         )
         self.assertTrue(accepted)
         self.assertIsNone(error)
 
     def test_unexpected_station_addition_is_fail_soft(self):
+        # EXPECTED_COUNTS["sk"] is 14 (SHMU added station 5145/Medvedov in
+        # August 2026, confirmed legitimate and integrated); a further,
+        # still-unexpected addition must still be rejected fail-soft.
         accepted, error = acceptable(
-            "sk", {"status": "complete", "station_count": 14, "observation_count": 27}, [],
+            "sk", {"status": "complete", "station_count": 15, "observation_count": 27}, [],
         )
         self.assertFalse(accepted)
-        self.assertEqual(error, "unexpected station count: expected 13, got 14")
+        self.assertEqual(error, "unexpected station count: expected 14, got 15")
+
+    def test_dedupe_treats_old_and_new_stream_id_format_as_the_same_stream(self):
+        # SHMU's adapter code once emitted bare source_stream_id values ("5127")
+        # and now emits "5127:observed"; SK's already-published observations
+        # still carry the bare form. A source_stream_id format change must not
+        # make dedupe() treat the same underlying reading as two streams.
+        old_format = {
+            "station_id": "sk-5127", "source_stream_id": "5127", "source_stream_type": "observed",
+            "parameter": "water_level", "source_observation_date": "2026-08-07", "value": 205,
+        }
+        new_format = {
+            "station_id": "sk-5127", "source_stream_id": "5127:observed", "source_stream_type": "observed",
+            "parameter": "water_level", "source_observation_date": "2026-08-07", "value": 206,
+        }
+        merged = dedupe([old_format, new_format], "observations")
+        self.assertEqual(len(merged), 1)
+        self.assertEqual(merged[0]["value"], 206)  # the later (new-format) row wins
+
+    def test_dedupe_still_keeps_distinct_stream_types_for_the_same_station(self):
+        # RS reports daily and nrt as genuinely different streams for the same
+        # station_id; a fix for the SK format drift must not merge these.
+        daily = {
+            "station_id": "rs-42010", "source_stream_id": "42010:daily", "source_stream_type": "daily",
+            "parameter": "water_level", "source_observation_date": "2026-08-07", "value": 100,
+        }
+        nrt = {
+            "station_id": "rs-42010", "source_stream_id": "42010:nrt", "source_stream_type": "nrt",
+            "parameter": "water_level", "source_observation_date": "2026-08-07", "value": 101,
+        }
+        merged = dedupe([daily, nrt], "observations")
+        self.assertEqual(len(merged), 2)
 
     def test_empty_observation_set_cannot_replace_lkg(self):
         accepted, error = acceptable("de", {"status": "complete", "station_count": 18, "observation_count": 0}, [])
@@ -257,6 +302,40 @@ class InternationalAutomationTests(unittest.TestCase):
             rs = summary["sources"][0]
             self.assertTrue(rs["request_made"])
             self.assertEqual(rs["collection_profile"], "all")
+
+    def test_scheduled_run_collects_bg_no_matter_when_it_actually_fires(self):
+        # P4 behavioral proof: a "scheduled" run invoked at a wall-clock time
+        # nowhere near BG's old 09:15/21:15 Europe/Sofia windows (simulating a
+        # GitHub Actions run delayed by hours, which has happened for real on
+        # this repo) must still attempt BG - there is no local-time gate left
+        # that could skip it.
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            previous = {code: {"stations": [], "observations": [], "forecasts": [], "issues": []} for code in ALL_SOURCES}
+            adapter_summary = {
+                "adapter": "x", "status": "complete", "publishable": True,
+                "station_count": 1, "observation_count": 1, "forecast_count": 0,
+            }
+            called_sources = []
+
+            def fake_run_source(code, *args, **kwargs):
+                called_sources.append(code)
+                return {**adapter_summary, "source": code, "output": str(root / "output" / "results" / code)}
+
+            with patch("scripts.update_international_data.materialize_candidates", return_value=previous), \
+                 patch("scripts.update_international_data.run_source", side_effect=fake_run_source), \
+                 patch("scripts.update_international_data.replace_candidate"), \
+                 patch("scripts.update_international_data.build", return_value={"station_count": 102}), \
+                 patch("scripts.update_international_data.validate", return_value={"ok": True}), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                result = main([
+                    "--source", "scheduled", "--mode", "live", "--action", "dry-run",
+                    "--output-dir", str(root / "output"), "--public-root", str(root / "public"),
+                    "--mirror-root", str(root / "mirror"), "--operations-state", str(root / "state.json"),
+                ])
+            self.assertEqual(result, 0)
+            self.assertIn("bg", called_sources)
+            self.assertEqual(set(called_sources), set(SCHEDULED_SOURCES))
 
     def test_unexpected_adapter_failure_is_isolated_and_keeps_lkg(self):
         with tempfile.TemporaryDirectory() as temporary:

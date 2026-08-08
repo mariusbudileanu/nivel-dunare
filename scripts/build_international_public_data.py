@@ -26,7 +26,7 @@ SOURCE_POLICY = {
     "rs": {"source_id": "hidmet_rs", "status": "complete", "observations": True, "forecasts": True, "current": True, "label": "RHMZ / Hidmet", "note": "Thirteen physical gauges: twelve provisional NRT streams, thirteen daily streams, and the central official point forecast."},
 }
 
-EXPECTED_COUNTS = {"de": 18, "at": 9, "sk": 13, "hu": 25, "hr": 3, "bg": 20, "rs": 13}
+EXPECTED_COUNTS = {"de": 18, "at": 9, "sk": 14, "hu": 25, "hr": 3, "bg": 20, "rs": 13}
 SENSITIVE_QUERY_KEYS = {"viadonau_partner_key", "api_key", "apikey", "token", "access_token"}
 DEFAULT_OPERATIONAL_FIELDS = {
     "de": {"access_status": "available", "automation_status": "scheduled", "freshness_status": "current", "validation_status": "source_validated"},
@@ -183,13 +183,20 @@ def observation_sort_key(row: dict[str, Any]) -> tuple[str, str]:
 def enrich_observation(row: dict[str, Any], station: dict[str, Any], policy: dict[str, Any], captures: dict[str, str]) -> dict[str, Any]:
     result = dict(row)
     quality = result.get("canonical_quality_flag") or "observed"
+    own_stream_type = result.get("source_stream_type") or station["source_stream_type"]
+    # An already-published observation for the station's own (primary) stream is
+    # canonicalized to the station's current source_stream_id, so an adapter's id
+    # formatting change (e.g. SK adding an ":observed" suffix) does not leave a
+    # stale label orphaned from streams.json. A genuinely different secondary
+    # stream (e.g. RS nrt vs the station's own daily) keeps its own id.
+    canonical_stream_id = station["source_stream_id"] if own_stream_type == station["source_stream_type"] else (result.get("source_stream_id") or station["source_stream_id"])
     result.update({
         "country_code": station["country_code"], "station_name": station["station_name"],
         "station_name_local": station["station_name_local"], "source_id": policy["source_id"],
         "source_status": policy["status"], "source_url": sanitize_url(result.get("source_url") or station.get("source_url")),
         "physical_station_id": result.get("physical_station_id") or station["physical_station_id"],
-        "source_stream_id": result.get("source_stream_id") or station["source_stream_id"],
-        "source_stream_type": result.get("source_stream_type") or station["source_stream_type"],
+        "source_stream_id": canonical_stream_id,
+        "source_stream_type": own_stream_type,
         "is_primary_stream": result.get("is_primary_stream", station["is_primary_stream"]),
         "observation_frequency": result.get("observation_frequency") or station.get("observation_frequency"),
         "captured_at_utc": captures.get(result.get("source_file_sha256", "")) or result.get("captured_at_utc") or result.get("capture_at"),
@@ -284,8 +291,14 @@ def _stream_rows(stations: list[dict[str, Any]], observations: list[dict[str, An
         "observation_count": obs_count[row["source_stream_id"]], "forecast_count": forecast_count[row["source_stream_id"]],
     } for row in stations]
     known = {row["source_stream_id"] for row in result}
+    # An adapter's source_stream_id formatting can change (e.g. SK adding an
+    # ":observed" suffix); an already-published observation still under the old
+    # label is the same stream as the station's own current one, not a second,
+    # secondary stream - matched by (station_id, source_stream_type), which
+    # stays distinct for genuinely different streams (e.g. RS daily vs nrt).
+    known_station_types = {(row["station_id"], row["source_stream_type"]) for row in result}
     for stream_id, observation in sorted(first_observation.items()):
-        if stream_id in known:
+        if stream_id in known or (observation["station_id"], observation["source_stream_type"]) in known_station_types:
             continue
         station = station_lookup[observation["station_id"]]
         result.append({
@@ -347,8 +360,9 @@ def build(candidate_root: Path, audit_csv: Path, archive_root: Path, output_root
         stations.extend(_rs_inventory(audit_csv, policies["rs"]))
     apply_coordinate_registry(stations, geocoding_registry)
     station_lookup = {row["station_id"]: row for row in stations}
-    if len(station_lookup) != 101:
-        raise ValueError(f"Expected 101 unique station streams, got {len(station_lookup)}")
+    expected_station_count = sum(EXPECTED_COUNTS.values())
+    if len(station_lookup) != expected_station_count:
+        raise ValueError(f"Expected {expected_station_count} unique station streams, got {len(station_lookup)}")
 
     # Coordinate references may have changed physical/stream IDs after enrichment.
     for row in observations:

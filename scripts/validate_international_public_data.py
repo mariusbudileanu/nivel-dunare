@@ -11,6 +11,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from scripts.build_international_public_data import EXPECTED_COUNTS
 from scripts.geocode_international_stations import COUNTRY_BOUNDS, validate_registry
 
 
@@ -69,11 +70,16 @@ def validate(root: Path, mirror: Path | None = None,
     station_id_set = set(station_ids)
     physical_ids = {row["physical_station_id"] for row in stations}
     stream_ids = [row["source_stream_id"] for row in streams]
+    expected_station_count = sum(EXPECTED_COUNTS.values())
+    # 12 streams beyond the one-per-station baseline (BG manual+automatic pairs,
+    # RS nrt/daily/forecast components) - structurally independent of which
+    # country's station count changes.
+    expected_stream_count = expected_station_count + 12
     require(status.get("contract_version") == "1.3-beta", "Unexpected public contract version")
-    require(len(stations) == 101 == status["station_count"], "Public registry must contain 101 station streams")
+    require(len(stations) == expected_station_count == status["station_count"], f"Public registry must contain {expected_station_count} station streams")
     require(len(station_ids) == len(station_id_set), "Duplicate station_id")
     require(len({row["station_slug"] for row in stations}) == len(stations), "Duplicate station_slug")
-    require(len(streams) == status["station_stream_count"] and len(streams) in {101, 113}, "Stream registry count mismatch")
+    require(len(streams) == status["station_stream_count"] and len(streams) in {expected_station_count, expected_stream_count}, "Stream registry count mismatch")
     require(len(stream_ids) == len(set(stream_ids)), "Duplicate source_stream_id")
     require({row["station_id"] for row in streams} == station_id_set, "Stream/station reference mismatch")
     require({row["physical_station_id"] for row in streams} <= physical_ids, "Orphan stream physical_station_id")
@@ -82,17 +88,17 @@ def validate(root: Path, mirror: Path | None = None,
         require({row["source_stream_id"] for row in rows} <= set(stream_ids) or label == "forecast", f"Orphan {label} stream")
         require({row["physical_station_id"] for row in rows} <= physical_ids, f"Orphan {label} physical station")
 
-    require(status["mapped_station_count"] == 101 and status["unmapped_station_count"] == 0, "All 101 station streams must be mapped")
+    require(status["mapped_station_count"] == expected_station_count and status["unmapped_station_count"] == 0, f"All {expected_station_count} station streams must be mapped")
     require(status["official_coordinate_station_count"] == 50, f"Expected 50 official coordinates, got {status['official_coordinate_station_count']}")
     require(status["manually_verified_coordinate_station_count"] == 15, "Expected 15 manually verified exact coordinates")
-    require(status["approximate_coordinate_station_count"] == 36, "Expected 36 locality coordinates")
+    require(status["approximate_coordinate_station_count"] == 37, "Expected 37 locality coordinates")
     require(not unmapped, "No international station should remain list-only")
     method_counts = {method: sum(row["coordinate_method"] == method for row in stations) for method in (
         "official_station_coordinate", "manually_verified_station_coordinate", "geocoded_locality", "unresolved"
     )}
     require(method_counts == {
         "official_station_coordinate": 50, "manually_verified_station_coordinate": 15,
-        "geocoded_locality": 36, "unresolved": 0,
+        "geocoded_locality": 37, "unresolved": 0,
     }, "Coordinate-method distribution mismatch")
     for station in stations:
         for key in (
@@ -115,7 +121,7 @@ def validate(root: Path, mirror: Path | None = None,
     feature_physical_ids = [row["properties"]["physical_station_id"] for row in features]
     require(geojson.get("type") == "FeatureCollection", "Invalid GeoJSON type")
     require(len(features) == len(set(feature_physical_ids)) == status["mapped_physical_station_count"] == status["physical_station_count"], "Physical marker aggregation mismatch")
-    require(len(features) == 93, "Expected 93 physical international markers")
+    require(len(features) == 94, "Expected 94 physical international markers")
     require(sum(row["properties"]["stream_count"] for row in features) == len(streams), "Marker stream aggregation lost observation streams")
     for feature in features:
         props = feature["properties"]
@@ -180,9 +186,13 @@ def validate(root: Path, mirror: Path | None = None,
         require(source["automation_status"] in {"scheduled", "manual", "disabled"}, "Invalid automation status")
         require(source["freshness_status"] in {"current", "stale", "unknown", "unavailable"}, "Invalid freshness status")
     automation = {row["country_code"]: row["automation_status"] for row in sources}
-    expected_scheduled = {"DE", "SK", "HU", "HR", "BG"} | ({"RS"} if automation["RS"] == "scheduled" else set())
+    expected_scheduled = (
+        {"DE", "SK", "HU", "HR", "BG"}
+        | ({"RS"} if automation["RS"] == "scheduled" else set())
+        | ({"AT"} if automation["AT"] == "scheduled" else set())
+    )
     require({code for code, value in automation.items() if value == "scheduled"} == expected_scheduled, "Scheduled source set mismatch")
-    require(automation["AT"] == "manual", "AT automation mismatch")
+    require(automation["AT"] in {"scheduled", "manual"}, "AT automation mismatch")
     require(automation["RS"] in {"scheduled", "disabled"}, "RS automation mismatch")
 
     require(status["observation_count"] == len(observations), "Observation count mismatch")

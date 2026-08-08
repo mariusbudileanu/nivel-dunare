@@ -7,7 +7,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from scripts.sources import get_adapter
-from scripts.sources.base import load_fixture_payloads, write_result
+from scripts.sources.base import SourceStructureError, load_fixture_payloads, write_result
 
 FIXTURES = Path(__file__).parent / "fixtures" / "international"
 
@@ -23,6 +23,56 @@ class InternationalLiveVariantTests(unittest.TestCase):
         self.assertEqual("complete", result.status)
         station_observations = [row for row in result.observations if row.station_id == "sk-5141"]
         self.assertEqual(["water_level"], [row.parameter for row in station_observations])
+
+    def test_appd_automatic_station_missing_reading_keeps_station_without_inventing_values(self):
+        # Observed live on 2026-08-07: Malak Preslavets' automatic row had only
+        # name+km ("<tr><td>Malak Preslavets</td><td>413.90</td></tr>"), missing
+        # level/diff-icon/temperature entirely - not a station gained or lost,
+        # just today's reading absent. The old len(row) >= 5 filter silently
+        # dropped the whole row, tripping the "< 12" station-loss guard.
+        adapter = get_adapter("bg")
+        payloads = load_fixture_payloads(FIXTURES / "bg")
+        payload = payloads["current"]
+        body = payload.body.replace(
+            b'<tr><td>Malak Preslavets</td><td>453.6</td><td>-170</td>'
+            b'<td><img src="images/nav/nochange.gif"></td><td>27.0</td></tr>',
+            b'<tr><td>Malak Preslavets</td><td>453.6</td></tr>',
+        )
+        self.assertNotEqual(body, payload.body, "fixture row text did not match; test would be vacuous")
+        payloads["current"] = replace(payload, body=body)
+        result = adapter.parse(payloads)
+        self.assertEqual(0, len([i for i in result.issues if i.severity == "critical"]))
+        automatic_stations = [s for s in result.stations if s.station_type == "automatic"]
+        self.assertEqual(12, len(automatic_stations))
+        preslavets = next(s for s in automatic_stations if s.station_name_local == "Malak Preslavets")
+        preslavets_observations = [row for row in result.observations if row.station_id == preslavets.station_id]
+        self.assertEqual([], preslavets_observations, "no value should be invented for the missing reading")
+        # The station listed right after Malak Preslavets in the source table
+        # must keep its own correct trend direction, not the one meant for a
+        # different row shifted in by the gap.
+        silistra = next(s for s in automatic_stations if "силистра" in s.station_name_local.casefold())
+        silistra_level = next(
+            row for row in result.observations
+            if row.station_id == silistra.station_id and row.parameter == "water_level"
+        )
+        self.assertEqual("up", silistra_level.trend)
+
+    def test_appd_automatic_row_entirely_removed_still_fails_closed(self):
+        # A missing-reading row (kept, tested above) must stay distinct from an
+        # actually removed station (still rejected): the count guard exists to
+        # catch a real roster shrink, and a lenient row filter must not defeat it.
+        adapter = get_adapter("bg")
+        payloads = load_fixture_payloads(FIXTURES / "bg")
+        payload = payloads["current"]
+        body = payload.body.replace(
+            b'<tr><td>Malak Preslavets</td><td>453.6</td><td>-170</td>'
+            b'<td><img src="images/nav/nochange.gif"></td><td>27.0</td></tr>',
+            b"",
+        )
+        self.assertNotEqual(body, payload.body, "fixture row text did not match; test would be vacuous")
+        payloads["current"] = replace(payload, body=body)
+        with self.assertRaises(SourceStructureError):
+            adapter.parse(payloads)
 
     def test_shmu_high_temperature_is_preserved_without_local_threshold(self):
         adapter = get_adapter("sk")
