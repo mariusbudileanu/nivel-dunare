@@ -189,6 +189,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--sources", type=Path, default=Path("data/public/international/sources.json"))
     parser.add_argument("--repo", default="mariusbudileanu/nivel-dunare")
     parser.add_argument("--label", default=ISSUE_LABEL)
+    parser.add_argument("--title", help="Override the issue title (e.g. to mark a verification run); defaults to the production title")
     parser.add_argument("--today", help="Override today's date (ISO 8601); defaults to the current UTC date")
     parser.add_argument("--dry-run", action="store_true", help="Print the computed report; never touch GitHub")
     args = parser.parse_args(argv)
@@ -197,6 +198,8 @@ def main(argv: list[str] | None = None) -> int:
     today = date.fromisoformat(args.today) if args.today else datetime.now(timezone.utc).date()
     problems = evaluate_sources(sources, today)
     title, body = render_issue(problems, today)
+    if args.title:
+        title = args.title
 
     if args.dry_run:
         print(json.dumps({
