@@ -4,6 +4,7 @@ observation,031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,Cetate,2026-08-04T03:00:00+03:0
 observation,031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,Cetate,2026-08-05T03:00:00+03:00,2026-08-05,,-108,-2,27.5,valid
 observation,031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,Cetate,2026-08-06T03:00:00+03:00,2026-08-06,,-112,-4,27.5,valid
 observation,031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,Cetate,2026-08-07T03:00:00+03:00,2026-08-07,,-112,0,28,valid
+observation,031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,Cetate,2026-08-08T03:00:00+03:00,2026-08-08,,-113,-1,28,valid
 forecast,031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,Cetate,2026-08-07T03:00:00+03:00,2026-08-07,120,,,,missing_forecast_encoded_as_zero
 forecast,031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,Cetate,2026-08-03T03:00:00+03:00,2026-08-03,24,,,,missing_forecast_encoded_as_zero
 forecast,031cc7fd-3f5f-4d3f-8c42-01438e8dd69a,Cetate,2026-08-04T03:00:00+03:00,2026-08-04,48,,,,missing_forecast_encoded_as_zero
