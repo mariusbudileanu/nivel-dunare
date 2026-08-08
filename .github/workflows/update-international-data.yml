@@ -357,9 +357,7 @@ jobs:
 
   check-source-health:
     needs: [collect-and-validate, publish]
-    if: |
-      needs.collect-and-validate.result == 'success' &&
-      (needs.publish.result == 'success' || (github.event_name == 'workflow_dispatch' && inputs.health_check_mode != 'off'))
+    if: "needs.collect-and-validate.result == 'success' && (needs.publish.result == 'success' || (github.event_name == 'workflow_dispatch' && inputs.health_check_mode != 'off'))"
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
