@@ -309,6 +309,8 @@ export function applyTranslations(root = document) {
   document.documentElement.lang = language;
   const title = document.querySelector("title"); if (title) title.textContent = t("appTitle");
   const description = document.querySelector('meta[name="description"]'); if (description) description.content = t("appDescription");
+  const ogTitle = document.querySelector('meta[property="og:title"]'); if (ogTitle) ogTitle.content = t("appTitle");
+  const ogDescription = document.querySelector('meta[property="og:description"]'); if (ogDescription) ogDescription.content = t("appDescription");
   const button = document.querySelector("#language-button");
   if (button) { button.textContent = language === "ro" ? "EN" : "RO"; button.setAttribute("aria-label", t("languageAction")); button.title = t("languageTitle"); }
 }
