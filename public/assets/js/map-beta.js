@@ -1,5 +1,5 @@
 import { MAP_CONFIG, formatDate, formatNumber } from "./config.js";
-import { applyTranslations, coordinateConfidenceLabel, coordinateProvenanceLabel, countryName, frequencyLabel, qualityLabel, stationTypeLabel, statusLabel, t } from "./i18n.js";
+import { applyTranslations, coordinateConfidenceLabel, coordinateProvenanceLabel, countryName, freshnessLabel, frequencyLabel, qualityLabel, stationTypeLabel, statusLabel, t } from "./i18n.js";
 
 let map;
 let primaryLayer;
@@ -94,7 +94,7 @@ function trendInfo(properties) {
 
 function freshnessWord(properties) {
   if (properties.freshness_status === "stale") return t("stale");
-  if (properties.freshness_status === "unavailable" || properties.access_status === "unavailable" || properties.access_status === "tls_failed") return t("unavailable");
+  if (properties.freshness_status === "unavailable" || properties.access_status === "unavailable" || properties.access_status === "tls_failed") return t("freshnessUnavailable");
   if (properties.quality_flag === "provisional" || properties.validation_status === "source_provisional") return t("provisional");
   return t("current");
 }
@@ -143,7 +143,7 @@ function popupDetailsBody(properties, isInternational, observation) {
     ${properties.country_code === "RS" ? `<p class="warning-copy">! ${escapeHtml(t(properties.source_status === "suspended" ? "rsTlsSuspended" : "rsProvisionalData"))}</p>` : ""}
     ${properties.country_code === "HR" && properties.freshness_status === "stale" ? `<p class="warning-copy">! ${escapeHtml(t("hrStaleDetail", { date: properties.published_snapshot_date || t("unavailable") }))}</p>` : ""}
     ${properties.country_code === "HR" ? `<p class="warning-copy">${escapeHtml(t("hrForecastDisclaimer"))}</p>` : ""}
-    ${isInternational ? `${valueLine(t("accessStatus"), statusLabel(properties.access_status || "unavailable"))}${valueLine(t("automationStatus"), statusLabel(properties.automation_status || "unavailable"))}${valueLine(t("freshnessStatus"), statusLabel(properties.freshness_status || "unavailable"))}${valueLine(t("validationStatus"), statusLabel(properties.validation_status || "unavailable"))}` : ""}
+    ${isInternational ? `${valueLine(t("accessStatus"), statusLabel(properties.access_status || "unavailable"))}${valueLine(t("automationStatus"), statusLabel(properties.automation_status || "unavailable"))}${valueLine(t("freshnessStatus"), freshnessLabel(properties.freshness_status || "unavailable"))}${valueLine(t("validationStatus"), statusLabel(properties.validation_status || "unavailable"))}` : ""}
     ${isInternational ? `<p><strong>${escapeHtml(t("sourceStatus"))}:</strong> <span class="status-tag ${escapeHtml(properties.source_status)}">${escapeHtml(statusLabel(properties.source_status))}</span></p>` : ""}
     ${sourceLink}`;
 }

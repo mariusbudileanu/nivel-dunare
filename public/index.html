@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Monitorizare zilnică a cotelor și prognozelor hidrologice ale Dunării pe baza datelor publice AFDJ.">
+  <meta name="description" content="Monitorizarea observațiilor și prognozelor Dunării din surse oficiale naționale.">
+  <meta property="og:title" content="Nivelul Dunării">
+  <meta property="og:description" content="Monitorizarea observațiilor și prognozelor Dunării din surse oficiale naționale.">
   <meta name="theme-color" content="#f4f7fb">
   <title>Nivelul Dunării</title>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
@@ -243,6 +245,7 @@
 
     <section class="surface source-summary-section" id="data-sources" aria-labelledby="source-summary-title">
       <div class="panel-heading"><div><p class="eyebrow" data-i18n="sourceOverview">Surse</p><h2 id="source-summary-title" data-i18n="sourceOverviewTitle">Surse de date</h2></div></div>
+      <p class="table-caption" data-i18n="sourceObservationTimeNote">Ora ultimei observații este convertită la ora României (Europe/Bucharest). Pentru sursele care publică doar data, fără oră, este afișată doar data.</p>
       <div class="source-summary-scroll"><table><thead><tr><th data-i18n="country">Țară</th><th data-i18n="source">Administrație / sursă</th><th data-i18n="automationStatus">Automatizare</th><th data-i18n="lastObservation">Ultima observație</th><th data-i18n="state">Stare</th><th data-i18n="detailsColumn">Detalii</th></tr></thead><tbody id="source-summary-body"></tbody></table></div>
     </section>
   </main>
@@ -256,9 +259,7 @@
     </div>
     <div class="footer-links-block">
       <nav class="footer-links" aria-label="Linkuri subsol" data-i18n-aria-label="footerLinksAria">
-        <a href="#data-sources" data-i18n="sourceOverviewTitle">Surse de date</a>
         <button type="button" class="footer-link-button" id="footer-methodology-link" data-i18n="infoTitle">Ghid și metodologie</button>
-        <button type="button" class="footer-link-button" id="footer-about-link" data-i18n="aboutProjectLink">Despre proiect</button>
         <a href="https://github.com/mariusbudileanu/nivel-dunare" target="_blank" rel="noopener" data-i18n="sourceCodeLink">Cod sursă</a>
         <a href="./data/downloads.json" data-i18n="downloadCatalog">Catalog descărcări</a>
       </nav>
