@@ -486,16 +486,6 @@
     "station_name_local": "Iža"
   },
   {
-    "captured_at_utc": "2026-08-05T19:41:20.707591+00:00",
-    "code": "test_partner_key",
-    "historical": false,
-    "message": "The public opendata key is for testing; production requires a permanent partner key.",
-    "record_id": null,
-    "severity": "warning",
-    "source_id": "viadonau_at",
-    "source_status": "partial"
-  },
-  {
     "captured_at_utc": "2026-08-08T03:12:08.719594+00:00",
     "code": "stale_source",
     "historical": false,
