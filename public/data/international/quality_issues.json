@@ -270,7 +270,7 @@
     "station_name_local": "Vidin"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = -180 ÷ -140 cm",
@@ -283,7 +283,7 @@
     "station_name_local": "BEZDAN"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = -130 ÷ -90 cm",
@@ -296,7 +296,7 @@
     "station_name_local": "APATIN"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = -120 ÷ -80 cm",
@@ -309,7 +309,7 @@
     "station_name_local": "BOGOJEVO"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = -90 ÷ -70 cm",
@@ -322,7 +322,7 @@
     "station_name_local": "BAČKA PALANKA"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = -90 ÷ -50 cm",
@@ -335,7 +335,7 @@
     "station_name_local": "NOVI SAD"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = 150 ÷ 180 cm",
@@ -348,7 +348,7 @@
     "station_name_local": "ZEMUN"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = 200 ÷ 230 cm",
@@ -361,7 +361,7 @@
     "station_name_local": "PANČEVO"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = 400 ÷ 430 cm",
@@ -374,7 +374,7 @@
     "station_name_local": "SMEDEREVO"
   },
   {
-    "captured_at_utc": "2026-08-06T09:00:34.091886+00:00",
+    "captured_at_utc": "2026-08-08T15:04:07.114297+00:00",
     "code": "range_not_point_forecast",
     "historical": false,
     "message": "Official range retained as evidence: 05.08. ÷ 11.08. = 710 ÷ 740 cm",
