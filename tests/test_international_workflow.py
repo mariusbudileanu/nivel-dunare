@@ -119,25 +119,41 @@ class InternationalWorkflowTests(unittest.TestCase):
         self.assertIn("raw, candidates, issues, logs and validated product", self.workflow)
 
     def test_source_health_job_runs_only_after_a_real_publish_succeeds(self):
-        # P5: must never fire on a workflow_dispatch dry-run/fixtures test
-        # (where the publish job is skipped, not failed) and must never write
-        # to repository contents - only to issues.
+        # P5: must never fire on a workflow_dispatch dry-run/fixtures test of
+        # the main publish flow (where the publish job is skipped, not
+        # failed, and health_check_mode defaults to "off") and must never
+        # write to repository contents - only to issues.
         self.assertIn("\n  check-source-health:\n", self.workflow)
         _, health_job = self.workflow.split("\n  check-source-health:\n", 1)
         self.assertIn("needs: [collect-and-validate, publish]", health_job.split("\n", 3)[0] + health_job.split("\n", 3)[1])
-        self.assertIn(
-            "if: needs.collect-and-validate.result == 'success' && needs.publish.result == 'success'",
-            health_job,
-        )
+        self.assertIn("needs.collect-and-validate.result == 'success'", health_job)
+        self.assertIn("needs.publish.result == 'success'", health_job)
+        self.assertIn("inputs.health_check_mode != 'off'", health_job)
         permissions = health_job.split("permissions:", 1)[1].split("steps:", 1)[0]
         self.assertIn("issues: write", permissions)
         self.assertNotIn("contents: write", permissions)
         self.assertIn("ref: main", health_job)
         self.assertIn("python -m scripts.check_source_health", health_job)
-        self.assertNotIn("check_source_health --dry-run", health_job)
         publish_start = self.workflow.index("\n  publish:\n")
         health_start = self.workflow.index("\n  check-source-health:\n")
         self.assertLess(publish_start, health_start, "check-source-health must be defined after publish")
+
+    def test_source_health_verification_modes_use_isolated_label_and_never_touch_prod_label_alone(self):
+        # The verification path must be reachable without a real publish
+        # (workflow_dispatch, health_check_mode != off), must be able to
+        # print without any GitHub call (dry-run), and its real-call variant
+        # must use a distinct label/title so it can never collide with the
+        # production "source-health" issue.
+        self.assertIn("health_check_mode:", self.workflow)
+        self.assertIn("options: [off, dry-run, live-test]", self.workflow)
+        _, health_job = self.workflow.split("\n  check-source-health:\n", 1)
+        self.assertIn("check_source_health --dry-run", health_job)
+        self.assertIn('--label source-health-verification', health_job)
+        self.assertIn('--title "[TEST] source-health-monitor verification', health_job)
+        # The dry-run verification step must never carry GH_TOKEN - it must
+        # be structurally incapable of calling the GitHub API.
+        dry_run_step = health_job.split("Verification - dry run", 1)[1].split("Verification - live test", 1)[0]
+        self.assertNotIn("GH_TOKEN", dry_run_step)
 
     def test_simulated_afdj_change_is_preserved_and_international_conflict_is_detected(self):
         with tempfile.TemporaryDirectory() as temporary:

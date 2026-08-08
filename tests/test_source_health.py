@@ -1,12 +1,18 @@
 from __future__ import annotations
 
+import io
+import json
 import unittest
+from contextlib import redirect_stdout
 from datetime import date
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from scripts.check_source_health import (
     CHRONIC_AFTER_DAYS,
     GhIssue,
     evaluate_sources,
+    main,
     render_issue,
     stale_after_days_by_code,
     sync_issue,
@@ -198,6 +204,36 @@ class CroatiaRetroactiveTests(unittest.TestCase):
         self.assertEqual(8, first_flagged)  # HR threshold is 7 days -> flagged on day 8, age_days=8
         self.assertLess(first_flagged, 148)
         self.assertGreater(first_flagged, 5)
+
+
+class MainTitleOverrideTests(unittest.TestCase):
+    def test_dry_run_title_override_replaces_the_default_title_only(self):
+        # A verification run must be able to use a title that unmistakably
+        # marks it as a test, without the pure render_issue() logic (already
+        # covered above) needing to know about that concern at all.
+        with TemporaryDirectory() as folder:
+            sources_path = Path(folder) / "sources.json"
+            sources_path.write_text(json.dumps([source("HR", "2026-03-12")]), encoding="utf-8")
+            captured = io.StringIO()
+            with redirect_stdout(captured):
+                exit_code = main([
+                    "--sources", str(sources_path), "--dry-run", "--today", "2026-08-08",
+                    "--title", "[TEST] source-health-monitor verification - safe to delete",
+                ])
+            self.assertEqual(0, exit_code)
+            payload = json.loads(captured.getvalue())
+            self.assertEqual("[TEST] source-health-monitor verification - safe to delete", payload["title"])
+            self.assertIn("Label-HR", payload["body"])
+
+    def test_dry_run_without_override_keeps_the_default_title(self):
+        with TemporaryDirectory() as folder:
+            sources_path = Path(folder) / "sources.json"
+            sources_path.write_text(json.dumps([source("HR", "2026-03-12")]), encoding="utf-8")
+            captured = io.StringIO()
+            with redirect_stdout(captured):
+                main(["--sources", str(sources_path), "--dry-run", "--today", "2026-08-08"])
+            payload = json.loads(captured.getvalue())
+            self.assertEqual("Surse internaționale cu probleme de livrare", payload["title"])
 
 
 if __name__ == "__main__":

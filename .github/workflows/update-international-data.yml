@@ -27,6 +27,12 @@ on:
         default: dry-run
         type: choice
         options: [dry-run, publish]
+      health_check_mode:
+        description: Source-health monitor test (independent of source/mode/action above; never fires on a schedule)
+        required: true
+        default: "off"
+        type: choice
+        options: [off, dry-run, live-test]
   schedule:
     # UTC; scheduled Actions runs can start later than the nominal minute.
     - cron: "37 1 * * *"
@@ -351,7 +357,9 @@ jobs:
 
   check-source-health:
     needs: [collect-and-validate, publish]
-    if: needs.collect-and-validate.result == 'success' && needs.publish.result == 'success'
+    if: |
+      needs.collect-and-validate.result == 'success' &&
+      (needs.publish.result == 'success' || (github.event_name == 'workflow_dispatch' && inputs.health_check_mode != 'off'))
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -369,7 +377,23 @@ jobs:
           python-version: "3.12"
 
       - name: Sync source-health issue from the just-published state
+        if: github.event_name != 'workflow_dispatch' || inputs.health_check_mode == 'off'
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: python -m scripts.check_source_health
+
+      - name: Verification - dry run (log output only, no GitHub call)
+        if: github.event_name == 'workflow_dispatch' && inputs.health_check_mode == 'dry-run'
+        shell: bash
+        run: python -m scripts.check_source_health --dry-run
+
+      - name: Verification - live test (real GitHub calls, isolated test label/title)
+        if: github.event_name == 'workflow_dispatch' && inputs.health_check_mode == 'live-test'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python -m scripts.check_source_health \
+            --label source-health-verification \
+            --title "[TEST] source-health-monitor verification - safe to delete"
