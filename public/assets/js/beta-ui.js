@@ -83,13 +83,23 @@ function detailLine(label, value) {
 }
 
 function sourceLastObservationValue(source, sourceStations) {
+  // Prefer the per-station measurement_datetime_utc when the international
+  // dataset has it (unambiguous time+zone, converted server-side to UTC).
+  // AFDJ isn't part of that dataset, so it always falls through to
+  // last_source_observation_at - which, for AFDJ, already carries a real
+  // offset-qualified time (e.g. "...T03:00:00+03:00"), unlike the
+  // international sources without a declared source time, where it's a
+  // bare date. hasTime reflects the actual shape of the value used, not
+  // which lookup path produced it, so this generalizes correctly to both.
   const stationIds = new Set(sourceStations.map(station => station.station_id));
   let latestUtc = null;
   for (const row of data.latest) {
     if (!stationIds.has(row.station_id) || !row.measurement_datetime_utc) continue;
     if (!latestUtc || new Date(row.measurement_datetime_utc) > new Date(latestUtc)) latestUtc = row.measurement_datetime_utc;
   }
-  return latestUtc || source.last_source_observation_at;
+  const value = latestUtc || source.last_source_observation_at;
+  const hasTime = Boolean(value) && !/^\d{4}-\d{2}-\d{2}$/.test(String(value));
+  return { value, hasTime };
 }
 
 function renderSourcesTable() {
@@ -105,8 +115,12 @@ function renderSourcesTable() {
     const sourceStations = stationsBySource.get(source.source_id) || [];
     const sourceUrl = source.source_url || sourceStations.find(station => station.source_url)?.source_url;
     const messageTemplate = source[getLanguage() === "en" ? "validation_message_en" : "validation_message_ro"] || t("unavailable");
-    const observationValue = sourceLastObservationValue(source, sourceStations);
-    const observationDate = observationValue ? formatDate(observationValue, true, "Europe/Bucharest") : t("unavailable");
+    const { value: observationValue, hasTime: observationHasTime } = sourceLastObservationValue(source, sourceStations);
+    const observationDate = observationValue
+      ? (observationHasTime
+        ? `${formatDate(observationValue, true, "Europe/Bucharest")} (${t("observationRoLabel")})`
+        : `${formatDate(observationValue)} (${t("observationSourceDateOnlyLabel")})`)
+      : t("unavailable");
     const message = messageTemplate.replaceAll("{date}", observationDate);
     const detailId = `source-details-${index}`;
     return `<tr class="source-row">
