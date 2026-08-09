@@ -130,6 +130,16 @@ class InternationalWorkflowTests(unittest.TestCase):
         self.assertIn("needs.collect-and-validate.result == 'success'", health_job)
         self.assertIn("needs.publish.result == 'success'", health_job)
         self.assertIn("inputs.health_check_mode != 'off'", health_job)
+        # Observed live (runs 31303342588 and its predecessor): a job with
+        # needs: is skipped whenever ANY needed job is skipped - even with a
+        # custom if: referencing needs.*.result - unless the condition also
+        # calls always(). publish is legitimately skipped on a verification
+        # dispatch (should_publish stays false), so without always() this
+        # job could never run in live-test/dry-run mode despite every
+        # operand of the condition being individually correct.
+        if_line = health_job.split("\n", 3)[1]
+        self.assertIn("if:", if_line)
+        self.assertIn("always()", if_line)
         permissions = health_job.split("permissions:", 1)[1].split("steps:", 1)[0]
         self.assertIn("issues: write", permissions)
         self.assertNotIn("contents: write", permissions)
