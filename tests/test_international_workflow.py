@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import subprocess
 import tempfile
 import unittest
@@ -143,14 +144,11 @@ class InternationalWorkflowTests(unittest.TestCase):
         # condition on check-source-health kept its embedded newline in the
         # string GitHub Actions evaluates, and the job was silently skipped
         # even though every operand was correct (run 31280392236) - `if:`
-        # must never be a YAML block scalar for any job, only a plain
-        # (optionally quoted) single-line string.
-        import yaml
-        doc = yaml.safe_load(self.workflow)
-        for job_name, job in doc["jobs"].items():
-            condition = job.get("if")
-            if condition is not None:
-                self.assertNotIn("\n", condition, f"job '{job_name}' has a multi-line if: condition")
+        # must never be a YAML block scalar (`|` or `>`), only a plain
+        # single-line string. No YAML parser is available in this
+        # stdlib-only project, so this checks the raw text directly.
+        block_scalar_if = re.findall(r"^\s*if:\s*[|>]", self.workflow, re.MULTILINE)
+        self.assertEqual([], block_scalar_if, "if: must not use a YAML block scalar (| or >)")
 
     def test_source_health_verification_modes_use_isolated_label_and_never_touch_prod_label_alone(self):
         # The verification path must be reachable without a real publish
