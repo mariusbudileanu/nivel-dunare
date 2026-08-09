@@ -183,7 +183,7 @@ def default_state(public_root: Path, commit_sha: str | None) -> dict[str, Any]:
             "consecutive_failures": int(prior.get("consecutive_failures") or 0),
             "published_snapshot_date": prior.get("published_snapshot_date") or latest_observation_date(source_rows(public_root, code)["observations"]),
             "next_expected_update": prior.get("next_expected_update"),
-            "update_frequency": ("every 3 hours plus daily/forecast Europe/Belgrade gates" if code == "rs" else ("daily at 01:37 UTC" if policy["automation_status"] == "scheduled" else ("manual" if code == "at" else "disabled"))),
+            "update_frequency": ("every 3 hours (NRT), 3 daily and 3 forecast UTC attempts (idempotent)" if code == "rs" else ("daily at 01:37 UTC" if policy["automation_status"] == "scheduled" else ("manual" if code == "at" else "disabled"))),
             "transport": prior.get("transport"), "runner": prior.get("runner"),
             "request_made": prior.get("request_made"),
             "components": prior.get("components", {}) if code == "rs" else prior.get("components"),
@@ -341,7 +341,7 @@ def update_state(state: dict[str, Any], code: str, now: datetime, summary: dict[
         "request_made": details.get("request_made", code != "rs"),
     })
     if code == "rs":
-        item["update_frequency"] = "every 3 hours plus daily/forecast Europe/Belgrade gates"
+        item["update_frequency"] = "every 3 hours (NRT), 3 daily and 3 forecast UTC attempts (idempotent)"
     for component_name in component_names:
         component = item.setdefault("components", {}).setdefault(component_name, {})
         component.update({
