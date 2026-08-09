@@ -138,6 +138,20 @@ class InternationalWorkflowTests(unittest.TestCase):
         health_start = self.workflow.index("\n  check-source-health:\n")
         self.assertLess(publish_start, health_start, "check-source-health must be defined after publish")
 
+    def test_job_level_if_conditions_are_single_line_expressions(self):
+        # Observed live on 2026-08-08: an `if: |` (literal block scalar) YAML
+        # condition on check-source-health kept its embedded newline in the
+        # string GitHub Actions evaluates, and the job was silently skipped
+        # even though every operand was correct (run 31280392236) - `if:`
+        # must never be a YAML block scalar for any job, only a plain
+        # (optionally quoted) single-line string.
+        import yaml
+        doc = yaml.safe_load(self.workflow)
+        for job_name, job in doc["jobs"].items():
+            condition = job.get("if")
+            if condition is not None:
+                self.assertNotIn("\n", condition, f"job '{job_name}' has a multi-line if: condition")
+
     def test_source_health_verification_modes_use_isolated_label_and_never_touch_prod_label_alone(self):
         # The verification path must be reachable without a real publish
         # (workflow_dispatch, health_check_mode != off), must be able to
