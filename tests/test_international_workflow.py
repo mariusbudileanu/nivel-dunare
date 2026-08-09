@@ -46,7 +46,11 @@ class InternationalWorkflowTests(unittest.TestCase):
         self.assertNotIn("21:15", self.workflow)
 
     def test_rs_windows_handoff_schedules_and_write_boundary(self):
-        for cron in ("17 */3 * * *", "47 0 * * *", "20 8 * * *", "20 9 * * *", "35 10 * * *", "35 11 * * *"):
+        for cron in (
+            "17 */3 * * *", "47 0 * * *",
+            "35 10 * * *", "35 12 * * *", "35 14 * * *",
+            "20 12 * * *", "20 14 * * *", "20 16 * * *",
+        ):
             self.assertIn(f'- cron: "{cron}"', self.rs_workflow)
         self.assertIn("runs-on: windows-latest", self.rs_workflow)
         self.assertIn("curl.exe --version", self.rs_workflow)
@@ -105,19 +109,51 @@ class InternationalWorkflowTests(unittest.TestCase):
         self.assertIn("retention-days: 30", self.workflow)
         self.assertIn("Scan product and artifact for secrets", self.workflow)
 
-    def test_rs_windows_job_installs_tzdata_before_zoneinfo_use(self):
-        # windows-latest has no OS-level IANA database; Python's zoneinfo needs the
-        # tzdata PyPI package there or ZoneInfo('Europe/Belgrade') raises
-        # ZoneInfoNotFoundError. Every scheduled run of this step failed with
-        # exactly that error (confirmed via `gh run view`) until an install step
-        # was added ahead of it.
-        self.assertIn("ZoneInfo('Europe/Belgrade')", self.rs_workflow)
-        before_resolve = self.rs_workflow.split("Resolve DST-safe Serbia collection profile", 1)[0]
-        self.assertIn("pip install", before_resolve)
-        self.assertIn("tzdata", before_resolve)
+    def test_international_workflow_artifact_and_secret_scan_details(self):
         self.assertIn("Configured DoRIS secret found in persisted output", self.workflow)
         self.assertIn("path.unlink()", self.workflow)
         self.assertIn("raw, candidates, issues, logs and validated product", self.workflow)
+
+    def test_rs_no_longer_gates_on_local_wall_clock_or_needs_tzdata(self):
+        # Faza 3: the old design computed Europe/Belgrade local wall-clock
+        # time and skipped a run whose local hour didn't match the target -
+        # fragile against GitHub Actions scheduling delay (confirmed live:
+        # every scheduled run failed on ZoneInfoNotFoundError before P1,
+        # and the DST-pair hour-match itself was never actually exercised).
+        # No code path in this file needs the IANA database any more - RS's
+        # own adapter (hidmet_rs.py) labels its data with a fixed UTC
+        # offset parsed from the source text, not zoneinfo.
+        self.assertNotIn("ZoneInfo", self.rs_workflow)
+        self.assertNotIn("zoneinfo", self.rs_workflow)
+        self.assertNotIn("tzdata", self.rs_workflow)
+        self.assertNotIn("Europe/Belgrade International Danube", self.rs_workflow)  # sanity: no stray leftovers
+
+    def test_rs_daily_and_forecast_check_todays_data_instead_of_the_clock(self):
+        self.assertIn("Resolve idempotent Serbia collection profile", self.rs_workflow)
+        resolve_step = self.rs_workflow.split("Resolve idempotent Serbia collection profile", 1)[1].split("- name:", 1)[0]
+        self.assertIn("international_source_operations.json", resolve_step)
+        self.assertIn("last_success_at", resolve_step)
+        self.assertIn("datetime.now(timezone.utc).date()", resolve_step)
+        self.assertIn("alreadyCollectedToday", resolve_step)
+        self.assertIn("$shouldRun = 'false'", resolve_step)
+        # Every new cron string must be mapped to a profile in the switch.
+        for cron in ("35 10 * * *", "35 12 * * *", "35 14 * * *"):
+            self.assertIn(f"'{cron}' {{ $profile = 'daily' }}", resolve_step)
+        for cron in ("20 12 * * *", "20 14 * * *", "20 16 * * *"):
+            self.assertIn(f"'{cron}' {{ $profile = 'forecast' }}", resolve_step)
+
+    def test_rs_schedule_margin_is_at_least_one_hour_past_the_tightest_target(self):
+        # Daily target ~10:20 Europe/Belgrade; tightest (latest-UTC) case is
+        # winter CET (UTC+1) = 09:20 UTC. Forecast target ~12:00; tightest
+        # case is 11:00 UTC. The first attempt of each must fire at or after
+        # target + 1h.
+        from datetime import datetime
+        daily_first = datetime.strptime("10:35", "%H:%M")
+        daily_tightest_target = datetime.strptime("09:20", "%H:%M")
+        self.assertGreaterEqual((daily_first - daily_tightest_target).total_seconds(), 3600)
+        forecast_first = datetime.strptime("12:20", "%H:%M")
+        forecast_tightest_target = datetime.strptime("11:00", "%H:%M")
+        self.assertGreaterEqual((forecast_first - forecast_tightest_target).total_seconds(), 3600)
 
     def test_source_health_job_runs_only_after_a_real_publish_succeeds(self):
         # P5: must never fire on a workflow_dispatch dry-run/fixtures test of

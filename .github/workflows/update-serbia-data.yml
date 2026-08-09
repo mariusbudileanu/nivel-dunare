@@ -25,11 +25,17 @@ on:
     # NRT latest every three hours and a daily reconciliation overlap.
     - cron: "17 */3 * * *"
     - cron: "47 0 * * *"
-    # DST-safe pairs; only the run matching 10:20/12:35 Europe/Belgrade proceeds.
-    - cron: "20 8 * * *"
-    - cron: "20 9 * * *"
+    # Daily (target ~10:20 Europe/Belgrade; tightest case 09:20 UTC in
+    # winter): three unconditional attempts starting >=1h after that,
+    # each a no-op if today's daily data is already collected.
     - cron: "35 10 * * *"
-    - cron: "35 11 * * *"
+    - cron: "35 12 * * *"
+    - cron: "35 14 * * *"
+    # Forecast (target ~12:00 Europe/Belgrade; tightest case 11:00 UTC in
+    # winter): same pattern.
+    - cron: "20 12 * * *"
+    - cron: "20 14 * * *"
+    - cron: "20 16 * * *"
 
 permissions:
   contents: read
@@ -56,11 +62,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install tzdata (windows-latest has no OS-level IANA database)
-        shell: pwsh
-        run: python -m pip install --disable-pip-version-check tzdata==2025.2
-
-      - name: Resolve DST-safe Serbia collection profile
+      - name: Resolve idempotent Serbia collection profile
         id: resolve
         shell: pwsh
         run: |
@@ -74,15 +76,30 @@ jobs:
             switch ('${{ github.event.schedule }}') {
               '17 */3 * * *' { $profile = 'nrt' }
               '47 0 * * *' { $profile = 'nrt' }
-              '20 8 * * *' { $profile = 'daily' }
-              '20 9 * * *' { $profile = 'daily' }
-              '35 10 * * *' { $profile = 'forecast' }
-              '35 11 * * *' { $profile = 'forecast' }
+              '35 10 * * *' { $profile = 'daily' }
+              '35 12 * * *' { $profile = 'daily' }
+              '35 14 * * *' { $profile = 'daily' }
+              '20 12 * * *' { $profile = 'forecast' }
+              '20 14 * * *' { $profile = 'forecast' }
+              '20 16 * * *' { $profile = 'forecast' }
               default { throw 'Unknown Serbia schedule' }
             }
-            $localHour = python -c "from datetime import datetime; from zoneinfo import ZoneInfo; print(datetime.now(ZoneInfo('Europe/Belgrade')).hour)"
-            if ($profile -eq 'daily' -and [int]$localHour -ne 10) { $shouldRun = 'false' }
-            if ($profile -eq 'forecast' -and [int]$localHour -ne 12) { $shouldRun = 'false' }
+            if ($profile -eq 'daily' -or $profile -eq 'forecast') {
+              # No wall-clock check: a fixed cron paired with "do we
+              # already have today's data for this profile?" is immune to
+              # GitHub Actions scheduling delay - a late run still either
+              # finds fresh data or safely no-ops.
+              $alreadyCollectedToday = python -c "
+import json
+from datetime import datetime, timezone
+data = json.load(open('data/reference/international_source_operations.json', encoding='utf-8'))
+component = data.get('sources', {}).get('rs', {}).get('components', {}).get('$profile', {})
+last_success = component.get('last_success_at')
+today = datetime.now(timezone.utc).date().isoformat()
+print('true' if last_success and str(last_success)[:10] == today else 'false')
+"
+              if ($alreadyCollectedToday -eq 'true') { $shouldRun = 'false' }
+            }
           }
           $shouldPublish = if ($shouldRun -eq 'true' -and $action -eq 'publish') { 'true' } else { 'false' }
           @(

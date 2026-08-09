@@ -101,7 +101,7 @@ class InternationalAutomationTests(unittest.TestCase):
         nrt = state["sources"]["rs"]["components"]["nrt"]
         self.assertEqual((nrt["last_attempt_status"], nrt["transport"], nrt["runner"], nrt["request_made"]), ("success", "curl.exe/Schannel", "Windows", True))
         self.assertEqual("2026-08-06", nrt["last_source_observation_at"])
-        self.assertEqual("every 3 hours plus daily/forecast Europe/Belgrade gates", state["sources"]["rs"]["update_frequency"])
+        self.assertEqual("every 3 hours (NRT), 3 daily and 3 forecast UTC attempts (idempotent)", state["sources"]["rs"]["update_frequency"])
         update_state(state, "rs", now, {"status": "failed", "error_type": "SourceAccessError"}, False, "forecast unavailable", details, None, "base", "forecast")
         components = state["sources"]["rs"]["components"]
         self.assertEqual("success", components["nrt"]["last_attempt_status"])

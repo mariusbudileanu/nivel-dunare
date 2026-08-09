@@ -72,7 +72,7 @@ class InternationalFrontendI18nTests(unittest.TestCase):
         self.assertIn('properties.source_status === "suspended" ? "rsTlsSuspended" : "rsProvisionalData"', self.map_beta)
         self.assertIn("rsStreamLine", self.map_beta)
         self.assertIn("capture_delay_seconds", self.map_beta)
-        self.assertIn('"every 3 hours plus daily/forecast Europe/Belgrade gates": "frequencyRsSchedule"', self.i18n)
+        self.assertIn('"every 3 hours (NRT), 3 daily and 3 forecast UTC attempts (idempotent)": "frequencyRsSchedule"', self.i18n)
 
     def test_user_visible_templates_coalesce_optional_values(self):
         self.assertIn("String(value ?? \"\")", self.beta)
