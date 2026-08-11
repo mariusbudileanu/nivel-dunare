@@ -4,15 +4,21 @@ import io
 import json
 import unittest
 from contextlib import redirect_stdout
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from scripts.check_source_health import (
     CHRONIC_AFTER_DAYS,
+    SHORT_RUN_SECONDS,
+    WORKFLOW_SPECS,
     GhIssue,
+    WorkflowProblem,
+    WorkflowRunSummary,
     evaluate_sources,
+    evaluate_workflow_health,
     main,
+    max_gap_hours,
     render_issue,
     stale_after_days_by_code,
     sync_issue,
@@ -234,6 +240,118 @@ class MainTitleOverrideTests(unittest.TestCase):
                 main(["--sources", str(sources_path), "--dry-run", "--today", "2026-08-08"])
             payload = json.loads(captured.getvalue())
             self.assertEqual("Surse internaționale cu probleme de livrare", payload["title"])
+
+
+def run(created_at, conclusion="success", duration=120.0):
+    return WorkflowRunSummary(conclusion=conclusion, created_at=created_at, duration_seconds=duration)
+
+
+class MaxGapAndThresholdTests(unittest.TestCase):
+    def test_international_workflow_gap_matches_shown_value(self):
+        # The exact figure shown to and confirmed by the repo owner before
+        # implementation: 13.03h, from 12:35 UTC to next day's 01:37 UTC.
+        crons = ("37 1 * * *", "35 8 * * *", "35 12 * * *")
+        self.assertAlmostEqual(13.03, max_gap_hours(list(crons)), places=2)
+
+    def test_serbia_workflow_gap_is_bounded_by_its_own_nrt_cadence(self):
+        crons = ("17 */3 * * *", "47 0 * * *", "35 10 * * *", "35 12 * * *", "35 14 * * *", "20 12 * * *", "20 14 * * *", "20 16 * * *")
+        self.assertAlmostEqual(3.0, max_gap_hours(list(crons)), places=2)
+
+    def test_thresholds_are_derived_not_invented(self):
+        by_file = {spec.file: spec.threshold_hours for spec in WORKFLOW_SPECS}
+        self.assertAlmostEqual(26.07, by_file["update-international-data.yml"], places=1)
+        self.assertAlmostEqual(6.0, by_file["update-serbia-data.yml"], places=1)
+
+
+class EvaluateWorkflowHealthTests(unittest.TestCase):
+    def test_healthy_workflow_produces_no_problem(self):
+        now = datetime(2026, 8, 11, 12, 0, tzinfo=timezone.utc)
+        runs_by_file = {spec.file: [run("2026-08-11T10:00:00Z")] for spec in WORKFLOW_SPECS}
+        self.assertEqual([], evaluate_workflow_health(WORKFLOW_SPECS, runs_by_file, now))
+
+    def test_no_success_within_threshold_is_flagged_not_running(self):
+        now = datetime(2026, 8, 11, 12, 0, tzinfo=timezone.utc)
+        runs_by_file = {
+            "update-serbia-data.yml": [run("2026-08-11T02:00:00Z")],  # 10h ago, threshold 6h
+            "update-international-data.yml": [run("2026-08-11T10:00:00Z")],
+        }
+        problems = evaluate_workflow_health(WORKFLOW_SPECS, runs_by_file, now)
+        self.assertEqual(1, len(problems))
+        self.assertEqual("update-serbia-data.yml", problems[0].file)
+        self.assertEqual("not_running", problems[0].kind)
+
+    def test_never_succeeded_is_flagged_with_no_hours_since(self):
+        now = datetime(2026, 8, 11, 12, 0, tzinfo=timezone.utc)
+        runs_by_file = {spec.file: [run("2026-08-11T10:00:00Z", conclusion="failure")] for spec in WORKFLOW_SPECS}
+        problems = evaluate_workflow_health(WORKFLOW_SPECS, runs_by_file, now)
+        self.assertEqual(2, len(problems))
+        self.assertTrue(all(p.hours_since_last_success is None for p in problems))
+
+    def test_short_duration_run_is_flagged_even_if_a_later_success_exists(self):
+        now = datetime(2026, 8, 11, 12, 0, tzinfo=timezone.utc)
+        runs_by_file = {
+            "update-serbia-data.yml": [run("2026-08-11T11:00:00Z"), run("2026-08-11T10:55:00Z", conclusion="failure", duration=0.0)],
+            "update-international-data.yml": [run("2026-08-11T10:00:00Z")],
+        }
+        problems = evaluate_workflow_health(WORKFLOW_SPECS, runs_by_file, now)
+        self.assertEqual(1, len(problems))
+        self.assertEqual("short_duration", problems[0].kind)
+        self.assertLessEqual(0.0, SHORT_RUN_SECONDS)
+
+    def test_retroactive_run_on_real_timeline_flags_serbia_stopped(self):
+        # Real data (P1/P5 collection-recovery, 2026-08-11): the last
+        # genuine scheduled success before the workflow file broke was
+        # run 31300733918, created 2026-08-09T07:15:30Z. Nothing else
+        # succeeded until the file was fixed. Evaluating "as of two days
+        # later" must flag it - this is the actual incident, not a
+        # synthetic one.
+        last_real_success = "2026-08-09T07:15:30Z"
+        two_days_later = datetime(2026, 8, 11, 7, 30, tzinfo=timezone.utc)
+        runs_by_file = {
+            "update-serbia-data.yml": [
+                run("2026-08-09T08:50:42Z", conclusion="failure", duration=0.0),
+                run(last_real_success, conclusion="success"),
+            ],
+            "update-international-data.yml": [run("2026-08-11T03:22:00Z")],
+        }
+        problems = evaluate_workflow_health(WORKFLOW_SPECS, runs_by_file, two_days_later)
+        serbia_problems = {p.kind for p in problems if p.file == "update-serbia-data.yml"}
+        self.assertIn("not_running", serbia_problems)
+        self.assertIn("short_duration", serbia_problems)
+        international_problems = [p for p in problems if p.file == "update-international-data.yml"]
+        self.assertEqual([], international_problems, "the healthy workflow must not also be flagged")
+
+
+class RenderIssueWorkflowSectionTests(unittest.TestCase):
+    def test_not_running_gets_its_own_section_distinct_from_source_staleness(self):
+        workflow_problems = [WorkflowProblem(
+            file="update-serbia-data.yml", label="Colectare Serbia (RHMZ)", kind="not_running",
+            hours_since_last_success=48.2, threshold_hours=6.0,
+        )]
+        title, body = render_issue([], date(2026, 8, 11), workflow_problems)
+        self.assertIn("## Colectarea nu rulează", body)
+        self.assertIn("noi nu mai colectăm", body)
+        self.assertIn("update-serbia-data.yml", body)
+        self.assertIn("48.2h", body)
+        self.assertNotIn("## Stale recent", body)
+        self.assertNotIn("## Stale de peste", body)
+
+    def test_source_and_workflow_problems_coexist_in_one_issue(self):
+        title, body = render_issue(
+            evaluate_sources([source("HR", "2026-03-12")], date(2026, 8, 11)), date(2026, 8, 11),
+            [WorkflowProblem(file="update-serbia-data.yml", label="Colectare Serbia (RHMZ)", kind="not_running", hours_since_last_success=48.2, threshold_hours=6.0)],
+        )
+        self.assertIn("## Colectarea nu rulează", body)
+        self.assertIn(f"## Stale de peste {CHRONIC_AFTER_DAYS} de zile", body)
+
+    def test_short_duration_problem_wording(self):
+        workflow_problems = [WorkflowProblem(
+            file="update-serbia-data.yml", label="Colectare Serbia (RHMZ)", kind="short_duration",
+            hours_since_last_success=None, threshold_hours=6.0, short_run_created_at="2026-08-08T08:50:42Z",
+        )]
+        _, body = render_issue([], date(2026, 8, 11), workflow_problems)
+        self.assertIn("2026-08-08T08:50:42Z", body)
+        self.assertIn(f"sub {SHORT_RUN_SECONDS}s", body)
 
 
 if __name__ == "__main__":
