@@ -377,6 +377,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+      actions: read
     steps:
       - name: Checkout latest main
         uses: actions/checkout@v7

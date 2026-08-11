@@ -225,6 +225,7 @@ class MainTitleOverrideTests(unittest.TestCase):
                 exit_code = main([
                     "--sources", str(sources_path), "--dry-run", "--today", "2026-08-08",
                     "--title", "[TEST] source-health-monitor verification - safe to delete",
+                    "--skip-workflow-check",
                 ])
             self.assertEqual(0, exit_code)
             payload = json.loads(captured.getvalue())
@@ -237,7 +238,7 @@ class MainTitleOverrideTests(unittest.TestCase):
             sources_path.write_text(json.dumps([source("HR", "2026-03-12")]), encoding="utf-8")
             captured = io.StringIO()
             with redirect_stdout(captured):
-                main(["--sources", str(sources_path), "--dry-run", "--today", "2026-08-08"])
+                main(["--sources", str(sources_path), "--dry-run", "--today", "2026-08-08", "--skip-workflow-check"])
             payload = json.loads(captured.getvalue())
             self.assertEqual("Surse internaționale cu probleme de livrare", payload["title"])
 
