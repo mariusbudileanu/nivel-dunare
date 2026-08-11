@@ -202,6 +202,11 @@ class InternationalWorkflowTests(unittest.TestCase):
         self.assertIn("always()", if_line)
         permissions = health_job.split("permissions:", 1)[1].split("steps:", 1)[0]
         self.assertIn("issues: write", permissions)
+        # P5 (collection-recovery): check_source_health.py now also calls
+        # `gh run list` to detect a stopped workflow - discovered live
+        # (run 31471407324) that this job lacked actions: read and would
+        # have failed in production, not just in a test.
+        self.assertIn("actions: read", permissions)
         self.assertNotIn("contents: write", permissions)
         self.assertIn("ref: main", health_job)
         self.assertIn("python -m scripts.check_source_health", health_job)
