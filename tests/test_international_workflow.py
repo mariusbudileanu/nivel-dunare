@@ -34,16 +34,31 @@ class InternationalWorkflowTests(unittest.TestCase):
         self.assertIn("bg", SCHEDULED_SOURCES)
         self.assertNotIn("rs", SCHEDULED_SOURCES)
 
+    def test_three_daily_attempts_cover_bg_and_hu_publication_lag(self):
+        # P3 collection-recovery (2026-08-11): confirmed live that a
+        # single 01:37 UTC attempt lands before BG's own ~09:15
+        # Europe/Sofia morning publication (3/3 real scheduled runs
+        # failed the fail-closed station-count guard; the live page had
+        # a full manual table once actually checked after 09:15) and
+        # before HU's own daily cutoff (last_source_observation_at was
+        # exactly one day behind the run's own date on 3/3 real runs).
+        # Every event_name==schedule firing runs the identical
+        # source=scheduled batch (see the resolve step), so later
+        # attempts give BG/HU a second and third chance without any
+        # per-source branching.
+        for cron in ("37 1 * * *", "35 8 * * *", "35 12 * * *"):
+            self.assertIn(f'- cron: "{cron}"', self.workflow)
+        self.assertEqual(3, self.workflow.count("- cron:"), "only the scheduled-batch crons should exist in this file")
+
     def test_bg_dedicated_exact_minute_gate_workflow_was_retired(self):
         # P4: the 09:15/21:15 Europe/Sofia exact-minute gate was fragile
         # against GitHub Actions scheduling delays of an hour or more
         # (observed directly on this repo). BG is fetched by the same
-        # unconditional shared daily cron as DE/SK/HU/HR/AT now, so a delayed
-        # run still collects data - there is no time check left to miss.
+        # unconditional shared daily attempts as DE/SK/HU/HR/AT now (three
+        # of them since P3 collection-recovery), so a delayed run still
+        # collects data - there is no time-match check left to miss.
         self.assertFalse(BG_WORKFLOW.exists(), "update-bg-danube-streams.yml should be removed, not left dormant")
         self.assertNotIn("TZ=Europe/Sofia", self.workflow)
-        self.assertNotIn("09:15", self.workflow)
-        self.assertNotIn("21:15", self.workflow)
 
     def test_rs_windows_handoff_schedules_and_write_boundary(self):
         for cron in (
