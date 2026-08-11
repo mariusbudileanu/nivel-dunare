@@ -88,16 +88,14 @@ jobs:
               # No wall-clock check: a fixed cron paired with "do we
               # already have today's data for this profile?" is immune to
               # GitHub Actions scheduling delay - a late run still either
-              # finds fresh data or safely no-ops.
-              $alreadyCollectedToday = python -c "
-import json
-from datetime import datetime, timezone
-data = json.load(open('data/reference/international_source_operations.json', encoding='utf-8'))
-component = data.get('sources', {}).get('rs', {}).get('components', {}).get('$profile', {})
-last_success = component.get('last_success_at')
-today = datetime.now(timezone.utc).date().isoformat()
-print('true' if last_success and str(last_success)[:10] == today else 'false')
-"
+              # finds fresh data or safely no-ops. A single-line python -c
+              # is used deliberately: a multi-line heredoc-style script at
+              # column 0 inside this indented YAML block scalar broke
+              # yaml.safe_load (block scalars require every content line
+              # to stay at or above the block's own indentation) - this is
+              # what actually broke this file after the first attempt at
+              # this same idempotency check; see the P1 recovery report.
+              $alreadyCollectedToday = python -c "import json, datetime; c = json.load(open('data/reference/international_source_operations.json', encoding='utf-8')).get('sources', {}).get('rs', {}).get('components', {}).get('$profile', {}); s = c.get('last_success_at'); print('true' if s and str(s)[:10] == datetime.datetime.now(datetime.timezone.utc).date().isoformat() else 'false')"
               if ($alreadyCollectedToday -eq 'true') { $shouldRun = 'false' }
             }
           }

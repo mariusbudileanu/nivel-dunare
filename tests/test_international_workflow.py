@@ -133,9 +133,18 @@ class InternationalWorkflowTests(unittest.TestCase):
         resolve_step = self.rs_workflow.split("Resolve idempotent Serbia collection profile", 1)[1].split("- name:", 1)[0]
         self.assertIn("international_source_operations.json", resolve_step)
         self.assertIn("last_success_at", resolve_step)
-        self.assertIn("datetime.now(timezone.utc).date()", resolve_step)
+        self.assertIn("datetime.datetime.now(datetime.timezone.utc).date()", resolve_step)
         self.assertIn("alreadyCollectedToday", resolve_step)
         self.assertIn("$shouldRun = 'false'", resolve_step)
+        # P1 recovery: a multi-line python -c heredoc at column 0 inside
+        # this indented `run: |` block scalar breaks yaml.safe_load - every
+        # line of a block scalar must stay at/above its own indentation.
+        # This broke the file for two days undetected (no test parsed the
+        # workflow YAML itself). Must stay a single line.
+        python_c_lines = [line for line in resolve_step.split("\n") if 'python -c "' in line]
+        self.assertEqual(1, len(python_c_lines))
+        self.assertIn('"', python_c_lines[0].split("python -c", 1)[1])
+        self.assertTrue(python_c_lines[0].rstrip().endswith('"'), "the python -c command must open and close on the same line")
         # Every new cron string must be mapped to a profile in the switch.
         for cron in ("35 10 * * *", "35 12 * * *", "35 14 * * *"):
             self.assertIn(f"'{cron}' {{ $profile = 'daily' }}", resolve_step)
