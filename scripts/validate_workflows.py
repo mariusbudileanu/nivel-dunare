@@ -166,6 +166,39 @@ def find_schedule_switch_mismatches(text: str) -> list[str]:
     return errors
 
 
+_YAML11_BOOLEAN_LITERALS = {
+    "y", "Y", "yes", "Yes", "YES", "n", "N", "no", "No", "NO",
+    "true", "True", "TRUE", "false", "False", "FALSE",
+    "on", "On", "ON", "off", "Off", "OFF",
+}
+_OPTIONS_LINE_RE = re.compile(r"^\s*options:\s*\[(?P<items>.*)\]\s*$")
+
+
+def find_unquoted_yaml11_boolean_option_literals(text: str) -> list[str]:
+    """A bare `off`/`on`/`yes`/`no`/`true`/`false` inside an `options:
+    [...]` flow sequence is parsed as a YAML 1.1 boolean, not the string
+    GitHub Actions' choice input expects. Real incident (P5 collection-
+    recovery, 2026-08-11): `options: [off, dry-run, live-test]` made
+    every dispatch of update-international-data.yml with an explicit or
+    defaulted health_check_mode fail with HTTP 422 - GitHub's own schema
+    validated the string "off" (from the correctly-quoted `default:
+    "off"`) against a parsed options list containing the boolean False,
+    not the string "off", and rejected every dispatch. Any GH Actions
+    choice list is virtually always meant to be literal strings."""
+    errors = []
+    for index, line in enumerate(text.splitlines()):
+        match = _OPTIONS_LINE_RE.match(line)
+        if not match:
+            continue
+        items = [item.strip() for item in match.group("items").split(",")]
+        for item in items:
+            if item in _YAML11_BOOLEAN_LITERALS:
+                errors.append(
+                    f'line {index + 1}: unquoted "{item}" in options: [...] is parsed as a YAML boolean, not a string - quote it',
+                )
+    return errors
+
+
 @dataclass
 class WorkflowReport:
     path: Path
@@ -187,6 +220,7 @@ def validate_workflow_text(text: str) -> list[str]:
     errors.extend(find_cron_syntax_errors(text))
     errors.extend(find_runs_on_errors(text))
     errors.extend(find_schedule_switch_mismatches(text))
+    errors.extend(find_unquoted_yaml11_boolean_option_literals(text))
     return errors
 
 

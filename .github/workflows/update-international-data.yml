@@ -32,7 +32,7 @@ on:
         required: true
         default: "off"
         type: choice
-        options: [off, dry-run, live-test]
+        options: ["off", dry-run, live-test]
   schedule:
     # UTC; scheduled Actions runs can start later than the nominal minute.
     # Three unconditional attempts a day, not one: BG (APPD, manual table)

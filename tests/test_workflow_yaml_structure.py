@@ -72,6 +72,20 @@ class ValidateWorkflowTextTests(unittest.TestCase):
         errors = validate_workflow_text("name: X\njobs:\n  a:\n    runs-on: ubuntu-latest\n")
         self.assertIn("missing top-level 'on:' block", errors)
 
+    def test_unquoted_off_in_options_is_rejected(self):
+        # Real incident (P5 collection-recovery, 2026-08-11):
+        # options: [off, dry-run, live-test] made every dispatch of
+        # update-international-data.yml fail with HTTP 422, because YAML
+        # 1.1 parses bare "off" as the boolean False, not the string GH
+        # Actions' choice input expects.
+        text = 'name: X\non:\n  workflow_dispatch:\n    inputs:\n      mode:\n        options: [off, dry-run, live-test]\njobs:\n  a:\n    runs-on: ubuntu-latest\n'
+        errors = validate_workflow_text(text)
+        self.assertTrue(any("off" in error and "boolean" in error for error in errors))
+
+    def test_quoted_off_in_options_is_accepted(self):
+        text = 'name: X\non:\n  workflow_dispatch:\n    inputs:\n      mode:\n        options: ["off", dry-run, live-test]\njobs:\n  a:\n    runs-on: ubuntu-latest\n'
+        self.assertEqual([], validate_workflow_text(text))
+
     def test_cron_with_wrong_field_count_is_rejected(self):
         text = 'name: X\non:\n  schedule:\n    - cron: "17 */3 * *"\njobs:\n  a:\n    runs-on: ubuntu-latest\n'
         errors = validate_workflow_text(text)

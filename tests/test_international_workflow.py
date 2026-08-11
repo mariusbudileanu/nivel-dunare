@@ -232,7 +232,7 @@ class InternationalWorkflowTests(unittest.TestCase):
         # must use a distinct label/title so it can never collide with the
         # production "source-health" issue.
         self.assertIn("health_check_mode:", self.workflow)
-        self.assertIn("options: [off, dry-run, live-test]", self.workflow)
+        self.assertIn('options: ["off", dry-run, live-test]', self.workflow)
         _, health_job = self.workflow.split("\n  check-source-health:\n", 1)
         self.assertIn("check_source_health --dry-run", health_job)
         self.assertIn('--label source-health-verification', health_job)
