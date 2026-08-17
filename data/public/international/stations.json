@@ -2,7 +2,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -51,7 +51,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -100,7 +100,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -149,7 +149,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -198,7 +198,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -247,7 +247,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -296,7 +296,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -345,7 +345,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -394,7 +394,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:56.740406+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:59.267079+00:00",
     "captured_via_provider_id": "viadonau_at",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -443,7 +443,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -459,7 +459,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGXXX00001G002006408",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.713261,
     "longitude": 24.406228,
     "mapped": true,
@@ -497,7 +497,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -513,7 +513,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGXXX00001G001608190",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 44.095855,
     "longitude": 22.944079,
     "mapped": true,
@@ -551,7 +551,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -567,7 +567,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGKOZ00001G001807039",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.798788,
     "longitude": 23.678446,
     "mapped": true,
@@ -605,7 +605,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -621,7 +621,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGLOM00001G000707433",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.8322056,
     "longitude": 23.22658612,
     "mapped": true,
@@ -659,7 +659,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -675,7 +675,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": false,
     "isrs_location_code": "BGLOM00001G001407433",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.8322056,
     "longitude": 23.22658612,
     "mapped": true,
@@ -713,7 +713,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -729,7 +729,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGXXX00001G002504139",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 44.100451,
     "longitude": 26.831624,
     "mapped": true,
@@ -767,7 +767,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -783,7 +783,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGNPO00001G000505975",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.705261,
     "longitude": 24.890833,
     "mapped": true,
@@ -821,7 +821,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -837,7 +837,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": false,
     "isrs_location_code": "BGNPO00001G000505975",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.705261,
     "longitude": 24.890833,
     "mapped": true,
@@ -875,7 +875,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -891,7 +891,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGXXX00001G000908336",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 44.1651333,
     "longitude": 22.7853778,
     "mapped": true,
@@ -929,7 +929,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -945,7 +945,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": false,
     "isrs_location_code": "BGXXX00001G001508336",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 44.1651333,
     "longitude": 22.7853778,
     "mapped": true,
@@ -983,7 +983,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -999,7 +999,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGOKH00001G000606780",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.74105,
     "longitude": 23.9629722,
     "mapped": true,
@@ -1037,7 +1037,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1053,7 +1053,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": false,
     "isrs_location_code": "BGOKH00001G001306780",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.74105,
     "longitude": 23.9629722,
     "mapped": true,
@@ -1091,7 +1091,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1107,7 +1107,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGRDU00001G000304956",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.8478972,
     "longitude": 25.94505827,
     "mapped": true,
@@ -1145,7 +1145,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1161,7 +1161,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": false,
     "isrs_location_code": "BGRDU00001G001104956",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.8478972,
     "longitude": 25.94505827,
     "mapped": true,
@@ -1199,7 +1199,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1215,7 +1215,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGXXX00001G002404654",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.991523,
     "longitude": 26.231264,
     "mapped": true,
@@ -1253,7 +1253,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1269,7 +1269,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGSLS00001G000103755",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 44.1242417,
     "longitude": 27.2658056,
     "mapped": true,
@@ -1307,7 +1307,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1323,7 +1323,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": false,
     "isrs_location_code": "BGSLS00001G001003755",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 44.1242417,
     "longitude": 27.2658056,
     "mapped": true,
@@ -1361,7 +1361,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1377,7 +1377,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGSVZ00001G000405543",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.62322439,
     "longitude": 25.34672248,
     "mapped": true,
@@ -1415,7 +1415,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1431,7 +1431,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": false,
     "isrs_location_code": "BGSVZ00001G001205543",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.62322439,
     "longitude": 25.34672248,
     "mapped": true,
@@ -1469,7 +1469,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:15.823268+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:22.214678+00:00",
     "captured_via_provider_id": "appd_bg",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1485,7 +1485,7 @@
     "is_exact_station_location": true,
     "is_primary_stream": true,
     "isrs_location_code": "BGVID00001G000807903",
-    "last_verified_at": "2026-08-16",
+    "last_verified_at": "2026-08-17",
     "latitude": 43.982903,
     "longitude": 22.877312,
     "mapped": true,
@@ -1523,7 +1523,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1572,7 +1572,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1621,7 +1621,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1670,7 +1670,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1722,7 +1722,7 @@
       "KACHLET WEHR UP",
       "KACHLET LOCK UP"
     ],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1774,7 +1774,7 @@
       "KACHLET WEHR UP",
       "KACHLET LOCK UP"
     ],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1823,7 +1823,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1872,7 +1872,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1921,7 +1921,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -1970,7 +1970,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2019,7 +2019,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2068,7 +2068,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2117,7 +2117,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2166,7 +2166,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2215,7 +2215,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2264,7 +2264,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2313,7 +2313,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2362,7 +2362,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:45:54.140325+00:00",
+    "capture_datetime_utc": "2026-08-17T09:09:56.019392+00:00",
     "captured_via_provider_id": "pegelonline_de",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2411,7 +2411,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:13.508317+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:19.442375+00:00",
     "captured_via_provider_id": "vodniputovi_hr",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2465,7 +2465,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:13.508317+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:19.442375+00:00",
     "captured_via_provider_id": "vodniputovi_hr",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2519,7 +2519,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:13.508317+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:19.442375+00:00",
     "captured_via_provider_id": "vodniputovi_hr",
     "coordinate_confidence": "high",
     "coordinate_method": "official_station_coordinate",
@@ -2573,7 +2573,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -2622,7 +2622,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -2671,7 +2671,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -2720,7 +2720,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -2769,7 +2769,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -2818,7 +2818,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -2867,7 +2867,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -2916,7 +2916,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -2965,7 +2965,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3014,7 +3014,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3063,7 +3063,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3112,7 +3112,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3161,7 +3161,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3210,7 +3210,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3259,7 +3259,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3308,7 +3308,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -3357,7 +3357,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3406,7 +3406,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3455,7 +3455,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3504,7 +3504,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3553,7 +3553,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3602,7 +3602,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3651,7 +3651,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3700,7 +3700,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -3749,7 +3749,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:12.752847+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:18.584712+00:00",
     "captured_via_provider_id": "hydroinfo_hu",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4435,7 +4435,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4484,7 +4484,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4533,7 +4533,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4582,7 +4582,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "high",
     "coordinate_method": "manually_verified_station_coordinate",
@@ -4631,7 +4631,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4680,7 +4680,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4729,7 +4729,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4778,7 +4778,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4827,7 +4827,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4876,7 +4876,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4925,7 +4925,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -4974,7 +4974,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -5023,7 +5023,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
@@ -5072,7 +5072,7 @@
   {
     "active": true,
     "aliases": [],
-    "capture_datetime_utc": "2026-08-17T02:46:09.406244+00:00",
+    "capture_datetime_utc": "2026-08-17T09:10:14.765355+00:00",
     "captured_via_provider_id": "shmu_sk",
     "coordinate_confidence": "medium",
     "coordinate_method": "geocoded_locality",
