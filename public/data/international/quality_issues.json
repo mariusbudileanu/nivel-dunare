@@ -11,7 +11,7 @@
   },
   {
     "active": false,
-    "captured_at_utc": "2026-08-22T02:38:38.700544+00:00",
+    "captured_at_utc": "2026-08-22T08:58:18.158575+00:00",
     "code": "outside_plausible_water_temperature_range",
     "historical": true,
     "message": "Inactive historical application-rule finding; it does not alter or exclude the official value.",
@@ -60,7 +60,7 @@
   },
   {
     "active": false,
-    "captured_at_utc": "2026-08-22T02:38:38.700544+00:00",
+    "captured_at_utc": "2026-08-22T08:58:18.158575+00:00",
     "code": "outside_plausible_water_temperature_range",
     "historical": true,
     "message": "Inactive historical application-rule finding; it does not alter or exclude the official value.",
@@ -109,7 +109,7 @@
     "station_name_local": "Iža"
   },
   {
-    "captured_at_utc": "2026-08-22T02:38:42.894980+00:00",
+    "captured_at_utc": "2026-08-22T08:59:17.084093+00:00",
     "code": "stale_source",
     "historical": false,
     "message": "Latest observation date 2026-03-12 is 163 days old; limit is 7",
