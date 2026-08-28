@@ -66,7 +66,7 @@
       "update_frequency": "09:15/21:15 Europe/Sofia by stream",
       "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive.",
       "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     },
     "de": {
       "access_status": "available",
@@ -162,7 +162,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "The source provides date and daypart; the application does not invent times or time zones.",
       "validation_message_ro": "Sursa oferă data și partea zilei; aplicația nu inventează ore sau fusuri.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "technical_validation_passed"
     },
     "rs": {
       "access_status": "available",
@@ -194,12 +194,12 @@
         },
         "nrt": {
           "consecutive_failures": 0,
-          "last_attempt_at": "2026-08-28T12:17:08.486788+00:00",
+          "last_attempt_at": "2026-08-28T15:27:33.934034+00:00",
           "last_attempt_status": "success",
-          "last_capture_at": "2026-08-28T12:16:38.103700+00:00",
+          "last_capture_at": "2026-08-28T15:27:03.642082+00:00",
           "last_error": null,
           "last_source_observation_at": "2026-08-28",
-          "last_success_at": "2026-08-28T12:17:08.486788+00:00",
+          "last_success_at": "2026-08-28T15:27:33.934034+00:00",
           "request_made": true,
           "runner": "Windows",
           "transport": "curl.exe/Schannel"
@@ -208,20 +208,20 @@
       "consecutive_failures": 0,
       "coordinate_status": "complete",
       "freshness_status": "current",
-      "last_attempt_at": "2026-08-28T12:17:08.486788+00:00",
+      "last_attempt_at": "2026-08-28T15:27:33.934034+00:00",
       "last_attempt_status": "success",
-      "last_capture_at": "2026-08-28T12:16:38.103700+00:00",
+      "last_capture_at": "2026-08-28T15:27:03.642082+00:00",
       "last_error": null,
       "last_error_code": null,
       "last_error_message": null,
-      "last_known_good_at": "2026-08-28T12:17:08.486788+00:00",
-      "last_known_good_commit": "50b16c2f744d494cb140584642852a8c03e0fd82",
+      "last_known_good_at": "2026-08-28T15:27:33.934034+00:00",
+      "last_known_good_commit": "63324795a67b410d1fbf841ba35be4cbdf29d32f",
       "last_source_observation_at": "2026-08-28",
-      "last_success_at": "2026-08-28T12:17:08.486788+00:00",
-      "last_success_capture_at": "2026-08-28T12:16:38.103700+00:00",
-      "last_success_commit": "50b16c2f744d494cb140584642852a8c03e0fd82",
-      "last_successful_fetch_at": "2026-08-28T12:17:08.486788+00:00",
-      "next_expected_update": "2026-08-28T15:17:00+00:00",
+      "last_success_at": "2026-08-28T15:27:33.934034+00:00",
+      "last_success_capture_at": "2026-08-28T15:27:03.642082+00:00",
+      "last_success_commit": "63324795a67b410d1fbf841ba35be4cbdf29d32f",
+      "last_successful_fetch_at": "2026-08-28T15:27:33.934034+00:00",
+      "next_expected_update": "2026-08-28T18:17:00+00:00",
       "published_snapshot_date": "2026-08-28",
       "request_made": true,
       "runner": "Windows",
