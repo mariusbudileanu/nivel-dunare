@@ -66,7 +66,7 @@
       "update_frequency": "09:15/21:15 Europe/Sofia by stream",
       "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive.",
       "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     },
     "de": {
       "access_status": "available",
@@ -131,7 +131,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source.",
       "validation_message_ro": "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "technical_validation_passed"
     },
     "hu": {
       "access_status": "available",
@@ -165,7 +165,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "The source provides date and daypart; the application does not invent times or time zones.",
       "validation_message_ro": "Sursa oferă data și partea zilei; aplicația nu inventează ore sau fusuri.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "technical_validation_passed"
     },
     "rs": {
       "access_status": "available",
@@ -185,12 +185,12 @@
         },
         "forecast": {
           "consecutive_failures": 0,
-          "last_attempt_at": "2026-08-28T00:59:20.391165+00:00",
+          "last_attempt_at": "2026-08-29T00:35:40.276649+00:00",
           "last_attempt_status": "success",
-          "last_capture_at": "2026-08-28T00:58:52.273240+00:00",
+          "last_capture_at": "2026-08-29T00:35:06.754080+00:00",
           "last_error": null,
-          "last_source_observation_at": "2026-08-27",
-          "last_success_at": "2026-08-28T00:59:20.391165+00:00",
+          "last_source_observation_at": "2026-08-28",
+          "last_success_at": "2026-08-29T00:35:40.276649+00:00",
           "request_made": true,
           "runner": "Windows",
           "transport": "curl.exe/Schannel"
@@ -211,20 +211,20 @@
       "consecutive_failures": 0,
       "coordinate_status": "complete",
       "freshness_status": "current",
-      "last_attempt_at": "2026-08-28T21:14:17.315973+00:00",
+      "last_attempt_at": "2026-08-29T00:35:40.276649+00:00",
       "last_attempt_status": "success",
-      "last_capture_at": "2026-08-28T21:13:39.814271+00:00",
+      "last_capture_at": "2026-08-29T00:35:06.754080+00:00",
       "last_error": null,
       "last_error_code": null,
       "last_error_message": null,
-      "last_known_good_at": "2026-08-28T21:14:17.315973+00:00",
-      "last_known_good_commit": "16fcb1cc12f5959f1e76fe7badbd28d70e5e8c6b",
-      "last_source_observation_at": "2026-08-28",
-      "last_success_at": "2026-08-28T21:14:17.315973+00:00",
-      "last_success_capture_at": "2026-08-28T21:13:39.814271+00:00",
-      "last_success_commit": "16fcb1cc12f5959f1e76fe7badbd28d70e5e8c6b",
-      "last_successful_fetch_at": "2026-08-28T21:14:17.315973+00:00",
-      "next_expected_update": "2026-08-28T21:17:00+00:00",
+      "last_known_good_at": "2026-08-29T00:35:40.276649+00:00",
+      "last_known_good_commit": "976531da39e6cd8155e9e66462c6e4db2e224954",
+      "last_source_observation_at": null,
+      "last_success_at": "2026-08-29T00:35:40.276649+00:00",
+      "last_success_capture_at": "2026-08-29T00:35:06.754080+00:00",
+      "last_success_commit": "976531da39e6cd8155e9e66462c6e4db2e224954",
+      "last_successful_fetch_at": "2026-08-29T00:35:40.276649+00:00",
+      "next_expected_update": "2026-08-29T03:17:00+00:00",
       "published_snapshot_date": "2026-08-28",
       "request_made": true,
       "runner": "Windows",
