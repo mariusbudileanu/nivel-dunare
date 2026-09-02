@@ -66,7 +66,7 @@
       "update_frequency": "09:15/21:15 Europe/Sofia by stream",
       "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive.",
       "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     },
     "de": {
       "access_status": "available",
@@ -162,7 +162,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "The source provides date and daypart; the application does not invent times or time zones.",
       "validation_message_ro": "Sursa oferă data și partea zilei; aplicația nu inventează ore sau fusuri.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "technical_validation_passed"
     },
     "rs": {
       "access_status": "available",
@@ -182,12 +182,12 @@
         },
         "forecast": {
           "consecutive_failures": 0,
-          "last_attempt_at": "2026-09-01T16:45:12.024241+00:00",
+          "last_attempt_at": "2026-09-02T17:57:14.883358+00:00",
           "last_attempt_status": "success",
-          "last_capture_at": "2026-09-01T16:44:37.405725+00:00",
+          "last_capture_at": "2026-09-02T17:56:39.350054+00:00",
           "last_error": null,
-          "last_source_observation_at": "2026-09-01",
-          "last_success_at": "2026-09-01T16:45:12.024241+00:00",
+          "last_source_observation_at": "2026-09-02",
+          "last_success_at": "2026-09-02T17:57:14.883358+00:00",
           "request_made": true,
           "runner": "Windows",
           "transport": "curl.exe/Schannel"
@@ -208,19 +208,19 @@
       "consecutive_failures": 0,
       "coordinate_status": "complete",
       "freshness_status": "current",
-      "last_attempt_at": "2026-09-02T16:38:58.705607+00:00",
+      "last_attempt_at": "2026-09-02T17:57:14.883358+00:00",
       "last_attempt_status": "success",
-      "last_capture_at": "2026-09-02T16:38:26.586864+00:00",
+      "last_capture_at": "2026-09-02T17:56:39.350054+00:00",
       "last_error": null,
       "last_error_code": null,
       "last_error_message": null,
-      "last_known_good_at": "2026-09-02T16:38:58.705607+00:00",
-      "last_known_good_commit": "3c1be28f9af85886c66ff372136ce9ba6162427c",
-      "last_source_observation_at": "2026-09-02",
-      "last_success_at": "2026-09-02T16:38:58.705607+00:00",
-      "last_success_capture_at": "2026-09-02T16:38:26.586864+00:00",
-      "last_success_commit": "3c1be28f9af85886c66ff372136ce9ba6162427c",
-      "last_successful_fetch_at": "2026-09-02T16:38:58.705607+00:00",
+      "last_known_good_at": "2026-09-02T17:57:14.883358+00:00",
+      "last_known_good_commit": "c9999e3ce15772bfe810196300e110fd2a0527be",
+      "last_source_observation_at": null,
+      "last_success_at": "2026-09-02T17:57:14.883358+00:00",
+      "last_success_capture_at": "2026-09-02T17:56:39.350054+00:00",
+      "last_success_commit": "c9999e3ce15772bfe810196300e110fd2a0527be",
+      "last_successful_fetch_at": "2026-09-02T17:57:14.883358+00:00",
       "next_expected_update": "2026-09-02T18:17:00+00:00",
       "published_snapshot_date": "2026-09-02",
       "request_made": true,
@@ -264,7 +264,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "Official values are retained without local plausibility thresholds.",
       "validation_message_ro": "Valorile oficiale sunt păstrate fără praguri locale de plauzibilitate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     }
   }
 }
