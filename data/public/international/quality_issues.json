@@ -1,6 +1,6 @@
 [
   {
-    "captured_at_utc": "2026-09-06T06:28:13.697937+00:00",
+    "captured_at_utc": "2026-09-06T12:16:38.078921+00:00",
     "code": "forecast_not_activated",
     "historical": false,
     "message": "APPD chart series remain diagnostic candidates because parameter, unit, target year, and issue semantics are not all demonstrated.",
@@ -11,7 +11,7 @@
   },
   {
     "active": false,
-    "captured_at_utc": "2026-09-06T06:28:08.331850+00:00",
+    "captured_at_utc": "2026-09-06T12:16:31.988422+00:00",
     "code": "outside_plausible_water_temperature_range",
     "historical": true,
     "message": "Inactive historical application-rule finding; it does not alter or exclude the official value.",
@@ -60,7 +60,7 @@
   },
   {
     "active": false,
-    "captured_at_utc": "2026-09-06T06:28:08.331850+00:00",
+    "captured_at_utc": "2026-09-06T12:16:31.988422+00:00",
     "code": "outside_plausible_water_temperature_range",
     "historical": true,
     "message": "Inactive historical application-rule finding; it does not alter or exclude the official value.",
@@ -109,7 +109,7 @@
     "station_name_local": "Iža"
   },
   {
-    "captured_at_utc": "2026-09-06T06:28:11.008461+00:00",
+    "captured_at_utc": "2026-09-06T12:16:35.069952+00:00",
     "code": "stale_source",
     "historical": false,
     "message": "Latest observation date 2026-03-12 is 178 days old; limit is 7",
