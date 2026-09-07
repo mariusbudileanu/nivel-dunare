@@ -66,7 +66,7 @@
       "update_frequency": "09:15/21:15 Europe/Sofia by stream",
       "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive.",
       "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     },
     "de": {
       "access_status": "available",
@@ -131,7 +131,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source.",
       "validation_message_ro": "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "technical_validation_passed"
     },
     "hu": {
       "access_status": "available",
@@ -165,7 +165,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "The source provides date and daypart; the application does not invent times or time zones.",
       "validation_message_ro": "Sursa oferă data și partea zilei; aplicația nu inventează ore sau fusuri.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "technical_validation_passed"
     },
     "rs": {
       "access_status": "available",
@@ -197,12 +197,12 @@
         },
         "nrt": {
           "consecutive_failures": 0,
-          "last_attempt_at": "2026-09-07T05:17:15.088983+00:00",
+          "last_attempt_at": "2026-09-07T12:41:32.693638+00:00",
           "last_attempt_status": "success",
-          "last_capture_at": "2026-09-07T05:16:44.515097+00:00",
+          "last_capture_at": "2026-09-07T12:40:54.323064+00:00",
           "last_error": null,
           "last_source_observation_at": "2026-09-07",
-          "last_success_at": "2026-09-07T05:17:15.088983+00:00",
+          "last_success_at": "2026-09-07T12:41:32.693638+00:00",
           "request_made": true,
           "runner": "Windows",
           "transport": "curl.exe/Schannel"
@@ -211,20 +211,20 @@
       "consecutive_failures": 0,
       "coordinate_status": "complete",
       "freshness_status": "current",
-      "last_attempt_at": "2026-09-07T05:17:15.088983+00:00",
+      "last_attempt_at": "2026-09-07T12:41:32.693638+00:00",
       "last_attempt_status": "success",
-      "last_capture_at": "2026-09-07T05:16:44.515097+00:00",
+      "last_capture_at": "2026-09-07T12:40:54.323064+00:00",
       "last_error": null,
       "last_error_code": null,
       "last_error_message": null,
-      "last_known_good_at": "2026-09-07T05:17:15.088983+00:00",
-      "last_known_good_commit": "ad2e874fcc118b1116f36902bf169e1b889c6049",
+      "last_known_good_at": "2026-09-07T12:41:32.693638+00:00",
+      "last_known_good_commit": "9a5957f2c7543ab2236294eaca33ec5776e04732",
       "last_source_observation_at": "2026-09-07",
-      "last_success_at": "2026-09-07T05:17:15.088983+00:00",
-      "last_success_capture_at": "2026-09-07T05:16:44.515097+00:00",
-      "last_success_commit": "ad2e874fcc118b1116f36902bf169e1b889c6049",
-      "last_successful_fetch_at": "2026-09-07T05:17:15.088983+00:00",
-      "next_expected_update": "2026-09-07T06:17:00+00:00",
+      "last_success_at": "2026-09-07T12:41:32.693638+00:00",
+      "last_success_capture_at": "2026-09-07T12:40:54.323064+00:00",
+      "last_success_commit": "9a5957f2c7543ab2236294eaca33ec5776e04732",
+      "last_successful_fetch_at": "2026-09-07T12:41:32.693638+00:00",
+      "next_expected_update": "2026-09-07T15:17:00+00:00",
       "published_snapshot_date": "2026-09-07",
       "request_made": true,
       "runner": "Windows",
@@ -267,7 +267,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "Official values are retained without local plausibility thresholds.",
       "validation_message_ro": "Valorile oficiale sunt păstrate fără praguri locale de plauzibilitate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     }
   }
 }
