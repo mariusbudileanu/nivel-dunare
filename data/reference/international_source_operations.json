@@ -35,7 +35,7 @@
       "update_frequency": "manual",
       "validation_message_en": "Automatic daily update, with a permanent DoRIS key.",
       "validation_message_ro": "Actualizare automată zilnică, cu cheie DoRIS permanentă.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     },
     "bg": {
       "access_status": "available",
@@ -69,7 +69,7 @@
       "update_frequency": "09:15/21:15 Europe/Sofia by stream",
       "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive.",
       "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     },
     "de": {
       "access_status": "available",
@@ -165,7 +165,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "The source provides date and daypart; the application does not invent times or time zones.",
       "validation_message_ro": "Sursa oferă data și partea zilei; aplicația nu inventează ore sau fusuri.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "technical_validation_passed"
     },
     "rs": {
       "access_status": "available",
@@ -173,12 +173,12 @@
       "components": {
         "daily": {
           "consecutive_failures": 0,
-          "last_attempt_at": "2026-09-15T15:15:39.985047+00:00",
+          "last_attempt_at": "2026-09-16T15:09:26.958399+00:00",
           "last_attempt_status": "success",
-          "last_capture_at": "2026-09-15T15:14:44.456046+00:00",
+          "last_capture_at": "2026-09-16T15:08:41.277263+00:00",
           "last_error": null,
-          "last_source_observation_at": "2026-09-15",
-          "last_success_at": "2026-09-15T15:15:39.985047+00:00",
+          "last_source_observation_at": "2026-09-16",
+          "last_success_at": "2026-09-16T15:09:26.958399+00:00",
           "request_made": true,
           "runner": "Windows",
           "transport": "curl.exe/Schannel"
@@ -211,20 +211,20 @@
       "consecutive_failures": 0,
       "coordinate_status": "complete",
       "freshness_status": "current",
-      "last_attempt_at": "2026-09-16T11:43:18.198100+00:00",
+      "last_attempt_at": "2026-09-16T15:09:26.958399+00:00",
       "last_attempt_status": "success",
-      "last_capture_at": "2026-09-16T11:42:31.588806+00:00",
+      "last_capture_at": "2026-09-16T15:08:41.277263+00:00",
       "last_error": null,
       "last_error_code": null,
       "last_error_message": null,
-      "last_known_good_at": "2026-09-16T11:43:18.198100+00:00",
-      "last_known_good_commit": "c5f1ce3b8d0c948efce932899ba5cab5c4cd9972",
+      "last_known_good_at": "2026-09-16T15:09:26.958399+00:00",
+      "last_known_good_commit": "a2c25f32eb83d5b064b5da00e613f7b49bc2e864",
       "last_source_observation_at": "2026-09-16",
-      "last_success_at": "2026-09-16T11:43:18.198100+00:00",
-      "last_success_capture_at": "2026-09-16T11:42:31.588806+00:00",
-      "last_success_commit": "c5f1ce3b8d0c948efce932899ba5cab5c4cd9972",
-      "last_successful_fetch_at": "2026-09-16T11:43:18.198100+00:00",
-      "next_expected_update": "2026-09-16T12:17:00+00:00",
+      "last_success_at": "2026-09-16T15:09:26.958399+00:00",
+      "last_success_capture_at": "2026-09-16T15:08:41.277263+00:00",
+      "last_success_commit": "a2c25f32eb83d5b064b5da00e613f7b49bc2e864",
+      "last_successful_fetch_at": "2026-09-16T15:09:26.958399+00:00",
+      "next_expected_update": "2026-09-16T15:17:00+00:00",
       "published_snapshot_date": "2026-09-16",
       "request_made": true,
       "runner": "Windows",
@@ -267,7 +267,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "Official values are retained without local plausibility thresholds.",
       "validation_message_ro": "Valorile oficiale sunt păstrate fără praguri locale de plauzibilitate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     }
   }
 }
