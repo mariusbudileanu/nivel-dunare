@@ -15612,7 +15612,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -15646,9 +15646,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:52.596363+00:00",
-                "capture_delay_seconds": 3832.596363,
-                "captured_at_utc": "2026-09-22T05:03:52.596363+00:00",
+                "capture_at": "2026-09-22T05:27:08.231692+00:00",
+                "capture_delay_seconds": 5228.231692,
+                "captured_at_utc": "2026-09-22T05:27:08.231692+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -15846,9 +15846,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:52.596363+00:00",
-          "capture_delay_seconds": 3832.596363,
-          "captured_at_utc": "2026-09-22T05:03:52.596363+00:00",
+          "capture_at": "2026-09-22T05:27:08.231692+00:00",
+          "capture_delay_seconds": 5228.231692,
+          "captured_at_utc": "2026-09-22T05:27:08.231692+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -15903,7 +15903,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -15937,9 +15937,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:53.345739+00:00",
-                "capture_delay_seconds": 3833.345739,
-                "captured_at_utc": "2026-09-22T05:03:53.345739+00:00",
+                "capture_at": "2026-09-22T05:27:08.909161+00:00",
+                "capture_delay_seconds": 5228.909161,
+                "captured_at_utc": "2026-09-22T05:27:08.909161+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -16091,9 +16091,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:53.345739+00:00",
-          "capture_delay_seconds": 3833.345739,
-          "captured_at_utc": "2026-09-22T05:03:53.345739+00:00",
+          "capture_at": "2026-09-22T05:27:08.909161+00:00",
+          "capture_delay_seconds": 5228.909161,
+          "captured_at_utc": "2026-09-22T05:27:08.909161+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -16148,7 +16148,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -16182,9 +16182,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:54.047283+00:00",
-                "capture_delay_seconds": 3834.047283,
-                "captured_at_utc": "2026-09-22T05:03:54.047283+00:00",
+                "capture_at": "2026-09-22T05:27:09.574109+00:00",
+                "capture_delay_seconds": 5229.574109,
+                "captured_at_utc": "2026-09-22T05:27:09.574109+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -16336,9 +16336,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:54.047283+00:00",
-          "capture_delay_seconds": 3834.047283,
-          "captured_at_utc": "2026-09-22T05:03:54.047283+00:00",
+          "capture_at": "2026-09-22T05:27:09.574109+00:00",
+          "capture_delay_seconds": 5229.574109,
+          "captured_at_utc": "2026-09-22T05:27:09.574109+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -16393,7 +16393,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -16427,9 +16427,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:54.759412+00:00",
-                "capture_delay_seconds": 3834.759412,
-                "captured_at_utc": "2026-09-22T05:03:54.759412+00:00",
+                "capture_at": "2026-09-22T05:27:10.232760+00:00",
+                "capture_delay_seconds": 5230.23276,
+                "captured_at_utc": "2026-09-22T05:27:10.232760+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -16581,9 +16581,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:54.759412+00:00",
-          "capture_delay_seconds": 3834.759412,
-          "captured_at_utc": "2026-09-22T05:03:54.759412+00:00",
+          "capture_at": "2026-09-22T05:27:10.232760+00:00",
+          "capture_delay_seconds": 5230.23276,
+          "captured_at_utc": "2026-09-22T05:27:10.232760+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -16638,7 +16638,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -16672,9 +16672,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:55.668238+00:00",
-                "capture_delay_seconds": 3835.668238,
-                "captured_at_utc": "2026-09-22T05:03:55.668238+00:00",
+                "capture_at": "2026-09-22T05:27:11.045424+00:00",
+                "capture_delay_seconds": 5231.045424,
+                "captured_at_utc": "2026-09-22T05:27:11.045424+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -16872,9 +16872,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:55.668238+00:00",
-          "capture_delay_seconds": 3835.668238,
-          "captured_at_utc": "2026-09-22T05:03:55.668238+00:00",
+          "capture_at": "2026-09-22T05:27:11.045424+00:00",
+          "capture_delay_seconds": 5231.045424,
+          "captured_at_utc": "2026-09-22T05:27:11.045424+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -16929,7 +16929,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "medium",
         "coordinate_method": "geocoded_locality",
         "coordinate_notes": "name_match=0.900; country and conservative Danube-sector checks passed",
@@ -17164,7 +17164,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -17198,9 +17198,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:56.403326+00:00",
-                "capture_delay_seconds": 3836.403326,
-                "captured_at_utc": "2026-09-22T05:03:56.403326+00:00",
+                "capture_at": "2026-09-22T05:27:11.713663+00:00",
+                "capture_delay_seconds": 5231.713663,
+                "captured_at_utc": "2026-09-22T05:27:11.713663+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -17352,9 +17352,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:56.403326+00:00",
-          "capture_delay_seconds": 3836.403326,
-          "captured_at_utc": "2026-09-22T05:03:56.403326+00:00",
+          "capture_at": "2026-09-22T05:27:11.713663+00:00",
+          "capture_delay_seconds": 5231.713663,
+          "captured_at_utc": "2026-09-22T05:27:11.713663+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -17409,7 +17409,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -17443,9 +17443,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:57.160868+00:00",
-                "capture_delay_seconds": 3837.160868,
-                "captured_at_utc": "2026-09-22T05:03:57.160868+00:00",
+                "capture_at": "2026-09-22T05:27:12.377106+00:00",
+                "capture_delay_seconds": 5232.377106,
+                "captured_at_utc": "2026-09-22T05:27:12.377106+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -17551,9 +17551,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:57.160868+00:00",
-          "capture_delay_seconds": 3837.160868,
-          "captured_at_utc": "2026-09-22T05:03:57.160868+00:00",
+          "capture_at": "2026-09-22T05:27:12.377106+00:00",
+          "capture_delay_seconds": 5232.377106,
+          "captured_at_utc": "2026-09-22T05:27:12.377106+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -17608,7 +17608,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -17642,9 +17642,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:57.886573+00:00",
-                "capture_delay_seconds": 3837.886573,
-                "captured_at_utc": "2026-09-22T05:03:57.886573+00:00",
+                "capture_at": "2026-09-22T05:27:13.034055+00:00",
+                "capture_delay_seconds": 5233.034055,
+                "captured_at_utc": "2026-09-22T05:27:13.034055+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -17796,9 +17796,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:57.886573+00:00",
-          "capture_delay_seconds": 3837.886573,
-          "captured_at_utc": "2026-09-22T05:03:57.886573+00:00",
+          "capture_at": "2026-09-22T05:27:13.034055+00:00",
+          "capture_delay_seconds": 5233.034055,
+          "captured_at_utc": "2026-09-22T05:27:13.034055+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -17853,7 +17853,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -17887,9 +17887,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:58.609039+00:00",
-                "capture_delay_seconds": 3838.609039,
-                "captured_at_utc": "2026-09-22T05:03:58.609039+00:00",
+                "capture_at": "2026-09-22T05:27:13.700442+00:00",
+                "capture_delay_seconds": 5233.700442,
+                "captured_at_utc": "2026-09-22T05:27:13.700442+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -17995,9 +17995,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:58.609039+00:00",
-          "capture_delay_seconds": 3838.609039,
-          "captured_at_utc": "2026-09-22T05:03:58.609039+00:00",
+          "capture_at": "2026-09-22T05:27:13.700442+00:00",
+          "capture_delay_seconds": 5233.700442,
+          "captured_at_utc": "2026-09-22T05:27:13.700442+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -18052,7 +18052,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -18086,9 +18086,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:03:59.333415+00:00",
-                "capture_delay_seconds": 3839.333415,
-                "captured_at_utc": "2026-09-22T05:03:59.333415+00:00",
+                "capture_at": "2026-09-22T05:27:14.356472+00:00",
+                "capture_delay_seconds": 5234.356472,
+                "captured_at_utc": "2026-09-22T05:27:14.356472+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -18194,9 +18194,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:03:59.333415+00:00",
-          "capture_delay_seconds": 3839.333415,
-          "captured_at_utc": "2026-09-22T05:03:59.333415+00:00",
+          "capture_at": "2026-09-22T05:27:14.356472+00:00",
+          "capture_delay_seconds": 5234.356472,
+          "captured_at_utc": "2026-09-22T05:27:14.356472+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -18251,7 +18251,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -18285,9 +18285,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:04:00.074271+00:00",
-                "capture_delay_seconds": 3840.074271,
-                "captured_at_utc": "2026-09-22T05:04:00.074271+00:00",
+                "capture_at": "2026-09-22T05:27:15.016843+00:00",
+                "capture_delay_seconds": 5235.016843,
+                "captured_at_utc": "2026-09-22T05:27:15.016843+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -18393,9 +18393,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:04:00.074271+00:00",
-          "capture_delay_seconds": 3840.074271,
-          "captured_at_utc": "2026-09-22T05:04:00.074271+00:00",
+          "capture_at": "2026-09-22T05:27:15.016843+00:00",
+          "capture_delay_seconds": 5235.016843,
+          "captured_at_utc": "2026-09-22T05:27:15.016843+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
@@ -18450,7 +18450,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-09-22T05:04:00.775764+00:00",
+        "capture_datetime_utc": "2026-09-22T05:27:15.671416+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -18484,9 +18484,9 @@
             "latest": {
               "water_level": {
                 "canonical_quality_flag": "provisional",
-                "capture_at": "2026-09-22T05:04:00.775764+00:00",
-                "capture_delay_seconds": 3840.775764,
-                "captured_at_utc": "2026-09-22T05:04:00.775764+00:00",
+                "capture_at": "2026-09-22T05:27:15.671416+00:00",
+                "capture_delay_seconds": 5235.671416,
+                "captured_at_utc": "2026-09-22T05:27:15.671416+00:00",
                 "captured_via_provider_id": "hidmet_rs",
                 "country_code": "RS",
                 "current_usable": true,
@@ -18592,9 +18592,9 @@
         ],
         "water_level": {
           "canonical_quality_flag": "provisional",
-          "capture_at": "2026-09-22T05:04:00.775764+00:00",
-          "capture_delay_seconds": 3840.775764,
-          "captured_at_utc": "2026-09-22T05:04:00.775764+00:00",
+          "capture_at": "2026-09-22T05:27:15.671416+00:00",
+          "capture_delay_seconds": 5235.671416,
+          "captured_at_utc": "2026-09-22T05:27:15.671416+00:00",
           "captured_via_provider_id": "hidmet_rs",
           "country_code": "RS",
           "current_usable": true,
