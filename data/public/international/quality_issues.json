@@ -1,6 +1,6 @@
 [
   {
-    "captured_at_utc": "2026-09-24T17:31:16.908875+00:00",
+    "captured_at_utc": "2026-09-25T06:33:43.438727+00:00",
     "code": "forecast_not_activated",
     "historical": false,
     "message": "APPD chart series remain diagnostic candidates because parameter, unit, target year, and issue semantics are not all demonstrated.",
@@ -11,7 +11,7 @@
   },
   {
     "active": false,
-    "captured_at_utc": "2026-09-24T17:31:09.487674+00:00",
+    "captured_at_utc": "2026-09-25T06:33:36.972155+00:00",
     "code": "outside_plausible_water_temperature_range",
     "historical": true,
     "message": "Inactive historical application-rule finding; it does not alter or exclude the official value.",
@@ -60,7 +60,7 @@
   },
   {
     "active": false,
-    "captured_at_utc": "2026-09-24T17:31:09.487674+00:00",
+    "captured_at_utc": "2026-09-25T06:33:36.972155+00:00",
     "code": "outside_plausible_water_temperature_range",
     "historical": true,
     "message": "Inactive historical application-rule finding; it does not alter or exclude the official value.",
@@ -109,10 +109,10 @@
     "station_name_local": "Iža"
   },
   {
-    "captured_at_utc": "2026-09-24T17:31:13.755923+00:00",
+    "captured_at_utc": "2026-09-25T06:33:41.066531+00:00",
     "code": "stale_source",
     "historical": false,
-    "message": "Latest observation date 2026-03-12 is 196 days old; limit is 7",
+    "message": "Latest observation date 2026-03-12 is 197 days old; limit is 7",
     "record_id": null,
     "severity": "warning",
     "source_id": "vodniputovi_hr",
