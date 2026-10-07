@@ -66,7 +66,7 @@
       "update_frequency": "09:15/21:15 Europe/Sofia by stream",
       "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive.",
       "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     },
     "de": {
       "access_status": "available",
@@ -191,12 +191,12 @@
         },
         "nrt": {
           "consecutive_failures": 0,
-          "last_attempt_at": "2026-10-07T06:34:18.041014+00:00",
+          "last_attempt_at": "2026-10-07T13:32:06.707945+00:00",
           "last_attempt_status": "success",
-          "last_capture_at": "2026-10-07T06:33:25.977696+00:00",
+          "last_capture_at": "2026-10-07T13:31:15.190732+00:00",
           "last_error": null,
           "last_source_observation_at": "2026-10-07",
-          "last_success_at": "2026-10-07T06:34:18.041014+00:00",
+          "last_success_at": "2026-10-07T13:32:06.707945+00:00",
           "request_made": true,
           "runner": "Windows",
           "transport": "curl.exe/Schannel"
@@ -205,20 +205,20 @@
       "consecutive_failures": 0,
       "coordinate_status": "complete",
       "freshness_status": "current",
-      "last_attempt_at": "2026-10-07T06:34:18.041014+00:00",
+      "last_attempt_at": "2026-10-07T13:32:06.707945+00:00",
       "last_attempt_status": "success",
-      "last_capture_at": "2026-10-07T06:33:25.977696+00:00",
+      "last_capture_at": "2026-10-07T13:31:15.190732+00:00",
       "last_error": null,
       "last_error_code": null,
       "last_error_message": null,
-      "last_known_good_at": "2026-10-07T06:34:18.041014+00:00",
-      "last_known_good_commit": "8c51abfb2318b5bb327df51e516775a4230934f4",
+      "last_known_good_at": "2026-10-07T13:32:06.707945+00:00",
+      "last_known_good_commit": "702dd499b8109e36d5bdc743c47af32ba0f2dee7",
       "last_source_observation_at": "2026-10-07",
-      "last_success_at": "2026-10-07T06:34:18.041014+00:00",
-      "last_success_capture_at": "2026-10-07T06:33:25.977696+00:00",
-      "last_success_commit": "8c51abfb2318b5bb327df51e516775a4230934f4",
-      "last_successful_fetch_at": "2026-10-07T06:34:18.041014+00:00",
-      "next_expected_update": "2026-10-07T09:17:00+00:00",
+      "last_success_at": "2026-10-07T13:32:06.707945+00:00",
+      "last_success_capture_at": "2026-10-07T13:31:15.190732+00:00",
+      "last_success_commit": "702dd499b8109e36d5bdc743c47af32ba0f2dee7",
+      "last_successful_fetch_at": "2026-10-07T13:32:06.707945+00:00",
+      "next_expected_update": "2026-10-07T15:17:00+00:00",
       "published_snapshot_date": "2026-10-07",
       "request_made": true,
       "runner": "Windows",
@@ -261,7 +261,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "Official values are retained without local plausibility thresholds.",
       "validation_message_ro": "Valorile oficiale sunt păstrate fără praguri locale de plauzibilitate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     }
   }
 }
