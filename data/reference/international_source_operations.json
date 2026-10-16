@@ -66,7 +66,7 @@
       "update_frequency": "09:15/21:15 Europe/Sofia by stream",
       "validation_message_en": "Manual and automatic streams are identified through the RIS registry; forecasts remain inactive.",
       "validation_message_ro": "Fluxurile manuale și automate sunt identificate prin registrul RIS; prognozele rămân neactivate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     },
     "de": {
       "access_status": "available",
@@ -131,7 +131,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "Data not updated. The feed is checked automatically every day, but the official source has not published more recent values. The latest available observation is dated {date}. Values are displayed exactly as provided by the source.",
       "validation_message_ro": "Date neactualizate. Fluxul este verificat automat zilnic, însă sursa oficială nu a publicat valori mai recente. Ultima observație disponibilă este din {date}. Valorile sunt afișate exact așa cum sunt furnizate de sursă.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "technical_validation_passed"
     },
     "hu": {
       "access_status": "available",
@@ -170,12 +170,12 @@
       "components": {
         "daily": {
           "consecutive_failures": 0,
-          "last_attempt_at": "2026-10-15T15:20:17.147211+00:00",
+          "last_attempt_at": "2026-10-16T15:00:42.093628+00:00",
           "last_attempt_status": "success",
-          "last_capture_at": "2026-10-15T15:18:46.760983+00:00",
+          "last_capture_at": "2026-10-16T14:59:13.949075+00:00",
           "last_error": null,
-          "last_source_observation_at": "2026-10-15",
-          "last_success_at": "2026-10-15T15:20:17.147211+00:00",
+          "last_source_observation_at": "2026-10-16",
+          "last_success_at": "2026-10-16T15:00:42.093628+00:00",
           "request_made": true,
           "runner": "Windows",
           "transport": "curl.exe/Schannel"
@@ -208,21 +208,21 @@
       "consecutive_failures": 0,
       "coordinate_status": "complete",
       "freshness_status": "current",
-      "last_attempt_at": "2026-10-15T17:10:18.986501+00:00",
+      "last_attempt_at": "2026-10-16T15:00:42.093628+00:00",
       "last_attempt_status": "success",
-      "last_capture_at": "2026-10-15T17:08:52.208091+00:00",
+      "last_capture_at": "2026-10-16T14:59:13.949075+00:00",
       "last_error": null,
       "last_error_code": null,
       "last_error_message": null,
-      "last_known_good_at": "2026-10-15T17:10:18.986501+00:00",
-      "last_known_good_commit": "804c8504d74a9c5b796af477dc5ba7cbac564d82",
-      "last_source_observation_at": null,
-      "last_success_at": "2026-10-15T17:10:18.986501+00:00",
-      "last_success_capture_at": "2026-10-15T17:08:52.208091+00:00",
-      "last_success_commit": "804c8504d74a9c5b796af477dc5ba7cbac564d82",
-      "last_successful_fetch_at": "2026-10-15T17:10:18.986501+00:00",
-      "next_expected_update": "2026-10-15T18:17:00+00:00",
-      "published_snapshot_date": "2026-10-15",
+      "last_known_good_at": "2026-10-16T15:00:42.093628+00:00",
+      "last_known_good_commit": "928ef78c477236b0df3dd915957ff810e64b743d",
+      "last_source_observation_at": "2026-10-16",
+      "last_success_at": "2026-10-16T15:00:42.093628+00:00",
+      "last_success_capture_at": "2026-10-16T14:59:13.949075+00:00",
+      "last_success_commit": "928ef78c477236b0df3dd915957ff810e64b743d",
+      "last_successful_fetch_at": "2026-10-16T15:00:42.093628+00:00",
+      "next_expected_update": "2026-10-16T15:17:00+00:00",
+      "published_snapshot_date": "2026-10-16",
       "request_made": true,
       "runner": "Windows",
       "source_status": "complete",
@@ -264,7 +264,7 @@
       "update_frequency": "daily at 01:37 UTC",
       "validation_message_en": "Official values are retained without local plausibility thresholds.",
       "validation_message_ro": "Valorile oficiale sunt păstrate fără praguri locale de plauzibilitate.",
-      "validation_status": "technical_validation_failed"
+      "validation_status": "source_provisional"
     }
   }
 }
