@@ -15703,7 +15703,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -15782,7 +15782,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42010:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42010"
@@ -15994,7 +15994,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -16073,7 +16073,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42015:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42015"
@@ -16239,7 +16239,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -16318,7 +16318,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42020:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42020"
@@ -16484,7 +16484,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -16563,7 +16563,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "30 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42030:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42030"
@@ -16729,7 +16729,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -16808,7 +16808,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42035:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42035"
@@ -17020,7 +17020,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "medium",
         "coordinate_method": "geocoded_locality",
         "coordinate_notes": "name_match=0.900; country and conservative Danube-sector checks passed",
@@ -17346,7 +17346,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -17425,7 +17425,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42045:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42045"
@@ -17591,7 +17591,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -17670,7 +17670,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42050:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42050"
@@ -17790,7 +17790,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -17869,7 +17869,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42055:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42055"
@@ -18035,7 +18035,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -18114,7 +18114,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42060:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42060"
@@ -18234,7 +18234,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -18313,7 +18313,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42065:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42065"
@@ -18433,7 +18433,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -18512,7 +18512,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "60 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42070:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42070"
@@ -18632,7 +18632,7 @@
         "type": "Point"
       },
       "properties": {
-        "capture_datetime_utc": "2026-11-02T21:44:29.801239+00:00",
+        "capture_datetime_utc": "2026-11-02T22:48:45.929746+00:00",
         "coordinate_confidence": "high",
         "coordinate_method": "manually_verified_station_coordinate",
         "coordinate_notes": "Exact coordinate for the official RHMZ station id.",
@@ -18711,7 +18711,7 @@
                 "variation_window_hours": null
               }
             },
-            "observation_frequency": "30 minutes",
+            "observation_frequency": "derived from source timestamps",
             "source_stream_id": "42095:nrt",
             "source_stream_type": "nrt",
             "station_id": "rs-42095"
