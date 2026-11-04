@@ -1,6 +1,6 @@
 [
   {
-    "captured_at_utc": "2026-11-04T16:31:08.022727+00:00",
+    "captured_at_utc": "2026-11-04T20:00:45.510786+00:00",
     "code": "forecast_not_activated",
     "historical": false,
     "message": "APPD chart series remain diagnostic candidates because parameter, unit, target year, and issue semantics are not all demonstrated.",
@@ -109,7 +109,7 @@
     "station_name_local": "Iža"
   },
   {
-    "captured_at_utc": "2026-11-04T16:31:05.676075+00:00",
+    "captured_at_utc": "2026-11-04T20:00:42.816342+00:00",
     "code": "stale_source",
     "historical": false,
     "message": "Latest observation date 2026-03-12 is 237 days old; limit is 7",
