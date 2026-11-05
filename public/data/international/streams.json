@@ -1119,7 +1119,7 @@
     "country_code": "RS",
     "forecast_count": 0,
     "is_primary_stream": true,
-    "observation_count": 2619,
+    "observation_count": 2620,
     "observation_frequency": "60 minutes",
     "physical_station_id": "rs-42060",
     "source_id": "hidmet_rs",
